@@ -1,9 +1,39 @@
 ---
-title: "Education, Children's Social Care and offending"
-author: "Jenny McNally"
-date: "21 June 2022"
-output: "pdf_document"
+params: 
+    input_la_choice: Wokingham
+    input_phase_choice: Secondary
+header-includes:
+  # Here be dragons, edit these header items at your own risk.
+   - \usepackage{graphics}
+#   - \usepackage{expl3}
+   - \usepackage{xparse}
+   - \usepackage{tcolorbox}
+#   - \usepackage{amsmath,amsfonts,amsthm}
+   - \usepackage{wrapfig}
+   - \usepackage{helvet}
+   - \usepackage{sectsty}
+   - \usepackage{fancyhdr}
+   - \usepackage{xpatch}
+   - \usepackage{booktabs}
+   - \pagestyle{fancy}
+   - \definecolor{gssmidblue}{RGB}{32, 115, 188}
+   - \definecolor{dfeheadingblue}{RGB}{16, 79, 117}
+   - \renewcommand{\familydefault}{\sfdefault}
+   - \allsectionsfont{\color{dfeheadingblue}}
+   - \sectionfont{\color{dfeheadingblue}\fontsize{24}{30}\selectfont}
+   - \fancyhead[C]{*** Note that this is a draft document and does not contain genuine data ***}
+   - \fancyhead[L,R]{}
+   - \fancyfoot[R]{\nouppercase{\emph{\rightmark}}}
+   - \fancyfoot[L]{\nouppercase{\emph{\leftmark}}}
+   - \fancyfoot[C] {}
+   - \renewcommand{\headrulewidth}{0pt}
+   - \renewcommand{\footrulewidth}{2pt}
+   - \futurelet\TMPfootrule\def\footrule{{\color{gssmidblue}\TMPfootrule}}
+output:
+  pdf_document
+urlcolor: blue
 ---
+
 
 ```{r load packages, include=FALSE}
 library(readxl)
@@ -37,14 +67,25 @@ ever_flags <- read_excel("170622_Dummy_data.xlsx",
   filter(SCHOOL_LA == i)
 
 ```
+\includegraphics[width=0.25\linewidth]{"images/Department_for_Education.png"}
+\vspace{2.4cm}
 
-**Executive Summary**:  
+
+# Education, Children's Social Care and offending `r offender_counts_school$SCHOOL_LA`
+\vspace{3.2cm}
+\vspace*{\fill}
+\color{dfeheadingblue}{\hrule}
+\color{black}
+
+## Executive Summary
 
 This analysis looks at the education and children’s social care background of children who had been cautioned or sentenced for an offence in `r offender_counts_school$SCHOOL_LA`. Using the Ministry of Justice and Department for Education data share, two offending groups are identified in this publication: approximately `r offender_counts_school$offenders` children who go to school in `r offender_counts_school$SCHOOL_LA` and had been cautioned or sentenced for an offence, which is equivalent to `r offender_counts_school$prop_off`% of the total pupil cohort, and approximately `r offender_counts_school$sv` children who go to school in `r offender_counts_school$SCHOOL_LA` and had been cautioned or sentenced for a serious violence offence (equivalent to `r offender_counts_school$prop_sv`% of the total pupil cohort).  
 
 This publication also analyses those that live in `r offender_counts_home$HOME_LA` -  approximately `r offender_counts_home$offenders` children in `r offender_counts_home$HOME_LA` had been cautioned or sentenced for an offence, which is equivalent to `r offender_counts_home$prop_off`% of the total pupil cohort, and approximately `r offender_counts_home$sv` children  in `r offender_counts_school$HOME_LA` had been cautioned or sentenced for a serious violence offence (equivalent to `r offender_counts_home$prop_sv`% of the total pupil cohort).
 
-**Introduction**:  
+\newpage
+
+## Introduction
 
 This paper investigates the education and children’s social care background of children who had been cautioned or sentenced for an offence, based on key variables from the Ministry of Justice and Department for Education data share that took place in 2020. The share covers offending data up to the end of 2017 and education and social care data up to the end of academic year 2017/18.  
 
@@ -56,9 +97,9 @@ Please note this is a descriptive statistics publication of census data and as s
 For more details on the data share that this analysis is based on, refer to the separately published Technical Note, and Annex C at the end of this paper. The data and variables used in the analysis for this paper are presented in the accompanying tables (with the source table referenced in this paper, where
 relevant).
 
-**Defining the study population**:  
+## Defining the study population
 
-*Defining the all-pupil cohort*:
+### Defining the all-pupil cohort
 
 The cohorts of children within this analysis includes all pupils who finished key stage 2 (KS2) in 2007/08, 2008/09 or 2009/10 and were aged 10 at the start
 of these academic years. Therefore, this cohort has a key stage 4 (KS4) academic year of 2012/13, 2013/14 or 2014/15 amounting to approximately 1.63 million pupils across England. For these children, all their records from Year 1 to Year 13 (or equivalent) are included. Pupils who do not have a KS4 record are not
@@ -90,7 +131,7 @@ a) KS4 attainment: This is due to the implementation of two major reforms in 201
 b) Children known to children’s social care: Full children in need (CIN) data is available from 2011/12, term 3. Children are included in this CIN analysis if they have been recorded as a child in need on the 31st March in any period between the ages of 12 – 16. Those matched to earlier years in the KS4 attainment data will have less coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 14 and above. To maximise coverage of the CIN data and avoid skewed results, analysis of children in need and children who are looked after is based on children
 matched to KS4 academic year 2014/15 only.  
 
-*Defining the offending groups*:  
+### Defining the offending groups
 
 ‘Children who had been cautioned or sentenced for an offence’ relates to all children and young people in the linked data who were in the academic years
 described above, and who been cautioned or sentenced for any offence recorded on the Police National Computer over the defined coverage period.  
@@ -102,7 +143,7 @@ The analysis has identified approximately `r offender_counts_home$Number_of_offe
 As well as ‘children who had been cautioned or sentenced for an offence’, ‘children who had been cautioned or sentenced for a serious violence offence’ have also been included in this analysis. The definition of serious violence offences based broadly on the following
 categories of offence groups and offence types: indictable only ‘violence against the person’ offences, indictable only ‘robbery offences’, and triable either way or indictable only ‘possession of weapons offences'.  
 
-**Key points on the analysis: interpreting results**  
+## Key points on the analysis: interpreting results
 
 Care should be taken when interpreting this analysis as the findings do not imply a causal link between the educational or children’s social care
 characteristics and being cautioned or sentenced for an offence. Future work using these data will aim to build upon this analysis to better understand the relationships between the outcomes and characteristics in this publication.  
@@ -122,7 +163,7 @@ known to be eligible for FSM. If there were a causal link, a much higher number 
 In addition to those given above, there are other reasons why this analysis cannot draw causal links. For example, there are many additional factors
 which could influence someone’s offending behaviour for which the data is not available for this analysis. The factors looked at in this paper come from education, children’s social care, and offending datasets, meaning there are many unobserved factors which have not been accounted for here, for example health characteristics.  
 
-**Defining ‘ever’**  
+## Defining ‘ever’
 
 It is important to note that this analysis will not be directly comparable with other published government statistics. Unless otherwise specified, when
 referencing whether a child has “ever” had a certain characteristic, the analysis considers all periods up to the end of KS4. This methodology may differ from that of other published statistics where, for example, only the previous six years are considered. For this reason, figures discussed here may appear higher than those available in other publications.  
@@ -168,7 +209,7 @@ home_school_chart <- ggplot(home_school_for_chart, aes(Proportion_with_different
   labs(x = "", y="% of children with a different LA")
 ```
 
-**Difference between home and school Local Authorities**:  
+## Difference between home and school Local Authorities
 
 `r home_vs_school$prop_count_any_dif` % of offenders that have a home LA of `r home_vs_school$HOME_LA` have a different school LA. `r school_vs_home$prop_count_any_dif*100` % that have a school LA of `r home_vs_school$HOME_LA` have a different home LA. For serious violence offenders, the proportions are `r home_vs_school$prop_count_sv_dif*100`% and `r school_vs_home$prop_count_sv_dif*100`% respectively. This publication will present statistics relating to the LA of a child's school aged 15 - analysis using home LA can be found in the accompanying tables.
 
@@ -194,7 +235,7 @@ previous_offending_chart <- ggplot(previous_offending_for_chart, aes(x = "", y =
 
 ```
 
-**Previous offending**:  
+## Previous offending 
 
 In order to better understand offending trajectories for children who had been cautioned or sentenced for a serious violence offence, the analysis looks at the volume of offending which preceded a first serious violence offence.  
 
@@ -224,7 +265,7 @@ gender_chart <- ggplot(gender_for_chart, aes(Pupil_group, perc_male)) +
   labs(x = "", y="% male")
 ```
 
-**Gender**:  
+## Gender
 
 Male pupils were over-represented amongst children who had been cautioned or sentenced for an offence and children who had been cautioned or sentenced for a serious violence offence and go to school in `r gender$SCHOOL_LA` -  `r gender$prop_any_count_M`% of those that had been cautioned or sentenced for any offence were male, and `r gender$prop_sv_count_M`% of those that were cautioned or sentenced for a serious violence offence were male. In comparison, `r gender$prop_count_M`% of the pupil cohort was male.  
 
@@ -252,7 +293,7 @@ age_chart <-  ggplot(age_for_chart, aes(x=OffenceStartAge, y=value, group=`Pupil
 
 ```
 
-**Age**:  
+## Age
 
 Within the age range of 10-17, age at first offence for all children who had been cautioned or sentenced for an offence tended to peak in the mid-teens.  
 
@@ -296,7 +337,7 @@ ethnic_major_chart <- ggplot(ethnic_major_long, aes(x=Pupil_group, y=value, fill
 
 ```
 
-**Ethnicity**:  
+## Ethnicity
 
 Pupils from ethnic minority groups (including White minorities) were over-represented amongst children who had been cautioned or sentenced for an offence.   
 
@@ -363,7 +404,7 @@ FSM_RHS_waffle <- waffle(FSM_RHS, rows=10, size=0.6,
 
 ```
 
-**FSM**:  
+## FSM
 
 Children who had been cautioned or sentenced for an offence were more likely to be eligible for free school meals (FSM) than the all-pupil cohort, with children who had been cautioned or sentenced for a serious violence offence having the highest proportion of children eligible for FSM.  
 
@@ -434,7 +475,7 @@ KS2_attainment_chart <- ggplot(KS2_attainment_for_chart, aes(fill=Subject, y=`% 
 
 ```
 
-**Attainment**:   
+## Attainment 
 
 A lower proportion of children who had been cautioned or sentenced for an offence achieved the expected standard in English and Maths at key stage 2 (KS2), or achieved various key stage 4 (KS4) benchmarks, compared to the all-pupil cohort.  
 
@@ -531,7 +572,7 @@ PA_RHS_waffle <- waffle(PA_RHS, rows=10, size=0.6,
 
 ```
 
-**Absence**:  
+## Absence
 
 A child is said to be persistently absent (PA) if they miss 10% or more of the sessions (most sessions represent a half-day) they could possibly have attended in an academic year or term. For context, this would amount to between 6 and 7 days of a 13-week term or around 19 days for a school year. This includes both authorised and unauthorised absences. 
 
@@ -759,7 +800,7 @@ Sus_RHS_waffle <- waffle(Sus_RHS, rows=10, size=0.6,
 
 ```
 
-**Suspensions and permanent exclusions**: 
+## Suspensions and permanent exclusions
 
 A suspension is where a pupil has been temporarily removed from the school, whilst a permanent exclusion is when a pupil is no longer allowed to attend a school.  
 
@@ -897,7 +938,7 @@ AP_RHS_waffle <- waffle(AP_RHS, rows=10, size=0.6,
 
 ```
 
-**Alternative Provision**:  
+## Alternative Provision
 
 Alternative provision (AP) is full or part-time education arranged by:  
 
@@ -1118,7 +1159,7 @@ SEMH_timing_chart <- ggplot(SEMH_timing_for_chart, aes(x="", y=`% with timing`, 
   theme(legend.position = "bottom")
 ```
 
-**Special Educational Needs**:  
+## Special Educational Needs 
 
 This analysis looks at the proportion of children who had been cautioned or sentenced for an offence who were ever recorded as having Special Educational Needs (SEN).  
 
@@ -1276,7 +1317,7 @@ CIN_RHS_waffle <- waffle(CIN_RHS, rows=10, size=0.3,
 
 ```
 
-**Children with a Social Worker**:  
+## Children with a Social Worker
 
 The next set of findings look at the proportion of children who had been cautioned or sentenced for an offence that were recorded as being children in need (CIN) or children who are looked after (CLA) on 31st March in any given year, as defined by the Children Act 1989, between 2011/12 – 2017/18 for CIN, and 2005/06 - 2017/18 for CLA. CIN here refers to children who are
 designated under a number of different social care classifications: children on a child in need plan; children on a child protection plan; and children who are looked after. As such, CLA figures are included in the figures for CIN. Since the CIN and CLA data cover different time periods, and CIN includes CLA for some of the same period, comparisons of CIN to CLA should be made with caution. To maximise coverage of the CIN data and avoid skewed results, the following analysis is based on children matched to KS4 academic year 2014/15 only.  
@@ -1337,10 +1378,25 @@ This should be taken into consideration when considering the first record of a c
 CSC_timing_chart
 ```
 
-**About this publication**:   
+\newpage
+\vspace*{\fill}
+\color{dfeheadingblue}{\hrule}
+\color{black}
+## Contact
 
-Department for Education enquiries hop.statistics@education.gov.uk  
-Ministry of Justice enquiries statistics.enquiries@justice.gov.uk  
-download www.gov.uk/government/publications
+> Pupil place planning team
+>
+> Publication: [Explore Education Statistics: Local authority school places scorecards](https://explore-education-statistics.service.gov.uk/find-statistics/local-authority-school-places-scorecards)
+>
+> Department for Education enquiries:  [hop.statistics@education.gov.uk](hop.statistics@education.gov.uk)
+>
+> Ministry of Justice enquiries [statistics.enquiries@justice.gov.uk](statistics.enquiries@justice.gov.uk) 
+>
+> download www.gov.uk/government/publications
+>
+>
+> This document was produced using the [DfE Analytical Services](https://github.com/dfe-analytical-services) Rmarkdown template, which is available on GitHub as part of our [R-Shiny data dashboard template](https://github.com/dfe-analytical-services/shiny-template).
 
+
+[\includegraphics[width=0.50\linewidth]{"images/Department_for_Education_long.png"}](https://www.gov.uk/government/organisations/department-for-education)
 
