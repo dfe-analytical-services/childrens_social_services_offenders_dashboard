@@ -19,7 +19,8 @@ library(stringr)
 library(gridExtra)
 
 #Set working directory
-knitr::opts_knit$set(root.dir = 'C:/Users/JMCNALLY/Department for Education/SBAEA - SAFE Taskforces/Local cuts of the data/Analysis/Outputs')
+knitr::opts_knit$set(root.dir = './')
+i <- 'zfPKp'
 ```
 
 ```{r intro, include=FALSE}
