@@ -1,0 +1,1345 @@
+---
+title: "Education, Children's Social Care and offending"
+author: "Jenny McNally"
+date: "21 June 2022"
+output: "pdf_document"
+---
+
+```{r load packages, include=FALSE}
+library(readxl)
+library(tidyverse)
+library(reshape2)
+library(dplyr)
+library(dbplyr)
+library(ggplot2)
+library(waffle)
+library(knitr)
+library(kableExtra)
+library(stringr)
+library(gridExtra)
+
+#Set working directory
+knitr::opts_knit$set(root.dir = 'C:/Users/JMCNALLY/Department for Education/SBAEA - SAFE Taskforces/Local cuts of the data/Analysis/Outputs')
+```
+
+```{r intro, include=FALSE}
+offender_counts_school <- read_excel("170622_Dummy_data.xlsx", 
+                             sheet = 'No_pupils_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+offender_counts_home <- read_excel("170622_Dummy_data.xlsx", 
+                             sheet = 'No_pupils_hmLA(SAFE)') %>%
+  filter(HOME_LA == i)
+
+ever_flags <- read_excel("170622_Dummy_data.xlsx", 
+                             sheet = 'Everflag_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+```
+
+**Executive Summary**:  
+
+This analysis looks at the education and children’s social care background of children who had been cautioned or sentenced for an offence in `r offender_counts_school$SCHOOL_LA`. Using the Ministry of Justice and Department for Education data share, two offending groups are identified in this publication: approximately `r offender_counts_school$offenders` children who go to school in `r offender_counts_school$SCHOOL_LA` and had been cautioned or sentenced for an offence, which is equivalent to `r offender_counts_school$prop_off`% of the total pupil cohort, and approximately `r offender_counts_school$sv` children who go to school in `r offender_counts_school$SCHOOL_LA` and had been cautioned or sentenced for a serious violence offence (equivalent to `r offender_counts_school$prop_sv`% of the total pupil cohort).  
+
+This publication also analyses those that live in `r offender_counts_home$HOME_LA` -  approximately `r offender_counts_home$offenders` children in `r offender_counts_home$HOME_LA` had been cautioned or sentenced for an offence, which is equivalent to `r offender_counts_home$prop_off`% of the total pupil cohort, and approximately `r offender_counts_home$sv` children  in `r offender_counts_school$HOME_LA` had been cautioned or sentenced for a serious violence offence (equivalent to `r offender_counts_home$prop_sv`% of the total pupil cohort).
+
+**Introduction**:  
+
+This paper investigates the education and children’s social care background of children who had been cautioned or sentenced for an offence, based on key variables from the Ministry of Justice and Department for Education data share that took place in 2020. The share covers offending data up to the end of 2017 and education and social care data up to the end of academic year 2017/18.  
+
+The descriptive statistics analysis has been produced to provide greater insight into the education and children’s social care background of children
+who had been cautioned or sentenced for an offence, including attainment outcomes and characteristics. However, this analysis does not imply there is a causal link between the educational outcomes, characteristics and offending.  
+
+Please note this is a descriptive statistics publication of census data and as such does not include any tests for statistical significance; there will be a further publication using more complex analytical methods to understand the relationships between education, children’s social care and offending.  
+
+For more details on the data share that this analysis is based on, refer to the separately published Technical Note, and Annex C at the end of this paper. The data and variables used in the analysis for this paper are presented in the accompanying tables (with the source table referenced in this paper, where
+relevant).
+
+**Defining the study population**:  
+
+*Defining the all-pupil cohort*:
+
+The cohorts of children within this analysis includes all pupils who finished key stage 2 (KS2) in 2007/08, 2008/09 or 2009/10 and were aged 10 at the start
+of these academic years. Therefore, this cohort has a key stage 4 (KS4) academic year of 2012/13, 2013/14 or 2014/15 amounting to approximately 1.63 million pupils across England. For these children, all their records from Year 1 to Year 13 (or equivalent) are included. Pupils who do not have a KS4 record are not
+included (See figure 1 below). Pupils who attended an independent primary or secondary school have been excluded from the data as their characteristics are not recorded, except for those registered in independent AP settings. The cohorts were selected in this way to maximise data coverage and balance data availability across each of the datasets provided in the share.  
+
+Children that appear on a school census at the end of KS2 and the end of KS4 have been included in this analysis, with allowances for those that have moved ahead or been kept behind by one or more school years. Independent AP schools have been included, however those with KS4 results at mainstream independent schools have been removed.  
+
+Results are provided for the all-pupil cohort (including all children who had been cautioned or sentenced for an offence) for comparison purposes.  
+
+```{r cohort table, echo=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+cohort_table <-  data.frame(
+ 'Academic Year' = c('2016/17', '2015/16', '2014/15', '2013/14', '2012/13', '2011/12', '2010/11', '2009/10', '2008/09', '2007/08', '2006/07', '2005/06', '2004/05', '2003/04', '2002/03'),
+ 'KS4 Academic Year 2014/15' = c("Year 13", "Year 12", "Year 11", "Year 10", "Year 9", "Year 8", "Year 7", "Year 6", "Year 5", "Year 4",
+                                 "Year 3", "Year 2", "Year 1", "", ""),
+ 'KS4 Academic Year 2013/14' = c("", "Year 13", "Year 12", "Year 11", "Year 10", "Year 9", "Year 8", "Year 7", "Year 6", "Year 5", "Year 4",
+                                 "Year 3", "Year 2", "Year 1", ""),
+ 'KS4 Academic Year 2012/13' = c("", "", "Year 13", "Year 12", "Year 11", "Year 10", "Year 9", "Year 8", "Year 7", "Year 6", "Year 5", "Year 4",
+                                 "Year 3", "Year 2", "Year 1"),
+ stringsAsFactors = FALSE
+)
+ 
+kable(cohort_table, col.names = gsub("[.]", " ", names(cohort_table)), caption = "Year group breakdown for the all-pupil cohort")
+```
+
+The findings presented throughout this publication are the combined results of all three cohorts, with the exception of findings discussing:  
+
+a) KS4 attainment: This is due to the implementation of two major reforms in 2013/144 which affect the calculation of KS4 performance measures data. Since the cohorts in the analysis are matched to years in the KS4 attainment data that fall either side of this reform, KS4 results for these cohorts cannot be combined to look at overall figures. Therefore, when analysing KS4 attainment, the analysis refers to the results of those with KS4 academic year 2014/15 as this provides the most recent indicator of academic achievement.  
+
+b) Children known to children’s social care: Full children in need (CIN) data is available from 2011/12, term 3. Children are included in this CIN analysis if they have been recorded as a child in need on the 31st March in any period between the ages of 12 – 16. Those matched to earlier years in the KS4 attainment data will have less coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 14 and above. To maximise coverage of the CIN data and avoid skewed results, analysis of children in need and children who are looked after is based on children
+matched to KS4 academic year 2014/15 only.  
+
+*Defining the offending groups*:  
+
+‘Children who had been cautioned or sentenced for an offence’ relates to all children and young people in the linked data who were in the academic years
+described above, and who been cautioned or sentenced for any offence recorded on the Police National Computer over the defined coverage period.  
+
+All cohorts in this analysis are limited to ages 10-17. This means that for each cohort, the last year of offending data would be during Year 13 (or equivalent). This is to ensure that each child had the same amount of time to offend – if the data was not limited by age, then children born in earlier years would have more years of data available to record offences, thereby skewing the results.  
+
+The analysis has identified approximately `r offender_counts_home$Number_of_offenders` children who had been cautioned or sentenced for an offence and live in `r offender_counts_home$LA.Name`, which is equivalent to `r offender_counts_home$Proportion_of_offenders`% of the all-pupil cohort. In comparison, `r offender_counts_school$Number_of_offenders` children who had been cautioned or sentenced for an offence go to school in `r offender_counts_school$LA.Name`, which is equivalent to `r offender_counts_home$Proportion_of_offenders`% of the all-pupil cohort.  
+
+As well as ‘children who had been cautioned or sentenced for an offence’, ‘children who had been cautioned or sentenced for a serious violence offence’ have also been included in this analysis. The definition of serious violence offences based broadly on the following
+categories of offence groups and offence types: indictable only ‘violence against the person’ offences, indictable only ‘robbery offences’, and triable either way or indictable only ‘possession of weapons offences'.  
+
+**Key points on the analysis: interpreting results**  
+
+Care should be taken when interpreting this analysis as the findings do not imply a causal link between the educational or children’s social care
+characteristics and being cautioned or sentenced for an offence. Future work using these data will aim to build upon this analysis to better understand the relationships between the outcomes and characteristics in this publication.  
+
+The education variables included in this paper have generally been analysed independently of each other. It is important to note that there may be links
+between these key variables which have not been factored into the analysis, and other factors which could not be taken into account.  
+
+Children who had been cautioned or sentenced for a serious violence offence represent a small, atypical group of young people; their results should not be assumed to be representative of all children who have been cautioned or sentenced for an
+offence or young people more generally.  
+
+The data used for this publication allows us to see what proportion of a certain offending group have a characteristic, as well as being able to see what
+proportion of children with a characteristic are also in the offending groups. For example, approximately `r ever_flags$sv_prop_count_FSM`% of children who had been cautioned or sentenced for a serious violence offence and had went to school in `r ever_flags$SCHOOL_LA` were known to have ever been eligible for free school meals (FSM), but it is not possible to conclude from these findings that there is a causal relationship between FSM eligibility and being cautioned or sentenced for a serious violence offence (or vice versa).  
+
+Indeed, those children who have been cautioned or sentenced for a serious violence offence identified as being eligible for FSM made up `r ever_flags$also_sv_prop_count_FSM`% of all pupils
+known to be eligible for FSM. If there were a causal link, a much higher number might be expected. Whilst it can be said that most children who have ever been cautioned or sentenced for a serious violence offence have also been eligible for FSM at some stage, it is not true that most children eligible for FSM are also cautioned or sentenced for a serious violence offence. This is a pattern which emerges throughout this analysis. It is therefore important to consider this when reading the publication.  
+
+In addition to those given above, there are other reasons why this analysis cannot draw causal links. For example, there are many additional factors
+which could influence someone’s offending behaviour for which the data is not available for this analysis. The factors looked at in this paper come from education, children’s social care, and offending datasets, meaning there are many unobserved factors which have not been accounted for here, for example health characteristics.  
+
+**Defining ‘ever’**  
+
+It is important to note that this analysis will not be directly comparable with other published government statistics. Unless otherwise specified, when
+referencing whether a child has “ever” had a certain characteristic, the analysis considers all periods up to the end of KS4. This methodology may differ from that of other published statistics where, for example, only the previous six years are considered. For this reason, figures discussed here may appear higher than those available in other publications.  
+
+Previous publication was national, now we are doing local cuts for SAFE areas, will follow with a dashboard etc. Also need to say something about how we found closest LA to offence.
+
+```{r home vs school, include=FALSE}
+home_vs_school <- read_excel("170622_Dummy_data.xlsx", 
+                             sheet = 'hm_with_dif_scl(SAFE)') %>%
+  filter(HOME_LA == i)
+
+school_vs_home <- read_excel("170622_Dummy_data.xlsx", 
+                             sheet = 'scl_with_dif_hm(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+home_vs_school_for_chart <- home_vs_school %>%
+  select(prop_count_all_dif, prop_count_any_dif, prop_count_sv_dif, HOME_LA) %>%
+  rename(`All pupils with a different school LA` = prop_count_all_dif,
+         `Any offence with a different school LA` = prop_count_any_dif,
+         `Serious Violence offence with a different school LA` = prop_count_sv_dif)
+
+school_vs_home_for_chart <- school_vs_home %>%
+  select(prop_count_all_dif, prop_count_any_dif, prop_count_sv_dif, SCHOOL_LA) %>%
+  rename(`All pupils with a different home LA` = prop_count_all_dif,
+         `Any offence with a different home LA` = prop_count_any_dif,
+         `Serious Violence offence with a different home LA` = prop_count_sv_dif)
+
+home_school_for_chart <- school_vs_home_for_chart %>%
+  left_join(home_vs_school_for_chart, by = c("SCHOOL_LA" = "HOME_LA")) %>%
+  select(-SCHOOL_LA) %>%
+  pivot_longer(
+    cols = c(
+      'All pupils with a different home LA', 'Any offence with a different home LA', 'Serious Violence offence with a different home LA',
+      'All pupils with a different school LA', 'Any offence with a different school LA', 'Serious Violence offence with a different school LA'),
+    names_to = ("Proportion_with_different_LA")
+  ) %>%
+  mutate(Proportion_with_different_LA2 = str_wrap(Proportion_with_different_LA, width = 10))
+
+home_school_chart <- ggplot(home_school_for_chart, aes(Proportion_with_different_LA2, value)) +
+  ggplot2::geom_bar(aes(fill = value),
+                    stat = "identity") +
+  theme(legend.position = "none") + 
+  labs(x = "", y="% of children with a different LA")
+```
+
+**Difference between home and school Local Authorities**:  
+
+`r home_vs_school$prop_count_any_dif` % of offenders that have a home LA of `r home_vs_school$HOME_LA` have a different school LA. `r school_vs_home$prop_count_any_dif*100` % that have a school LA of `r home_vs_school$HOME_LA` have a different home LA. For serious violence offenders, the proportions are `r home_vs_school$prop_count_sv_dif*100`% and `r school_vs_home$prop_count_sv_dif*100`% respectively. This publication will present statistics relating to the LA of a child's school aged 15 - analysis using home LA can be found in the accompanying tables.
+
+```{r home school chart, echo=FALSE, fig.cap="Proportion of children with different home and school LAs. [Source: DfE-MoJ data share]"}
+home_school_chart
+```
+
+```{r previous offending, include=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+previous_offending <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'previous_offence_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+previous_offending_for_chart <- previous_offending %>%
+  select(SCHOOL_LA, prop_previous) %>%
+  rbind(c(previous_offending$SCHOOL_LA[1], 100 - previous_offending$prop_previous[1])) %>%
+  mutate(`Prior offending` = as.character(c('Serious Violence offence with a prior offence','Serious Violence offence without a prior offence'))) %>%
+  rename(`Proportion with a prior offence` = `prop_previous`)
+
+previous_offending_chart <- ggplot(previous_offending_for_chart, aes(x = "", y = `Proportion with a prior offence`, fill = `Prior offending`)) +
+  geom_col() +
+  coord_polar(theta = "y") +
+  theme(axis.title.y=element_blank(), axis.text.y=element_blank(), axis.ticks.y=element_blank()) + labs(x="")
+
+```
+
+**Previous offending**:  
+
+In order to better understand offending trajectories for children who had been cautioned or sentenced for a serious violence offence, the analysis looks at the volume of offending which preceded a first serious violence offence.  
+
+`r (100-previous_offending$prop_previous)`% of children who had been cautioned or sentenced for a serious violence offence had not been cautioned or sentenced for a previous offence.
+
+```{r previous offending chart, echo=FALSE, fig.cap="The proportion of children who had been cautioned or sentenced for a serious violence offence with or without a prior offence, for pupils matched to KS4 academic years 2012/13, 2013.14 and 2014/15. [Source: DfE-MoJ data share]"}
+previous_offending_chart
+```
+
+```{r gender, include=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+gender <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'Gender_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+gender_for_chart <- gender %>%
+  select(prop_count_M, prop_any_count_M, prop_sv_count_M)
+
+gender_for_chart <- t(gender_for_chart) %>%
+  as.data.frame() %>%
+  mutate(Pupil_group = c('All pupils', 'Any offence', 'Serious Violence Offence')) %>%
+  rename('perc_male' = 'V1')
+
+gender_chart <- ggplot(gender_for_chart, aes(Pupil_group, perc_male)) +
+  ggplot2::geom_bar(aes(fill = Pupil_group),
+                    stat = "identity") +
+  theme(legend.position = "none") + 
+  labs(x = "", y="% male")
+```
+
+**Gender**:  
+
+Male pupils were over-represented amongst children who had been cautioned or sentenced for an offence and children who had been cautioned or sentenced for a serious violence offence and go to school in `r gender$SCHOOL_LA` -  `r gender$prop_any_count_M`% of those that had been cautioned or sentenced for any offence were male, and `r gender$prop_sv_count_M`% of those that were cautioned or sentenced for a serious violence offence were male. In comparison, `r gender$prop_count_M`% of the pupil cohort was male.  
+
+```{r gender chart, echo=FALSE, fig.cap="The gender breakdown of offending and pupil group, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share]"}
+gender_chart
+```
+
+```{r age, include=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+
+age <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'Age_first_offence_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+age_for_chart <- age %>%
+  select(OffenceStartAge, prop_off, prop_sv) %>%
+  rename(`Any offence` = prop_off, `Serious Violence Offence` = prop_sv) %>%
+  pivot_longer(
+    cols = c(`Any offence`, `Serious Violence Offence`),
+    names_to = ("Pupil Group"))
+
+age_chart <-  ggplot(age_for_chart, aes(x=OffenceStartAge, y=value, group=`Pupil Group`)) + 
+  geom_line(aes(linetype=`Pupil Group`)) + 
+  labs(x = "Age at first offence", y="% at age") +
+  theme(legend.position = "bottom")
+
+```
+
+**Age**:  
+
+Within the age range of 10-17, age at first offence for all children who had been cautioned or sentenced for an offence tended to peak in the mid-teens.  
+
+The average age at first offence for all offenders in `r age$SCHOOL_LA[1]` is `r sum(age$OffenceStartAge*age$offenders) / sum(age$offenders)`. The average age at first offence for all serious violence offenders is `r sum(age$OffenceStartAge*age$sv) / sum(age$sv)`
+
+```{r age chart, echo=FALSE, fig.cap="The proportion of children relative to their age at first offence by offending group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+age_chart
+```
+
+```{r ethnicity, include=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+
+ethnic_minor <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'Ethnicity_minor_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+ethnic_major <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'Ethnicity_major_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+ethnic_major_long <- ethnic_major %>%
+  select(EthnicGroupMajor, prop_all, prop_off, prop_sv) %>%
+  rename(`All Pupils` = prop_all, `Any Offence` = prop_off, `Serious Violence Offence` = prop_sv) %>%
+  pivot_longer(
+    cols = c(`All Pupils`, `Any Offence`, `Serious Violence Offence`),
+    names_to = ("Pupil_group")
+  ) %>%
+  mutate('Ethnic Group Major' = c('Any other ethnic group', 'Any other ethnic group', 'Any other ethnic group',
+                                  'Asian', 'Asian', 'Asian',
+                                  'Black', 'Black', 'Black',
+                                  'Chinese', 'Chinese', 'Chinese',
+                                  'Mixed', 'Mixed', 'Mixed',
+                                  'Unclassified', 'Unclassified', 'Unclassified',
+                                  'White', 'White', 'White'))
+
+ethnic_major_chart <- ggplot(ethnic_major_long, aes(x=Pupil_group, y=value, fill = `Ethnic Group Major`)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  geom_col() + 
+  labs(x = "", y="% of ethnic group major") +
+  theme(legend.position = "bottom")
+
+```
+
+**Ethnicity**:  
+
+Pupils from ethnic minority groups (including White minorities) were over-represented amongst children who had been cautioned or sentenced for an offence.   
+
+Ethnicity has two different categorisations in the school census – ethnic group major and ethnic group minor. Ethnic group major contains wider categories (Asian, Black, Chinese, White, Mixed, Unclassified, Any Other Ethnic Group) whereas ethnic group minor is more detailed.  
+
+The most common major ethnic group with a school LA of `r ethnic_major$SCHOOL_LA[1]` was `r ethnic_major$EthnicGroupMajor[which.max(ethnic_major$prop_all)]` (`r max(ethnic_major$prop_all)`%). The most common major ethnic group amongst children who had been cautioned or sentenced for an offence was `r ethnic_major$EthnicGroupMajor[which.max(ethnic_major$prop_off)]` (`r max(ethnic_major$prop_off)`%) - for children who had been cautioned or sentenced for a serious violence offence, it was `r ethnic_major$EthnicGroupMajor[which.max(ethnic_major$prop_sv)]` (`r max(ethnic_major$prop_sv)`%).
+
+```{r ethnicity chart, echo=FALSE, fig.cap="The proportion of all pupils split by ethnic group major, offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+
+ethnic_major_chart
+```
+
+```{r FSM, include=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+
+ever_flags <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'Everflag_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+#FSM chart
+FSM_for_chart <- ever_flags %>%
+  select(prop_count_FSM, any_prop_count_FSM, sv_prop_count_FSM)
+
+FSM_for_chart <- t(FSM_for_chart) %>%
+  as.data.frame() %>%
+  mutate(`Pupil Group` = c('All pupils', 'Any offence', 'Serious Violence Offence')) %>%
+  rename(`% eligible for FSM` = 'V1')    
+
+FSM_chart <- ggplot(FSM_for_chart, aes(`Pupil Group`, `% eligible for FSM`)) +
+  ggplot2::geom_bar(aes(fill = `Pupil Group`),
+                    stat = "identity") +
+  theme(legend.position = "none") +
+  coord_flip() + labs(x="")
+
+FSM_for_waffle <- ever_flags %>%
+  select(sv_prop_count_FSM, also_sv_prop_count_FSM) %>%
+  mutate(sv_prop_count_FSM = round(sv_prop_count_FSM,0),
+         also_sv_prop_count_FSM = round(also_sv_prop_count_FSM,0),
+         non_sv_prop_count_FSM = 100 - sv_prop_count_FSM,
+         non_sv_also_prop_count_FSM = 100 - also_sv_prop_count_FSM)
+
+FSM_LHS <- FSM_for_waffle %>%
+  select(sv_prop_count_FSM, non_sv_prop_count_FSM)
+
+FSM_RHS <- FSM_for_waffle %>%
+  select(also_sv_prop_count_FSM, non_sv_also_prop_count_FSM)
+
+FSM_LHS_waffle <- waffle(FSM_LHS, rows=10, size=0.6, 
+                          colors=c("#00688B", "#838B83"), 
+                          title="Blue squares = % of children who were cautioned
+       or sentenced for a serious 
+       violence offence who were eligible for FSM",  
+                          xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+FSM_RHS_waffle <- waffle(FSM_RHS, rows=10, size=0.6, 
+                         colors=c("#00688B", "#C1CDC1"), 
+                         title="Blue squares = % of FSM eligible pupils who were
+                          cautioned or sentenced for a
+                          serious violence offence",
+                         xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+```
+
+**FSM**:  
+
+Children who had been cautioned or sentenced for an offence were more likely to be eligible for free school meals (FSM) than the all-pupil cohort, with children who had been cautioned or sentenced for a serious violence offence having the highest proportion of children eligible for FSM.  
+
+```{r FSM chart, echo=FALSE, fig.cap="Proportion of all pupils eligible for free school meals (FSM) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+FSM_chart
+```
+
+`r ever_flags$any_prop_count_FSM`% of all children who had been cautioned or sentenced for an offence had ever been eligible for FSM, compared to children who had been cautioned or sentenced for a serious violence offence (`r ever_flags$sv_prop_count_FSM`%). This compares to `r ever_flags$prop_count_FSM`% of all pupils. 
+
+However, whilst the majority of children who had been cautioned or sentenced for an offence had ever been eligible for FSM, it is not the case that the majority of children eligible for FSM are also cautioned or sentenced for an offence: only `r ever_flags$also_any_prop_count_FSM`% of those that had ever been eligible for FSM had also ever been cautioned or sentenced for an offence, and only `r ever_flags$also_sv_prop_count_FSM`% had ever been cautioned or sentenced for a serious violence offence.
+
+```{r FSM waffle, echo=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+# set the plotting area into a 1*2 array
+par(mfrow=c(1,2)) 
+
+# Use grid.arrange to put plots in columns
+grid.arrange(FSM_LHS_waffle, FSM_RHS_waffle, ncol=2)
+```
+
+```{r attainment, include=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+KS4_attainment <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'KS4_attain_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+#KS4 chart
+KS4_attainment_for_chart <- KS4_attainment %>%
+  select(propcount_anypass, propcount_5AG, propcount_5AC, propanycount_anypass, propanycount_5AG, propanycount_5AC,
+         propsvcount_anypass, propsvcount_5AG, propsvcount_5AC)
+
+KS4_attainment_for_chart <- t(KS4_attainment_for_chart) %>%
+  as.data.frame() %>%
+  mutate(`Pupil Group` = c('All pupils', 'All pupils', 'All pupils', 'Any offence', 'Any offence', 'Any offence', 'Serious Violence Offence', 'Serious Violence Offence', 'Serious Violence Offence'),
+         KS4_benchmark = c('Achieved any pass at GCSE or equiv.', 'Achieved 5 or more GCSE (or equiv.) passes A* - G incl. English and Maths',
+                           'Achieved 5 or more GCSE (or equiv.) passes A* - C incl. English and Maths', 'Achieved any pass at GCSE or equiv.',
+                           'Achieved 5 or more GCSE (or equiv.) passes A* - G incl. English and Maths', 'Achieved 5 or more GCSE (or equiv.) passes A* - C incl. English and Maths',
+                           'Achieved any pass at GCSE or equiv.', 'Achieved 5 or more GCSE (or equiv.) passes A* - G incl. English and Maths',
+                           'Achieved 5 or more GCSE (or equiv.) passes A* - C incl. English and Maths')) %>%
+  rename(`% at KS4 benchmark` = 'V1')  %>%
+  mutate(KS4_benchmark2 = str_wrap(KS4_benchmark, width = 10))
+
+KS4_attainment_chart <- ggplot(KS4_attainment_for_chart, aes(fill=`Pupil Group`, y=`% at KS4 benchmark`, x=KS4_benchmark2)) + 
+  geom_bar(position='dodge', stat='identity') +
+  theme(axis.title.x=element_blank()) +
+  theme(legend.position = "bottom")
+
+#KS2 chart
+KS2_attainment <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'KS2_attain_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+KS2_attainment_for_chart <- KS2_attainment %>%
+  select(propcount_EngL4orabove,propcount_MatL4orabove,
+         propcount_EngL4orabove_offenders, propcount_MatL4orabove_offenders,
+         propcount_EngL4orabove_SV_offenders, propcount_MatL4orabove_SV_offenders)
+
+KS2_attainment_for_chart <- t(KS2_attainment_for_chart) %>%
+  as.data.frame() %>%
+  mutate(`Pupil Group` = c('All pupils', 'All pupils',
+                         'Any offence', 'Any offence',
+                         'Serious Violence Offence', 'Serious Violence Offence')) %>%
+  mutate(Subject = c('English', 'Maths', 'English', 'Maths', 'English', 'Maths')) %>%
+  rename(`% at level 4 or above` = 'V1')  
+
+KS2_attainment_chart <- ggplot(KS2_attainment_for_chart, aes(fill=Subject, y=`% at level 4 or above`, x=`Pupil Group`)) + 
+  geom_bar(position='dodge', stat='identity') +
+  coord_flip() + labs(x="") +
+  theme(legend.position = "bottom")
+
+```
+
+**Attainment**:   
+
+A lower proportion of children who had been cautioned or sentenced for an offence achieved the expected standard in English and Maths at key stage 2 (KS2), or achieved various key stage 4 (KS4) benchmarks, compared to the all-pupil cohort.  
+
+KS2 attainment differed across English and Maths, with children who had been cautioned or sentenced for an offence tending to perform worse in English compared to Maths. `r KS2_attainment$propcount_EngL4orabove_offenders`% of children who had been cautioned or sentenced for an offence and `r KS2_attainment$propcount_EngL4orabove_SV_offenders`% of children who been cautioned or sentenced for a serious violence offence achieved a level 4 or above in English. In comparison, `r KS2_attainment$propcount_MatL4orabove_offenders`% of children who had been cautioned or sentenced for an offence and `r KS2_attainment$propcount_MatL4orabove_SV_offenders`% of children who had been cautioned or sentenced for a serious violence offence achieved a level 4 or above in Maths. This compares to `r KS2_attainment$propcount_EngL4orabove`% of the pupil cohort that achieved a level 4 or above in English and `r KS2_attainment$propcount_MatL4orabove`% of the pupil cohort achieved a level 4 or above in Maths.  
+
+```{r KS2 attainment chart, echo=FALSE, fig.cap="Proportion of all pupils who achieved level 4 or above in English and Mathematics at key stage 2 (KS2) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+KS2_attainment_chart
+```
+
+In 2014/15, `r KS4_attainment$propanycount_anypass`% of children who had been cautioned or sentenced for an offence and `r KS4_attainment$propsvcount_anypass`% of children who had been cautioned or sentenced for a serious violence offence achieved any pass at GCSE (or equivalent), compared with `r KS4_attainment$propcount_anypass`% of the pupil cohort.  
+
+```{r KS4 attainment chart, echo=FALSE, fig.cap="Proportion of all pupils who achieved various key stage 4 (KS4) benchmarks by offending and pupil group, for pupils matched to KS4 academic year 2014/15 only. [Source: DfE-MoJ data share]"}
+KS4_attainment_chart
+```
+
+
+```{r absence, include=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+#Same excel tabs as FSM for "ever"
+
+Absence_timing <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'PAPAUO_timing_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+#Absence chart
+Absence_for_chart <- ever_flags %>%
+  select(prop_count_PA, any_prop_count_PA, sv_prop_count_PA, prop_count_PAUO, any_prop_count_PAUO, sv_prop_count_PAUO)
+
+Absence_for_chart <- t(Absence_for_chart) %>%
+  as.data.frame() %>%
+  mutate(`Pupil Group` = c('All pupils', 'Any offence', 'Serious Violence Offence', 'All pupils', 'Any offence', 'Serious Violence Offence')) %>%
+  mutate(`Absence Type` = c('Persistent absence', 'Persistent absence', 'Persistent absence',
+                            'Persistent absence (unauthorised other)', 'Persistent absence (unauthorised other)', 'Persistent absence (unauthorised other)')) %>%
+  rename(`% persistently absent` = 'V1') %>%
+  mutate(`Absence Type` = str_wrap(`Absence Type`, width = 10))
+
+Absence_chart <- ggplot(Absence_for_chart, aes(fill=`Pupil Group`, y=`% persistently absent`, x=`Absence Type`)) + 
+  geom_bar(position='dodge', stat='identity') + labs(x="") +
+  theme(legend.position = "bottom")
+
+#Absence timing chart
+Absence_timing_for_chart <- Absence_timing %>%
+  select(prop_PASame_Term, prop_PA_Before_SV, prop_PA_After_SV, prop_PAUOSame_Term, prop_PAUO_Before_SV, prop_PAUO_After_SV)
+
+Absence_timing_for_chart <- t(Absence_timing_for_chart) %>%
+  as.data.frame() %>%
+  mutate(Absence_type = c('Persistent absence', 'Persistent absence', 'Persistent absence',
+                          'Persistent absence (unauthorised other)', 'Persistent absence (unauthorised other)',
+                          'Persistent absence (unauthorised other)')) %>%
+  mutate(Timing = c('2 - In the same term as the first serious violence offence', '1 - Before the first serious violence offence',
+                    '3 - After the first serious violence offence', '2 - In the same term as the first serious violence offence',
+                    '1 - Before the first serious violence offence', '3 - After the first serious violence offence')) %>%
+  rename('perc_absence' = 'V1') %>%
+  arrange(Timing)
+
+Absence_timing_chart <- ggplot(Absence_timing_for_chart, aes(x=Absence_type, y=perc_absence, fill = Timing)) +
+  geom_bar(position='stack', stat = "identity", ) +
+  coord_flip() +
+  geom_col() + 
+  labs(x = "", y="% with persistent absence timing") +
+  theme(legend.position = "bottom")
+
+#PA waffle
+
+PA_for_waffle <- ever_flags %>%
+  select(sv_prop_count_PA, also_sv_prop_count_PA) %>%
+  mutate(sv_prop_count_PA = round(sv_prop_count_PA,0),
+         also_sv_prop_count_PA = round(also_sv_prop_count_PA,0),
+         non_sv_prop_count_PA = 100 - sv_prop_count_PA,
+         non_sv_also_prop_count_PA = 100 - also_sv_prop_count_PA)
+
+PA_LHS <- PA_for_waffle %>%
+  select(sv_prop_count_PA, non_sv_prop_count_PA)
+
+PA_RHS <- PA_for_waffle %>%
+  select(also_sv_prop_count_PA, non_sv_also_prop_count_PA)
+
+PA_LHS_waffle <- waffle(PA_LHS, rows=10, size=0.6, 
+                         colors=c("#00688B", "#838B83"), 
+                          title="Blue squares = % of children who were cautioned
+       or sentenced for a serious 
+       violence offence who had been persistently absent",  
+                         xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+PA_RHS_waffle <- waffle(PA_RHS, rows=10, size=0.6, 
+                         colors=c("#00688B", "#C1CDC1"), 
+                         title="Blue squares = % of those persistently absent who were
+                          cautioned or sentenced for a
+                          serious violence offence", 
+                         xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+```
+
+**Absence**:  
+
+A child is said to be persistently absent (PA) if they miss 10% or more of the sessions (most sessions represent a half-day) they could possibly have attended in an academic year or term. For context, this would amount to between 6 and 7 days of a 13-week term or around 19 days for a school year. This includes both authorised and unauthorised absences. 
+
+For the following analysis, a pupil is marked as having ever been persistently absent if they have missed over 10% of their possible sessions over the course of a school year, not a term.  
+
+It is worth noting that persistent absence can include various reasons for absence, including absence due to being suspended or permanently
+excluded.  
+
+Children who had been cautioned or sentenced for an offence were more likely to be persistently absent for any reason than the all-pupil cohort.  
+`r ever_flags$also_any_prop_count_PA`% of children who had been cautioned or sentenced for an offence had ever been persistently absent, compared to `r ever_flags$also_sv_count_PA`% of children who had been
+cautioned or sentenced for a serious violence offence. This compares to `r ever_flags$prop_count_PA`% of the pupil cohort.  
+
+```{r Absence chart, echo=FALSE, fig.cap="Proportion of all pupils who had ever been persistently absent or persistently absent (unauthorised other) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/114 and 2014/15. [Source: DfE-MoJ data share]"}
+Absence_chart
+```
+
+Looking at the proportion of the persistently absent pupils who had ever been cautioned or sentenced for an offence: `r ever_flags$any_prop_count_PA`% of persistently absent pupils had been cautioned or sentenced for an offence, compared to `r ever_flags$any_prop_count_PA`% who had been cautioned or sentenced for a serious violence offence. Therefore, whilst it can be said that the majority of children who had been cautioned or sentenced for an offence had ever been persistently absent, it is not the case that the majority of persistently absent pupils also been cautioned or sentenced for an offence.
+
+```{r PA waffle, echo=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+# set the plotting area into a 1*2 array
+par(mfrow=c(1,2)) 
+
+# Use grid.arrange to put plots in columns
+grid.arrange(PA_LHS_waffle, PA_RHS_waffle, ncol=2)
+```
+
+Schools use a set of national codes to record the reasons for any absences. As the rates of persistent absence are so high amongst the pupil cohort, below these codes are used to analyse the reasons why children are marked as persistently absent.
+
+The absence reason ‘persistent absence unauthorised other’ (PAUO) is used as a proxy for truancy. Looking at this reason code in isolation, `r ever_flags$any_prop_count_PAUO`% of children who had been cautioned or sentenced for an offence had ever been PAUO, compared to `r ever_flags$sv_prop_count_PAUO`% of children who had been cautioned or sentenced for a serious violence offence. This compares to `r ever_flags$prop_count_PAUO`% of the all-pupil cohort.  
+
+Another possible reason for absence is due to a suspension, where the pupil has been temporarily removed from the school, and in some cases
+permanent exclusion. If this reason code is removed from the calculation of persistent absence so as to avoid double counting, the proportions decrease slightly but follow the same pattern as above - `r ever_flags$any_prop_count_PA_without_E`% of children who had been cautioned or sentenced for an offence had ever been persistently absent, compared to `r ever_flags$SV_prop_count_PA_without_E`% of children who had been cautioned or sentenced for a serious violence offence. This compares to `r ever_flags$prop_count_PA_without_E`% of the all-pupil cohort.  
+
+Looking at persistently absent due to suspensions or permanent exclusions (PAE) in isolation, `r ever_flags$any_prop_count_PAE`% of children who had been cautioned or sentenced for an offence had ever been PAE (persistently absent due to suspensions or permanent exclusions), compared to `r ever_flags$sv_prop_count_PAE`% of children who had been cautioned or sentenced for a serious violence offence. This compares to `r ever_flags$prop_count_PAE`% of the all-pupil cohort.
+
+
+*Timing of PA and PAUO*  
+
+This analysis looks at children who had been cautioned or sentenced for a serious violence offence who had ever been flagged as persistently absent, and whether the first record of persistent absence occurred before, after or during the same school term as the first serious violence offence.  
+
+Almost all (`r Absence_timing$prop_PA_Before_SV`%) of children who had been cautioned or sentenced for a serious violence offence who had ever been recorded as persistently absent for any reason were first flagged as being so prior to their first serious violence offence. This compares to about (`r Absence_timing$prop_PAUO_Before_SV`%) of children had ever been recorded as persistently absent (unauthorised other).
+
+```{r Absence timing chart, echo=FALSE, fig.cap="Timing of first record of persistent absence or persistent absence (unauthorised other) relative to the timing of children's first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+Absence_timing_chart
+```
+
+```{r exclusions and suspensions, include=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+#Same excel tabs as FSM for "ever"
+
+#Excluded/suspended chart
+
+ExclSus_for_chart <- ever_flags %>%
+  select(prop_count_Sus, any_prop_count_Sus, sv_prop_count_Sus, prop_count_Excl, any_prop_count_Excl, sv_prop_count_Excl)
+
+ExclSus_for_chart <- t(ExclSus_for_chart) %>%
+  as.data.frame() %>%
+  mutate(`Pupil Group` = c('All pupils', 'Any offence', 'Serious Violence Offence', 'All pupils', 'Any offence', 'Serious Violence Offence')) %>%
+  mutate(`Excluded/Suspended` = c('Suspended', 'Suspended', 'Suspended', 'Permanently Excluded', 'Permanently Excluded', 'Permanently Excluded')) %>%
+  rename(`% suspended/permanently excluded` = 'V1')  
+
+ExclSus_chart <- ggplot(ExclSus_for_chart, aes(fill=`Pupil Group`, y=`% suspended/permanently excluded`, x=`Excluded/Suspended`)) + 
+  geom_bar(position='dodge', stat='identity') + labs(x="") +
+  theme(legend.position = "bottom")
+
+#First suspension chart
+first_sus_timing <- read_excel("170622_Dummy_data.xlsx", 
+                               sheet = 'First_sus_timing_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+first_sus_timing_for_chart <- first_sus_timing %>%
+  select(grouped_overall, prop_svfirst_all, prop_susfirst_all) %>%
+  pivot_longer(
+    cols = c(prop_svfirst_all, prop_susfirst_all),
+    names_to = ("Before_After") 
+  ) %>%
+  mutate(grouped_overall2 = c('I - 1 - 29 days', 'G - 1 - 29 days', 'J - 30 - 59 days', 'F - 30 - 59 days', 'K - 60 - 89 days',
+                              'E - 60 - 80 days', 'L - 90 - 179 days', 'D - 90 - 179 days', 'M - 180 -365 days', 'C - 180 -365 days',
+                              'B - 1 - 2 years', 'N - 1 - 2 years', 'O - Over 2 years', 'A - Over 2 years', 'H - On same day', 
+                             'Z - On same day')) %>%
+  arrange(grouped_overall2)
+
+first_sus_timing_for_chart <- first_sus_timing_for_chart[1:15,] %>%
+  select(-grouped_overall)
+
+first_sus_timing_chart <- ggplot(first_sus_timing_for_chart, aes(y=value, x=grouped_overall2)) + 
+  geom_bar(position='dodge', stat='identity') +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+  labs(x="", y="% with timing")
+
+#Closest suspension chart
+closest_sus_timing <- read_excel("170622_Dummy_data.xlsx", 
+                               sheet = 'Closest_sus_timing_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+closest_sus_timing_for_chart <- closest_sus_timing %>%
+  select(grouped_overall, prop_svfirst_all, prop_susfirst_all) %>%
+  pivot_longer(
+    cols = c(prop_svfirst_all, prop_susfirst_all),
+    names_to = ("Before_After") 
+  ) %>%
+  mutate(grouped_overall2 = c('I - 1 - 29 days', 'G - 1 - 29 days', 'J - 30 - 59 days', 'F - 30 - 59 days', 'K - 60 - 89 days',
+                              'E - 60 - 80 days', 'L - 90 - 179 days', 'D - 90 - 179 days', 'M - 180 -365 days', 'C - 180 -365 days',
+                              'B - 1 - 2 years', 'N - 1 - 2 years', 'O - Over 2 years', 'A - Over 2 years', 'H - On same day', 
+                              'Z - On same day')) %>%
+  arrange(grouped_overall2)
+
+closest_sus_timing_for_chart <- closest_sus_timing_for_chart[1:15,] %>%
+  select(-grouped_overall)
+
+closest_sus_timing_chart <- ggplot(closest_sus_timing_for_chart, aes(y=value, x=grouped_overall2)) + 
+  geom_bar(position='dodge', stat='identity') +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+  labs(x="", y="% with timing")
+
+#First exclusion chart
+first_excl_timing <- read_excel("170622_Dummy_data.xlsx", 
+                               sheet = 'First_excl_timing_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+first_excl_timing_for_chart <- first_excl_timing %>%
+  select(grouped_overall, prop_svfirst_all, prop_exclfirst_all) %>%
+  pivot_longer(
+    cols = c(prop_svfirst_all, prop_exclfirst_all),
+    names_to = ("Before_After") 
+  ) %>%
+  mutate(grouped_overall2 = c('I - 1 - 29 days', 'G - 1 - 29 days', 'J - 30 - 59 days', 'F - 30 - 59 days', 'K - 60 - 89 days',
+                              'E - 60 - 80 days', 'L - 90 - 179 days', 'D - 90 - 179 days', 'M - 180 -365 days', 'C - 180 -365 days',
+                              'B - 1 - 2 years', 'N - 1 - 2 years', 'O - Over 2 years', 'A - Over 2 years', 'H - On same day', 
+                              'Z - On same day')) %>%
+  arrange(grouped_overall2)
+
+first_excl_timing_chart <- ggplot(first_excl_timing_for_chart, aes(y=value, x=grouped_overall2)) + 
+  geom_bar(position='dodge', stat='identity') +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+  labs(x="", y="% with timing") 
+
+
+#Closest exclusion chart
+closest_excl_timing <- read_excel("170622_Dummy_data.xlsx", 
+                                 sheet = 'Closest_excl_timing_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+closest_excl_timing_for_chart <- closest_excl_timing %>%
+  select(grouped_overall, prop_svfirst_all, prop_exclfirst_all) %>%
+  pivot_longer(
+    cols = c(prop_svfirst_all, prop_exclfirst_all),
+    names_to = ("Before_After") 
+  ) %>%
+  mutate(grouped_overall2 = c('I - 1 - 29 days', 'G - 1 - 29 days', 'J - 30 - 59 days', 'F - 30 - 59 days', 'K - 60 - 89 days',
+                              'E - 60 - 80 days', 'L - 90 - 179 days', 'D - 90 - 179 days', 'M - 180 -365 days', 'C - 180 -365 days',
+                              'B - 1 - 2 years', 'N - 1 - 2 years', 'O - Over 2 years', 'A - Over 2 years', 'H - On same day', 
+                              'Z - On same day')) %>%
+  arrange(grouped_overall2)
+
+closest_excl_timing_chart <- ggplot(closest_excl_timing_for_chart, aes(y=value, x=grouped_overall2)) + 
+  geom_bar(position='dodge', stat='identity') +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+  labs(x="", y="% with timing") 
+
+#Excluded waffle
+
+Excl_for_waffle <- ever_flags %>%
+  select(sv_prop_count_Excl, also_sv_prop_count_Excl) %>%
+  mutate(sv_prop_count_Excl = round(sv_prop_count_Excl,0),
+         also_sv_prop_count_Excl = round(also_sv_prop_count_Excl,0),
+         non_sv_prop_count_Excl = 100 - sv_prop_count_Excl,
+         non_sv_also_prop_count_Excl = 100 - also_sv_prop_count_Excl)
+
+Excl_LHS <- Excl_for_waffle %>%
+  select(sv_prop_count_Excl, non_sv_prop_count_Excl)
+
+Excl_RHS <- Excl_for_waffle %>%
+  select(also_sv_prop_count_Excl, non_sv_also_prop_count_Excl)
+
+Excl_LHS_waffle <- waffle(Excl_LHS, rows=10, size=0.6, 
+                        colors=c("#00688B", "#838B83"), 
+                          title="Blue squares = % of children who were cautioned
+       or sentenced for a serious 
+       violence offence who had been permanently excluded",
+                        xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+Excl_RHS_waffle <- waffle(Excl_RHS, rows=10, size=0.6, 
+                        colors=c("#00688B", "#C1CDC1"), 
+                         title="Blue squares = % of those permanently excluded who were
+                          cautioned or sentenced for a
+                          serious violence offence", 
+                        xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+#Suspended waffle
+
+Sus_for_waffle <- ever_flags %>%
+  select(sv_prop_count_Sus, also_sv_prop_count_Sus) %>%
+  mutate(sv_prop_count_Sus = round(sv_prop_count_Sus,0),
+         also_sv_prop_count_Sus = round(also_sv_prop_count_Sus,0),
+         non_sv_prop_count_Sus = 100 - sv_prop_count_Sus,
+         non_sv_also_prop_count_Sus = 100 - also_sv_prop_count_Sus)
+
+Sus_LHS <- Sus_for_waffle %>%
+  select(sv_prop_count_Sus, non_sv_prop_count_Sus)
+
+Sus_RHS <- Sus_for_waffle %>%
+  select(also_sv_prop_count_Sus, non_sv_also_prop_count_Sus)
+
+Sus_LHS_waffle <- waffle(Sus_LHS, rows=10, size=0.6, 
+                          colors=c("#00688B", "#838B83"), 
+                          title="Blue squares = % of children who were cautioned
+       or sentenced for a serious 
+       violence offence who had been suspended", 
+                          xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+Sus_RHS_waffle <- waffle(Sus_RHS, rows=10, size=0.6, 
+                          colors=c("#00688B", "#C1CDC1"), 
+                         title="Blue squares = % of those suspended who were
+                          cautioned or sentenced for a
+                          serious violence offence",  
+                          xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+```
+
+**Suspensions and permanent exclusions**: 
+
+A suspension is where a pupil has been temporarily removed from the school, whilst a permanent exclusion is when a pupil is no longer allowed to attend a school.  
+
+Children who had been cautioned or sentenced for an offence were more likely to be both suspended and permanently excluded than the all-pupil cohort.  
+
+```{r ExclSus chart, echo=FALSE, fig.cap="The proportion of all pupils who had a record of being suspended or permanently excluded by offending and pupil group, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+ExclSus_chart
+```
+
+`r ever_flags$any_prop_count_Sus`% of all children who had been cautioned or sentenced for an offence had ever received a suspension, compared to children who had been cautioned or sentenced for a serious violence offence (`r ever_flags$sv_prop_count_Sus`%). This compares to `r ever_flags$prop_count_Sus`% of all pupils.  
+
+Considering the proportion of all suspended pupils who had also been cautioned or sentenced for an offence, `r ever_flags$also_any_prop_count_Sus`% of suspended pupils had ever
+been cautioned or sentenced for an offence, compared to `r ever_flags$also_SV_prop_count_Sus`% who had been cautioned or sentenced for a serious violence offence. This shows us that, whilst the majority of children cautioned or sentenced for offences had also been suspended, it is not the case that most suspended pupils are cautioned or sentenced for offences.  
+
+```{r Sus waffle, echo=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+# set the plotting area into a 1*2 array
+par(mfrow=c(1,2)) 
+
+# Use grid.arrange to put plots in columns
+grid.arrange(Sus_LHS_waffle, Sus_RHS_waffle, ncol=2)
+```
+
+Overall, `r ever_flags$any_prop_count_Excl`% of children who had been cautioned or sentenced for an offence had been permanently excluded, compared with `r ever_flags$sv_prop_count_Excl`% of children who had been cautioned or sentenced for a serious violence offence. This compares to `r ever_flags$prop_count_Excl`% of all pupils.  
+
+However, when looking at all children that had ever been permanently excluded, `r ever_flags$also_any_prop_count_Excl`% had ever been cautioned or sentenced for an offence, compared to `r ever_flags$also_sv_prop_count_Excl`% who had been cautioned or sentenced for a serious violence offence.  
+
+It can therefore be said that the majority of children who had been excluded had been cautioned or sentenced for any offence, but a smaller proportion had been cautioned or sentenced for a serious violence offence. 
+
+```{r Excl waffle, echo=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+# set the plotting area into a 1*2 array
+par(mfrow=c(1,2)) 
+
+# Use grid.arrange to put plots in columns
+grid.arrange(Excl_LHS_waffle, Excl_RHS_waffle, ncol=2)
+```
+
+*Timing of exclusions and suspensions*  
+
+The following analysis first investigates the sequencing of suspensions and permanent exclusions with serious violence offences. It looks at both the child’s first suspension or permanent exclusion and, in the case of multiple events, their closest suspension or permanent exclusion relative to their first serious violence offence.
+
+Did first suspensions / permanent exclusions commonly precede or follow first serious violence offences? 
+
+The majority of children who had been cautioned or sentenced for a serious violence offence who had received a suspension or permanent exclusion received their first suspension or permanent exclusion before the offence (`r sum(first_sus_timing$prop_susfirst_all)`% and `r sum(first_excl_timing$prop_susfirst_all)`% respectively).  
+
+```{r first_sus chart, echo=FALSE, fig.cap="Timing of children's first suspension relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share]"}
+first_sus_timing_chart  
+```
+
+```{r first_excl chart, echo=FALSE, fig.cap="Timing of children's first permanent exclusion relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share]"}
+first_excl_timing_chart  
+```
+
+Did the closest suspensions / permanent exclusions commonly precede or follow serious violence offences?  
+
+Similar to the first suspension or permanent exclusion seen above, the majority of children who had been cautioned or sentenced for a serious violence offence received their closest suspension or permanent exclusion before their first serious violence offence (`r sum(closest_sus_timing$prop_susfirst_all)`% and `r sum(closest_excl_timing$prop_susfirst_all)`% respectively).  
+
+```{r closest_sus chart, echo=FALSE, fig.cap="Timing of children's closest suspension relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share]"}
+closest_sus_timing_chart  
+```
+
+```{r closest_excl chart, echo=FALSE, fig.cap="Timing of children's closest permanent exclusion relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share]"}
+closest_excl_timing_chart  
+```
+
+```{r AP, include=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+#Same excel tabs as FSM for "ever"
+
+AP_for_chart <- ever_flags %>%
+  select(prop_count_AP, any_prop_count_AP, sv_prop_count_AP)
+
+AP_for_chart <- t(AP_for_chart) %>%
+  as.data.frame() %>%
+  mutate(`Pupil Group` = c('All pupils', 'Any offence', 'Serious Violence Offence')) %>%
+  rename(`% ever attended AP` = 'V1')  
+
+AP_chart <- ggplot(AP_for_chart, aes(y=`% ever attended AP`, x=`Pupil Group`)) +
+  ggplot2::geom_bar(aes(fill = `Pupil Group`),
+                    stat = "identity") +
+  theme(legend.position = "none") +
+  coord_flip() + labs(x="")
+
+#AP timing
+AP_timing <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'AP_timing_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+AP_timing_for_chart <- AP_timing %>%
+  select(prop_APSame_Term, prop_AP_Before_SV, prop_AP_After_SV)
+
+AP_timing_for_chart <- t(AP_timing_for_chart) %>%
+  as.data.frame() %>%
+  mutate(Timing = c('2 - In the same term as the first serious violence offence', '1 - Before the first serious violence offence',
+                          '3 - After the first serious violence offence')) %>%
+  rename(`% with AP timing` = 'V1') %>%
+  arrange(Timing)
+
+AP_timing_chart <- ggplot(AP_timing_for_chart, aes(x="", y=`% with AP timing`, fill = Timing)) +
+  geom_bar(position='stack', stat = "identity") +
+  coord_flip() +
+  geom_col() + 
+  labs(x = "", y="% with AP timing") +
+  theme(legend.position = "bottom")
+
+#AP waffle
+AP_for_waffle <- ever_flags %>%
+  select(sv_prop_count_AP, also_sv_prop_count_AP) %>%
+  mutate(sv_prop_count_AP = round(sv_prop_count_AP,0),
+         also_sv_prop_count_AP = round(also_sv_prop_count_AP,0),
+         non_sv_prop_count_AP = 100 - sv_prop_count_AP,
+         non_sv_also_prop_count_AP = 100 - also_sv_prop_count_AP)
+
+AP_LHS <- AP_for_waffle %>%
+  select(sv_prop_count_AP, non_sv_prop_count_AP)
+
+AP_RHS <- AP_for_waffle %>%
+  select(also_sv_prop_count_AP, non_sv_also_prop_count_AP)
+
+AP_LHS_waffle <- waffle(AP_LHS, rows=10, size=0.6, 
+                         colors=c("#00688B", "#838B83"), 
+                          title="Blue squares = % of children who were cautioned
+       or sentenced for a serious 
+       violence offence who had attended AP",  
+                         xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+AP_RHS_waffle <- waffle(AP_RHS, rows=10, size=0.6, 
+                         colors=c("#00688B", "#C1CDC1"), 
+                         title="Blue squares = % of those who had attended AP who were
+                          cautioned or sentenced for a
+                          serious violence offence",  
+                         xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+```
+
+**Alternative Provision**:  
+
+Alternative provision (AP) is full or part-time education arranged by:  
+
+a) local authorities, either directly or working with schools, for pupils who, because of permanent exclusion, illness or other reasons, would not otherwise receive suitable education.  
+
+b) schools for pupils to improve their behaviour off-site, or during a
+suspension  
+
+The education often takes place at a pupil referral unit (PRU), AP academy or free school, known collectively as the 'state place-funded AP' sector.  
+
+However, alternative provision placements can also be arranged in
+independent schools, FE colleges or unregistered education settings, known as the 'independent AP' sector. Some of the pupils identified in the data as attending independent and unregistered AP settings were registered in independent special schools named on their Education, Health and Care plans, some of which do not meet the Department for Education’s (DfE) statutory definition of AP.  
+
+Children who had been cautioned or sentenced for an offence were more likely to have attended both state and non-state funded AP.  
+
+```{r AP chart, echo=FALSE, fig.cap="The proportion of all pupils who had ever attended alternative provision by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/4 and 2014/15. [Source: DfE-MoJ data share]"}
+AP_chart
+```
+
+`r ever_flags$any_prop_count_AP`% of all children who had been cautioned or sentenced for an offence
+(approximately `r ever_flags$any_count_AP` children) had ever been registered at an AP setting, compared to `r ever_flags$SV_prop_count_AP`% of children who had been cautioned or sentenced for a serious violence offence (approximately `r ever_flags$SV_count_AP` children). This compares to only `r ever_flags$prop_count_AP`% of the total pupil cohort, which is approximately `r ever_flags$count_AP` children.  
+
+Looking only at the pupil cohort which had ever been registered at a state or non-state funded AP setting, `r ever_flags$also_any_prop_count_AP`% had ever been cautioned or sentenced for an offence. In addition, `r ever_flags$also_SV_prop_count_AP`% of those at any AP setting had ever been cautioned or sentenced for a serious violence offence.
+
+```{r AP waffle, echo=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+# set the plotting area into a 1*2 array
+par(mfrow=c(1,2)) 
+
+# Use grid.arrange to put plots in columns
+grid.arrange(AP_LHS_waffle, AP_RHS_waffle, ncol=2)
+```
+
+*Timing of AP in relation to offence*  
+
+Did the first term a child attended alternative provision (AP) commonly precede the first serious violence offence?  
+
+For children who had been cautioned or sentenced for a serious violence offence and also attended AP, `r AP_timing$prop_AP_Before_SV`% first attended AP before their first serious violence offence, `r AP_timing$prop_APSame_Term`% first attended AP during the same term as their first serious violence offence, and `r AP_timing$prop_AP_After_SV`% first attended AP after their first serious violence offence.  
+
+```{r AP timing chart, echo=FALSE, fig.cap="The first term children attended alternative provision (AP) relative to the timing of their first ofence, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+AP_timing_chart
+```
+
+```{r SEN, echo=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+SEN <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'SEN_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+#SEN chart
+SEN_for_chart <- SEN %>%
+  select(prop_EHCP_all, prop_EHCP_any, prop_EHCP_SV, prop_SEN_support_all, prop_SEN_support_any, prop_SEN_support_SV) %>%
+  mutate(prop_NoSEN_all = 100 - prop_EHCP_all - prop_SEN_support_all, prop_NoSEN_any = 100 - prop_EHCP_any - prop_SEN_support_any,
+         prop_NoSEN_SV = 100 - prop_EHCP_SV - prop_SEN_support_SV)
+
+SEN_for_chart <- t(SEN_for_chart) %>%
+  as.data.frame() %>%
+  mutate(Pupil_group = c('All pupils', 'Any offence', 'Serious Violence Offence', 'All pupils', 'Any offence', 'Serious Violence Offence', 'All pupils', 'Any offence', 'Serious Violence Offence')) %>%
+  mutate(`SEN type` = c('EHCP', 'EHCP', 'EHCP', 'SEN support', 'SEN support', 'SEN support', 'No identified SEN', 'No identified SEN', 'No identified SEN')) %>%
+  rename('perc_SEN' = 'V1')  
+
+SEN_chart <- ggplot(SEN_for_chart, aes(fill=`SEN type`, y=perc_SEN, x=Pupil_group)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  geom_col() + 
+  labs(x = "", y="% of SEN") +
+  theme(legend.position = "bottom")
+
+#SEN timing charts
+SEN_timing <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'SEN_timing_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+EHCP_timing <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'EHCP_timing_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+SEN_timing_for_chart <- SEN_timing %>%
+  select(prop_SENSame_Term, prop_SEN_Before_SV, prop_SEN_After_SV)
+
+SEN_timing_for_chart <- t(SEN_timing_for_chart) %>%
+  as.data.frame() %>%
+  mutate(Timing = c('2 - In the same term as the first serious violence offence', '1 - Before the first serious violence offence',
+                    '3 - After the first serious violence offence')) %>%
+  rename(`% with timing` = 'V1') %>%
+  arrange(Timing)
+
+SEN_timing_chart <- ggplot(SEN_timing_for_chart, aes(x= "", y= `% with timing`, fill = Timing)) +
+  geom_bar(position='stack', stat = "identity") +
+  coord_flip() +
+  geom_col() + 
+  labs(x = "", y="% with SEN timing") +
+  theme(legend.position = "bottom")
+
+EHCP_timing_for_chart <- EHCP_timing %>%
+  select(prop_EHCPSame_Term, prop_EHCP_Before_SV, prop_EHCP_After_SV)
+
+EHCP_timing_for_chart <- t(EHCP_timing_for_chart) %>%
+  as.data.frame() %>%
+  mutate(Timing = c('2 - In the same term as the first serious violence offence', '1 - Before the first serious violence offence',
+                    '3 - After the first serious violence offence')) %>%
+  rename(`% with timing` = 'V1') %>%
+  arrange(Timing)
+
+EHCP_timing_chart <- ggplot(EHCP_timing_for_chart, aes(x="", y=`% with timing`, fill = Timing)) +
+  geom_bar(position='stack', stat = "identity") +
+  coord_flip() +
+  geom_col() + 
+  labs(x = "", y="% with EHCP timing") +
+  theme(legend.position = "bottom")
+
+#SEN waffles
+
+SEN_support_for_waffle <- SEN %>%
+  select(prop_SEN_support_SV, prop_also_SEN_support_SV) %>%
+  mutate(prop_SEN_support_SV = round(prop_SEN_support_SV,0),
+         prop_also_SEN_support_SV = round(prop_also_SEN_support_SV,0),
+         non_SEN_support_SV = 100 - prop_SEN_support_SV,
+         non_prop_also_SEN_support_SV = 100 - prop_also_SEN_support_SV)
+
+SEN_support_LHS <- SEN_support_for_waffle %>%
+  select(prop_SEN_support_SV, non_SEN_support_SV)
+
+SEN_support_RHS <- SEN_support_for_waffle %>%
+  select(prop_also_SEN_support_SV, non_prop_also_SEN_support_SV)
+
+SEN_support_LHS_waffle <- waffle(SEN_support_LHS, rows=10, size=0.6, 
+                        colors=c("#00688B", "#838B83"), 
+                          title="Blue squares = % of children who were cautioned
+       or sentenced for a serious 
+       violence offence who had ever had SEN support",  
+                        xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+SEN_support_RHS_waffle <- waffle(SEN_support_RHS, rows=10, size=0.6, 
+                        colors=c("#00688B", "#C1CDC1"), 
+                         title="Blue squares = % of those who ever had SEN support who were
+                          cautioned or sentenced for a
+                          serious violence offence", 
+                        xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+EHCP_for_waffle <- SEN %>%
+  select(prop_EHCP_SV, prop_also_EHCP_SV) %>%
+  mutate(prop_EHCP_SV = round(prop_EHCP_SV,0),
+         prop_also_EHCP_SV = round(prop_also_EHCP_SV,0),
+         non_EHCP_SV = 100 - prop_EHCP_SV,
+         non_prop_also_EHCP_SV = 100 - prop_also_EHCP_SV)
+
+EHCP_LHS <- EHCP_for_waffle %>%
+  select(prop_EHCP_SV, non_EHCP_SV)
+
+EHCP_RHS <- EHCP_for_waffle %>%
+  select(prop_also_EHCP_SV, non_prop_also_EHCP_SV)
+
+EHCP_LHS_waffle <- waffle(EHCP_LHS, rows=10, size=0.6, 
+                        colors=c("#00688B", "#838B83"), 
+                          title="Blue squares = % of children who were cautioned
+       or sentenced for a serious 
+       violence offence who had ever had an EHC plan", 
+                        xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+EHCP_RHS_waffle <- waffle(EHCP_RHS, rows=10, size=0.6, 
+                        colors=c("#00688B", "#C1CDC1"), 
+                         title="Blue squares = % of those who ever had an EHC plan who were
+                          cautioned or sentenced for a
+                          serious violence offence",  
+                        xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+#SEN types
+
+SEN_types_all <- SEN %>%
+  select(prop_SPLD_all, prop_MLD_all, prop_SLD_all, prop_PMLD_all, prop_SLCN_all, prop_HI_all, prop_VI_all, prop_MSI_all, prop_PD_all, prop_ASD_all, prop_OTH_all, prop_SEMH_all, prop_NSA_all)
+
+SEN_types_all <- t(SEN_types_all) %>%
+  as.data.frame() %>%
+  mutate(SEN_type = c('SPLD', 'MLD', 'SLD', 'PMLD', 'SLCN', 'HI', 'VI', 'MSI', 'PD', 'ASD', 'OTH', 'SEMH', 'NSA')) %>%
+  rename('perc_SEN_type' = 'V1')  
+
+SEN_types_any <- SEN %>%
+  select(prop_SPLD_any, prop_MLD_any, prop_SLD_any, prop_PMLD_any, prop_SLCN_any, prop_HI_any, prop_VI_any, prop_MSI_any, prop_PD_any, prop_ASD_any, prop_OTH_any, prop_SEMH_any, prop_NSA_any,)
+
+SEN_types_any <- t(SEN_types_any) %>%
+  as.data.frame() %>%
+  mutate(SEN_type = c('SPLD', 'MLD', 'SLD', 'PMLD', 'SLCN', 'HI', 'VI', 'MSI', 'PD', 'ASD', 'OTH', 'SEMH', 'NSA')) %>%
+  rename('perc_SEN_type' = 'V1')  
+
+SEN_types_SV <- SEN %>%
+  select(prop_SPLD_SV, prop_MLD_SV, prop_SLD_SV, prop_PMLD_SV, prop_SLCN_SV, prop_HI_SV, prop_VI_SV, prop_MSI_SV, prop_PD_SV, prop_ASD_SV, prop_OTH_SV, prop_SEMH_SV, prop_NSA_SV)
+
+SEN_types_SV <- t(SEN_types_SV) %>%
+  as.data.frame() %>%
+  mutate(SEN_type = c('SPLD', 'MLD', 'SLD', 'PMLD', 'SLCN', 'HI', 'VI', 'MSI', 'PD', 'ASD', 'OTH', 'SEMH', 'NSA')) %>%
+  rename('perc_SEN_type' = 'V1')  
+
+#SEMH timing
+SEMH_timing <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'SEMH_timing_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+SEMH_timing_for_chart <- SEMH_timing %>%
+  select(prop_SEMH_Before_SV, prop_SEMHSame_Term, prop_SEMH_After_SV)
+  
+SEMH_timing_for_chart <- t(SEMH_timing_for_chart) %>%
+  as.data.frame() %>%
+  mutate(Timing = c('1 - Before the first serious violence offence', '2 - In the same term as the first serious violence offence', '3 - After the first serious violence offence')) %>%
+  rename(`% with timing` = 'V1')
+
+SEMH_timing_chart <- ggplot(SEMH_timing_for_chart, aes(x="", y=`% with timing`, fill = Timing)) +
+  geom_bar(position='stack', stat = "identity") +
+  coord_flip() +
+  geom_col() + 
+  labs(x = "", y="% with SEMH timing") +
+  theme(legend.position = "bottom")
+```
+
+**Special Educational Needs**:  
+
+This analysis looks at the proportion of children who had been cautioned or sentenced for an offence who were ever recorded as having Special Educational Needs (SEN).  
+
+A child or young person has SEN if they have a learning difficulty or disability which calls for special educational provision to be made for them.  
+Most children with SEN will have their needs met by their education setting with no additional funding from the local authority (‘SEN support’, whilst others may undergo a formal assessment resulting in an Education, Health and Care plan (EHC plan) if they are assessed as having a complex need that requires additional provision. It is important to note that this analysis only covers children who have identified SEN, and some children will have unidentified needs and therefore relevant support will not have been put in place.  
+
+Children who had been cautioned or sentenced for an offence were more likely to be recorded as having SEN (either with SEN support and with an EHC plan) than the all-pupil cohort.  
+
+```{r SEN chart, echo=FALSE, fig.cap="Special Educational Needs (SEN) of all pupils by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+SEN_chart
+```
+
+Of children who had been cautioned or sentenced for an offence, `r SEN$prop_SEN_any`% had ever had SEN (approximately `r SEN$SEN_any` children), compared to `r SEN$prop_SEN_SV`% of children who had been cautioned or sentenced for a serious violence offence (approximately `r SEN$SEN_SV` children). The corresponding proportion is lower for the all-pupil cohort at `r SEN$prop_SEN_all`%, which is approximately `r SEN$SEN_all` children.    
+Of children who had been cautioned or sentenced for any offence, `r SEN$prop_EHCP_any`% had ever had an EHC plan (approximately `r SEN$EHCP_any` children), compared to `r SEN$prop_EHCP_SV`% of children who had been cautioned or sentenced for a serious violence offence (approximately `r SEN$EHCP_SV` children). The corresponding proportion of the all-pupil cohort with an EHC plan is lower at `r SEN$prop_EHCP_all`%, which is approximately `r SEN$EHCP_all` children.  
+
+```{r SEN support waffle, echo=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+# set the plotting area into a 1*2 array
+par(mfrow=c(1,2)) 
+
+# Use grid.arrange to put plots in columns
+grid.arrange(SEN_support_LHS_waffle, SEN_support_RHS_waffle, ncol=2)
+```
+
+`r SEN$prop_SEN_support_SV`% of children who had been cautioned or sentenced for a serious violence offence had ever had SEN support, however only `r SEN$prop_also_SEN_support_SV`% of children who had ever had SEN support were children who were cautioned or sentenced for a serious violence offence. A lower proportion of children who had been cautioned or sentenced for a serious violence offence had ever had an EHC plan (`r SEN$prop_EHCP_SV`%) compared to SEN support. When looking at children who had ever had an EHC plan, `r SEN$prop_also_EHCP_SV`% were children who were cautioned or sentenced for a serious violence offence.  
+
+```{r EHCP waffle, echo=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+# set the plotting area into a 1*2 array
+par(mfrow=c(1,2)) 
+
+# Use grid.arrange to put plots in columns
+grid.arrange(EHCP_LHS_waffle, EHCP_RHS_waffle, ncol=2)
+```
+
+*Types of SEN*
+
+For this analysis, both primary and secondary SEN type have been considered when exploring types of SEN.  
+
+The most prevalent type of SEN amongst children who had been cautioned or sentenced for an offence and went to school in `r SEN$SCHOOL_LA` was `r SEN_types_any$SEN_type[which.max(SEN_types_any$perc_SEN_type)]`.  
+
+`r max(SEN_types_any$perc_SEN_type)`% of children who had been cautioned or sentenced for an offence were recorded with `r SEN_types_any$SEN_type[which.max(SEN_types_any$perc_SEN_type)]`, compared to `r max(SEN_types_SV$perc_SEN_type)`% of
+children who had been cautioned or sentenced for a serious violence offence. The corresponding all-pupil
+cohort was `r max(SEN_types_all$perc_SEN_type)`%.   
+
+*Timing of SEN*  
+
+Did a child being identified as SEN commonly precede the first serious violence offence?  
+
+For children who had been cautioned or sentenced for a serious violence offence and also had an EHC plan, `r EHCP_timing$prop_EHCP_Before_SV`% first had an EHC plan before their first serious violence offence. `r EHCP_timing$prop_EHCPSame_Term`% first had an EHC plan during the same term as their first serious violence offence, and `r EHCP_timing$prop_EHCP_After_SV`% first had an EHC plan after their first serious violence offence.  
+
+```{r EHCP timing chart, echo=FALSE, fig.cap="The first term children had an EHC plan, relative to the timing of their first serious violence offence,for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+EHCP_timing_chart
+```
+
+For children who had been cautioned or sentenced for a serious violence offence and had ever had SEN (either with or without an EHCP), `r SEN_timing$prop_SEN_Before_SV`% first had SEN before their first serious violence offence. `r SEN_timing$prop_SENSame_Term`% first had SEN during the same term as their first serious violence offence, and `r SEN_timing$prop_SEN_After_SV`% first had SEN after their first serious violence offence. 
+
+```{r SEN timing chart, echo=FALSE, fig.cap="The first term children had SEN support, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+SEN_timing_chart
+```
+
+*Timing of SEMH*
+
+As SEMH is consistently the most common SEN type amongst children who have been cautioned or sentenced for an offence, further analysis has been carried out on the timing of SEMH.  
+
+For children who had been cautioned or sentenced for a serious violence offence and had ever had SEMH (either with or without an EHCP), `r SEMH_timing$prop_SEMH_Before_SV`% first had SEMH before their first serious violence offence. `r SEMH_timing$prop_SSEMHSame_Term`% first had SEMH during the same term as their first serious violence offence, and `r SEMH_timing$prop_SEMH_After_SV`% first had SEMH after their first serious violence offence.  
+
+```{r SEMH timing chart, echo=FALSE, fig.cap="The first term children had SEMH, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+SEMH_timing_chart
+```
+
+```{r CSC, echo=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+CSC <- read_excel("170622_Dummy_data.xlsx", 
+                    sheet = 'CiN_CLA_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+CSC_for_chart <- CSC %>%
+  select(propcount_CIN, propany_count_CIN, propsv_count_CIN, propcount_CLA, propany_count_CLA, propsv_count_CLA)
+
+CSC_for_chart <- t(CSC_for_chart) %>%
+  as.data.frame() %>%
+  mutate(`Pupil Group` = c('All pupils', 'Any offence', 'Serious Violence Offence', 'All pupils', 'Any offence', 'Serious Violence Offence')) %>%
+  mutate(CSC_type = c('Children in need', 'Children in need', 'Children in need', 'Children who are looked after', 'Children who are looked after', 'Children who are looked after')) %>%
+  rename(`% recorded as CIN/CLA` = 'V1')  
+
+CSC_chart <- ggplot(CSC_for_chart, aes(fill=`Pupil Group`, y=`% recorded as CIN/CLA`, x=CSC_type)) + 
+  geom_bar(position='dodge', stat='identity') + labs(x="") +
+  theme(legend.position = "bottom")
+
+#CSC timing
+CSC_timing <- read_excel("170622_Dummy_data.xlsx", 
+                         sheet = 'CSC_timing_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+CLA_timing <- read_excel("170622_Dummy_data.xlsx", 
+                         sheet = 'CLA_timing_sclLA(SAFE)') %>%
+  filter(SCHOOL_LA == i)
+
+CSC_timing_for_chart <- CSC_timing %>%
+  select(prop_CINP_Before_SV, prop_CINPSame_Term, prop_CINP_After_SV,
+         prop_CPP_Before_SV, prop_CPPSame_Term, prop_CPP_After_SV)
+
+CLA_timing_for_chart <- CLA_timing %>%
+  select(prop_CLA_Before_SV, prop_CLASame_Term, prop_CLA_After_SV)
+
+CSC_timing_for_chart <- cbind(CSC_timing_for_chart, CLA_timing_for_chart)
+
+CSC_timing_for_chart <- t(CSC_timing_for_chart) %>%
+  as.data.frame() %>%
+  mutate(CSC_type = c('CIN', 'CIN', 'CIN', 'CPP', 'CPP', 'CPP', 'CLA', 'CLA', 'CLA')) %>%
+  mutate(Timing = c('1 - Before the first serious violence offence', '2 - In the same term as the first serious violence offence',
+                    '3 - After the first serious violence offence', '1 - Before the first serious violence offence',
+                    '2 - In the same term as the first serious violence offence', '3 - After the first serious violence offence',
+                    '1 - Before the first serious violence offence', '2 - In the same term as the first serious violence offence',
+                    '3 - After the first serious violence offence')) %>%
+  rename(`% with timing` = 'V1')
+
+CSC_timing_chart <- ggplot(CSC_timing_for_chart, aes(x=CSC_type, y=`% with timing`, fill = Timing)) +
+  geom_bar(position='stack', stat = "identity") +
+  coord_flip() +
+  geom_col() + 
+  labs(x = "", y="% with CSC timing") + labs(x="") +
+  theme(legend.position = "bottom")
+
+#CIN waffles
+
+CIN_for_waffle <- CSC %>%
+  select(propsv_count_CIN, also_propsv_count_CIN) %>%
+  mutate(propsv_count_CIN = round(propsv_count_CIN,0),
+         also_propsv_count_CIN = round(also_propsv_count_CIN,0),
+         non_propsv_count_CIN = 100 - propsv_count_CIN,
+         non_also_propsv_count_CIN = 100 - also_propsv_count_CIN)
+
+CIN_LHS <- CIN_for_waffle %>%
+  select(propsv_count_CIN, non_propsv_count_CIN)
+
+CIN_RHS <- CIN_for_waffle %>%
+  select(also_propsv_count_CIN, non_also_propsv_count_CIN)
+
+CIN_LHS_waffle <- waffle(CIN_LHS, rows=10, size=0.3, 
+                         colors=c("#00688B", "#838B83"), 
+                         title="Blue squares = % of children who were cautioned
+       or sentenced for a serious 
+       violence offence who had ever been CIN", 
+                         xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+CIN_RHS_waffle <- waffle(CIN_RHS, rows=10, size=0.3, 
+                         colors=c("#00688B", "#C1CDC1"), 
+                         title="Blue squares = % of those who had ever been CIN who were
+                          cautioned or sentenced for a
+                          serious violence offence", 
+                         xlab="1 square = 1 %") +
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(size = 8)) 
+
+```
+
+**Children with a Social Worker**:  
+
+The next set of findings look at the proportion of children who had been cautioned or sentenced for an offence that were recorded as being children in need (CIN) or children who are looked after (CLA) on 31st March in any given year, as defined by the Children Act 1989, between 2011/12 – 2017/18 for CIN, and 2005/06 - 2017/18 for CLA. CIN here refers to children who are
+designated under a number of different social care classifications: children on a child in need plan; children on a child protection plan; and children who are looked after. As such, CLA figures are included in the figures for CIN. Since the CIN and CLA data cover different time periods, and CIN includes CLA for some of the same period, comparisons of CIN to CLA should be made with caution. To maximise coverage of the CIN data and avoid skewed results, the following analysis is based on children matched to KS4 academic year 2014/15 only.  
+
+When reading the findings related to children looked after (CLA), it is
+important to note that the introduction of the Legal Aid, Sentencing and Punishment of Offenders Act 2012 (LASPOA) meant that, from 3rd December 2012, children up to the age of 18 who are remanded to youth detention accommodation as a result of being charged with or convicted of an offence will be ‘looked after’ by the designated local authority. Therefore, caution should be taken when considering the findings related to CLA and offending, as the child may have become CLA due to the offending.    
+
+Overall, children who had been cautioned or sentenced for an offence were more likely to have been both CIN and CLA than the all-pupil cohort.    
+`r CSC$propany_count_CIN`% of children who had been cautioned or sentenced for an offence were
+children in need on the 31st March in any given year when aged between 12 and 16, compared with `r CSC$propsv_count_CIN`% of children who had been cautioned or
+sentenced for a serious violence offence and `r CSC$prop_countCIN`% of the all-pupil cohort.
+`r CSC$propany_count_CLA`% of children who had been cautioned or sentenced for an offence were CLA on the 31st March in any given year when aged between 6 and 16,
+compared with `r CSC$propsv_count_CLA`% of children who had been cautioned or sentenced for a serious violence offence. This compares to `r CSC$propcount_CLA`% of the all-pupil cohort.  
+
+```{r CSC chart, echo=FALSE, fig.cap="The proportion of children who had been recorded as being CIN/CLA on 31st March in any given years, by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+CSC_chart
+```
+
+Looking at the CIN and CLA cohorts, `r CSC$also_propsv_count_CIN`% of those who were CIN, and `r CSC$also_propsv_count_CLA`% of those who were CLA, on 31st March in any given year had ever also been
+cautioned or sentenced for a serious violence offence. Meaning that, although high proportions of the children who had been cautioned or sentenced for a serious violence offence had been CIN or CLA, it is not the case that most CIN or CLA are also cautioned or sentenced for a serious violence offence.
+
+```{r CIN support waffle, echo=FALSE, fig.cap="[Source: DfE-MoJ data share]"}
+# set the plotting area into a 1*2 array
+par(mfrow=c(1,2)) 
+
+# Use grid.arrange to put plots in columns
+grid.arrange(CIN_LHS_waffle, CIN_RHS_waffle, ncol=2)
+```
+
+*Timing of CiN/CLA in relation to offence*  
+
+Did the first record of a child being known to children’s social care
+commonly precede the first serious violence offence?  
+
+The focus of this analysis is to understand the sequencing of a child’s journey between different social care groups relative to the interaction(s) with the criminal justice system they may have had. It looks at children who had been cautioned or sentenced for a serious violence offence and whether their first record of being a child in need, a child on a child protection plan, and/or a
+child being looked after occurred before, after or during the same school term as their first serious violence offence (for those recorded as CIN, including CLA, as defined by the Children Act 1989, at any point in a given school term
+between 2011/12 – 2017/18 for CIN, and 2004/05 - 2017/18 for CLA). 
+
+The analysis uses the following three definitions:  
+
+a) Children in need (CIN) – children who are designated under a number of different social care classifications: children on a child in need plan; children on a child protection plan; and children who are looked after.  
+
+b) Children on a child protection plan (CPP) - support for a child where there is reasonable suspicion that child is suffering, or likely to suffer, significant harm.  
+
+c) Children who are looked after (CLA) – a child who is looked after by a local authority if they fall into one of the following: is provided with accommodation, for a continuous period of more than 24 hours (Children Act 1989, Section 20 and 21); is subject to a care order (Children Act 1989, Part IV), or is subject to a placement order. The analysis has not analysed children on a child in need plan (CINP) separately, but rather have looked at all children in need, and the two categories of highest intervention.  
+
+The analysis presented here utilises a different dataset to that used in Section 1 of this publication, enabling more granular examination of those recorded in the children’s social care system at any point during the year, not just on 31st March, and to look at changes in their social care group throughout the year. To maximise coverage of the CIN data and avoid skewed results, the following analysis is based on children matched to KS4 academic year 2014/15 only.  
+
+Children who had been cautioned or sentenced for a serious violence offence have been classified here as being CIN, CPP or CLA in an academic term, if at any point in that term they have been recorded as CIN, CPP or CLA.  
+
+From 3rd December 2012, children who were remanded to youth detention accommodation were recorded as CLA by the designated local authority.  
+
+This should be taken into consideration when considering the first record of a child who is looked after relative to the first serious violence offence as there will be a proportion of children who had not been previously CLA who were remanded for a serious violence offence, and therefore would have become automatically looked after. This could skew the results seen below as the analysis has not differentiated between children whose first record of being looked after resulted from the criteria listed above, or if they became looked after for other reasons.  
+
+`r CSC_timing$prop_CINP_Before_SV`% of children who had been cautioned or sentenced for a serious violence offence and were also recorded as a child in need were recorded as a child in need before their first serious violence offence. For CPP and CLA, the percentages were `r CSC_timing$prop_CPP_Before_SV`% and `r CLA_timing$prop_CLA_Before_SV`% respectively.  
+
+```{r CSC timing chart, echo=FALSE, fig.cap="The first record of children being a child in need, having a child protection plan or being a child who was looked after, relaitve to the timing of their first first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share]"}
+CSC_timing_chart
+```
+
+**About this publication**:   
+
+Department for Education enquiries hop.statistics@education.gov.uk  
+Ministry of Justice enquiries statistics.enquiries@justice.gov.uk  
+download www.gov.uk/government/publications
+
+
