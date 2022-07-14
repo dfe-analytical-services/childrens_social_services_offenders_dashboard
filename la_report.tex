@@ -1,0 +1,204 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{graphics}
+\usepackage{expl3}
+\usepackage{xparse}
+\usepackage{tcolorbox}
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage{wrapfig}
+\usepackage{helvet}
+\usepackage{sectsty}
+\usepackage{fancyhdr}
+\usepackage{xpatch}
+\pagestyle{fancy}
+\definecolor{gssmidblue}{RGB}{32, 115, 188}
+\definecolor{dfeheadingblue}{RGB}{16, 79, 117}
+\renewcommand{\familydefault}{\sfdefault}
+\allsectionsfont{\color{dfeheadingblue}}
+\sectionfont{\color{dfeheadingblue}\fontsize{24}{30}\selectfont}
+\fancyhead[C]{*** Note that this is a draft document and does not contain genuine data ***}
+\fancyhead[L,R]{}
+\fancyfoot[R]{\nouppercase{\emph{\rightmark}}}
+\fancyfoot[L]{\nouppercase{\emph{\leftmark}}}
+\fancyfoot[C] {}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{2pt}
+\futurelet\TMPfootrule\def\footrule{{\color{gssmidblue}\TMPfootrule}}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+read(``../data\_file'')
+
+\includegraphics[width=0.25\linewidth]{"images/Department_for_Education.png"}
+\vspace{2.4cm}
+
+\hypertarget{childrens-social-services-and-offenders-statistics-for-gateshead}{%
+\section{Children's Social Services and Offenders Statistics for
+Gateshead}\label{childrens-social-services-and-offenders-statistics-for-gateshead}}
+
+\vspace{3.2cm}
+\vspace*{\fill}
+\color{dfeheadingblue}{\hrule}
+\color{black}
+
+\hypertarget{introduction}{%
+\subsection{Introduction}\label{introduction}}
+
+This document presents data for Gateshead\ldots{}
+
+\vspace{12pt}
+
+\makebox[1.00\linewidth]{
+\centering
+\begin{tcolorbox}[colback=gssmidblue,
+ leftright skip=0.1cm,
+ coltext=white,
+ halign=left,
+ fontupper={\Huge \bfseries},
+ fontlower={\large \bfseries},
+ sharp corners,
+ colframe=gssmidblue,
+ width=0.49\linewidth,
+ boxrule=0pt,
+ equal height group=introbox
+ ]
+1.23\%
+\tcblower
+Some precentage
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[colback=gssmidblue,
+ leftright skip=0.1cm,
+ coltext=white,
+ halign=left,
+ fontupper={\Huge \bfseries},
+ fontlower={\large \bfseries},
+ sharp corners,
+ colframe=gssmidblue,
+ width=0.49\linewidth,
+ boxrule=0pt,
+ equal height group=introbox
+ ]
+£43,500
+\tcblower
+An expenditure
+\end{tcolorbox}
+}
+
+\newpage
+
+\vspace*{\fill}
+\color{dfeheadingblue}{\hrule}
+\color{black}
+
+\hypertarget{contact}{%
+\subsection{Contact}\label{contact}}
+
+\begin{quote}
+Pupil place planning team
+
+Publication:
+\href{https://explore-education-statistics.service.gov.uk/find-statistics/}{This
+is where to find the host publication}
+
+Dashboard:
+\href{https://department-for-education.shinyapps.io/childrens_social_services_offenders_dashboard}{Link
+to dashboard}
+
+Email:
+\href{mailto:\%3Cteam.address\%3E@education.gov.uk}{team.address@education.gov.uk}
+
+This document was produced using the
+\href{https://github.com/dfe-analytical-services}{DfE Analytical
+Services} Rmarkdown template, which is available on GitHub as part of
+our
+\href{https://github.com/dfe-analytical-services/shiny-template}{R-Shiny
+data dashboard template}.
+\end{quote}
+
+\href{https://www.gov.uk/government/organisations/department-for-education}{\includegraphics[width=0.50\linewidth]{"images/Department_for_Education_long.png"}}
+
+\end{document}
