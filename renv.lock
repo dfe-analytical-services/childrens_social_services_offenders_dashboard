@@ -501,6 +501,19 @@
         "tibble"
       ]
     },
+    "formattable": {
+      "Package": "formattable",
+      "Version": "0.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "870d6d5d39b23923d0c816f904075b4c",
+      "Requirements": [
+        "htmltools",
+        "htmlwidgets",
+        "knitr",
+        "rmarkdown"
+      ]
+    },
     "fs": {
       "Package": "fs",
       "Version": "1.5.2",

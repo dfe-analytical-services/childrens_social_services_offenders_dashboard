@@ -2,9 +2,13 @@
 params:
   input_la_choice: Wokingham
   input_phase_choice: Secondary
+title: "Education, children's social care and offending, descriptive statistics: a focus on `r params$input_la_choice`"
+author: "Department for Education"
 header-includes:
 - \usepackage{graphics}
 - \usepackage{xparse}
+- \usepackage{moresize}
+- \usepackage{setspace}
 - \usepackage{tcolorbox}
 - \usepackage{wrapfig}
 - \usepackage{helvet}
@@ -12,30 +16,52 @@ header-includes:
 - \usepackage{fancyhdr}
 - \usepackage{xpatch}
 - \usepackage{booktabs}
+- \onehalfspacing
 - \pagestyle{fancy}
 - \definecolor{gssmidblue}{RGB}{32, 115, 188}
 - \definecolor{dfeheadingblue}{RGB}{16, 79, 117}
 - \renewcommand{\familydefault}{\sfdefault}
 - \allsectionsfont{\color{dfeheadingblue}}
-- \sectionfont{\color{dfeheadingblue}\fontsize{24}{30}\selectfont}
+- \sectionfont{\color{dfeheadingblue}\fontsize{16}{18}\selectfont}
 - \fancyhead[C]{}
 - \fancyhead[L]{\nouppercase{\emph{\leftmark}}}
 - \fancyhead[R]{}
 - \fancyfoot[R]{\nouppercase{\emph{\rightmark}}}
 - \fancyfoot[L]{}
 - \renewcommand{\headrulewidth}{0pt}
-- \renewcommand{\footrulewidth}{2pt}
+- \renewcommand{\footrulewidth}{0pt}
 - \futurelet\TMPfootrule\def\footrule{{\color{gssmidblue}\TMPfootrule}}
 - \usepackage{floatrow}
 - \floatsetup[figure]{capposition=top}
+- \usepackage[titles]{tocloft}
+- \renewcommand{\cftdot}{}
+- \AtBeginDocument{\let\maketitle\relax}
+- \usepackage{cellspace}
+- \usepackage{etoolbox}
+- \colorlet{headercolour}{DarkSeaGreen}
+
 output:
   pdf_document:
     df_print: paged
     toc: true
+    includes:
+      before_body: title.sty
 urlcolor: blue
 fontsize: 12pt
 ---
-  
+
+```{r write title page, include=FALSE}
+connTitle <- file("title.sty")
+writeLines(c("\\resizebox{48mm}{!}{\\includegraphics{images/Department_for_Education.png}}\n",
+             "\\vspace*{0.24\\textheight}\n",
+             "\\HUGE{\\color{dfeheadingblue}\\textbf{Education, children's social care and offending, descriptive statistics}} \n", 
+             paste0("\\Huge{\\color{dfeheadingblue}\\textbf{A focus on ",params$input_la_choice,"}}"),
+             "\\vspace*{2\\baselineskip} \n",
+             "\\normalsize \n \\newpage \n"), connTitle)
+close(connTitle)
+```
+
+
 ```{r load packages, include=FALSE}
 library(readxl)
 library(tidyverse)
@@ -67,6 +93,8 @@ i <- 'TlDJE'
 `%!in%` <- Negate(`%in%`)
 ```
 
+
+
 ```{r intro, include=FALSE}
 offender_counts_school <- read_excel("170622_Dummy_data.xlsx", 
                                      sheet = 'No_pupils_sclLA(SAFE)') %>%
@@ -86,19 +114,13 @@ ever_flags_no_star <- read_excel("170622_Dummy_data.xlsx",
 
 ever_flags_no_star[ever_flags_no_star == '*'] <- '(suppressed)'
 ```
-\includegraphics[width=0.25\linewidth]{"images/Department_for_Education.png"}
-\vspace{2.4cm}
 
 
-# Education, children's social care and offending, descriptive statistics: a focus on `r offender_counts_school$SCHOOL_LA`
-\vspace{3.2cm}
-\vspace*{\fill}
-\color{dfeheadingblue}{\hrule}
 \color{black}
 
 \newpage
 
-## Executive Summary
+# Summary
 
 This analysis uses the Ministry of Justice and Department for Education data-share to look at the education and children's social care background of children who had been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA`. We focus on two main groups: children who had been cautioned or sentenced for any type of offence, and those who had been cautioned or sentenced for a serious violence offence. For the cohorts used in this analysis, there are approximately `r round(offender_counts_school$offenders, -1)` children who had attended school in `r offender_counts_school$SCHOOL_LA` and been cautioned or sentenced for any offence, equivalent to `r offender_counts_school$prop_off`% of the all-pupil cohort that had attended school in `r offender_counts_school$SCHOOL_LA`, and approximately `r round(offender_counts_school$sv, -1)` children who had attended school in `r offender_counts_school$SCHOOL_LA` and been cautioned or sentenced for a serious violence offence (equivalent to `r offender_counts_school$prop_sv`% of the all-pupil cohort).  
 
@@ -110,7 +132,7 @@ Equivalent analysis has been produced for each of the 10 SAFE areas, which will 
 
 \newpage
 
-## Introduction
+# Introduction
 
 This paper investigates the education and children's social care background of children who had been cautioned or sentenced for an offence and attended school in `r offender_counts_home$HOME_LA`, based on key variables from the Ministry of Justice and Department for Education data share which was undertaken in 2020. The share covers offending data up to the end of 2017 and education and social care data up to the end of academic year 2017/18.  
 
@@ -159,17 +181,22 @@ This publication will present statistics relating to the Local Authority (LA) of
 
 ```{r cohort table, echo=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
 cohort_table <-  data.frame(
-  'Academic Year' = c('2016/17', '2015/16', '2014/15', '2013/14', '2012/13', '2011/12', '2010/11', '2009/10', '2008/09', '2007/08', '2006/07', '2005/06', '2004/05', '2003/04', '2002/03'),
-  'KS4 Academic Year\n2014/15' = c("Year 13", "Year 12", "Year 11", "Year 10", "Year 9", "Year 8", "Year 7", "Year 6", "Year 5", "Year 4",
+  `Academic Year` = c('2016/17', '2015/16', '2014/15', '2013/14', '2012/13', '2011/12', '2010/11', '2009/10', '2008/09', '2007/08', '2006/07', '2005/06', '2004/05', '2003/04', '2002/03'),
+  `KS4 Academic Year 2014-15` = c("Year 13", "Year 12", "Year 11", "Year 10", "Year 9", "Year 8", "Year 7", "Year 6", "Year 5", "Year 4",
                                   "Year 3", "Year 2", "Year 1", "", ""),
-  'KS4 Academic Year\n2013/14' = c("", "Year 13", "Year 12", "Year 11", "Year 10", "Year 9", "Year 8", "Year 7", "Year 6", "Year 5", "Year 4",
+  `KS4 Academic Year 2013-14` = c("", "Year 13", "Year 12", "Year 11", "Year 10", "Year 9", "Year 8", "Year 7", "Year 6", "Year 5", "Year 4",
                                   "Year 3", "Year 2", "Year 1", ""),
-  'KS4 Academic Year\n2012/13' = c("", "", "Year 13", "Year 12", "Year 11", "Year 10", "Year 9", "Year 8", "Year 7", "Year 6", "Year 5", "Year 4",
+  `KS4 Academic Year 2012-13` = c("", "", "Year 13", "Year 12", "Year 11", "Year 10", "Year 9", "Year 8", "Year 7", "Year 6", "Year 5", "Year 4",
                                   "Year 3", "Year 2", "Year 1"),
   stringsAsFactors = FALSE
 )
 
-kable((cohort_table), col.names = gsub("[.]", " ", names(cohort_table)), caption = "Year group breakdown for the all-pupil cohort")
+kable((cohort_table), 
+      col.names = gsub(" 1","/1",gsub("Academic Year ","",gsub("[.]"," ",names(cohort_table)))), 
+      caption = "Year group breakdown for the all-pupil cohort",
+      format='latex') %>%
+  row_spec(0, bold = T, background = "#9FB9C8")
+
 ```
 
 The findings presented throughout this publication are the combined results of all three cohorts, with the exception of findings discussing:  
@@ -2294,23 +2321,29 @@ Children who had been cautioned or sentenced for a serious violence offence have
 `r if(CSC_timing_no_star$prop_CINP_Before_SV == "(suppressed)" | CSC_timing_no_star$prop_CPP_Before_SV == "(suppressed)" | CLA_timing_no_star$prop_CLA_Before_SV == "(suppressed)"){"*Results have been suppressed due to small numbers.*"}`
 
 \newpage
+\resizebox{48mm}{!}{\includegraphics{images/Department_for_Education.png}}
 \vspace*{\fill}
-\color{dfeheadingblue}{\hrule}
 \color{black}
-## Contact
+© Crown copyright 2022
 
-> Pupil place planning team
->
-  > Publication: [Explore Education Statistics: Local authority school places scorecards](https://explore-education-statistics.service.gov.uk/find-statistics/local-authority-school-places-scorecards)
->
-  > Department for Education enquiries:  [hop.statistics@education.gov.uk](hop.statistics@education.gov.uk)
->
-  > Ministry of Justice enquiries [statistics.enquiries@justice.gov.uk](statistics.enquiries@justice.gov.uk) 
->
-  > download www.gov.uk/government/publications
->
-  >
-  > This document was produced using the [DfE Analytical Services](https://github.com/dfe-analytical-services) Rmarkdown template, which is available on GitHub as part of our [R-Shiny data dashboard template](https://github.com/dfe-analytical-services/shiny-template).
+This publication (not including logos) is licensed under the terms of the Open Government Licence v3.0 except where otherwise stated. Where we have identified any third party copyright information you will need to obtain permission from the copyright holders concerned.
 
+To view this licence:
 
-[\includegraphics[width=0.50\linewidth]{"images/Department_for_Education_long.png"}](https://www.gov.uk/government/organisations/department-for-education)
+\begin{tabular}{p{0.02\linewidth} p{0.1\linewidth} p{0.88\linewidth}}
+& visit & www.nationalarchives.gov.uk/doc/open-government-licence/version/3 \\
+& email & psi@nationalarchives.gsi.gov.uk \\
+& write to & Information Policy Team, The National Archives, Kew, London, TW9 4DU \\
+\end{tabular}
+
+About this publication:
+
+\begin{tabular}{p{0.02\linewidth} p{0.1\linewidth} p{0.88\linewidth}}
+& enquiries & www.education.gov.uk/contactus \\
+& download & www.gov.uk/government/publications \\
+\end{tabular}
+
+\begin{tabular}{p{0.08\linewidth} p{0.24\linewidth} p{0.08\linewidth} p{0.36\linewidth}}
+& Follow us on Twitter: & & Like us on Facebook: \\
+& @educationgovuk & & facebook.com/educationgovuk \\
+\end{tabular}
