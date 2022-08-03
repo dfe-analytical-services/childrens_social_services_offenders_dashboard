@@ -1,10 +1,11 @@
 ---
 params:
-  input_la_choice: Wokingham
+  input_la_choice: Birmingham
   input_phase_choice: Secondary
 title: "Education, children's social care and offending, descriptive statistics: a focus on `r params$input_la_choice`"
 author: "Department for Education"
 header-includes:
+- \usepackage{longtable}
 - \usepackage{graphics}
 - \usepackage{xparse}
 - \usepackage{moresize}
@@ -54,8 +55,8 @@ fontsize: 12pt
 connTitle <- file("title.sty")
 writeLines(c("\\resizebox{48mm}{!}{\\includegraphics{images/Department_for_Education.png}}\n",
              "\\vspace*{0.24\\textheight}\n",
-             "\\HUGE{\\color{dfeheadingblue}\\textbf{Education, children's social care and offending, descriptive statistics}} \n", 
-             paste0("\\Huge{\\color{dfeheadingblue}\\textbf{A focus on ",params$input_la_choice,"}}"),
+             "\\Huge{\\color{dfeheadingblue}\\raggedright\\textbf{Education, children's social care and offending, descriptive statistics}} \n", 
+             paste0("\\huge{\\color{dfeheadingblue}\\textbf{A focus on ",params$input_la_choice,"}}"),
              "\\vspace*{2\\baselineskip} \n",
              "\\normalsize \n \\newpage \n"), connTitle)
 close(connTitle)
@@ -81,7 +82,19 @@ library(formattable)
 knitr::opts_knit$set(root.dir = './')
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 options(scipen=999)
-i <- 'TlDJE'
+i <- params$input_la_choice
+safe_LA <- c('TlDJE','ExbVO', 'zfPKp',
+             'uBH5D', 'EG67z', '9Hfya',
+             'lqSj6', 'antN5', 'aoCSR',
+             'aA5QM')
+
+i <- params$input_la_choice
+
+if (params$input_la_choice %in% safe_LA){
+  data_file <- "data/170622_Dummy_data.xlsx"
+} else {
+  data_file <- "data/130722_outputs_SAFE_suppressed_FINAL.xlsx"
+}
 
 #IFERROR function
  IFERROR <- function(code, silent = FALSE) {
@@ -96,19 +109,19 @@ i <- 'TlDJE'
 
 
 ```{r intro, include=FALSE}
-offender_counts_school <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+offender_counts_school <- read_excel(data_file, 
                                      sheet = 'No_pupils_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-offender_counts_home <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+offender_counts_home <- read_excel(data_file, 
                                    sheet = 'No_pupils_hmLA(SAFE)') %>%
   filter(HOME_LA == i)
 
-ever_flags <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+ever_flags <- read_excel(data_file, 
                          sheet = 'Everflag_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-ever_flags_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+ever_flags_no_star <- read_excel(data_file, 
                          sheet = 'Everflag_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -332,21 +345,21 @@ It is important to note that this analysis will not be directly comparable with 
 referencing whether a child has 'ever' had a certain characteristic, the analysis considers all periods up to the end of KS4. This methodology may differ from that of other published statistics where, for example, only the previous six years are considered. For this reason, figures discussed here may appear higher than those available in other publications.  
 
 ```{r home vs school, include=FALSE}
-home_vs_school <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+home_vs_school <- read_excel(data_file, 
                              sheet = 'hm_with_dif_scl(SAFE)') %>%
   filter(HOME_LA == i)
 
-school_vs_home <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+school_vs_home <- read_excel(data_file, 
                              sheet = 'scl_with_dif_hm(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-school_vs_home_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+school_vs_home_no_star <- read_excel(data_file, 
                              sheet = 'scl_with_dif_hm(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
 school_vs_home_no_star[school_vs_home_no_star == '*'] <- '(number too small to report)'
 
-home_vs_school_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+home_vs_school_no_star <- read_excel(data_file, 
                              sheet = 'hm_with_dif_scl(SAFE)') %>%
   filter(HOME_LA == i)
 
@@ -418,7 +431,7 @@ home_school_chart
 \newpage
 
 ```{r previous offending, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-previous_offending <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+previous_offending <- read_excel(data_file, 
                                  sheet = 'previous_offence_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -474,7 +487,7 @@ previous_offending_chart
 ```
 
 ```{r gender, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-gender <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+gender <- read_excel(data_file, 
                      sheet = 'Gender_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -517,7 +530,7 @@ gender_chart
 
 ```{r age, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
 
-age <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+age <- read_excel(data_file, 
                   sheet = 'Age_first_offence_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -562,11 +575,11 @@ age_chart
 
 ```{r ethnicity, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
 
-ethnic_minor <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+ethnic_minor <- read_excel(data_file, 
                            sheet = 'Ethnicity_minor_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-ethnic_major <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+ethnic_major <- read_excel(data_file, 
                            sheet = 'Ethnicity_major_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -649,11 +662,11 @@ ethnic_major_chart
 
 ```{r FSM, include=FALSE, fig.dim = c(8, 6), fig.cap="[Source: DfE-MoJ data share, table: ...]"}
 
-ever_flags <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+ever_flags <- read_excel(data_file, 
                          sheet = 'Everflag_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-ever_flags_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+ever_flags_no_star <- read_excel(data_file, 
                          sheet = 'Everflag_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -764,7 +777,7 @@ grid.arrange(FSM_LHS_waffle, FSM_RHS_waffle, ncol=2, widths=c(1,2))
 ```
 
 ```{r attainment, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-KS4_attainment <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+KS4_attainment <- read_excel(data_file, 
                              sheet = 'KS4_attain_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -806,7 +819,7 @@ KS4_attainment_chart <- ggplot(KS4_attainment_for_chart, aes(fill=`Pupil Group`,
         legend.title=element_text(size=12)) #change font size of legend title 
 
 #KS2 chart
-KS2_attainment <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+KS2_attainment <- read_excel(data_file, 
                              sheet = 'KS2_attain_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -881,7 +894,7 @@ KS4_attainment_chart
 ```{r absence, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
 #Same excel tabs as FSM for "ever"
 
-Absence_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+Absence_timing <- read_excel(data_file, 
                              sheet = 'PAPAUO_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1117,7 +1130,7 @@ ExclSus_chart <- ggplot(ExclSus_for_chart, aes(fill=`Pupil Group`, y=`% suspende
         legend.title=element_text(size=12)) #change font size of legend title 
 
 #First suspension chart
-first_sus_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+first_sus_timing <- read_excel(data_file, 
                                sheet = 'First_sus_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1166,7 +1179,7 @@ first_sus_timing_chart <- ggplot(first_sus_timing_for_chart, aes(y=value, x=grou
 
 
 #Closest suspension chart
-closest_sus_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+closest_sus_timing <- read_excel(data_file, 
                                  sheet = 'Closest_sus_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1215,7 +1228,7 @@ closest_sus_timing_chart <- ggplot(closest_sus_timing_for_chart, aes(y=value, x=
         legend.title=element_text(size=12)) #change font size of legend title 
 
 #First exclusion chart
- first_excl_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+ first_excl_timing <- read_excel(data_file, 
                                 sheet = 'First_excl_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1263,7 +1276,7 @@ first_excl_timing_chart <- ggplot(first_excl_timing_for_chart, aes(y=value, x=gr
         legend.title=element_text(size=12)) #change font size of legend title 
 
 #Closest exclusion chart
-closest_excl_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+closest_excl_timing <- read_excel(data_file, 
                                   sheet = 'Closest_excl_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1547,11 +1560,11 @@ AP_chart <- ggplot(AP_for_chart, aes(x=`% ever attended AP`, y=`Pupil Group`, fi
         legend.title=element_text(size=12)) #change font size of legend title 
 
 #AP timing
-AP_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+AP_timing <- read_excel(data_file, 
                         sheet = 'AP_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-AP_timing_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+AP_timing_no_star <- read_excel(data_file, 
                   sheet = 'AP_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1698,7 +1711,7 @@ AP_timing_chart
 `r if(NA %in% AP_timing_for_chart$'% with AP timing'){"*Chart has been suppressed due to small numbers.*"}`
 
 ```{r SEN, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-SEN <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+SEN <- read_excel(data_file, 
                   sheet = 'SEN_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1733,11 +1746,11 @@ SEN_chart <- ggplot(SEN_for_chart, aes(fill=`SEN type`, x=perc_SEN, y=Pupil_grou
         legend.title=element_text(size=12)) #change font size of legend title 
 
 #SEN timing charts
-SEN_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+SEN_timing <- read_excel(data_file, 
                          sheet = 'SEN_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-EHCP_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+EHCP_timing <- read_excel(data_file, 
                           sheet = 'EHCP_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1958,7 +1971,7 @@ SLCN_SV <- SEN_types_SV %>%
   filter(SEN_type == 'SLCN')
 
 #SEMH timing
-SEMH_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+SEMH_timing <- read_excel(data_file, 
                           sheet = 'SEMH_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -2101,11 +2114,11 @@ SEMH_timing_chart
 `r if(NA %in% SEMH_timing_for_chart$'% with SEMH timing'){"*Chart has been suppressed due to small numbers.*"}`
 
 ```{r CSC, echo=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-CSC <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+CSC <- read_excel(data_file, 
                   sheet = 'CiN_CLA_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-CSC_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+CSC_no_star <- read_excel(data_file, 
                   sheet = 'CiN_CLA_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -2141,21 +2154,21 @@ CSC_chart <- ggplot(CSC_for_chart, aes(fill=`Pupil Group`, y=`% recorded\nas CIN
 
 #CSC timing
 
-CSC_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+CSC_timing <- read_excel(data_file, 
                          sheet = 'CSC_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-CSC_timing_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+CSC_timing_no_star <- read_excel(data_file, 
                          sheet = 'CSC_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
 CSC_timing_no_star[CSC_timing_no_star == '*'] <- '(number too small to report)'
 
-CLA_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+CLA_timing <- read_excel(data_file, 
                          sheet = 'CLA_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-CLA_timing_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
+CLA_timing_no_star <- read_excel(data_file, 
                          sheet = 'CLA_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -2323,6 +2336,301 @@ Children who had been cautioned or sentenced for a serious violence offence have
 `r if(CSC_timing_no_star$prop_CINP_Before_SV == "(number too small to report)" | CSC_timing_no_star$prop_CPP_Before_SV == "(number too small to report)" | CLA_timing_no_star$prop_CLA_Before_SV == "(number too small to report)"){"*Results have been suppressed due to small numbers.*"}`
 
 \newpage
+
+# Annex A: Glossary
+
+```{r glossary table, echo = FALSE}
+glossary_table <-  data.frame(
+  'Item' = c('Alternative Provision (AP)', 'Child Protection Plan (CPP)', 'Children in need (CIN)', 'Children who are looked after (CLA)', 'Free school meals (FSM)', 'Permanent exclusion', 'Persistent absence', 'Persistent absence (unauthorised other)', 'Serious Violence', 'Special Educational Needs (SEN)', 'Suspension'),
+  
+  
+  'Definition' = c("Education arranged by local authorities for pupils who, because of permanent exclusion, illness or other reasons, would not otherwise receive suitable education; education arranged by schools for pupils on a fixed period exclusion (suspension); and pupils being directed by schools to off-site provision to improve their behaviour.",
+                   
+                   "Support for a child where there is reasonable suspicion that child is suffering, or likely to suffer, significant harm. CPP is a subset of CIN.",
+                   
+                   "Child in need (CIN) is a broad definition spanning a wide range of children and adolescents, in need of varying types of support and intervention, for a variety of reasons. A child is defined as ‘in need’ under section 17 of the Children Act 1989 where:   
+• they are unlikely to achieve or maintain, or to
+have the opportunity of achieving or
+maintaining, a reasonable standard of health
+or development without the provision for
+them of services by a local authority  
+• their health or development is likely to be
+significantly impaired, or further impaired,
+without the provision for them of such
+services; or  
+• they are disabled  
+CPP and CLA are subsets of CIN.",
+                   
+                   "Under the Children Act 1989, a child is looked after by a local authority if they fall into one of the following:  
+• is provided with accommodation, for a 
+continuous period of more than 24 hours 
+[Children Act 1989, Section 20 and 21]  
+• is subject to a care order [Children Act 1989, 
+Part IV]  
+• is subject to a placement order  
+CLA is a subset of CIN.",
+                   
+                   "The metric used in this analysis is FSM eligibility. Children are eligible for FSM if a claim  has been made by them or on their behalf and 
+either:    
+• the relevant local authority / school has 
+confirmed that they are entitled to free school 
+meals  
+• the relevant local authority / school has seen 
+the necessary documentation (that confirms 
+entitlement to free school meals)
+FSM are available to pupils in receipt of, or
+whose parents are in receipt of, one or more of
+the following benefits:  
+• Universal Credit (provided you have an
+annual net earned income of no more than
+£7,400, as assessed by earnings from up to
+three of your most recent assessment
+periods)  
+• Income Support  
+• Income-based Jobseeker’s Allowance  
+• Income-related Employment and Support
+Allowance  
+• Support under Part VI of the Immigration and
+Asylum Act 1999  
+• The guarantee element of Pension Credit  
+• Child Tax Credit (provided you are not also
+entitled to Working Tax Credit and have an
+annual gross income of no more than
+£16,190)  
+• Working Tax Credit run-on – paid for four
+weeks after you stop qualifying for Working
+Tax Credit",
+                   
+                   "A permanent exclusion is when a pupil is no longer allowed to attend a school.",
+                   
+                   "Persistent absence is when a pupil enrolment’s overall absence equates to 10 per cent or more of their possible sessions.", 
+                   
+                   "Persistent absence (unauthorised other) is when a pupil enrolment’s absence due to
+‘unauthorised other’ reasons equates to 10 per cent or more of their possible sessions.",
+                   
+                   "The definition of serious violence used in this paper is broadly based on the following categories of offence groups and offence types:
+indictable only ‘violence against the person’ offences, indictable only ‘robbery offences’, and triable either way or indictable only ‘possession of weapons offences’. A full list of offences included in the definition can be found in Annex B. Children who have committed a serious violence offence here therefore relate to young people cautioned or convicted for any of the offences in Annex B.", 
+                   
+                   "A child or young person has SEN if they have a learning difficulty or disability which calls for special educational provision to be made for them i.e., educational or training provision that is additional to or different from that made generally for their peers. A pupil identified as having SEN will either:  
+• be receiving ‘SEN Support’  
+• in a minority of cases, have a statutory
+Education, Health and Care plan setting out
+their complex needs and how these will be
+me",
+                   
+                   "A suspension is where a pupil has been temporarily removed from the school (including during lunchtime). Prior to 2019/20, suspensions were referred to as a fixed period exclusion. Please see here for more information: [Exclusion from maintained schools, academies and pupil referral units in England](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1092493/20170831_Exclusion_Stat_guidance.pdf)"
+                   
+  ),
+  
+  stringsAsFactors = FALSE
+)
+
+kable(glossary_table,"latex",longtable=T,caption="Here's the table caption.") %>% 
+  kable_styling(latex_options = "hold_position") %>% 
+  row_spec(0, bold = T, background = "#9FB9C8") %>% 
+  column_spec(1:2, width = c("4.2cm","11.8cm"))
+
+```
+
+\newpage
+
+# Annex B: Serious Violence definition - list of offences
+
+```{r sv definition table, echo = FALSE}
+sv_definition_table <-  data.frame(
+  'Home Office Offence code' = c('00100', '00101', '00102', '00200', '00301', '00302', '00303', '00304', '00305', '00306', '00401', '00402', '00403', '00501', '00504', '00505', '00506', '00507', '00509', '00510', '00513', '00514', '00515', '00516', '00517', '00518', '00519', '00520', '00521', '00522', '00527', '00802', '00804', '00805', '00806', '00833', '00840', '00846', '00859', '03401', '03402', '03410', '02802', '05601', '00803', '00811', '00813', '00814', '00815', '00816', '00817', '00818', '00823', '00824', '00825', '00826', '00827', '00828', '00853', '00854', '00861', '00862', '00863', '00864', '08101', '08103', '08104', '08107', '08108', '08109', '08110', '08111', '08112', '08113', '08114', '08115', '08116', '08117', '08126', '08127', '08129', '08130', '08135', '08136', '08137', '08138', '08139', '08140', '08142', '08143', '08144', '08145', '08169', '08170', '08171', '08172', '08173', '08174', '08176', '08177', '08178', '08179', '08180', '08181', '08182', '08183', '08184', '08185', '08186', '08187', '08188', '08189', '08190', '08191', '09001', '09002', '09003', '09004', '09005', '05914', '05915', '06906'),
+  
+  
+  'Offence description' = c('Violence against the person', 'Murder of persons aged 1 year or over', 'Murder of infants under 1 year of age', 'Attempted murder', 'Making threats to kill', 'Conspiracy or soliciting, etc., to commit murder', 'Assisting offender by impeding his apprehension or
+prosecution in a case of murder', 'Intentionally encouraging or assisting commission of murder', 'Encouraging or assisting in the commission of murder believing
+it will be committed', 'Encouraging or assisting in the commission of one or more
+offences of murder believing one or more will be committed', 'Manslaughter', 'Infanticide', 'Child destruction', 'Wounding etc. with intent to do grievous bodily harm etc. or to
+resist apprehension', 'Attempting to choke, suffocate etc. with intent to commit an
+indictable offence (garrotting)', 'Using chloroform, etc., to commit or assist in committing an
+indictable offence', 'Burning, maiming, etc. by explosion', 'Causing, explosions or casting corrosive fluids with intent to do
+grievous bodily harm', 'Placing, etc. explosives in or near ships or buildings with intent
+to do bodily harm, etc.', 'Endangering life or causing harm by administering poison', 'Possession etc. of explosives with intent to endanger life', 'Possession of firearms etc., with intent to endanger life (Group
+I)', 'Possession of firearms etc. with intent to endanger life (Group
+II)', 'Possession of firearms etc. with intent to endanger life (Group
+III)', 'Using etc. firearms or imitation firearms with intent to resist
+arrest etc. (Group I)', 'Using etc. firearms or imitation firearms with intent to resist
+arrest etc. (Group II)', 'Using etc. firearms or imitation firearms with intent to resist
+arrest etc. (Group III)', 'Use etc. of chemical weapons', 'Use of premises or equipment for producing chemical
+weapons', 'Use, threat of use, production or possession of a nuclear
+weapon', 'Torture', 'Administering poison with intent to injure or annoy', 'Causing bodily harm by furious driving', 'Assaults on person preserving wreck', 'Assaults occasioning actual bodily harm', 'Racially aggravated wounding or inflicting grievous bodily
+harm (inflicting bodily injury with or without weapon)', 'Religiously aggravated malicious wounding or grievous bodily
+harm', 'Racially or religiously aggravated malicious wounding or
+grievous bodily harm (GBH)', 'Racially or religiously aggravated wounding or grievous bodily
+harm', 'Robbery', 'Assault with intent to rob', 'Robbery', 'Burglary in a dwelling with intent to inflict grievous bodily harm
+- indictable only', 'Arson endangering life', 'Setting spring guns etc. to injure trespassers', 'Possession of offensive weapons without lawful authority or
+reasonable excuse', 'Possessing firearm or imitation firearm at time of committing or
+being arrested for an offence specified in Schedule 1 of the Act 
+(Group I)', 'Possessing firearm or imitation firearm at time of committing or
+being arrested for an offence specified in Schedule 1 of the Act 
+(Group II)', 'Possessing firearm or imitation firearm at time of committing or
+being arrested for an offence specified in Schedule 1 of the Act 
+(Group III)', 'Possessing firearm or imitation firearm with intent to commit an
+indictable offence or resist arrest etc (Group I)', 'Possessing firearm or imitation firearm with intent to commit an
+indictable offence, or resist arrest etc (Group II)', 'Possessing firearm or imitation firearm with intent to commit an
+indictable offence, or resist arrest etc (Group III)', '00823', 'Possession of a firearm or imitation firearm, with intent to
+cause fear of violence
+(Group I)', 'Possession of a firearm or imitation firearm with intent to cause
+fear of violence
+(Group II)', 'Possession of a firearm or imitation firearm with intent to cause
+fear of violence (Group III)', 'Having an article with a blade or point in a public place', 'Having an article with a blade or point on school premises', 'Possession of offensive weapons without lawful authority or
+reasonable excuse on school premises', 'Using another to look after, hide or transport a dangerous
+weapon - offensive weapon, knife or bladed weapon', 'Using another to look after, hide or transport a dangerous
+weapon - a firearm', 'Threaten with an offensive weapon in a public place', 'Threaten with a blade or sharply pointed article on school
+premises', 'Threaten with an offensive weapon on school premises', 'Threaten with blade/sharply pointed article in a public place', 'Possession of weapons', 'Possessing etc. firearm or ammunition without firearm
+certificate (Group I)', 'Possessing etc. shotgun without certificate (Group II)', 'Trading in firearms without being registered as a firearms
+dealer (Group I)', 'Trading in firearms without being registered as a firearms
+dealer', 'Selling firearm to person without a certificate (Group I)', 'Selling firearm to person without a certificate (Group II)', 'Repairing, testing etc. firearm for person without a certificate
+(Group I)', 'Repairing, testing etc. firearm for person without a certificate
+(Group II)', 'Falsifying certificate etc. with a view to acquisition of firearm
+(Group I)', 'Falsifying certificate etc. with a view to acquisition of firearm
+(Group II)', 'Shortening a shotgun or other smooth bore gun (Group I)', 'Conversion of firearms (Group I)', 'Possessing or distributing prohibited weapons or ammunition
+(Group I)', 'Carrying firearm in public place etc. (Group I)', 'Carrying loaded firearm in public place etc. (Group II)', 'Trespassing with firearm or imitation firearm in a building
+(Group I)', 'Trespassing with firearm or imitation firearm in a building
+(Group II)', 'Possession of firearms by persons previously convicted of
+crime (Group I)', 'Possession of firearms by persons previously convicted of
+crime (Group II)', 'Possession of firearms by persons previously convicted of
+crime (Group III)', 'Supplying firearms to person denied them under Section 21
+(Group I)', 'Supplying firearms to person denied them under Section 21
+(Group II)', 'Supplying firearms to person denied them under Section 21
+(Group III)', 'Failure to transfer firearms or ammunition in person (Group I)', 'Failure to give notice in writing to the Chief Officer of Police of
+transfers involving firearms (Group I)', 'Failure by certificate holder to notify in writing Chief Officer of
+Police of deactivation, destruction or loss of firearms or
+ammunition (Group I)', 'ammunition (Group I)
+08145 Failure by certificate holder to notify in writing Chief Officer of
+Police of events taking place outside Great Britain involving
+firearms and ammunition (sold or otherwise disposed of, lost
+etc) (Group I)', 'Possession of weapons', 'Possessing or distributing prohibited weapons designed for
+discharge of noxious liquid etc. (Group I)', 'Possessing or distributing firearm disguised as other object
+(Group I)', 'Possessing or distributing other prohibited weapons', 'Offence in relation to the unlawful IMPORTATION of any
+weapon or ammunition of a kind mentioned in
+S.5(1)(a),(ab),(aba),(ac), (ad),(ae),(af) or (c) of the Firearms
+Act 1968', 'Selling or transferring an air weapon unlawfully', 'Carrying a loaded or unloaded or imitation firearm or air
+weapon in public place', 'Knowingly being concerned in activity prohibited by Parts 2, 3
+or 4 of the Order with intent to evade the relevant prohibition', 'Unship / unload prohibited weapon / ammunition with intent to
+evade prohibition / restriction', 'Remove prohibited weapons / ammunition from their place of
+importation with intent to evade prohibition / restriction', 'Import prohibited weapons / ammunition with intent to evade a
+prohibition / restriction', 'Export prohibited weapon / ammunition with intent to evade
+prohibition / restriction', 'Carry / remove / deposit etc. prohibited weapons / ammunition
+with intent to evade a prohibition / restriction', 'Knowingly concerned in fraudulent evasion of prohibition /
+restriction on prohibited weapon / ammunition', 'Manufacture weapon / ammunition specified in section 5(1) of
+the Firearms Act 1968', 'Sell / transfer prohibited weapon / ammunition', 'Possess prohibited weapon / ammunition for sale / transfer', 'Purchase / acquire prohibited weapon / ammunition for sale /
+transfer', 'Offences under Explosives Precursors Regulations 2014', 'Manufacture an offensive weapon; Possess article for use in
+connection with conversion of imitation firearm', 'Make / sell / give as gift defectively deactivated weapon -
+Police and Crime Act 2017', 'Unlawful marketing of knives (selling or hiring)', 'Unlawful marketing of knives (offering or exposing to sell or
+hire)', 'Unlawful marketing of knives - having in possession for the
+purpose of sale or hire', 'Publication of any written, pictorial or other material in
+connection with the marketing of any knife - the material
+suggesting or indicating knife suitable for combat', 'Publication of any written, pictorial or other material in
+connection with the marketing of any knife - the material is
+otherwise likely to stimulate or encourage violent behaviour
+involving use of the knife as a weapon', 'Manufacture, possession or control of explosives under
+suspicious circumstances', 'Possessing or making an explosive substance, a noxious or
+dangerous thing, a machine, engine or instrument with intent
+to commit an offence under the Offences against the Person
+Act 1861', 'Unauthorised possession in prison of knife or offensive
+weapon'),
+  
+  stringsAsFactors = FALSE
+)
+
+colnames(sv_definition_table) <- c("Home Office Offence code","Offence description")
+kable(sv_definition_table,"latex",longtable=T,caption="Here's the table caption.") %>% 
+  kable_styling(latex_options = "hold_position") %>% 
+  row_spec(0, bold = T, background = "#9FB9C8") %>% 
+  column_spec(1:2, width = c("3.2cm","12.8cm"))
+
+```
+
+\newpage
+
+# Annex C: Data sources  
+
+Most of the DfE data used in the descriptive statistics analysis is taken from the school census, which is a pupil-level data collection from primary, secondary, special and state-funded alternative provision (AP) schools (pupil referral units, AP academies and AP free schools). The school census takes place three times a year; in the Autumn, Spring and Summer terms. Data from the Pupil Referral Unit (PRU) and the AP censuses is also included. The PRU census was a yearly Spring collection census of all state-funded AP settings which was incorporated into the school census in 2013/14. The AP census is also a yearly Spring census. Since the AP and PRU censuses are yearly, missing termly data for Autumn and Summer terms was inferred from the Spring data collection of the same academic year, where appropriate. Additionally, some data is collected in the school census that is not collected in the AP and PRU census. Where appropriate, this missing data has been filled in from the school census.  
+
+To be aware; in most cases, where pupils are registered in two schools, the pupil’s main record from the school census was used to obtain information about the pupil. However, in some cases, existence of a dual-subsidiary record was noted, and the student flagged as attending more than one educational setting. We have incorporated information from pupil’s subsidiary records for school, Local Authority and SEN, in order to capture as much information as possible.  
+
+In addition to this, examination data was also included. This data was matched onto the school census base data at a pupil-level from the KS2 and KS4 examination data. Where duplicate results existed for students, the latest academic year was taken. If duplicates remained, the highest score was used.
+
+\newpage
+
+## Ethnicity data  
+
+Data on a child’s ethnicity is taken from the School Census. As of 2011, information regarding ethnicity could only be provided by the child or their parent(s).  
+
+```{r ethnicity annex table, echo = FALSE, fig.cap="**Ethnic group major categories**"}
+ethnicity_major_annex_table <-  data.frame(
+  'Code' = c('AOEG', 'ASIA', 'BLAC', 'CHIN', 'MIXD', 'UNCL', 'WHIT'),
+  
+  'Ethnic group' = c("Any Other Ethnic Group", "Asian", "Black", "Chinese", "Mixed", "Unclassified", "White"),
+  
+  stringsAsFactors = FALSE
+)
+
+kable((ethnicity_major_annex_table), 
+      col.names = gsub(" 1","/1",gsub("Academic Year ","",gsub("[.]"," ",names(ethnicity_major_annex_table)))),
+      caption = "Ethnic Group Major categories",
+      format='latex') %>%
+  kable_styling(latex_options = "hold_position") %>% 
+  row_spec(0, bold = T, background = "#9FB9C8")
+```
+
+```{r ethnicity minor annex table, echo = FALSE, fig.cap="**Ethnic group minor categories**"}
+ethnicity_minor_annex_table <-  data.frame(
+  'Code' = c('ABAN', 'AIND', 'AOTH', 'APKN', 'BAFR', 'BCRB', 'BOTH', 'CHNE', 'MOTH', 'MWAS', 'MWBA', 'MWBC', 'NOBT', 'OOTH', 'REFU', 'WBRI', 'WIRI', 'WIRT', 'WOTH', 'WROM'),
+  
+  'Ethnic group' = c("Bangladeshi", "Indian", "Any Other Asian Background", "Pakistani", "Black African", "Black Caribbean", "Any Other Black Background", "Chinese", "An Other Mixed Background", "White and Asian", "White and Black African", "White and Black Caribbean", "Information Not Yet Obtained", "Any Other Ethnic Group", "Refused", "White British", "White Irish", "Travellor of Irish Heritage", "Any Other White Background", "Gypsy/Roma"),
+  
+  stringsAsFactors = FALSE
+)
+
+kable((ethnicity_minor_annex_table),
+      col.names = gsub(" 1","/1",gsub("Academic Year ","",gsub("[.]"," ",names(ethnicity_minor_annex_table)))),
+      caption = "Ethnic Group Minor categories",
+      format='latex') %>%
+  kable_styling(latex_options = "hold_position") %>% 
+  row_spec(0, bold = T, background = "#9FB9C8")
+```
+
+\newpage
+
+## Children known to children's social care data  
+
+Data from the children in need (CIN) census and children who are looked after (CLA) census was also included. In sections 1, 3 and 4 of the publication, the CIN and CLA data used indicates whether a given pupil was CIN or CLA on the 31st March in a given year. This differs from the measures used in the annual publication ‘Children looked after in England including adoptions’, which looks at whether the child was recorded as being looked after on 31st March in the previous year; whether the child started being looked after during the previous year ending 31st March; and for offending specifically, whether the child had been looked after for at least 12 months in the year ending 31st March. For section 2, termly CIN and CLA datasets were used which were provided internally. This is the only piece of analysis that has used data that is not available for external users of the data share.  
+
+## Special Educational Needs data  
+
+Pupils identified with Special Educational Needs (SEN) are classified as those that have a statement of SEN or Education, Health and Care (EHC) plan (or, prior to reforms introduced in September 2014, a Statement of SEN) and those who are in the SEN Support category (or, prior to reforms introduced in September 2014, School Action or School Action Plus). The period for local authorities to transfer children and young people with Statements of SEN to EHC plans started in September 2014 and ended on 31 March 2018.  
+
+Primary type of need is collected through the school census for those pupils on SEN Support, or EHC plan (or the pre-2014 equivalents). The coverage for January 2015 onwards is different to previous years. Pupils who were on School Action were not required to have a primary type of need recorded. From 2015 pupils who were on School Action who have transferred to SEN Support will be recorded as having a primary type of need. This has led to an increase in the number of pupils recorded as having a primary type of need. There were changes to the classification of type of need in 2015: the previous code of ‘Behaviour, Emotional and Social Difficulties (BESD)’ was removed. A new code ‘Social, Emotional and Mental Health (SEMH)’ was introduced, although this was not intended to be a direct replacement.
+
+```{r sen annex table, echo = FALSE, fig.cap="**Special Educational Needs categories**"}
+sen_annex_table <-  data.frame(
+  'Code' = c('ASD', 'HI', 'MLD', 'MSI', 'PD', 'PMLD', 'SEMH', 'BESD', 'SLCN', 'SLD', 'SPLD', 'VI', 'OTH'),
+  
+  'SEN primary need' = c("Autistic spectrum disorder", "Hearing impairment", "Moderate learning difficulty", "Multi-sensory impairment", "Physical disability", "Profound & multiple learning difficulty", "Social, emotional & mental health", "Behaviour, emotional & socal difficulties", "Speech, language &
+communication", "Severe learning difficulty", "Specific learning difficulty", "Visual impairment", "Other difficulty/disability"),
+  
+  stringsAsFactors = FALSE
+)
+
+kable((sen_annex_table), 
+      col.names = gsub(" 1","/1",gsub("Academic Year ","",gsub("[.]"," ",names(sen_annex_table)))),
+      caption = "Special Educational Needs categories",
+      format='latex') %>%
+  kable_styling(latex_options = "hold_position") %>% 
+  row_spec(0, bold = T, background = "#9FB9C8")
+```
+
+\newpage
+
+\newpage
+
+
 \resizebox{48mm}{!}{\includegraphics{images/Department_for_Education.png}}
 \vspace*{\fill}
 \color{black}
