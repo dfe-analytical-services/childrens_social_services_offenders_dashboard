@@ -86,7 +86,7 @@ i <- 'TlDJE'
 #IFERROR function
  IFERROR <- function(code, silent = FALSE) {
          tryCatch(code, error = function(c) {
-           if (!silent) {"(suppressed)"}
+           if (!silent) {"(number too small to report)"}
            else{code}})}
  
 #'Not in' function
@@ -96,23 +96,23 @@ i <- 'TlDJE'
 
 
 ```{r intro, include=FALSE}
-offender_counts_school <- read_excel("170622_Dummy_data.xlsx", 
+offender_counts_school <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                                      sheet = 'No_pupils_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-offender_counts_home <- read_excel("170622_Dummy_data.xlsx", 
+offender_counts_home <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                                    sheet = 'No_pupils_hmLA(SAFE)') %>%
   filter(HOME_LA == i)
 
-ever_flags <- read_excel("170622_Dummy_data.xlsx", 
+ever_flags <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                          sheet = 'Everflag_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-ever_flags_no_star <- read_excel("170622_Dummy_data.xlsx", 
+ever_flags_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                          sheet = 'Everflag_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-ever_flags_no_star[ever_flags_no_star == '*'] <- '(suppressed)'
+ever_flags_no_star[ever_flags_no_star == '*'] <- '(number too small to report)'
 ```
 
 
@@ -288,7 +288,7 @@ offender_counts_school_RHS_waffle <- waffle(
         legend.title=element_text(size=12)) #change font size of legend title 
 ```
 
-Approximately `r round((offender_counts_school$sv/offender_counts_school$offenders)*100, 0)`% of the ‘children who had been cautioned or sentenced for an offence’ group are in the ‘children who had been cautioned or sentenced for a serious violence offence’ group.  
+For those that attended school in `r offender_counts_school$SCHOOL_LA`, approximately `r round((offender_counts_school$sv/offender_counts_school$offenders)*100, 0)`% of the ‘children who had been cautioned or sentenced for an offence’ group are in the ‘children who had been cautioned or sentenced for a serious violence offence’ group.  
 
 ```{r offenders vs sv offenders waffle, echo=FALSE, fig.cap="The proportion of children who had been cautioned or sentenced for an offence that had also been cautioned or sentenced for a serious violence offence, and the proportion of children who had been cautioned or sentence for an offence, for pupils matched to KS4 academic years 2012/13, 2013/14,2014/15 [Source: DfE-MoJ data share, table: ...]"}
 # set the plotting area into a 1*2 array
@@ -322,9 +322,9 @@ Tests for statistical significance have been performed on certain outcomes in th
 
 [^45th_footnote]: Significance testing has been performed using the prop.test function in R, which is used for testing the null hypothesis that the proportions (probabilities of success) in several groups are the same, or that they equal certain values.
 
-## Statistical Disclosure Control
+## Reporting on small numbers of children
 
-In order to prevent the disclosure of sensitive data, any numbers in this publication that relate to less than 6 pupils have been replaced by the word 'suppressed'. Where there are further risks of identification (for example where a suppressed number can be calculated using other numbers), numbers have been further suppressed. Due to the size variation across the ten SAFE Taskforce Local Authority areas, this happens more in some of the ten publications than others.  
+In order to prevent the disclosure of sensitive data, any numbers in this publication that relate to less than 6 pupils have been replaced by the words 'number too small to report'. Where there are further risks of identification (for example where a suppressed number can be calculated using other numbers), numbers have been further suppressed. Due to the size variation across the ten SAFE Taskforce Local Authority areas, this happens more in some of the ten publications than others.  
 
 ## Defining 'ever'
 
@@ -332,25 +332,25 @@ It is important to note that this analysis will not be directly comparable with 
 referencing whether a child has 'ever' had a certain characteristic, the analysis considers all periods up to the end of KS4. This methodology may differ from that of other published statistics where, for example, only the previous six years are considered. For this reason, figures discussed here may appear higher than those available in other publications.  
 
 ```{r home vs school, include=FALSE}
-home_vs_school <- read_excel("170622_Dummy_data.xlsx", 
+home_vs_school <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                              sheet = 'hm_with_dif_scl(SAFE)') %>%
   filter(HOME_LA == i)
 
-school_vs_home <- read_excel("170622_Dummy_data.xlsx", 
+school_vs_home <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                              sheet = 'scl_with_dif_hm(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-school_vs_home_no_star <- read_excel("170622_Dummy_data.xlsx", 
+school_vs_home_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                              sheet = 'scl_with_dif_hm(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-school_vs_home_no_star[school_vs_home_no_star == '*'] <- '(suppressed)'
+school_vs_home_no_star[school_vs_home_no_star == '*'] <- '(number too small to report)'
 
-home_vs_school_no_star <- read_excel("170622_Dummy_data.xlsx", 
+home_vs_school_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                              sheet = 'hm_with_dif_scl(SAFE)') %>%
   filter(HOME_LA == i)
 
-home_vs_school_no_star[home_vs_school_no_star == '*'] <- '(suppressed)'
+home_vs_school_no_star[home_vs_school_no_star == '*'] <- '(number too small to report)'
 
 home_vs_school_for_chart <- home_vs_school %>%
   select(prop_count_all_dif, prop_count_any_dif, prop_count_sv_dif, HOME_LA) %>%
@@ -418,7 +418,7 @@ home_school_chart
 \newpage
 
 ```{r previous offending, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-previous_offending <- read_excel("170622_Dummy_data.xlsx", 
+previous_offending <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                                  sheet = 'previous_offence_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -455,6 +455,8 @@ significance_testing <- read_excel("20072022_sig_testing.xlsx",
                                  sheet = 'sv') %>%
   filter(LA == i)
 
+significance_testing[significance_testing == '*'] <- '(number too small to report)'
+
 ```
 
 \newpage
@@ -472,7 +474,7 @@ previous_offending_chart
 ```
 
 ```{r gender, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-gender <- read_excel("170622_Dummy_data.xlsx", 
+gender <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                      sheet = 'Gender_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -515,7 +517,7 @@ gender_chart
 
 ```{r age, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
 
-age <- read_excel("170622_Dummy_data.xlsx", 
+age <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                   sheet = 'Age_first_offence_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -560,11 +562,11 @@ age_chart
 
 ```{r ethnicity, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
 
-ethnic_minor <- read_excel("170622_Dummy_data.xlsx", 
+ethnic_minor <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                            sheet = 'Ethnicity_minor_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-ethnic_major <- read_excel("170622_Dummy_data.xlsx", 
+ethnic_major <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                            sheet = 'Ethnicity_major_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -647,15 +649,15 @@ ethnic_major_chart
 
 ```{r FSM, include=FALSE, fig.dim = c(8, 6), fig.cap="[Source: DfE-MoJ data share, table: ...]"}
 
-ever_flags <- read_excel("170622_Dummy_data.xlsx", 
+ever_flags <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                          sheet = 'Everflag_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-ever_flags_no_star <- read_excel("170622_Dummy_data.xlsx", 
+ever_flags_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                          sheet = 'Everflag_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-ever_flags_no_star[ever_flags_no_star == '*'] <- '(suppressed)'
+ever_flags_no_star[ever_flags_no_star == '*'] <- '(number too small to report)'
 
 #FSM chart
 FSM_for_chart <- ever_flags %>%
@@ -762,7 +764,7 @@ grid.arrange(FSM_LHS_waffle, FSM_RHS_waffle, ncol=2, widths=c(1,2))
 ```
 
 ```{r attainment, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-KS4_attainment <- read_excel("170622_Dummy_data.xlsx", 
+KS4_attainment <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                              sheet = 'KS4_attain_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -804,7 +806,7 @@ KS4_attainment_chart <- ggplot(KS4_attainment_for_chart, aes(fill=`Pupil Group`,
         legend.title=element_text(size=12)) #change font size of legend title 
 
 #KS2 chart
-KS2_attainment <- read_excel("170622_Dummy_data.xlsx", 
+KS2_attainment <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                              sheet = 'KS2_attain_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -879,7 +881,7 @@ KS4_attainment_chart
 ```{r absence, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
 #Same excel tabs as FSM for "ever"
 
-Absence_timing <- read_excel("170622_Dummy_data.xlsx", 
+Absence_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                              sheet = 'PAPAUO_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1115,7 +1117,7 @@ ExclSus_chart <- ggplot(ExclSus_for_chart, aes(fill=`Pupil Group`, y=`% suspende
         legend.title=element_text(size=12)) #change font size of legend title 
 
 #First suspension chart
-first_sus_timing <- read_excel("170622_Dummy_data.xlsx", 
+first_sus_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                                sheet = 'First_sus_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1164,7 +1166,7 @@ first_sus_timing_chart <- ggplot(first_sus_timing_for_chart, aes(y=value, x=grou
 
 
 #Closest suspension chart
-closest_sus_timing <- read_excel("170622_Dummy_data.xlsx", 
+closest_sus_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                                  sheet = 'Closest_sus_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1213,7 +1215,7 @@ closest_sus_timing_chart <- ggplot(closest_sus_timing_for_chart, aes(y=value, x=
         legend.title=element_text(size=12)) #change font size of legend title 
 
 #First exclusion chart
- first_excl_timing <- read_excel("170622_Dummy_data.xlsx", 
+ first_excl_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                                 sheet = 'First_excl_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1261,7 +1263,7 @@ first_excl_timing_chart <- ggplot(first_excl_timing_for_chart, aes(y=value, x=gr
         legend.title=element_text(size=12)) #change font size of legend title 
 
 #Closest exclusion chart
-closest_excl_timing <- read_excel("170622_Dummy_data.xlsx", 
+closest_excl_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                                   sheet = 'Closest_excl_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1545,15 +1547,15 @@ AP_chart <- ggplot(AP_for_chart, aes(x=`% ever attended AP`, y=`Pupil Group`, fi
         legend.title=element_text(size=12)) #change font size of legend title 
 
 #AP timing
-AP_timing <- read_excel("170622_Dummy_data.xlsx", 
+AP_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                         sheet = 'AP_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-AP_timing_no_star <- read_excel("170622_Dummy_data.xlsx", 
+AP_timing_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                   sheet = 'AP_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-AP_timing_no_star[AP_timing_no_star == '*'] <- '(suppressed)'
+AP_timing_no_star[AP_timing_no_star == '*'] <- '(number too small to report)'
 
 AP_timing_for_chart <- AP_timing %>%
   select(prop_AP_Before_SV, prop_APSame_Term, prop_AP_After_SV)
@@ -1696,7 +1698,7 @@ AP_timing_chart
 `r if(NA %in% AP_timing_for_chart$'% with AP timing'){"*Chart has been suppressed due to small numbers.*"}`
 
 ```{r SEN, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-SEN <- read_excel("170622_Dummy_data.xlsx", 
+SEN <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                   sheet = 'SEN_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1731,11 +1733,11 @@ SEN_chart <- ggplot(SEN_for_chart, aes(fill=`SEN type`, x=perc_SEN, y=Pupil_grou
         legend.title=element_text(size=12)) #change font size of legend title 
 
 #SEN timing charts
-SEN_timing <- read_excel("170622_Dummy_data.xlsx", 
+SEN_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                          sheet = 'SEN_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-EHCP_timing <- read_excel("170622_Dummy_data.xlsx", 
+EHCP_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                           sheet = 'EHCP_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -1956,7 +1958,7 @@ SLCN_SV <- SEN_types_SV %>%
   filter(SEN_type == 'SLCN')
 
 #SEMH timing
-SEMH_timing <- read_excel("170622_Dummy_data.xlsx", 
+SEMH_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                           sheet = 'SEMH_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
@@ -2099,15 +2101,15 @@ SEMH_timing_chart
 `r if(NA %in% SEMH_timing_for_chart$'% with SEMH timing'){"*Chart has been suppressed due to small numbers.*"}`
 
 ```{r CSC, echo=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-CSC <- read_excel("170622_Dummy_data.xlsx", 
+CSC <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                   sheet = 'CiN_CLA_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-CSC_no_star <- read_excel("170622_Dummy_data.xlsx", 
+CSC_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                   sheet = 'CiN_CLA_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-CSC_no_star[CSC_no_star == '*'] <- '(suppressed)'
+CSC_no_star[CSC_no_star == '*'] <- '(number too small to report)'
 
 CSC_for_chart <- CSC %>%
   select(propcount_CIN, propany_count_CIN, propsv_count_CIN, propcount_CLA, propany_count_CLA, propsv_count_CLA)
@@ -2139,25 +2141,25 @@ CSC_chart <- ggplot(CSC_for_chart, aes(fill=`Pupil Group`, y=`% recorded\nas CIN
 
 #CSC timing
 
-CSC_timing <- read_excel("170622_Dummy_data.xlsx", 
+CSC_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                          sheet = 'CSC_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-CSC_timing_no_star <- read_excel("170622_Dummy_data.xlsx", 
+CSC_timing_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                          sheet = 'CSC_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-CSC_timing_no_star[CSC_timing_no_star == '*'] <- '(suppressed)'
+CSC_timing_no_star[CSC_timing_no_star == '*'] <- '(number too small to report)'
 
-CLA_timing <- read_excel("170622_Dummy_data.xlsx", 
+CLA_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                          sheet = 'CLA_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-CLA_timing_no_star <- read_excel("170622_Dummy_data.xlsx", 
+CLA_timing_no_star <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                          sheet = 'CLA_timing_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
 
-CLA_timing_no_star[CLA_timing_no_star == '*'] <- '(suppressed)'
+CLA_timing_no_star[CLA_timing_no_star == '*'] <- '(number too small to report)'
 
 CSC_timing_for_chart <- CSC_timing %>%
   select(prop_CINP_Before_SV, prop_CINPSame_Term, prop_CINP_After_SV,
@@ -2276,8 +2278,8 @@ sentenced for a serious violence offence and had attended school in `r offender_
 
 [^31st_footnote]:  Full CIN data is available from 2011/12, term 3. Children are included in this CIN analysis if they had been recorded as a child in need on the 31st March in any period between the ages of 12 - 16. Those matched to earlier years in the KS4 attainment data will as a result have less coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 14 and above.
 
-`r CSC_no_star$propany_count_CLA`% of children who had been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA` were CLA on the 31st March in any given year when aged between 6 and 16[^32nd_footnote] (approximately `r IFERROR(round(as.numeric(CSC_no_star$any_count_CLA), -1))` children),
-compared with `r CSC_no_star$propsv_count_CLA`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r offender_counts_school$SCHOOL_LA` (approximately `r IFERROR(round(as.numeric(CSC_no_star$sv_count_CLA), -1))` children). This compares to `r CSC_no_star$propcount_CLA`% of the all-pupil cohort that had attended school in `r offender_counts_school$SCHOOL_LA` (approximately `r IFERROR(round(as.numeric(CSC_no_star$count_CLA), -1))` children). For children who had been cautioned or sentenced for a serious violence offence in `r offender_counts_school$SCHOOL_LA`, this result was `r (significance_testing$CLA)` at the 5% level.  
+`r CSC_no_star$propany_count_CLA`% of children who had been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA` were CLA on the 31st March in any given year when aged between 6 and 16[^32nd_footnote] (approximately `r CSC_no_star$any_count_CLA` children),
+compared with `r CSC_no_star$propsv_count_CLA`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r offender_counts_school$SCHOOL_LA` (approximately `r CSC_no_star$sv_count_CLA` children). This compares to `r CSC_no_star$propcount_CLA`% of the all-pupil cohort that had attended school in `r offender_counts_school$SCHOOL_LA` (approximately `r CSC_no_star$count_CLA` children). For children who had been cautioned or sentenced for a serious violence offence in `r offender_counts_school$SCHOOL_LA`, this result was `r (significance_testing$CLA)` at the 5% level.  
 
 [^32nd_footnote]:  Children are included in this CLA analysis if they had been recorded as a child being looked after on the 31st March in any period between the ages of 6 - 16. Those matched to earlier years in the KS4 attainment data will as a result have less coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 8 and above.
 
@@ -2318,7 +2320,7 @@ Children who had been cautioned or sentenced for a serious violence offence have
 
 `r CSC_timing_no_star$prop_CINP_Before_SV`% of children who had been cautioned or sentenced for a serious violence offence, had attended school in `r offender_counts_school$SCHOOL_LA` and were also recorded as a child in need, were recorded as such before their first serious violence offence. For CPP and CLA, the percentages were `r CSC_timing_no_star$prop_CPP_Before_SV`% and `r CLA_timing_no_star$prop_CLA_Before_SV`% respectively.  
 
-`r if(CSC_timing_no_star$prop_CINP_Before_SV == "(suppressed)" | CSC_timing_no_star$prop_CPP_Before_SV == "(suppressed)" | CLA_timing_no_star$prop_CLA_Before_SV == "(suppressed)"){"*Results have been suppressed due to small numbers.*"}`
+`r if(CSC_timing_no_star$prop_CINP_Before_SV == "(number too small to report)" | CSC_timing_no_star$prop_CPP_Before_SV == "(number too small to report)" | CLA_timing_no_star$prop_CLA_Before_SV == "(number too small to report)"){"*Results have been suppressed due to small numbers.*"}`
 
 \newpage
 \resizebox{48mm}{!}{\includegraphics{images/Department_for_Education.png}}
