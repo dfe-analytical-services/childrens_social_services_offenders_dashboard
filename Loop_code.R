@@ -16,8 +16,9 @@ safe_LA <- c('TlDJE','ExbVO', 'zfPKp',
              'lqSj6', 'antN5', 'aoCSR',
              'aA5QM')
 
-for(i in safe_LA){
+for(la_name in safe_LA){
   rmarkdown::render("Loop.Rmd",
-         output_file=paste0(i, ".pdf"),
-         params=list(new_title=paste("Education, Children's Social Care and offending")))
+         output_file=paste0(la_name, ".pdf"),
+         params=list(input_la_choice=la_name)
+  )
 }
