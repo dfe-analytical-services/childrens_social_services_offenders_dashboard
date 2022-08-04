@@ -5,6 +5,7 @@ params:
 title: "Education, Children's Social Care and Offending: A focus on `r params$input_la_choice` (Descriptive Statistics)"
 author: "Department for Education"
 header-includes:
+- \usepackage{longtable}
 - \usepackage{graphics}
 - \usepackage{xparse}
 - \usepackage{moresize}
@@ -39,7 +40,7 @@ header-includes:
 - \usepackage{cellspace}
 - \usepackage{etoolbox}
 - \colorlet{headercolour}{DarkSeaGreen}
-- \usepackage{longtable}
+
 
 output:
   pdf_document:
@@ -123,7 +124,7 @@ ever_flags_no_star[ever_flags_no_star == '*'] <- '(number too small to report)'
 
 # Summary
 
-This analysis uses the Ministry of Justice and Department for Education data-share to look at the education and children's social care background of children who had been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA` local authority area. We focus on two main groups: children who had been cautioned or sentenced for any type of offence, and those who had been cautioned or sentenced for a serious violence offence. For the cohorts used in this analysis, there are approximately `r format(round(offender_counts_school$offenders, -1), big.mark=',')` children who had attended school in `r offender_counts_school$SCHOOL_LA` and been cautioned or sentenced for any offence, equivalent to `r offender_counts_school$prop_off`% of the all-pupil cohort that had attended school in `r offender_counts_school$SCHOOL_LA`, and approximately `r format(round(offender_counts_school$sv, -1), big.mark=',')` children who had attended school in `r offender_counts_school$SCHOOL_LA` and been cautioned or sentenced for a serious violence offence - equivalent to `r offender_counts_school$prop_sv`% of the all-pupil cohort.  
+This analysis uses Ministry of Justice and Department for Education data to look at the education and children's social care background of children who had been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA` local authority area. We focus on two main groups: children who had been cautioned or sentenced for any type of offence, and those who had been cautioned or sentenced for a serious violence offence. For the cohorts used in this analysis, there are approximately `r format(round(offender_counts_school$offenders, -1), big.mark=',')` children who had attended school in `r offender_counts_school$SCHOOL_LA` and been cautioned or sentenced for any offence, equivalent to `r offender_counts_school$prop_off`% of the all-pupil cohort that had attended school in `r offender_counts_school$SCHOOL_LA`, and approximately `r format(round(offender_counts_school$sv, -1), big.mark=',')` children who had attended school in `r offender_counts_school$SCHOOL_LA` and been cautioned or sentenced for a serious violence offence - equivalent to `r offender_counts_school$prop_sv`% of the all-pupil cohort.  
 
 While this publication focuses on those that attended school in `r offender_counts_home$HOME_LA`, some of the accompanying tables include information on those that lived in `r offender_counts_home$HOME_LA` but did not necessarily attend school there. There are approximately `r format(round(offender_counts_home$offenders, -1), big.mark=',')` children that lived in `r offender_counts_home$HOME_LA` (regardless of where they attended school) who had been cautioned or sentenced for any offence, equivalent to `r offender_counts_home$prop_off`% of the all-pupil cohort that lived in `r offender_counts_home$HOME_LA`. There are approximately `r format(round(offender_counts_home$sv, -1), big.mark=',')` children that lived in `r offender_counts_home$HOME_LA` who had been cautioned or sentenced for a serious violence offence (equivalent to `r offender_counts_home$prop_sv`% of the all-pupil cohort). However, the primary focus of this analysis is on those who attended school in `r offender_counts_home$HOME_LA`, unless otherwise stated.
 
@@ -137,7 +138,7 @@ Equivalent analysis has been produced for each of the ten SAFE areas, which will
 
 This paper investigates the education and children's social care background of children who had been cautioned or sentenced for an offence and attended school in `r offender_counts_home$HOME_LA`, based on key variables from the Ministry of Justice and Department for Education data share which was undertaken in 2020. The data share covers offending data up to the end of 2017 and education and social care data up to the end of academic year 2017/18.  
 
-This descriptive statistics analysis has been produced to provide greater insight into the education and children's social care background of children who had been cautioned or sentenced for an offence. However, this analysis does not imply there is a causal link between these characteristics and offending.  
+This descriptive statistics analysis has been produced to provide greater insight into the education and children's social care background of children who had been cautioned or sentenced for an offence. However, this analysis does not show, or intend to show, that there are any specific or general causal links between these characteristics and offending.  
 
 Section 1 includes a high-level analysis of demographic factors, including:  
 
@@ -151,7 +152,7 @@ Section 2 includes analysis that relates to children's experiences whilst in sch
 
 • Attainment    
 • Persistent Absence  
-• Exclusions and Suspensions  
+• Permanent exclusions and Suspensions  
 • Alternative Provision   
 • Special Educational Needs   
 • Children with a Social Worker    
@@ -207,7 +208,7 @@ a) KS4 attainment: This is due to the implementation of two major reforms in 201
 
 [^3rd_footnote]: The two major reforms referenced: 1) Professor Alison Wolf’s Review of Vocational Education recommendations which: restrict the qualifications counted; prevent any qualification from counting as larger than one GCSE; and cap the number of non-GCSEs included in performance measures at two per pupil, and 2) an early entry policy to only count a pupil’s first attempt at a qualification, in subjects counted in the English Baccalaureate.
 
-b) Children known to children's social care: Full children in need (CIN) data is available from 2011/12, term 3[^4th_footnote]. Children are included in this CIN analysis if they had been recorded as a child in need on the 31st March in any period between the ages of 12 - 16. Those matched to earlier years in the KS4 attainment data will have less coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 14 and above. To maximise coverage of the CIN data and avoid skewed results, analysis of children in need and children who are looked after is based on children
+b) Children known to children's social care: Full children in need (CIN) data is available from 2011/12, summer term[^4th_footnote]. Children are included in this CIN analysis if they had been recorded as a child in need on the 31st March in any period between the ages of 12 - 16. Those matched to earlier years in the KS4 attainment data will have less coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 14 and above. To maximise coverage of the CIN data and avoid skewed results, analysis of children in need and children who are looked after is based on children
 matched to KS4 academic year 2014/15 only. 
 
 [^4th_footnote]: The CIN census was introduced in 2008/09, and initially covered a reduced 6-month period. A full year collection was introduced in 2009 – 2010, however a number of local authorities were unable to provide a complete, clean children in need return for that year. Reviews were carried out on the CIN census and resulted in some data items being removed from the 2010 – 2011 collection onward. 
@@ -228,7 +229,7 @@ categories of offence groups and offence types: indictable only 'violence agains
 
 [^6th_footnote]: A full list of offences included in the definition can be found in Annex B and the separate Technical Note.  
 
-The analysis has identified approximately `r format(round(offender_counts_school$sv, -1), big.mark=',')` children who had been cautioned or sentenced for a serious violence offence and attended school in `r offender_counts_school$SCHOOL_LA`, which is equivalent to `r offender_counts_school$prop_sv`% of the all-pupil cohort that attended school in `r offender_counts_school$SCHOOL_LA`. In comparison, there were approximately `r format(round(offender_counts_home$sv, -1), big.mark=',')` children who had been cautioned or sentenced for a serious violence offence and lived in `r offender_counts_home$HOME_LA`, which is equivalent to `r offender_counts_home$prop_sv`% of the all-pupil cohort that lived in `r offender_counts_home$HOME_LA`.   
+The analysis has identified approximately `r format(round(offender_counts_school$sv, -1), big.mark=',')` children who had been cautioned or sentenced for a serious violence offence and attended school in `r offender_counts_school$SCHOOL_LA`, which is equivalent to `r offender_counts_school$prop_sv`% of the all-pupil cohort that attended school in `r offender_counts_school$SCHOOL_LA`. In comparison, there were approximately `r format(round(offender_counts_home$sv, -1), big.mark=',')` children who had been cautioned or sentenced for a serious violence offence and *lived* in `r offender_counts_home$HOME_LA`, which is equivalent to `r offender_counts_home$prop_sv`% of the all-pupil cohort that lived in `r offender_counts_home$HOME_LA`.   
 
 ```{r offenders and sv offenders overlap, include=FALSE}
 
@@ -249,7 +250,7 @@ offender_counts_school_RHS <- offender_counts_school_for_waffle %>%
 offender_counts_school_LHS_waffle <- waffle(
   offender_counts_school_LHS, rows=10, size=0.6, flip=TRUE,
                          colors=c("#08306b", "#2171b5"), 
-                         title="Children who were cautioned\nor sentenced for\nan offence",  
+                         title="Children who were cautioned\nor sentenced for an offence",  
                          xlab="1 square = 1 %") +
   theme_classic() +
   theme(axis.line = element_blank(),
@@ -259,13 +260,12 @@ offender_counts_school_LHS_waffle <- waffle(
         legend.title = element_blank(),
         plot.title = element_text(hjust = 0.5, size=9)) +
   scale_fill_manual(values = c("#08306b", "#2171b5"), 
-                    labels = c("Children who\nwere cautioned or\nsentenced for a\nserious violence offence", 
-                               "Children who\nwere not cautioned\nor sentenced for a\nserious violence offence")) +
+                    labels = c("Serious\nviolence\noffence", 
+                               "Not a serious\nviolence\noffence")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text 
 
 
 offender_counts_school_RHS_waffle <- waffle(
@@ -281,18 +281,18 @@ offender_counts_school_RHS_waffle <- waffle(
         legend.title = element_blank(),
         plot.title = element_text(hjust = 0.5, size=9)) +
   scale_fill_manual(values = c("#08306b", "#6BACE6"), 
-                    labels = c("Children cautioned\n or sentenced\nfor an offence", 
+                    labels = c("Children cautioned\nor sentenced for\nan offence", 
                                "All other\npupils")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+
 ```
 
 For those that attended school in `r offender_counts_school$SCHOOL_LA`, approximately `r round((offender_counts_school$sv/offender_counts_school$offenders)*100, 0)`% of the ‘children who had been cautioned or sentenced for an offence’ group are in the ‘children who had been cautioned or sentenced for a serious violence offence’ group.  
 
-```{r offenders vs sv offenders waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for an offence that had also been cautioned or sentenced for a serious violence offence, and the proportion of children who had been cautioned or sentence for an offence, for pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15 [Source: DfE-MoJ data share, table: ...]**"}
+```{r offenders vs sv offenders waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for an offence that had also been cautioned or sentenced for a serious violence offence, and the proportion of children who had been cautioned or sentence for an offence, for pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15 [Source: DfE-MoJ data share, table: 1.1.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -315,7 +315,7 @@ The data used for this publication allows us to see what proportion of a certain
 proportion of children with a characteristic are also in the offending groups. For example, approximately `r ever_flags_no_star$sv_prop_count_FSM`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r ever_flags_no_star$SCHOOL_LA` were known to had ever been eligible for free school meals (FSM), but it is not possible to conclude from these findings that there is a causal relationship between FSM eligibility and being cautioned or sentenced for a serious violence offence (or vice versa).  
 
 Indeed, those children who had been cautioned or sentenced for a serious violence offence identified as being eligible for FSM made up `r ever_flags_no_star$also_sv_prop_count_FSM`% of all pupils
-known to be eligible for FSM. If there were a causal link, a much higher number might be expected. Whilst it can be said that most children who had ever been cautioned or sentenced for a serious violence offence had also been eligible for FSM at some stage, it is not true that most children eligible for FSM had also been cautioned or sentenced for a serious violence offence. This is a pattern which emerges throughout this analysis; it is therefore important to consider this when reading the publication.  
+known to be eligible for FSM. Whilst it can be said that most children who had ever been cautioned or sentenced for a serious violence offence had also been eligible for FSM at some stage, it is not true that most children eligible for FSM had also been cautioned or sentenced for a serious violence offence. This is a pattern which emerges throughout this analysis; it is therefore important to consider this when reading the publication.  
 
 In addition to those given above, there are other reasons why this analysis cannot draw causal links. For example, there are many additional factors
 which could influence someone's offending behaviour for which the data is not available for this analysis. The factors looked at in this paper come from education, children's social care, and offending datasets, meaning there are many unobserved factors which have not been accounted for here, for example health characteristics.  
@@ -392,15 +392,11 @@ home_school_chart <- ggplot(home_school_for_chart, aes(fill = diff_LA, y = value
   labs(x = NULL, y="% of\nchildren with\na different\nLA") +
   geom_text(aes(label = paste0(value, "%")), vjust = -0.4, position = position_dodge(width = 1)) +
   theme_classic() +
-  theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black")) +
+  theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=12)) +
   scale_fill_manual(values = c("#08306b", "#2171b5")) +
   theme(axis.title.y=element_text(angle=0)) +
-  theme(text=element_text(size=12), #change font size of all text
-        axis.text=element_text(size=12), #change font size of axis text
-        axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+  theme(text=element_text(size=12), #change font size of plot title
+        legend.text=element_text(size=12)) #change font size of legend text
 ```
 
 ## Difference between home and school Local Authorities
@@ -413,7 +409,7 @@ The remainder of this document refers only to children with a school LA of `r ho
 
 `r if(offender_counts_home$HOME_LA %in% 'Bradford' | offender_counts_home$HOME_LA %in% 'Sheffield'){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r home school chart, echo=FALSE, fig.dim = c(8, 6), fig.cap="**Proportion of children with different home and school LAs. [Source: DfE-MoJ data share, table: ...]**"}
+```{r home school chart, echo=FALSE, fig.cap="**Proportion of children with different home and school LAs. [Source: DfE-MoJ data share, table: 1.12.1 and 1.12.2]**"}
 home_school_chart
 ```
 
@@ -435,7 +431,7 @@ previous_offending_for_chart$`Proportion with a previous offence` <- as.numeric(
 previous_offending_chart <- ggplot(previous_offending_for_chart, aes(x = "", y = `Proportion with a previous offence`, fill = `Previous offending`)) +
   geom_bar(stat="identity", width=1) +
   coord_polar(theta = "y", start = 0, direction = -1) +
-  geom_text(aes(x=1.65, label = paste0(`Proportion with a previous offence`, "%")), position = position_stack(vjust=0.5), size=4) +
+  geom_text(aes(x=1.65, label = paste0(`Proportion with a previous offence`, "%")), position = position_stack(vjust=0.5), size=4.5) +
   labs(x = NULL, y = NULL) +
   theme_classic() +
   theme(axis.line = element_blank(),
@@ -444,14 +440,11 @@ previous_offending_chart <- ggplot(previous_offending_for_chart, aes(x = "", y =
         legend.position = "bottom", 
         legend.title=element_blank()) +
   scale_fill_manual(values = c("#08306b", "#2171b5"), labels = c("Serious violence offence\nwith a previous offence", "Serious violence offence\nwithout a previous offence")) +
-  theme(text=element_text(size=12), #change font size of all text
+  theme(text=element_text(size=12, colour = 'black'), #change font size of all text
         axis.text=element_blank(), #remove axis text
         axis.line=element_blank(),
         axis.ticks=element_blank(),
-        axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
 
 significance_testing <- read_excel("20072022_sig_testing.xlsx", 
                                  sheet = 'sv') %>%
@@ -471,7 +464,7 @@ In order to better understand offending trajectories for children who had been c
 
 `r (100-previous_offending$prop_previous)`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r offender_counts_home$HOME_LA` had not been cautioned or sentenced for a previous offence. The difference between these results and the national figure was `r (significance_testing$previous_offending)`.  
 
-```{r previous offending chart, echo=FALSE, fig.dim = c(8, 6), fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence with or without a prior offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r previous offending chart, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence with or without a prior offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.1.1]**"}
 previous_offending_chart
 ```
 
@@ -493,17 +486,14 @@ gender_for_chart <- t(gender_for_chart) %>%
 gender_chart <- ggplot(gender_for_chart, aes(fill = Gender, Group, perc)) +
   ggplot2::geom_bar(stat = "identity") +
   labs(x=NULL, y="% male/female") +
-  geom_text(aes(label = paste0(perc, "%"), group = Gender), color = "white", position = position_stack(vjust = 0.5)) +
+  geom_text(aes(label = paste0(perc, "%"), group = Gender), color = "white", position = position_stack(vjust = 0.5), size=4) +
   theme_classic() +
   theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black")) +
   scale_fill_manual(values = c("#08306b", "#2171b5"), labels = c("Female", "Male")) +
-  theme(axis.title.y=element_text(angle=0)) +
+  theme(axis.title.y=element_text(angle=0, size=12)) +
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
-        axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
 
 ```
 
@@ -513,7 +503,7 @@ gender_chart <- ggplot(gender_for_chart, aes(fill = Gender, Group, perc)) +
 
 Male pupils were over-represented amongst children who had been cautioned or sentenced for an offence and children who had been cautioned or sentenced for a serious violence offence -  `r gender$prop_any_count_M`% of those that had been cautioned or sentenced for any offence were male, and `r gender$prop_sv_count_M`% of those that were cautioned or sentenced for a serious violence offence were male. In comparison, `r gender$prop_count_M`% of the all-pupil cohort that attended school in `r gender$SCHOOL_LA` was male. For children who had been cautioned or sentenced for a serious violence offence, the difference between these results and the national figure was `r (significance_testing$gender)`.  
 
-```{r gender chart, echo=FALSE, fig.dim = c(8, 6), fig.cap="**The gender breakdown of offending and pupil group, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r gender chart, echo=FALSE, fig.cap="**The gender breakdown of offending and pupil group, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: 1.1.1]**"}
 gender_chart
 ```
 
@@ -536,15 +526,11 @@ age_chart <-  ggplot(age_for_chart, aes(x=OffenceStartAge, y=value, group=`Pupil
   geom_line(aes(color=`Pupil Group`), size=1.5) + 
   labs(x = "Age at first offence", y="% at age") +
   theme_classic() +
-  theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black")) +
+  theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=12)) +
   scale_color_manual(values = c("#08306b", "#2171b5")) +
-  theme(axis.title.y=element_text(angle=0)) +
+  theme(axis.title.y=element_text(angle=0, size=12)) +
   theme(text=element_text(size=12), #change font size of all text
-        axis.text=element_text(size=12), #change font size of axis text
-        axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend #change font size of legend title 
 
 ```
 
@@ -552,13 +538,33 @@ age_chart <-  ggplot(age_for_chart, aes(x=OffenceStartAge, y=value, group=`Pupil
 
 ## Age
 
-The most common age at first offence for all those that were cautioned or sentenced for an offence and attended school in `r age$SCHOOL_LA[1]` was `r age$OffenceStartAge[which.max(age$prop_off)]`. The most common age at first serious violence offence for all those that were cautioned or sentenced for a serious violence offence and attended school in `r age$SCHOOL_LA[1]` was `r age$OffenceStartAge[which.max(age$prop_sv)]`. The chart below shows the distribution of the age at first offence in `r age$SCHOOL_LA[1]`[^7th_footnote].  
+`r if(offender_counts_home$HOME_LA == 'Birmingham'){"The most common ages at first offence for all those that were cautioned or sentenced for an offence and attended school in Birmingham were 16 and 17."}`
+
+`r if(offender_counts_home$HOME_LA == 'Bradford'){"The most common age at first offence for all those that were cautioned or sentenced for an offence and attended school in Bradford was 15"}`
+
+`r if(offender_counts_home$HOME_LA == 'Haringey'){"The most common ages at first offence for all those that were cautioned or sentenced for an offence and attended school in Haringey were 14 and 17."}`
+
+`r if(offender_counts_home$HOME_LA == 'Lambeth'){"The most common age at first offence for all those that were cautioned or sentenced for an offence and attended school in Lambeth was 16"}`
+
+`r if(offender_counts_home$HOME_LA == 'Leeds'){"The most common age at first offence for all those that were cautioned or sentenced for an offence and attended school in Leeds was 15"}`
+
+`r if(offender_counts_home$HOME_LA == 'Liverpool'){"The most common age at first offence for all those that were cautioned or sentenced for an offence and attended school in Liverpool was 15"}`
+
+`r if(offender_counts_home$HOME_LA == 'Manchester'){"The most common age at first offence for all those that were cautioned or sentenced for an offence and attended school in Manchester was 15"}`
+
+`r if(offender_counts_home$HOME_LA == 'Newham'){"The most common age at first offence for all those that were cautioned or sentenced for an offence and attended school in Newham was 15"}`
+
+`r if(offender_counts_home$HOME_LA == 'Sheffield'){"The most common age at first offence for all those that were cautioned or sentenced for an offence and attended school in Sheffield was 17"}`
+
+`r if(offender_counts_home$HOME_LA == 'Southwark'){"The most common age at first offence for all those that were cautioned or sentenced for an offence and attended school in Southwark was 16"}`
+
+The most common age at first serious violence offence for all those that were cautioned or sentenced for a serious violence offence and attended school in `r age$SCHOOL_LA[1]` was `r age$OffenceStartAge[which.max(age$prop_sv)]`. The chart below shows the distribution of the age at first offence in `r age$SCHOOL_LA[1]`[^7th_footnote].  
 
 [^7th_footnote]: All offences were included in the analysis of age at first offence for children who had been cautioned or sentenced for an offence irrespective of whether they were also serious violence offences. Serious violence offences only were included in the analysis for children who had been cautioned or sentenced for a serious violence offence.
 
 `r if("*" %in% age$prop_off | "*" %in% age$prop_sv){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r age chart, echo=FALSE,  fig.dim = c(8, 6), fig.cap="**The proportion of children relative to their age at first offence by offending group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r age chart, echo=FALSE, fig.cap="**The proportion of children relative to their age at first offence by offending group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.3.1]**"}
 age_chart
 ```
 
@@ -599,19 +605,20 @@ ethnic_major_long <- ethnic_major_long %>% map_df(rev) %>% mutate(`Ethnic Group 
 ethnic_major_chart <- ggplot(ethnic_major_long, aes(x=value, y=`Ethnic Group Major`, fill = `Ethnic Group Major`)) +
   geom_bar(stat = "identity") +
   labs(x = "% of ethnic group major", y=NULL) +
-  geom_text(aes(label = paste0(value, "%")), vjust = 0, hjust=-0.1) +
+  geom_text(aes(label = paste0(value, "%")), vjust = 0, hjust=-0.1, size=4) +
   theme_classic() +
-  theme(legend.position = "none", axis.text = element_text(color="black")) +
+  theme(legend.position = "none", axis.text = element_text(color="black", size=12)) +
   scale_fill_manual(values = c("#08306b", "#08519c", "#2171b5", "#4292c6", "#6baed6", "#9ecae1", "#c6dbef"),
                     breaks=c("White","Unclassified", "Mixed", "Chinese", "Black","Asian", "Any other ethnic group")) +
-  facet_wrap(~Pupil_group) + theme(strip.background = element_blank()) +
+  facet_wrap(~Pupil_group) + 
+  theme(strip.background = element_blank()) +
   xlim(0,105) +
-  scale_y_discrete(labels = c("Any other\nethnic group","Asian","Black", "Chinese", "Mixed", "Unclassified", "White")) + theme(text=element_text(size=12), #change font size of all text
+  scale_y_discrete(labels = c("Any other\nethnic group","Asian","Black", "Chinese", "Mixed", "Unclassified", "White")) + 
+  theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) + #change font size of legend text
+  annotate("segment",x=0,xend=100,y=Inf,yend=Inf,color="black",lwd=1)
 
 ethnic_major_all_not_suppressed <- ethnic_major %>%
   filter(prop_all != "*") %>%
@@ -644,7 +651,7 @@ The most common major ethnic group amongst all pupils with a school LA of `r eth
 
 `r if("*" %in% ethnic_major$prop_all | "*" %in% ethnic_major$prop_off | "*" %in% ethnic_major$prop_sv){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r ethnicity chart, echo=FALSE, fig.cap="**The proportion of all pupils split by ethnic group major, offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r ethnicity chart, echo=FALSE, fig.cap="**The proportion of all pupils split by ethnic group major, offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.2.1]**"}
 
 ethnic_major_chart
 ```
@@ -675,17 +682,16 @@ FSM_for_chart <- FSM_for_chart %>% mutate(`% eligible for FSM` = as.numeric(`% e
 FSM_chart <- ggplot(FSM_for_chart, aes(x=`% eligible for FSM`, y=`Pupil Group`, fill = `Pupil Group`)) +
   geom_bar(position = 'dodge', stat = 'identity') +
   labs(x="% eligible for FSM", y=NULL) +
-  geom_text(aes(label = paste0(`% eligible for FSM`, "%")), hjust =-0.1, position = position_dodge(width = 1)) +
+  geom_text(aes(label = paste0(`% eligible for FSM`, "%")), hjust =-0.1, position = position_dodge(width = 1), size=4) +
   theme_classic() +
-  theme(legend.position = "none", axis.text = element_text(color="black")) +
+  theme(legend.position = "none", axis.text = element_text(color="black", size=12)) +
   scale_fill_manual(values = c("#08306b", "#08306b", "#08306b")) +
-  xlim(0,100) + theme(text=element_text(size=12), #change font size of all text
+  xlim(0,100) + 
+  theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
-        axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        axis.title=element_text(size=12)) #change font size of axis titles
 
+      
 #FSM waffle
 FSM_for_waffle <- ever_flags %>%
   select(sv_prop_count_FSM, also_sv_prop_count_FSM) %>%
@@ -717,8 +723,7 @@ FSM_LHS_waffle <- waffle(FSM_LHS, rows=10, size=0.6, flip=TRUE,
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text #change font size of legend title 
 
 FSM_RHS_waffle <- waffle(FSM_RHS, rows=10, size=0.6, flip=TRUE,
                          colors=c("#08306b", "#6BACE6"), 
@@ -737,8 +742,7 @@ FSM_RHS_waffle <- waffle(FSM_RHS, rows=10, size=0.6, flip=TRUE,
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text) #change font size of legend title  
 ```
 
 \newpage
@@ -751,13 +755,13 @@ Children who had been cautioned or sentenced for an offence that attended school
 
 `r ever_flags_no_star$any_prop_count_FSM`% of all children who had been cautioned or sentenced for an offence and had attended school in `r home_vs_school_no_star$HOME_LA` had ever been eligible for FSM (approximately `r format(IFERROR(round(as.numeric(ever_flags_no_star$any_count_FSM), -1)), big.mark=',')` children), compared to `r ever_flags_no_star$sv_prop_count_FSM`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r home_vs_school_no_star$HOME_LA` (approximately `r format(IFERROR(round(as.numeric(ever_flags_no_star$sv_count_FSM), -1)), big.mark=',')` children). This compares to `r ever_flags_no_star$prop_count_FSM`% of all pupils who attended school in `r home_vs_school_no_star$HOME_LA` and had ever been eligible for FSM (approximately `r format(IFERROR(round(as.numeric(ever_flags_no_star$count_FSM), -1)), big.mark=',')` children). For children who had been cautioned or sentenced for a serious violence offence, the difference between these results and the national figure was `r (significance_testing$FSM)`.  
 
-```{r FSM chart, echo=FALSE,  fig.dim = c(8, 6), fig.cap="**Proportion of all pupils eligible for free school meals (FSM) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r FSM chart, echo=FALSE, fig.cap="**Proportion of all pupils eligible for free school meals (FSM) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.8.1]**"}
 FSM_chart
 ```
 
 However, whilst the majority of children who had been cautioned or sentenced for an offence and had attended school in `r home_vs_school_no_star$HOME_LA` had ever been eligible for FSM, it is not the case that the majority of children eligible for FSM were also cautioned or sentenced for an offence: only `r ever_flags_no_star$also_any_prop_count_FSM`% of those that had ever been eligible for FSM and had attended school in `r home_vs_school_no_star$HOME_LA` had also ever been cautioned or sentenced for an offence, and only `r ever_flags_no_star$also_sv_prop_count_FSM`% had ever been cautioned or sentenced for a serious violence offence.
 
-```{r FSM waffle, echo=FALSE,  fig.dim = c(8, 6), fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been eligible for free school meals (FSM), and all pupils who had ever been eligible for FSM, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: ...]**"}
+```{r FSM waffle, echo=FALSE,  fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been eligible for free school meals (FSM), and all pupils who had ever been eligible for FSM, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 1.8.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -792,22 +796,20 @@ KS4_attainment_for_chart <- KS4_attainment_for_chart %>% mutate(`% at\nKS4\nbenc
 
 KS4_attainment_chart <- ggplot(KS4_attainment_for_chart, aes(fill=`Pupil Group`, y=`% at\nKS4\nbenchmark`, x=KS4_benchmark2)) + 
   geom_bar(position='dodge', stat='identity') +
-  geom_text(aes(label = paste0(`% at\nKS4\nbenchmark`, "%")), vjust = -0.4, hjust=0.5, position = position_dodge(width = 1)) +
+  geom_text(aes(label = paste0(`% at\nKS4\nbenchmark`, "%")), vjust = -0.4, hjust=0.5, position = position_dodge(width = 1), size=4) +
   theme_classic() +
   theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black"),
         axis.title.x = element_blank()) +
   scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6")) +
   ylim(0,105) +
-  scale_x_discrete(limits = rev, labels = c("Achieved any pass at GCSE\nor equiv.",
-                                            "Achieved 5 or more GCSE\n(or equiv.) passes A* - G\nincl. English and Maths",
-                                            "Achieved 5 or more GCSE\n(or equiv.) passes A* - C\nincl. English and Maths")) +
-  theme(axis.title.y=element_text(angle=0)) +
+  scale_x_discrete(limits = rev, labels = c("Achieved any pass\nat GCSE\nor equiv.",
+                                            "Achieved 5 or\nmore GCSE\n(or equiv.)\npasses A* - G\nincl. English and Maths",
+                                            "Achieved 5 or\nmore GCSE\n(or equiv.)\npasses A* - C\nincl. English and Maths")) +
+  theme(axis.title.y=element_text(angle=0, size=12)) +
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
 
 #KS2 chart
 KS2_attainment <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
@@ -831,7 +833,7 @@ KS2_attainment_for_chart <- KS2_attainment_for_chart %>% mutate(`% at level 4 or
 
 KS2_attainment_chart <- ggplot(KS2_attainment_for_chart, aes(fill=rev(Subject), x=`% at level 4 or above`, y=`Pupil Group`)) + 
   geom_bar(position='dodge', stat='identity') +
-  geom_text(aes(label = paste0(`% at level 4 or above`, "%")), vjust = 0, hjust=-0.15, position = position_dodge(width = 1)) +
+  geom_text(aes(label = paste0(`% at level 4 or above`, "%")), vjust = 0, hjust=-0.15, position = position_dodge(width = 1), size=4) +
   theme_classic() +
   theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black"),
         axis.title.y = element_blank()) +
@@ -840,9 +842,7 @@ KS2_attainment_chart <- ggplot(KS2_attainment_for_chart, aes(fill=rev(Subject), 
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
 
 ```
 
@@ -860,7 +860,7 @@ National Curriculum tests results: [National curriculum assessments: KS2 and KS3
 
 KS2 attainment in `r offender_counts_school$SCHOOL_LA` differed across English and Maths, with children who had been cautioned or sentenced for any offence tending to perform worse in English compared to Maths. `r KS2_attainment$propcount_EngL4orabove_offenders`% of children who had been cautioned or sentenced for an offence and `r KS2_attainment$propcount_EngL4orabove_SV_offenders`% of children who been cautioned or sentenced for a serious violence offence achieved a level 4 or above in English. In comparison, `r KS2_attainment$propcount_MatL4orabove_offenders`% of children who had been cautioned or sentenced for an offence and `r KS2_attainment$propcount_MatL4orabove_SV_offenders`% of children who had been cautioned or sentenced for a serious violence offence achieved a level 4 or above in Maths. This compares to `r KS2_attainment$propcount_EngL4orabove`% of the all-pupil cohort that achieved a level 4 or above in English and `r KS2_attainment$propcount_MatL4orabove`% of the all-pupil cohort that achieved a level 4 or above in Maths.  
 
-```{r KS2 attainment chart,  fig.dim = c(8, 6), echo=FALSE, fig.cap="**Proportion of all pupils who achieved level 4 or above in English and Mathematics at key stage 2 (KS2) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r KS2 attainment chart,  echo=FALSE, fig.cap="**Proportion of all pupils who achieved level 4 or above in English and Mathematics at key stage 2 (KS2) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.10.1]**"}
 KS2_attainment_chart
 ```
 
@@ -877,7 +877,7 @@ Similarly, for those that achieved 5 or more GCSE (or equivalent) passes at grad
 `r if("*" %in% KS4_attainment$propcount_anypass | "*" %in% KS4_attainment$propcount_5AG | "*" %in% KS4_attainment$propcount_5AC | "*" %in% KS4_attainment$propanycount_anypass | "*" %in% KS4_attainment$propanycount_5AG | "*" %in% KS4_attainment$propanycount_5AC | "*" %in% KS4_attainment$propsvcount_anypass | "*" %in% KS4_attainment$propsvcount_5AG | "*" %in% KS4_attainment$propsvcount_5AC){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
 
-```{r KS4 attainment chart,  fig.dim = c(8, 6), echo=FALSE, fig.cap="**Proportion of all pupils who achieved various key stage 4 (KS4) benchmarks by offending and pupil group, for pupils matched to KS4 academic year 2014/15 only. [Source: DfE-MoJ data share, table: ...]**"}
+```{r KS4 attainment chart,  echo=FALSE, fig.cap="**Proportion of all pupils who achieved various key stage 4 (KS4) benchmarks by offending and pupil group, for pupils matched to KS4 academic year 2014/15 only. [Source: DfE-MoJ data share, table: 1.11.1]**"}
 KS4_attainment_chart
 ```
 
@@ -906,19 +906,17 @@ Absence_for_chart <- Absence_for_chart %>% mutate(`% persistently absent` = as.n
 Absence_chart <- ggplot(Absence_for_chart, aes(fill=`Pupil Group`, y=`% persistently absent`, x=`Absence Type`)) + 
   geom_bar(position='dodge', stat='identity') + 
   labs(x=NULL, y="% persistently\nabsent") +
-  geom_text(aes(label = paste0(`% persistently absent`, "%")), vjust = -0.4, position = position_dodge(width = 1)) +
+  geom_text(aes(label = paste0(`% persistently absent`, "%")), vjust = -0.4, position = position_dodge(width = 1), size=4) +
   theme_classic() + 
   theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black")) +
   scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6")) +
   ylim(0,100) +
-  scale_x_discrete(labels = c("Persistent absence", "Persistent absence (unauthorised other)")) +
-  theme(axis.title.y=element_text(angle=0)) +
+  scale_x_discrete(labels = c("Persistent absence", "Persistent absence\n(unauthorised other)")) +
+  theme(axis.title.y=element_text(angle=0, size=12)) +
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
 
 
 #Absence timing chart
@@ -941,7 +939,7 @@ Absence_timing_for_chart <- Absence_timing_for_chart %>% mutate(perc_absence = a
 Absence_timing_chart <- ggplot(Absence_timing_for_chart, aes(x= perc_absence, y=Absence_type, fill = Timing, group=rev(Timing))) +
   geom_bar(position='stack', stat = "identity", width = 0.7) +
   labs(x = "% with persistent absence timing", y=NULL) +
-  geom_text(aes(label = paste0(perc_absence, "%"), group = rev(Timing)), position = position_stack(vjust = 0.5), vjust= -5.5, hjust=0) +
+  geom_text(aes(label = paste0(perc_absence, "%"), group = rev(Timing)), position = position_stack(vjust = 0.5), vjust= -7.5, hjust=0, size=4) +
   theme_classic() +
   theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black")) +
   scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6"),
@@ -953,8 +951,7 @@ Absence_timing_chart <- ggplot(Absence_timing_for_chart, aes(x= perc_absence, y=
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
 
 #PA waffle
 
@@ -984,12 +981,12 @@ PA_LHS_waffle <- waffle(PA_LHS, rows=10, size=0.6, flip=TRUE,
         plot.title = element_text(hjust = 0.5, size=9)) +
   scale_fill_manual(values = c("#08306b", "#2171b5"), 
                     labels = c("Persistently\nabsent", 
-                               "Not persistently\nabsent")) +
+                               "Not\npersistently\nabsent")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+       
 
 PA_RHS_waffle <- waffle(PA_RHS, rows=10, size=0.6, flip=TRUE,
                         colors=c("#08306b", "#6BACE6"), 
@@ -1003,13 +1000,12 @@ PA_RHS_waffle <- waffle(PA_RHS, rows=10, size=0.6, flip=TRUE,
         legend.title = element_blank(),
         plot.title = element_text(hjust = 0.5, size=9)) + 
   scale_fill_manual(values = c("#08306b", "#6BACE6"), 
-                    labels = c("Children cautioned or sentenced\nfor a serious violence offence", 
-                               "All other pupils")) +
+                    labels = c("Children cautioned\nor sentenced\nfor a serious violence\noffence", 
+                               "All other\npupils")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
 ```
 
 \newpage
@@ -1038,18 +1034,18 @@ Schools use a set of national codes to record the reasons for any absences. As t
 
 [^16th_footnote]:  A breakdown of rates of persistent absence by reason code are included in the accompanying publication tables.
 
-The absence reason 'persistent absence unauthorised other' (PAUO) is used as a proxy for persistent truancy. Looking at this reason code in isolation, `r ever_flags_no_star$any_prop_count_PAUO`% of children who had been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA` had ever been PAUO, compared to `r ever_flags_no_star$sv_prop_count_PAUO`% of children who had been cautioned or sentenced for a serious violence offence. This compares to `r ever_flags_no_star$prop_count_PAUO`% of the all-pupil cohort that had attended school in `r offender_counts_school$SCHOOL_LA`. For children who had been cautioned or sentenced for a serious violence offence, the difference between these results and the national figure was `r (significance_testing$PAUO)`.  
+The absence reason 'persistent absence for "unauthorised other" reasons' (PAUO) is used as a closest available proxy for persistent truancy. Looking at this reason code in isolation, `r ever_flags_no_star$any_prop_count_PAUO`% of children who had been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA` had ever been PAUO, compared to `r ever_flags_no_star$sv_prop_count_PAUO`% of children who had been cautioned or sentenced for a serious violence offence. This compares to `r ever_flags_no_star$prop_count_PAUO`% of the all-pupil cohort that had attended school in `r offender_counts_school$SCHOOL_LA`. For children who had been cautioned or sentenced for a serious violence offence, the difference between these results and the national figure was `r (significance_testing$PAUO)`.  
 
 \newpage
 
-```{r Absence chart, echo=FALSE,  fig.dim = c(8, 6), fig.cap="**Proportion of all pupils who had ever been persistently absent or persistently absent (unauthorised other) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r Absence chart, echo=FALSE, fig.cap="**Proportion of all pupils who had ever been persistently absent or persistently absent (unauthorised other) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.7.1]**"}
 Absence_chart
 ```
 
 
 Looking at the proportion of the persistently absent pupils who had ever been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA`: `r ever_flags_no_star$also_any_prop_count_PA`% of pupils who had ever been persistently absent pupils had been cautioned or sentenced for an offence, compared to `r ever_flags_no_star$also_sv_prop_count_PA`% who had been cautioned or sentenced for a serious violence offence. Therefore, whilst it can be said that the majority of children who had been cautioned or sentenced for a serious violence offence had ever been persistently absent, it is not the case that the majority of persistently absent pupils had also ever been cautioned or sentenced for a serious violence offence.  
 
-```{r PA waffle, echo=FALSE,  fig.dim = c(8, 6), fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had been persistently absent, and all pupils who had ever been persistently absent, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: ...]**"}
+```{r PA waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had been persistently absent, and all pupils who had ever been persistently absent, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 1.7.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -1081,7 +1077,7 @@ Almost all (`r Absence_timing$prop_PA_Before_SV`%) children who had been caution
 
 `r if("*" %in% Absence_timing$prop_PASame_Term | "*" %in% Absence_timing$prop_PA_After_SV | "*" %in% Absence_timing$prop_PAUOSame_Term | "*" %in% Absence_timing$prop_PAUO_After_SV){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r Absence timing chart, echo=FALSE, fig.dim = c(8, 6), fig.cap="**Timing of first record of persistent absence or persistent absence (unauthorised other) relative to the timing of children's first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r Absence timing chart, echo=FALSE, fig.cap="**Timing of first record of persistent absence or persistent absence (unauthorised other) relative to the timing of children's first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.3.1]**"}
 Absence_timing_chart
 ```
 
@@ -1105,19 +1101,17 @@ ExclSus_for_chart$`Excluded/Suspended` <- factor(ExclSus_for_chart$`Excluded/Sus
 ExclSus_chart <- ggplot(ExclSus_for_chart, aes(fill=`Pupil Group`, y=`% suspended/permanently excluded`, x=`Excluded/Suspended`)) + 
   geom_bar(position='dodge', stat='identity') + 
   labs(x=NULL, y="%\nsuspended/\npermanently\nexcluded") +
-  geom_text(aes(label = paste0(`% suspended/permanently excluded`, "%")), vjust = -0.4, position = position_dodge(width = 1)) +
+  geom_text(aes(label = paste0(`% suspended/permanently excluded`, "%")), vjust = -0.4, position = position_dodge(width = 1), size=4) +
   theme_classic() + 
   theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black")) +
   scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6")) +
   ylim(0,100) +
   scale_x_discrete(labels = c("Suspended", "Permanently excluded")) +
-  theme(axis.title.y=element_text(angle=0)) +
+  theme(axis.title.y=element_text(angle=0, size=12)) +
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text 
 
 #First suspension chart
 first_sus_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
@@ -1146,7 +1140,7 @@ first_sus_timing_for_chart <- first_sus_timing_for_chart %>% mutate(value = as.n
 first_sus_timing_chart <- ggplot(first_sus_timing_for_chart, aes(y=value, x=grouped_overall2, fill=time_group)) + 
   geom_bar(position='dodge', stat='identity') +
   labs(x=NULL, y="% with\ntiming") +
-  geom_text(aes(label = paste0(value, "%")), hjust =0.5, vjust=-0.15, position = position_dodge(width = 1)) +
+  geom_text(aes(label = paste0(value, "%")), hjust =0.5, vjust=-0.15, position = position_dodge(width = 1), size=4) +
   theme_classic() +
   theme(legend.position = "bottom", legend.title = element_blank(), 
         axis.text = element_text(color="black", angle = 45, vjust = 0.5, hjust=1)) +
@@ -1159,13 +1153,12 @@ first_sus_timing_chart <- ggplot(first_sus_timing_for_chart, aes(y=value, x=grou
                               "30 - 59 days","1 - 29 days", "On same day", "1 - 29 days",  "30 - 59 days", 
                               "60 - 89 days", "90 - 179 days", "180 -365 days", "1 - 2 years", "Over 2 years")) +
   geom_vline(xintercept ="H - On same day", linetype='dashed', color = 'grey') +
-  theme(axis.title.y=element_text(angle=0)) + 
+  theme(axis.title.y=element_text(angle=0, size=12)) + 
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+       
 
 
 #Closest suspension chart
@@ -1196,7 +1189,7 @@ closest_sus_timing_for_chart <- closest_sus_timing_for_chart %>% mutate(value = 
 closest_sus_timing_chart <- ggplot(closest_sus_timing_for_chart, aes(y=value, x=grouped_overall2, fill=time_group)) + 
   geom_bar(position='dodge', stat='identity') +
   labs(x=NULL, y="% with\ntiming") +
-  geom_text(aes(label = paste0(value, "%")), hjust =0.5, vjust=-0.15, position = position_dodge(width = 1)) +
+  geom_text(aes(label = paste0(value, "%")), hjust =0.5, vjust=-0.15, position = position_dodge(width = 1), size=4) +
   theme_classic() +
   theme(legend.position = "bottom", legend.title = element_blank(), 
         axis.text = element_text(color="black", angle = 45, vjust = 0.5, hjust=1)) +
@@ -1209,13 +1202,12 @@ closest_sus_timing_chart <- ggplot(closest_sus_timing_for_chart, aes(y=value, x=
                               "30 - 59 days","1 - 29 days", "On same day", "1 - 29 days",  "30 - 59 days", 
                               "60 - 89 days", "90 - 179 days", "180 -365 days", "1 - 2 years", "Over 2 years")) +
   geom_vline(xintercept ="H - On same day", linetype='dashed', color = 'grey') +
-  theme(axis.title.y=element_text(angle=0))  + 
+  theme(axis.title.y=element_text(angle=0, size=12))  + 
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+        
 
 #First exclusion chart
  first_excl_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
@@ -1244,7 +1236,7 @@ first_excl_timing_chart <- ggplot(first_excl_timing_for_chart, aes(y=value, x=gr
   theme_classic() +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
   labs(x="", y="% with\ntiming") +
-  geom_text(aes(label = paste0(value, "%")), hjust =0.5, vjust=-0.15, position = position_dodge(width = 1)) +
+  geom_text(aes(label = paste0(value, "%")), hjust =0.5, vjust=-0.15, position = position_dodge(width = 1), size=4) +
   theme_classic() +
   theme(legend.position = "bottom", legend.title = element_blank(), 
         axis.text = element_text(color="black", angle = 45, vjust = 0.5, hjust=1)) +
@@ -1257,13 +1249,12 @@ first_excl_timing_chart <- ggplot(first_excl_timing_for_chart, aes(y=value, x=gr
                               "30 - 59 days","1 - 29 days", "On same day", "1 - 29 days",  "30 - 59 days", 
                               "60 - 89 days", "90 - 179 days", "180 -365 days", "1 - 2 years", "Over 2 years")) +
   geom_vline(xintercept ="H - On same day", linetype='dashed', color = 'grey') +
-  theme(axis.title.y=element_text(angle=0))  + 
+  theme(axis.title.y=element_text(angle=0, size=12))  + 
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+        
 
 #Closest exclusion chart
 closest_excl_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
@@ -1295,7 +1286,7 @@ closest_excl_timing_chart <- ggplot(closest_excl_timing_for_chart, aes(y=value, 
   geom_text(aes(label = paste0(value, "%")), hjust =0.5, vjust=-0.15, position = position_dodge(width = 1)) +
   theme_classic() +
   theme(legend.position = "bottom", legend.title = element_blank(), 
-        axis.text = element_text(color="black", angle = 45, vjust = 0.5, hjust=1)) +
+        axis.text = element_text(color="black", angle = 45, vjust = 0.5, hjust=1, size=4)) +
   scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6"), 
                     labels=c("Closest permanent exclusion\nprior to first\nserious violence offence", 
                              "Closest permanent exclusion\non same day as first\nserious violence offence", 
@@ -1305,13 +1296,12 @@ closest_excl_timing_chart <- ggplot(closest_excl_timing_for_chart, aes(y=value, 
                               "30 - 59 days","1 - 29 days", "On same day", "1 - 29 days",  "30 - 59 days", 
                               "60 - 89 days", "90 - 179 days", "180 -365 days", "1 - 2 years", "Over 2 years")) +
   geom_vline(xintercept ="H - On same day", linetype='dashed', color = 'grey') +
-  theme(axis.title.y=element_text(angle=0))  + 
+  theme(axis.title.y=element_text(angle=0, size=14))  + 
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+        
 
 
 #Excluded waffle
@@ -1340,13 +1330,13 @@ Excl_LHS_waffle <- waffle(Excl_LHS, rows=10, size=0.6, flip=TRUE,
         legend.title = element_blank(),
         plot.title = element_text(hjust = 0.5, size=9)) +
   scale_fill_manual(values = c("#08306b", "#2171b5"), 
-                    labels = c("Permanently excluded", 
-                               "Not permanently\nexcluded")) +
+                    labels = c("Permanently\nexcluded", 
+                               "Not\npermanently\nexcluded")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+      
 
 Excl_RHS_waffle <- waffle(Excl_RHS, rows=10, size=0.6, flip=TRUE,
                           colors=c("#08306b", "#6BACE6"), 
@@ -1360,14 +1350,13 @@ Excl_RHS_waffle <- waffle(Excl_RHS, rows=10, size=0.6, flip=TRUE,
         legend.title = element_blank(),
         plot.title = element_text(hjust = 0.5, size=9)) + 
   scale_fill_manual(values = c("#08306b", "#6BACE6"), 
-                    labels = c("Children cautioned or sentenced\nfor a serious violence offence", 
-                               "All other pupils")) +
+                    labels = c("Children cautioned\nor sentenced\nfor a serious violence\noffence", 
+                               "All other\npupils")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
-
+        legend.text=element_text(size=12)) #change font size of legend text
+       
 #Suspended waffle
 Sus_for_waffle <- ever_flags %>%
   select(sv_prop_count_Sus, also_sv_prop_count_Sus) %>%
@@ -1395,12 +1384,12 @@ Sus_LHS_waffle <- waffle(Sus_LHS, rows=10, size=0.6, flip=TRUE,
         plot.title = element_text(hjust = 0.5, size=9)) +
   scale_fill_manual(values = c("#08306b", "#2171b5"), 
                     labels = c("Suspended", 
-                               "Not suspended")) +
+                               "Not\nsuspended")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+       
 
 Sus_RHS_waffle <- waffle(Sus_RHS, rows=10, size=0.6, flip=TRUE,
                          colors=c("#08306b", "#6BACE6"), 
@@ -1414,13 +1403,13 @@ Sus_RHS_waffle <- waffle(Sus_RHS, rows=10, size=0.6, flip=TRUE,
         legend.title = element_blank(),
         plot.title = element_text(hjust = 0.5, size=9)) + 
   scale_fill_manual(values = c("#08306b", "#6BACE6"), 
-                    labels = c("Children cautioned or sentenced\nfor a serious violence offence", 
-                               "All other pupils")) +
+                    labels = c("Children cautioned\nor sentenced\nfor a serious violence\noffence", 
+                               "All other\npupils")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+      
 
 ```
 
@@ -1440,7 +1429,7 @@ Children who had been cautioned or sentenced for an offence and had attended sch
 
 Overall, `r ever_flags_no_star$any_prop_count_Excl`% of children who had been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA` had been permanently excluded (approximately `r format(IFERROR(round(as.numeric(ever_flags_no_star$any_count_Excl), -1)), big.mark=',')` children), compared with `r ever_flags_no_star$sv_prop_count_Excl`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r offender_counts_school$SCHOOL_LA` (approximately `r format(IFERROR(round(as.numeric(ever_flags_no_star$sv_count_Excl), -1)), big.mark=',')` children). This compares to `r ever_flags_no_star$prop_count_Excl`% of the all-pupil cohort that had attended school in `r offender_counts_school$SCHOOL_LA` (approximately `r format(IFERROR(round(as.numeric(ever_flags_no_star$count_Excl), -1)), big.mark=',')` children).  For children who had been cautioned or sentenced for a serious violence offence, the difference between these results and the national figure was `r (significance_testing$exclusions)`.   
 
-```{r ExclSus chart, echo=FALSE,  fig.dim = c(8, 6), fig.cap="**The proportion of all pupils who had a record of being suspended or permanently excluded by offending and pupil group, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r ExclSus chart, echo=FALSE, fig.cap="**The proportion of all pupils who had a record of being suspended or permanently excluded by offending and pupil group, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.9.1]**"}
 ExclSus_chart
 ```
 
@@ -1449,7 +1438,7 @@ ExclSus_chart
 In comparison to the proportions seen above, `r ever_flags_no_star$also_any_prop_count_Sus`% of suspended pupils that had attended school in `r offender_counts_school$SCHOOL_LA` had ever
 been cautioned or sentenced for an offence, compared to `r ever_flags_no_star$also_sv_prop_count_Sus`% who had been cautioned or sentenced for a serious violence offence. This shows us that, whilst the majority of children who had been cautioned or sentenced for a serious violence offence had also been suspended, it is not the case that most suspended pupils have been cautioned or sentenced for a serious violence offence.  
 
-```{r Sus waffle, echo=FALSE, fig.dim = c(8, 6),fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: ...]**"}
+```{r Sus waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 1.9.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -1461,7 +1450,7 @@ grid.arrange(Sus_LHS_waffle, Sus_RHS_waffle, ncol=2, widths=c(1,2))
 
 When looking at all children that had ever been permanently excluded and had attended school in `r offender_counts_school$SCHOOL_LA`, `r ever_flags_no_star$also_any_prop_count_Excl`% had ever been cautioned or sentenced for an offence, compared to `r ever_flags_no_star$also_sv_prop_count_Excl`% who had been cautioned or sentenced for a serious violence offence.  
 
-```{r Excl waffle, echo=FALSE, fig.dim = c(8, 6), fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: ...]**"}
+```{r Excl waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 1.9.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -1481,7 +1470,7 @@ Most children who had been cautioned or sentenced for a serious violence offence
 
 `r if("*" %in% first_sus_timing$prop_susfirst_all | "*" %in% first_sus_timing$prop_svfirst_all ){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r first_sus chart, echo=FALSE, fig.dim = c(8, 6), fig.cap="**Timing of children's first suspension relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r first_sus chart, echo=FALSE, fig.cap="**Timing of children's first suspension relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: 2.2.3]**"}
 first_sus_timing_chart  
 ```
 
@@ -1491,7 +1480,7 @@ Many children who had been cautioned or sentenced for a serious violence offence
 
 `r if(offender_counts_home$HOME_LA == 'Birmingham' & ("*" %in% first_excl_timing$prop_susfirst_all | "*" %in% first_excl_timing$prop_svfirst_all)){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r first_excl chart, echo=FALSE, eval=offender_counts_home$HOME_LA == 'Birmingham', fig.cap="**Timing of children's first exclusion relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r first_excl chart, echo=FALSE, eval=offender_counts_home$HOME_LA == 'Birmingham', fig.cap="**Timing of children's first exclusion relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: 2.2.1]**"}
 first_excl_timing_chart
 ```
 
@@ -1509,13 +1498,13 @@ Similar to the first suspension or permanent exclusion seen above, many children
 
 `r if("*" %in% closest_sus_timing$prop_susfirst_all | "*" %in% closest_sus_timing$prop_svfirst_all ){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r closest_sus chart, echo=FALSE,  fig.dim = c(8, 6), fig.cap="**Timing of children's closest suspension relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r closest_sus chart, echo=FALSE, fig.cap="**Timing of children's closest suspension relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: 2.2.7]**"}
 closest_sus_timing_chart  
 ```
 
 `r if(offender_counts_home$HOME_LA == 'Birmingham' & ("*" %in% closest_excl_timing$prop_susfirst_all | "*" %in% closest_excl_timing$prop_svfirst_all)){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r closest_excl chart, echo=FALSE,  fig.dim = c(8, 6), eval=offender_counts_home$HOME_LA == 'Birmingham', fig.cap="**Timing of children's closest permanent exclusion relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r closest_excl chart, echo=FALSE,  eval=offender_counts_home$HOME_LA == 'Birmingham', fig.cap="**Timing of children's closest permanent exclusion relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: 2.2.5]**"}
 closest_excl_timing_chart
 ```
 
@@ -1537,7 +1526,7 @@ AP_for_chart <- AP_for_chart %>% mutate(`% ever attended AP` = as.numeric(`% eve
 AP_chart <- ggplot(AP_for_chart, aes(x=`% ever attended AP`, y=`Pupil Group`, fill = `Pupil Group`)) +
   geom_bar(position = 'dodge', stat = 'identity') +
   labs(x="% ever attended AP", y=NULL) +
-  geom_text(aes(label = paste0(`% ever attended AP`, "%")), hjust =-0.1, position = position_dodge(width = 1)) +
+  geom_text(aes(label = paste0(`% ever attended AP`, "%")), hjust =-0.1, position = position_dodge(width = 1), size=4) +
   theme_classic() +
   theme(legend.position = "none", axis.text = element_text(color="black")) +
   scale_fill_manual(values = c("#08306b", "#08306b", "#08306b")) +
@@ -1545,9 +1534,7 @@ AP_chart <- ggplot(AP_for_chart, aes(x=`% ever attended AP`, y=`Pupil Group`, fi
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
 
 #AP timing
 AP_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
@@ -1577,19 +1564,17 @@ AP_timing_for_chart <- AP_timing_for_chart %>% mutate(`% with AP timing` = as.nu
 AP_timing_chart <- ggplot(AP_timing_for_chart, aes(x=`% with AP timing`, y= pupil_group, fill = Timing, group=rev(Timing)))+
   geom_bar(position='stack', stat = "identity", width = 0.7) +
   labs(x = "% with AP timing", y=NULL) +
-  geom_text(aes(label = paste0(`% with AP timing`, "%"), group = rev(Timing)),  position = position_stack(vjust = 0.5), vjust= -9.5, hjust=0) +
+  geom_text(aes(label = paste0(`% with AP timing`, "%"), group = rev(Timing)),  position = position_stack(vjust = 0.5), vjust= -13, hjust=0,size=4) +
   theme_classic() +
   theme(legend.position = "bottom", legend.title=element_blank(), axis.text.x = element_text(color="black")) +
   scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6"),
-                    labels = c("Before the first\nserious violence offence", 
-                               "In the same term as the\nfirst serious violence offence", 
-                               "After the first\nserious violence offence"))  + 
+                    labels = c("Before the first\nserious violence\noffence", 
+                               "In the same term\nas the first serious\nviolence offence", 
+                               "After the first\nserious violence\noffence"))  + 
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
 
 
 #AP waffle
@@ -1619,12 +1604,12 @@ AP_LHS_waffle <- waffle(AP_LHS, rows=10, size=0.6, flip=TRUE,
         plot.title = element_text(hjust = 0.5, size=9)) +
   scale_fill_manual(values = c("#08306b", "#2171b5"), 
                     labels = c("Attended AP", 
-                               "Did not attend AP")) +
+                               "Did not\nattend AP")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+       
 
 AP_RHS_waffle <- waffle(AP_RHS, rows=10, size=0.6, flip=TRUE,
                         colors=c("#08306b", "#6BACE6"), 
@@ -1639,12 +1624,11 @@ AP_RHS_waffle <- waffle(AP_RHS, rows=10, size=0.6, flip=TRUE,
         plot.title = element_text(hjust = 0.5, size=9)) + 
   scale_fill_manual(values = c("#08306b", "#6BACE6"), 
                     labels = c("Children cautioned or sentenced\nfor a serious violence offence", 
-                               "All other pupils")) +
+                               "All other\npupils")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text 
 
 
 ```
@@ -1670,7 +1654,7 @@ Children who had been cautioned or sentenced for an offence and had attended sch
 
 `r ever_flags_no_star$any_prop_count_AP`% of all children who had been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA` had ever been registered at an AP setting (approximately `r format(round(ever_flags_no_star$any_count_AP, -1), big.mark=',')` children), compared to `r ever_flags_no_star$sv_prop_count_AP`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r offender_counts_school$SCHOOL_LA` (approximately `r format(round(ever_flags_no_star$sv_count_AP, -1), big.mark=',')` children). This compares to only `r ever_flags_no_star$prop_count_AP`% of the all-pupil cohort in `r offender_counts_school$SCHOOL_LA` (approximately `r format(round(ever_flags_no_star$count_AP, -1), big.mark=',')` children). For children who had been cautioned or sentenced for a serious violence offence, the difference between these results and the national figure was `r (significance_testing$AP)`.    
 
-```{r AP chart, echo=FALSE,  fig.dim = c(8, 6), fig.cap="**The proportion of all pupils who had ever attended alternative provision by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r AP chart, echo=FALSE,  fig.cap="**The proportion of all pupils who had ever attended alternative provision by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.6.1]**"}
 AP_chart
 ```
 
@@ -1678,7 +1662,7 @@ AP_chart
 
 Looking only at pupils that had ever been registered at an AP setting and had attended school in `r offender_counts_school$SCHOOL_LA`, `r ever_flags_no_star$also_any_prop_count_AP`% had ever been cautioned or sentenced for an offence. In addition, `r ever_flags_no_star$also_sv_prop_count_AP`% of those that had ever been registered at an AP setting and had attended school in `r offender_counts_school$SCHOOL_LA` had ever been cautioned or sentenced for a serious violence offence.  
 
-```{r AP waffle, echo=FALSE,  fig.dim = c(8, 6), fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: ...]**"}
+```{r AP waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 1.6.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -1694,7 +1678,7 @@ grid.arrange(AP_LHS_waffle, AP_RHS_waffle, ncol=2, widths=c(1,2))
   
 For children who had been cautioned or sentenced for a serious violence offence, attended school in `r offender_counts_school$SCHOOL_LA`, and had ever been registered at an AP setting, `r AP_timing_no_star$prop_AP_Before_SV`% first attended AP before their first serious violence offence and `r AP_timing_no_star$prop_AP_After_SV`% first attended AP after their first serious violence offence, whilst `r AP_timing_no_star$prop_APSame_Term`% first attended AP in the same term as their first serious violence offence.  
 
-```{r AP timing chart, echo=FALSE,  fig.dim = c(8, 6), eval=NA %!in% AP_timing_for_chart$`% with AP timing`, fig.cap="**The first term children attended alternative provision (AP) relative to the timing of their first offence, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r AP timing chart, echo=FALSE, eval=NA %!in% AP_timing_for_chart$`% with AP timing`, fig.cap="**The first term children attended alternative provision (AP) relative to the timing of their first offence, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.5.1]**"}
 AP_timing_chart
 ```
 
@@ -1722,7 +1706,7 @@ SEN_for_chart <- SEN_for_chart %>% mutate(perc_SEN = as.numeric(perc_SEN))
 SEN_chart <- ggplot(SEN_for_chart, aes(fill=`SEN type`, x=perc_SEN, y=Pupil_group, group=rev(`SEN type`))) +
   geom_bar(position='stack', stat = "identity", width = 0.7) +
   labs(x = "% of SEN", y=NULL) +
-  geom_text(aes(label = paste0(perc_SEN, "%"), group = rev(`SEN type`)),  position = position_stack(vjust = 0.5), vjust= -3.5) +
+  geom_text(aes(label = paste0(perc_SEN, "%"), group = rev(`SEN type`)),  position = position_stack(vjust = 0.5), vjust= -5.5, size=4) +
   theme_classic() +
   theme(legend.position = "bottom", legend.title=element_blank(), axis.text.x = element_text(color="black")) +
   scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6"),
@@ -1731,9 +1715,7 @@ SEN_chart <- ggplot(SEN_for_chart, aes(fill=`SEN type`, x=perc_SEN, y=Pupil_grou
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
 
 #SEN timing charts
 SEN_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
@@ -1760,19 +1742,17 @@ SEN_timing_for_chart <- SEN_timing_for_chart %>% mutate(`% with timing` = as.num
 SEN_timing_chart <- ggplot(SEN_timing_for_chart, aes(x= `% with timing`, y=pupil_group, fill = Timing, group=rev(Timing))) +
   geom_bar(position='stack', stat = "identity", width = 0.7) +
   labs(x = "% with SEN timing", y=NULL) +
-  geom_text(aes(label = paste0(`% with timing`, "%"), group = rev(Timing)),  position = position_stack(vjust = 0.5), vjust= -9.5, hjust=0) +
+  geom_text(aes(label = paste0(`% with timing`, "%"), group = rev(Timing)),  position = position_stack(vjust = 0.5), vjust= -12.5, hjust=0, size=4) +
   theme_classic() +
-  theme(legend.position = "bottom", legend.title=element_blank(), axis.text.x = element_text(color="black")) +
+  theme(legend.position = "bottom", legend.title=element_blank(), axis.text.x = element_text(color="black", size=12)) +
   scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6"),
-                    labels = c("Before the first\nserious violence offence", 
-                               "In the same term as the\nfirst serious violence offence", 
-                               "After the first\nserious violence offence"))  + 
+                    labels = c("Before the first\nserious violence\noffence", 
+                               "In the same term\nas the first serious\nviolence offence", 
+                               "After the first\nserious violence\noffence"))  + 
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
-        axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        axis.title=element_text(size=12), #change font size of axis title
+        legend.text=element_text(size=12)) #change font size of legend text
 
 EHCP_timing_for_chart <- EHCP_timing %>%
   select(prop_EHCPSame_Term, prop_EHCP_Before_SV, prop_EHCP_After_SV)
@@ -1790,19 +1770,18 @@ EHCP_timing_for_chart <- EHCP_timing_for_chart %>% mutate(`% with timing` = as.n
 EHCP_timing_chart <- ggplot(EHCP_timing_for_chart, aes(x= `% with timing`, y=pupil_group, fill = Timing, group=rev(Timing))) +
   geom_bar(position='stack', stat = "identity", width = 0.7) +
   labs(x = "% with EHC plan timing", y=NULL) +
-  geom_text(aes(label = paste0(`% with timing`, "%"), group = rev(Timing)),  position = position_stack(vjust = 0.5), vjust= -9.5, hjust=0) +
+  geom_text(aes(label = paste0(`% with timing`, "%"), group = rev(Timing)),  position = position_stack(vjust = 0.5), vjust= -12.5, hjust=0, size=4) +
   theme_classic() +
   theme(legend.position = "bottom", legend.title=element_blank(), axis.text.x = element_text(color="black")) +
   scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6"),
-                    labels = c("Before the first\nserious violence offence", 
-                               "In the same term as the\nfirst serious violence offence", 
-                               "After the first\nserious violence offence"))  + 
+                    labels = c("Before the first\nserious violence\noffence", 
+                              "In the same term\nas the first serious\nviolence offence", 
+                               "After the first\nserious violence\noffence"))  + 
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
 
 #SEN waffles
 
@@ -1832,12 +1811,12 @@ SEN_support_LHS_waffle <- waffle(SEN_support_LHS, rows=10, size=0.6, flip=TRUE,
         plot.title = element_text(hjust = 0.5, size=9)) +
   scale_fill_manual(values = c("#08306b", "#2171b5"), 
                     labels = c("SEN Support", 
-                               "Not SEN Support")) +
+                               "Not SEN\nSupport")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+      
 
 SEN_support_RHS_waffle <- waffle(SEN_support_RHS, rows=10, size=0.6, flip=TRUE,
                                  colors=c("#08306b", "#6BACE6"), 
@@ -1852,13 +1831,12 @@ SEN_support_RHS_waffle <- waffle(SEN_support_RHS, rows=10, size=0.6, flip=TRUE,
         plot.title = element_text(hjust = 0.5, size=9)) + 
   scale_fill_manual(values = c("#08306b", "#6BACE6"), 
                     labels = c("Children cautioned or sentenced\nfor a serious violence offence", 
-                               "All other pupils")) +
+                               "All other\npupils")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
-
+        legend.text=element_text(size=12)) #change font size of legend text
+        
 EHCP_for_waffle <- SEN %>%
   select(prop_EHCP_SV, prop_also_EHCP_SV) %>%
   mutate(prop_EHCP_SV = round(prop_EHCP_SV,0),
@@ -1885,12 +1863,12 @@ EHCP_LHS_waffle <- waffle(EHCP_LHS, rows=10, size=0.6, flip=TRUE,
         plot.title = element_text(hjust = 0.5, size=9)) +
   scale_fill_manual(values = c("#08306b", "#2171b5"), 
                     labels = c("EHC plan", 
-                               "No EHC plan")) +
+                               "No EHC\nplan")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+        
 
 EHCP_RHS_waffle <- waffle(EHCP_RHS, rows=10, size=0.6, flip=TRUE,
                           colors=c("#08306b", "#6BACE6"), 
@@ -1905,12 +1883,12 @@ EHCP_RHS_waffle <- waffle(EHCP_RHS, rows=10, size=0.6, flip=TRUE,
         plot.title = element_text(hjust = 0.5, size=9)) + 
   scale_fill_manual(values = c("#08306b", "#6BACE6"), 
                     labels = c("Children cautioned or sentenced\nfor a serious violence offence", 
-                               "All other pupils")) +
+                               "All other\npupils")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+       
 
 #SEN types
 
@@ -1979,18 +1957,17 @@ SEMH_timing_for_chart <- SEMH_timing_for_chart %>% mutate(`% with SEMH timing` =
 SEMH_timing_chart <- ggplot(SEMH_timing_for_chart, aes(x= `% with SEMH timing`, y=pupil_group, fill = Timing, group=rev(Timing))) +
   geom_bar(position='stack', stat = "identity", width = 0.7) +
   labs(x = "% with SEMH timing", y=NULL) +
-  geom_text(aes(label = paste0(`% with SEMH timing`, "%"), group = rev(Timing)),  position = position_stack(vjust = 0.5), vjust= -9.5, hjust=0) +
+  geom_text(aes(label = paste0(`% with SEMH timing`, "%"), group = rev(Timing)),  position = position_stack(vjust = 0.5), vjust= -12.5, hjust=0, size=4) +
   theme_classic() +
-  theme(legend.position = "bottom", legend.title=element_blank(), axis.text.x = element_text(color="black")) +
+  theme(legend.position = "bottom", legend.title=element_blank(), axis.text.x = element_text(color="black", size=12)) +
   scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6"),
-                    labels = c("Before the first\nserious violence offence", 
-                               "In the same term as the\nfirst serious violence offence", 
-                               "After the first\nserious violence offence"))  + 
+                    labels = c("Before the first\nserious violence\noffence", 
+                               "In the same term as\nthe first serious\nviolence offence", 
+                               "After the first\nserious violence\noffence"))  + 
   theme(text=element_text(size=12), #change font size of all text
+        axis.text = element_text(size=12),
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text 
 
 ```
 
@@ -2024,7 +2001,7 @@ Of children who had been cautioned or sentenced for any offence and had attended
 
 \newpage
 
-```{r SEN chart, echo=FALSE,fig.dim = c(8, 6), fig.cap="**Special Educational Needs (SEN) of all pupils by offending and pupil group, for those that were ever recorded with SEN, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r SEN chart, echo=FALSE, fig.cap="**Special Educational Needs (SEN) of all pupils by offending and pupil group, for those that were ever recorded with SEN, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.5.1]**"}
 SEN_chart
 ```
 
@@ -2032,7 +2009,7 @@ SEN_chart
 
 `r SEN$prop_SEN_support_SV`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r offender_counts_school$SCHOOL_LA` had ever had SEN Support (without an EHC plan), however only `r SEN$prop_also_SEN_support_SV`% of children who had ever had SEN Support and had attended school in `r offender_counts_school$SCHOOL_LA` were children who were cautioned or sentenced for a serious violence offence.  
 
-```{r SEN Support waffle, echo=FALSE, fig.dim = c(8, 6), fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: ...]**"}
+```{r SEN Support waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 1.5.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 # Use grid.arrange to put plots in columns
@@ -2043,7 +2020,7 @@ grid.arrange(SEN_support_LHS_waffle, SEN_support_RHS_waffle, ncol=2, widths=c(1,
 
 When looking at children who had ever had an EHC plan, `r SEN$prop_also_EHCP_SV`% of those that had attended school in `r offender_counts_school$SCHOOL_LA` were children who were cautioned or sentenced for a serious violence offence.  
 
-```{r EHCP waffle, echo=FALSE, fig.dim = c(8, 6), fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: ...]**"}
+```{r EHCP waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 1.5.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 # Use grid.arrange to put plots in columns
@@ -2075,7 +2052,7 @@ For children who had been cautioned or sentenced for a serious violence offence,
 
 [^37th_footnote]: This analysis aims to differentiate between children who had been cautioned or sentenced for an offence, or a serious violence offence, that have received different levels of support. As such, the analysis distinguishes between those that have had SEN Support, but have never had an EHC plan, and those that have had an EHC plan, and when they were first recorded as receiving that support. It is important to note that this does not necessarily equate to when the child was first identified as having SEN. 
 
-```{r EHCP timing chart, echo=FALSE, fig.dim = c(8, 6), eval=NA %!in% EHCP_timing_for_chart$`% with timing`, fig.cap="**The first term children had an EHC plan, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r EHCP timing chart, echo=FALSE, eval=NA %!in% EHCP_timing_for_chart$`% with timing`, fig.cap="**The first term children had an EHC plan, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.6.1]**"}
 EHCP_timing_chart
 ```
 
@@ -2083,7 +2060,7 @@ EHCP_timing_chart
 
 For children who had been cautioned or sentenced for a serious violence offence, attended school in `r offender_counts_school$SCHOOL_LA`, and had ever been recorded with SEN (either with or without an EHC plan), `r SEN_timing$prop_SEN_Before_SV`% were first recorded with SEN before their first serious violence offence. 
 
-```{r SEN timing chart, echo=FALSE, fig.dim = c(8, 6), eval=NA %!in% SEN_timing_for_chart$`% with timing`, fig.cap="**The first term children had been recorded with SEN, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r SEN timing chart, echo=FALSE, eval=NA %!in% SEN_timing_for_chart$`% with timing`, fig.cap="**The first term children had been recorded with SEN, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.6.1]**"}
 SEN_timing_chart
 ```
 
@@ -2095,7 +2072,7 @@ As SEMH is consistently the most common recorded SEN type amongst children who h
 
 For children who had been cautioned or sentenced for a serious violence offence, had attended school in `r offender_counts_school$SCHOOL_LA` and had ever been recorded with SEMH (either with or without an EHC plan), `r SEMH_timing$prop_SEMH_Before_SV`% were first recorded with SEMH before their first serious violence offence.  
 
-```{r SEMH timing chart, echo=FALSE,fig.dim = c(8, 6), eval=NA %!in% SEMH_timing_for_chart$`% with SEMH timing`, fig.cap="**The first term children had been recorded with SEMH, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r SEMH timing chart, echo=FALSE, eval=NA %!in% SEMH_timing_for_chart$`% with SEMH timing`, fig.cap="**The first term children had SEMH, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.6.3]**"}
 SEMH_timing_chart
 ```
 
@@ -2125,20 +2102,18 @@ CSC_for_chart <- CSC_for_chart %>% mutate(`% recorded\nas CIN/CLA` = as.numeric(
 
 CSC_chart <- ggplot(CSC_for_chart, aes(fill=`Pupil Group`, y=`% recorded\nas CIN/CLA`, x=rev(CSC_type))) + 
   geom_bar(position='dodge', stat='identity') +
-  geom_text(aes(label = paste0(`% recorded\nas CIN/CLA`, "%")), vjust = -0.4, hjust=0.5, position = position_dodge(width = 1)) +
+  geom_text(aes(label = paste0(`% recorded\nas CIN/CLA`, "%")), vjust = -0.4, hjust=0.5, position = position_dodge(width = 1), size=4) +
   theme_classic() +
   theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black"),
         axis.title.x = element_blank()) +
   scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6")) +
   ylim(0,105) +
   scale_x_discrete(limits = rev, labels = c("Children in need","Children who are\nlooked after")) +
-  theme(axis.title.y=element_text(angle=0))  + 
+  theme(axis.title.y=element_text(angle=0, size=12))  + 
   theme(text=element_text(size=12), #change font size of all text
         axis.text=element_text(size=12), #change font size of axis text
         axis.title=element_text(size=12), #change font size of axis titles
-        plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
 
 #CSC timing
 
@@ -2171,18 +2146,6 @@ CLA_timing_for_chart <- CLA_timing %>%
 
 CSC_timing_for_chart <- cbind(CSC_timing_for_chart, CLA_timing_for_chart)
 
-CSC_timing_for_chart <- t(CSC_timing_for_chart) %>%
-  as.data.frame() %>%
-  mutate(CSC_type = factor(c('CIN', 'CIN', 'CIN', 'CPP', 'CPP', 'CPP', 'CLA', 'CLA', 'CLA'), levels=c("CLA","CPP","CIN"))) %>%
-  mutate(Timing = c('1 - Before the first serious violence offence', '2 - In the same term as the first serious violence offence',
-                    '3 - After the first serious violence offence', '1 - Before the first serious violence offence',
-                    '2 - In the same term as the first serious violence offence', '3 - After the first serious violence offence',
-                    '1 - Before the first serious violence offence', '2 - In the same term as the first serious violence offence',
-                    '3 - After the first serious violence offence')) %>%
-  rename(`% with timing` = 'V1') 
-
-CSC_timing_for_chart <- CSC_timing_for_chart %>% mutate(`% with timing` = as.numeric(`% with timing`))
-
 CSC_timing_chart <- ggplot(CSC_timing_for_chart, aes(x= `% with timing`, y=CSC_type, fill = Timing, group=rev(Timing))) +
   geom_bar(position='stack', stat = "identity", width = 0.7) +
   labs(x = "% with timing", y=NULL) +
@@ -2190,10 +2153,10 @@ CSC_timing_chart <- ggplot(CSC_timing_for_chart, aes(x= `% with timing`, y=CSC_t
   theme_classic() +
   theme(legend.position = "bottom", legend.title=element_blank(), axis.text.x = element_text(color="black")) +
   scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6"),
-                    labels = c("Before the first\nserious violence offence", 
-                               "In the same term as the\nfirst serious violence offence", 
-                               "After the first\nserious violence offence")) +
-  theme(text=element_text(size=10))
+                    labels = c("Before the first\nserious violence\noffence", 
+                               "In the same term as\nthe first serious\nviolence offence", 
+                               "After the first\nserious violence\noffence")) +
+  theme(text=element_text(size=12))
 
 #CIN waffles
 
@@ -2227,8 +2190,8 @@ CIN_LHS_waffle <- waffle(CIN_LHS, rows=10, size=0.3, flip=TRUE,
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text
+        
 
 CIN_RHS_waffle <- waffle(CIN_RHS, rows=10, size=0.3, flip=TRUE,
                          colors=c("#08306b", "#6BACE6"), 
@@ -2243,12 +2206,11 @@ CIN_RHS_waffle <- waffle(CIN_RHS, rows=10, size=0.3, flip=TRUE,
         plot.title = element_text(hjust = 0.5, size=9)) + 
   scale_fill_manual(values = c("#08306b", "#6BACE6"), 
                     labels = c("Children cautioned or sentenced\nfor a serious violence offence", 
-                               "All other pupils")) +
+                               "All other\npupils")) +
   theme(text=element_text(size=12), #change font size of all text
         axis.title=element_text(size=12), #change font size of axis titles
         plot.title=element_text(size=12), #change font size of plot title
-        legend.text=element_text(size=12), #change font size of legend text
-        legend.title=element_text(size=12)) #change font size of legend title 
+        legend.text=element_text(size=12)) #change font size of legend text 
 ```
 
 \newpage
@@ -2284,7 +2246,7 @@ compared with `r CSC_no_star$propsv_count_CLA`% of children who had been caution
 
 [^32nd_footnote]:  Children are included in this CLA analysis if they had been recorded as a child being looked after on the 31st March in any period between the ages of 6 - 16. Those matched to earlier years in the KS4 attainment data will as a result have less coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 8 and above.
 
-```{r CSC chart, echo=FALSE, fig.cap="**The proportion of children who had been recorded as being CIN/CLA on 31st March in any given year, by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]**"}
+```{r CSC chart, echo=FALSE, fig.cap="**The proportion of children who had been recorded as being CIN/CLA on 31st March in any given year, by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.4.1]**"}
 CSC_chart
 ```
 
@@ -2293,7 +2255,7 @@ CSC_chart
 Looking at the CIN and CLA cohorts that had attended school in `r offender_counts_school$SCHOOL_LA`, `r CSC_no_star$also_propsv_count_CIN`% of those who were CIN and `r CSC_no_star$also_propsv_count_CLA`% of those who were CLA, on 31st March in any given year had ever also been
 cautioned or sentenced for a serious violence offence. Meaning that, although high proportions of children who had been cautioned or sentenced for a serious violence offence had ever been recorded as CIN or CLA, it is not the case that most children that were ever recorded as CIN or CLA were also cautioned or sentenced for a serious violence offence.
 
-```{r CIN waffle, echo=FALSE, fig.dim = c(8, 6), fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: ...]**"}
+```{r CIN waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 1.4.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -2313,7 +2275,7 @@ between 2011/12 – 2017/18 for CIN, and 2004/05 - 2017/18 for CLA).
 
 The analysis presented here utilises a different dataset[^39th_footnote] to that used in the previous section of this publication, enabling more granular examination of those recorded in the children’s social care system at any point during the year, not just on 31st March, and to look at changes in their social care group throughout the year.  
 
-[^39th_footnote]: Termly CIN and CLA datasets were provided internally to enable us to complete this analysis.
+[^39th_footnote]: Termly CIN and CLA datasets were provided internally to enable us to complete this analysis. This data is not currently available within the MoJ-DfE data share.
 
 Children who had been cautioned or sentenced for a serious violence offence have been classified here as being CIN, CPP or CLA in an academic term, if at any point in that term they have been recorded as CIN, CPP or CLA[^41st_footnote].  
 
@@ -2413,9 +2375,9 @@ me",
   stringsAsFactors = FALSE
 )
 
-kable(glossary_table,"latex",longtable=T,caption="Here's the table caption.") %>% 
-  kable_styling(full_width = TRUE) %>%
-  row_spec(0, bold = T, background = "#9FB9C8")
+#kable(glossary_table,"latex",longtable=T,caption="Here's the table caption.") %>% 
+#  kable_styling(full_width = TRUE) %>%
+#row_spec(0, bold = T, background = "#9FB9C8")
 
 ```
 
@@ -2525,9 +2487,8 @@ weapon'),
   stringsAsFactors = FALSE
 )
 
-kable(sv_definition_table,"latex",longtable=T,caption="Here's the table caption.") %>% 
-  kable_styling(full_width = TRUE) %>%
-  row_spec(0, bold = T, background = "#9FB9C8")
+#kable(sv_definition_table,"latex",longtable=T,caption="Here's the table caption.") %>% 
+#  row_spec(0, bold = T, background = "#9FB9C8")
 
 ```
 
