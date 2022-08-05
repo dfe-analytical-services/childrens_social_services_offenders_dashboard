@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2021.12.7)  5 AUG 2022 11:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7200 64-bit) (preloaded format=pdflatex 2021.12.7)  5 AUG 2022 11:27
 entering extended mode
 **./Loop_markdown.tex
 (Loop_markdown.tex
@@ -1467,21 +1467,21 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 [2] [3]
 LaTeX Font Info:    Trying to load font information for TS1+phv on input line 2
-22.
+23.
 ("C:\Program Files\MiKTeX 2.9\tex/latex/psnfss\ts1phv.fd"
 File: ts1phv.fd 2001/06/04 scalable font definitions for TS1/phv.
 ) [4]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 243.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 244.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 260.
+(Font)              <10> on input line 261.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 260.
+(Font)              <7> on input line 261.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 260.
+(Font)              <5> on input line 261.
 [5] [6]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 426.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 427.
 [7]
 <Loop_markdown_files/figure-latex/offenders vs sv offenders waffle-1.pdf, id=12
 7, 469.755pt x 325.215pt>
@@ -1489,7 +1489,7 @@ File: Loop_markdown_files/figure-latex/offenders vs sv offenders waffle-1.pdf G
 raphic file (type pdf)
 <use Loop_markdown_files/figure-latex/offenders vs sv offenders waffle-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/offenders vs sv offen
-ders waffle-1.pdf  used on input line 436.
+ders waffle-1.pdf  used on input line 437.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [8 <./Loop_markdown_files/figure-latex/offenders vs sv offenders waffle-1.pdf>]
 [9] [10] [11]
@@ -1499,7 +1499,7 @@ File: Loop_markdown_files/figure-latex/home school chart-1.pdf Graphic file (ty
 pe pdf)
 <use Loop_markdown_files/figure-latex/home school chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/home school chart-1.p
-df  used on input line 598.
+df  used on input line 600.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [12] [13 <./Loop_markdown_files/figure-latex/home school chart-1.pdf>]
 <Loop_markdown_files/figure-latex/previous offending chart-1.pdf, id=175, 469.7
@@ -1508,7 +1508,7 @@ File: Loop_markdown_files/figure-latex/previous offending chart-1.pdf Graphic f
 ile (type pdf)
 <use Loop_markdown_files/figure-latex/previous offending chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/previous offending ch
-art-1.pdf  used on input line 625.
+art-1.pdf  used on input line 627.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [14 <./Loop_markdown_files/figure-latex/previous offending chart-1.pdf>]
 <Loop_markdown_files/figure-latex/gender chart-1.pdf, id=188, 469.755pt x 325.2
@@ -1517,7 +1517,7 @@ File: Loop_markdown_files/figure-latex/gender chart-1.pdf Graphic file (type pd
 f)
 <use Loop_markdown_files/figure-latex/gender chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/gender chart-1.pdf  u
-sed on input line 649.
+sed on input line 651.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [15 <./Loop_markdown_files/figure-latex/gender chart-1.pdf>]
 <Loop_markdown_files/figure-latex/age chart-1.pdf, id=201, 469.755pt x 325.215p
@@ -1525,7 +1525,7 @@ t>
 File: Loop_markdown_files/figure-latex/age chart-1.pdf Graphic file (type pdf)
 <use Loop_markdown_files/figure-latex/age chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/age chart-1.pdf  used
- on input line 675.
+ on input line 681.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [16 <./Loop_markdown_files/figure-latex/age chart-1.pdf>]
 <Loop_markdown_files/figure-latex/ethnicity chart-1.pdf, id=216, 469.755pt x 32
@@ -1534,7 +1534,7 @@ File: Loop_markdown_files/figure-latex/ethnicity chart-1.pdf Graphic file (type
  pdf)
 <use Loop_markdown_files/figure-latex/ethnicity chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/ethnicity chart-1.pdf
-  used on input line 715.
+  used on input line 721.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [17] [18 <./Loop_markdown_files/figure-latex/ethnicity chart-1.pdf>]
 <Loop_markdown_files/figure-latex/FSM chart-1.pdf, id=235, 469.755pt x 325.215p
@@ -1542,7 +1542,7 @@ t>
 File: Loop_markdown_files/figure-latex/FSM chart-1.pdf Graphic file (type pdf)
 <use Loop_markdown_files/figure-latex/FSM chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/FSM chart-1.pdf  used
- on input line 749.
+ on input line 754.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [19] [20 <./Loop_markdown_files/figure-latex/FSM chart-1.pdf>]
 <Loop_markdown_files/figure-latex/FSM waffle-1.pdf, id=253, 469.755pt x 325.215
@@ -1551,7 +1551,7 @@ File: Loop_markdown_files/figure-latex/FSM waffle-1.pdf Graphic file (type pdf)
 
 <use Loop_markdown_files/figure-latex/FSM waffle-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/FSM waffle-1.pdf  use
-d on input line 769.
+d on input line 774.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [21 <./Loop_markdown_files/figure-latex/FSM waffle-1.pdf>]
 <Loop_markdown_files/figure-latex/KS2 attainment chart-1.pdf, id=266, 469.755pt
@@ -1560,7 +1560,7 @@ File: Loop_markdown_files/figure-latex/KS2 attainment chart-1.pdf Graphic file
 (type pdf)
 <use Loop_markdown_files/figure-latex/KS2 attainment chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/KS2 attainment chart-
-1.pdf  used on input line 817.
+1.pdf  used on input line 822.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [22] [23 <./Loop_markdown_files/figure-latex/KS2 attainment chart-1.pdf>]
 <Loop_markdown_files/figure-latex/KS4 attainment chart-1.pdf, id=285, 469.755pt
@@ -1569,212 +1569,229 @@ File: Loop_markdown_files/figure-latex/KS4 attainment chart-1.pdf Graphic file
 (type pdf)
 <use Loop_markdown_files/figure-latex/KS4 attainment chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/KS4 attainment chart-
-1.pdf  used on input line 855.
+1.pdf  used on input line 860.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[24] [25 <./Loop_markdown_files/figure-latex/KS4 attainment chart-1.pdf>] [26] 
-[27]
-<Loop_markdown_files/figure-latex/PA waffle-1.pdf, id=322, 469.755pt x 325.215p
+[24] [25 <./Loop_markdown_files/figure-latex/KS4 attainment chart-1.pdf>] [26]
+<Loop_markdown_files/figure-latex/Absence chart-1.pdf, id=317, 469.755pt x 325.
+215pt>
+File: Loop_markdown_files/figure-latex/Absence chart-1.pdf Graphic file (type p
+df)
+<use Loop_markdown_files/figure-latex/Absence chart-1.pdf>
+Package pdftex.def Info: Loop_markdown_files/figure-latex/Absence chart-1.pdf  
+used on input line 933.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<Loop_markdown_files/figure-latex/PA waffle-1.pdf, id=318, 469.755pt x 325.215p
 t>
 File: Loop_markdown_files/figure-latex/PA waffle-1.pdf Graphic file (type pdf)
 <use Loop_markdown_files/figure-latex/PA waffle-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/PA waffle-1.pdf  used
- on input line 947.
+ on input line 953.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[28 <./Loop_markdown_files/figure-latex/PA waffle-1.pdf>] [29]
-<Loop_markdown_files/figure-latex/Absence timing chart-1.pdf, id=346, 469.755pt
+[27 <./Loop_markdown_files/figure-latex/Absence chart-1.pdf>] [28 <./Loop_markd
+own_files/figure-latex/PA waffle-1.pdf>] [29]
+<Loop_markdown_files/figure-latex/Absence timing chart-1.pdf, id=352, 469.755pt
  x 325.215pt>
 File: Loop_markdown_files/figure-latex/Absence timing chart-1.pdf Graphic file 
 (type pdf)
 <use Loop_markdown_files/figure-latex/Absence timing chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/Absence timing chart-
-1.pdf  used on input line 1021.
+1.pdf  used on input line 1028.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [30 <./Loop_markdown_files/figure-latex/Absence timing chart-1.pdf>]
-<Loop_markdown_files/figure-latex/ExclSus chart-1.pdf, id=361, 469.755pt x 325.
+<Loop_markdown_files/figure-latex/ExclSus chart-1.pdf, id=367, 469.755pt x 325.
 215pt>
 File: Loop_markdown_files/figure-latex/ExclSus chart-1.pdf Graphic file (type p
 df)
 <use Loop_markdown_files/figure-latex/ExclSus chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/ExclSus chart-1.pdf  
-used on input line 1070.
+used on input line 1077.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [31] [32 <./Loop_markdown_files/figure-latex/ExclSus chart-1.pdf>]
-<Loop_markdown_files/figure-latex/Sus waffle-1.pdf, id=380, 469.755pt x 325.215
+<Loop_markdown_files/figure-latex/Sus waffle-1.pdf, id=386, 469.755pt x 325.215
 pt>
 File: Loop_markdown_files/figure-latex/Sus waffle-1.pdf Graphic file (type pdf)
 
 <use Loop_markdown_files/figure-latex/Sus waffle-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/Sus waffle-1.pdf  use
-d on input line 1089.
+d on input line 1097.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [33 <./Loop_markdown_files/figure-latex/Sus waffle-1.pdf>]
-<Loop_markdown_files/figure-latex/Excl waffle-1.pdf, id=391, 469.755pt x 325.21
+<Loop_markdown_files/figure-latex/Excl waffle-1.pdf, id=397, 469.755pt x 325.21
 5pt>
 File: Loop_markdown_files/figure-latex/Excl waffle-1.pdf Graphic file (type pdf
 )
 <use Loop_markdown_files/figure-latex/Excl waffle-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/Excl waffle-1.pdf  us
-ed on input line 1106.
+ed on input line 1114.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [34 <./Loop_markdown_files/figure-latex/Excl waffle-1.pdf>]
-<Loop_markdown_files/figure-latex/first_sus chart-1.pdf, id=402, 469.755pt x 32
+<Loop_markdown_files/figure-latex/first_sus chart-1.pdf, id=408, 469.755pt x 32
 5.215pt>
 File: Loop_markdown_files/figure-latex/first_sus chart-1.pdf Graphic file (type
  pdf)
 <use Loop_markdown_files/figure-latex/first_sus chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/first_sus chart-1.pdf
-  used on input line 1139.
+  used on input line 1147.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [35 <./Loop_markdown_files/figure-latex/first_sus chart-1.pdf>] [36]
-<Loop_markdown_files/figure-latex/closest_sus chart-1.pdf, id=421, 469.755pt x 
+<Loop_markdown_files/figure-latex/closest_sus chart-1.pdf, id=427, 469.755pt x 
 325.215pt>
 File: Loop_markdown_files/figure-latex/closest_sus chart-1.pdf Graphic file (ty
 pe pdf)
 <use Loop_markdown_files/figure-latex/closest_sus chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/closest_sus chart-1.p
-df  used on input line 1179.
+df  used on input line 1187.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [37 <./Loop_markdown_files/figure-latex/closest_sus chart-1.pdf>] [38]
-<Loop_markdown_files/figure-latex/AP chart-1.pdf, id=441, 469.755pt x 325.215pt
+<Loop_markdown_files/figure-latex/AP chart-1.pdf, id=447, 469.755pt x 325.215pt
 >
 File: Loop_markdown_files/figure-latex/AP chart-1.pdf Graphic file (type pdf)
 <use Loop_markdown_files/figure-latex/AP chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/AP chart-1.pdf  used 
-on input line 1237.
+on input line 1245.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [39] [40 <./Loop_markdown_files/figure-latex/AP chart-1.pdf>]
-<Loop_markdown_files/figure-latex/AP waffle-1.pdf, id=460, 469.755pt x 325.215p
+<Loop_markdown_files/figure-latex/AP waffle-1.pdf, id=466, 469.755pt x 325.215p
 t>
 File: Loop_markdown_files/figure-latex/AP waffle-1.pdf Graphic file (type pdf)
 <use Loop_markdown_files/figure-latex/AP waffle-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/AP waffle-1.pdf  used
- on input line 1254.
+ on input line 1262.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[41 <./Loop_markdown_files/figure-latex/AP waffle-1.pdf>] [42] [43] [44]
-<Loop_markdown_files/figure-latex/SEN chart-1.pdf, id=495, 469.755pt x 325.215p
+[41 <./Loop_markdown_files/figure-latex/AP waffle-1.pdf>]
+<Loop_markdown_files/figure-latex/AP timing chart-1.pdf, id=477, 469.755pt x 32
+5.215pt>
+File: Loop_markdown_files/figure-latex/AP timing chart-1.pdf Graphic file (type
+ pdf)
+<use Loop_markdown_files/figure-latex/AP timing chart-1.pdf>
+Package pdftex.def Info: Loop_markdown_files/figure-latex/AP timing chart-1.pdf
+  used on input line 1288.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[42 <./Loop_markdown_files/figure-latex/AP timing chart-1.pdf>] [43] [44]
+<Loop_markdown_files/figure-latex/SEN chart-1.pdf, id=508, 469.755pt x 325.215p
 t>
 File: Loop_markdown_files/figure-latex/SEN chart-1.pdf Graphic file (type pdf)
 <use Loop_markdown_files/figure-latex/SEN chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/SEN chart-1.pdf  used
- on input line 1375.
+ on input line 1389.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [45 <./Loop_markdown_files/figure-latex/SEN chart-1.pdf>]
-<Loop_markdown_files/figure-latex/SEN Support waffle-1.pdf, id=506, 469.755pt x
+<Loop_markdown_files/figure-latex/SEN Support waffle-1.pdf, id=519, 469.755pt x
  325.215pt>
 File: Loop_markdown_files/figure-latex/SEN Support waffle-1.pdf Graphic file (t
 ype pdf)
 <use Loop_markdown_files/figure-latex/SEN Support waffle-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/SEN Support waffle-1.
-pdf  used on input line 1392.
+pdf  used on input line 1406.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [46 <./Loop_markdown_files/figure-latex/SEN Support waffle-1.pdf>]
-<Loop_markdown_files/figure-latex/EHCP waffle-1.pdf, id=517, 469.755pt x 325.21
+<Loop_markdown_files/figure-latex/EHCP waffle-1.pdf, id=530, 469.755pt x 325.21
 5pt>
 File: Loop_markdown_files/figure-latex/EHCP waffle-1.pdf Graphic file (type pdf
 )
 <use Loop_markdown_files/figure-latex/EHCP waffle-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/EHCP waffle-1.pdf  us
-ed on input line 1408.
+ed on input line 1422.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [47 <./Loop_markdown_files/figure-latex/EHCP waffle-1.pdf>] [48] [49] [50]
-<Loop_markdown_files/figure-latex/CSC chart-1.pdf, id=567, 469.755pt x 325.215p
+<Loop_markdown_files/figure-latex/CSC chart-1.pdf, id=580, 469.755pt x 325.215p
 t>
 File: Loop_markdown_files/figure-latex/CSC chart-1.pdf Graphic file (type pdf)
 <use Loop_markdown_files/figure-latex/CSC chart-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/CSC chart-1.pdf  used
- on input line 1591.
+ on input line 1606.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [51] [52 <./Loop_markdown_files/figure-latex/CSC chart-1.pdf>]
-<Loop_markdown_files/figure-latex/CIN waffle-1.pdf, id=584, 469.755pt x 325.215
+<Loop_markdown_files/figure-latex/CIN waffle-1.pdf, id=597, 469.755pt x 325.215
 pt>
 File: Loop_markdown_files/figure-latex/CIN waffle-1.pdf Graphic file (type pdf)
 
 <use Loop_markdown_files/figure-latex/CIN waffle-1.pdf>
 Package pdftex.def Info: Loop_markdown_files/figure-latex/CIN waffle-1.pdf  use
-d on input line 1611.
+d on input line 1627.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 [53 <./Loop_markdown_files/figure-latex/CIN waffle-1.pdf>] [54]
-Overfull \hbox (469.75502pt too wide) detected at line 1681
+Overfull \hbox (469.75502pt too wide) detected at line 1697
  [] 
  []
 
 
-Overfull \hbox (9.88905pt too wide) in alignment at lines 1680--1741
+Overfull \hbox (9.88905pt too wide) in alignment at lines 1696--1757
 [] []
  []
 
 [55] [56] [57]
-Overfull \hbox (469.75502pt too wide) detected at line 1750
+Overfull \hbox (469.75502pt too wide) detected at line 1766
  [] 
  []
 
 
-Overfull \hbox (9.88905pt too wide) in alignment at lines 1749--1796
+Overfull \hbox (9.88905pt too wide) in alignment at lines 1765--1812
 [] []
  []
 
 
-Overfull \hbox (9.88905pt too wide) in alignment at lines 1796--1848
+Overfull \hbox (9.88905pt too wide) in alignment at lines 1812--1864
 [] []
  []
 
 
-Overfull \hbox (9.88905pt too wide) in alignment at lines 1848--1907
+Overfull \hbox (9.88905pt too wide) in alignment at lines 1864--1923
 [] []
  []
 
 [58]
-Overfull \hbox (9.88905pt too wide) in alignment at lines 1907--1958
+Overfull \hbox (9.88905pt too wide) in alignment at lines 1923--1974
 [] []
  []
 
 [59]
-Overfull \hbox (9.88905pt too wide) in alignment at lines 1958--2019
+Overfull \hbox (9.88905pt too wide) in alignment at lines 1974--2035
 [] []
  []
 
 [60]
-Overfull \hbox (9.88905pt too wide) in alignment at lines 2019--2075
+Overfull \hbox (9.88905pt too wide) in alignment at lines 2035--2091
 [] []
  []
 
 [61]
-Overfull \hbox (9.88905pt too wide) in alignment at lines 2075--2092
+Overfull \hbox (9.88905pt too wide) in alignment at lines 2091--2108
 [] []
  []
 
 [62] [63] [64]
-Overfull \hbox (469.75502pt too wide) detected at line 2139
+Overfull \hbox (469.75502pt too wide) detected at line 2155
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in alignment at lines 2138--2157
+Underfull \hbox (badness 10000) in alignment at lines 2154--2173
 [] []
  []
 
 [65]
-Overfull \hbox (469.75502pt too wide) detected at line 2162
+Overfull \hbox (469.75502pt too wide) detected at line 2178
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in alignment at lines 2161--2201
+Underfull \hbox (badness 10000) in alignment at lines 2177--2217
 [] []
  []
 
 
-Underfull \hbox (badness 10000) in alignment at lines 2201--2206
+Underfull \hbox (badness 10000) in alignment at lines 2217--2222
 [] []
  []
 
 [66]
-Overfull \hbox (469.75502pt too wide) detected at line 2231
+Overfull \hbox (469.75502pt too wide) detected at line 2247
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in alignment at lines 2230--2262
+Underfull \hbox (badness 10000) in alignment at lines 2246--2278
 [] []
  []
 
@@ -1782,51 +1799,51 @@ Underfull \hbox (badness 10000) in alignment at lines 2230--2262
 File: images/Department_for_Education.png Graphic file (type png)
 <use images/Department_for_Education.png>
 Package pdftex.def Info: images/Department_for_Education.png  used on input lin
-e 2288.
+e 2304.
 (pdftex.def)             Requested size: 469.75311pt x 277.93726pt.
 
-Overfull \hbox (36.00714pt too wide) in paragraph at lines 2301--2306
+Overfull \hbox (36.00714pt too wide) in paragraph at lines 2317--2322
 [][]  
  []
 
 
-Overfull \hbox (0.9113pt too wide) in paragraph at lines 2310--2310
+Overfull \hbox (0.9113pt too wide) in paragraph at lines 2326--2326
 []|\T1/phv/m/n/12 (-20) enquiries| 
  []
 
 
-Overfull \hbox (3.174pt too wide) in paragraph at lines 2311--2311
+Overfull \hbox (3.174pt too wide) in paragraph at lines 2327--2327
 []|\T1/phv/m/n/12 (-20) download| 
  []
 
 
-Overfull \hbox (36.00714pt too wide) in paragraph at lines 2309--2313
+Overfull \hbox (36.00714pt too wide) in paragraph at lines 2325--2329
 [][]  
  []
 
-<images/logoTwitter.png, id=677, 27.2655pt x 21.681pt>
+<images/logoTwitter.png, id=690, 27.2655pt x 21.681pt>
 File: images/logoTwitter.png Graphic file (type png)
 <use images/logoTwitter.png>
-Package pdftex.def Info: images/logoTwitter.png  used on input line 2315.
+Package pdftex.def Info: images/logoTwitter.png  used on input line 2331.
 (pdftex.def)             Requested size: 27.26665pt x 21.68193pt.
-<images/logoFacebook.png, id=678, 21.681pt x 21.681pt>
+<images/logoFacebook.png, id=691, 21.681pt x 21.681pt>
 File: images/logoFacebook.png Graphic file (type png)
 <use images/logoFacebook.png>
-Package pdftex.def Info: images/logoFacebook.png  used on input line 2318.
+Package pdftex.def Info: images/logoFacebook.png  used on input line 2334.
 (pdftex.def)             Requested size: 21.68193pt x 21.68193pt.
 [69 <./images/logoTwitter.png> <./images/logoFacebook.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2322.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2322.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2338.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2338.
 (Loop_markdown.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2322.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 2322.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2338.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 2338.
  ) 
 Here is how much of TeX's memory you used:
- 39944 strings out of 492452
- 735301 string characters out of 3129802
- 820552 words of memory out of 3000000
- 43129 multiletter control sequences out of 15000+200000
- 547980 words of font info for 307 fonts, out of 3000000 for 9000
+ 39969 strings out of 492452
+ 736187 string characters out of 3129802
+ 820570 words of memory out of 3000000
+ 43141 multiletter control sequences out of 15000+200000
+ 548271 words of font info for 313 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,15n,66p,1012b,920s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}{C:/Program Files/Mi
@@ -1834,9 +1851,9 @@ KTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}<C:/Program Files/MiKTeX 2.9/fonts/type1/
 public/lm/lmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8
 a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Prog
 ram Files/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on Loop_markdown.pdf (69 pages, 393533 bytes).
+Output written on Loop_markdown.pdf (69 pages, 402473 bytes).
 PDF statistics:
- 833 PDF objects out of 1000 (max. 8388607)
- 219 named destinations out of 1000 (max. 500000)
- 67948 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 846 PDF objects out of 1000 (max. 8388607)
+ 221 named destinations out of 1000 (max. 500000)
+ 67958 words of extra memory for PDF output out of 74296 (max. 10000000)
 
