@@ -1,6 +1,6 @@
 ---
 params:
-  input_la_choice: Leeds
+  input_la_choice: Haringey
   input_phase_choice: Secondary
 title: "Education, children's social care and offending: A focus on `r params$input_la_choice` (Descriptive Statistics)"
 author: "Department for Education"
@@ -71,7 +71,6 @@ library(tidyverse)
 library(reshape2)
 library(dplyr)
 library(dbplyr)
-library(ggplot2)
 library(waffle)
 library(knitr)
 library(kableExtra)
@@ -84,7 +83,7 @@ library(formattable)
 knitr::opts_knit$set(root.dir = './')
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 options(scipen=999)
-i <- 'Leeds'
+i <- 'Haringey'
 
 #IFERROR function
  IFERROR <- function(code, silent = FALSE) {
@@ -183,7 +182,7 @@ This publication will present statistics relating to the Local Authority (LA) of
 
 \newpage
 
-```{r cohort table, echo=FALSE, fig.cap="**[Source: DfE-MoJ data share, table: ...]**"}
+```{r cohort table, echo=FALSE}
 cohort_table <-  data.frame(
   `Academic Year` = c('2016/17', '2015/16', '2014/15', '2013/14', '2012/13', '2011/12', '2010/11', '2009/10', '2008/09', '2007/08', '2006/07', '2005/06', '2004/05', '2003/04', '2002/03'),
   `KS4 Academic Year 2014-15` = c("Year 13", "Year 12", "Year 11", "Year 10", "Year 9", "Year 8", "Year 7", "Year 6", "Year 5", "Year 4",
@@ -293,7 +292,7 @@ offender_counts_school_RHS_waffle <- waffle(
 
 For those that attended school in `r offender_counts_school$SCHOOL_LA`, approximately `r round((offender_counts_school$sv/offender_counts_school$offenders)*100, 0)`% of the ‘children who had been cautioned or sentenced for an offence’ group are in the ‘children who had been cautioned or sentenced for a serious violence offence’ group.  
 
-```{r offenders vs sv offenders waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for an offence that had also been cautioned or sentenced for a serious violence offence, and the proportion of children who had been cautioned or sentence for an offence, for pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15 [Source: DfE-MoJ data share, tables: 0.1.1 and 0.1.2]**"}
+```{r offenders vs sv offenders waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for an offence that had also been cautioned or sentenced for a serious violence offence, and the proportion of children who had been cautioned or sentence for an offence, for pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15 [Source: DfE-MoJ data share, table 0.1.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -428,13 +427,13 @@ The remainder of this document refers only to children with a school LA of `r ho
 
 `r if(offender_counts_home$HOME_LA %in% 'Bradford' | offender_counts_home$HOME_LA %in% 'Sheffield'){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r home school chart, echo=FALSE, fig.cap="**Proportion of children with different home and school LAs. [Source: DfE-MoJ data share, tables: 0.1.1 and 0.1.2]**"}
+```{r home school chart, echo=FALSE, fig.cap="**Proportion of children with different home and school LAs. [Source: DfE-MoJ data share, tables 0.1.1 and 0.1.2]**"}
 home_school_chart
 ```
 
 \newpage
 
-```{r previous offending, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
+```{r previous offending, include=FALSE}
 previous_offending <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                                  sheet = 'previous_offence_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
@@ -483,11 +482,11 @@ In order to better understand offending trajectories for children who had been c
 
 `r (100-previous_offending$prop_previous)`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r offender_counts_home$HOME_LA` had not been cautioned or sentenced for a previous offence. The difference between these results and the national figure was `r (significance_testing$previous_offending)`.  
 
-```{r previous offending chart, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence with or without a prior offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.1.1]**"}
+```{r previous offending chart, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence with or without a prior offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 1.1.1]**"}
 previous_offending_chart
 ```
 
-```{r gender, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
+```{r gender, include=FALSE}
 gender <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                      sheet = 'Gender_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
@@ -522,11 +521,11 @@ gender_chart <- ggplot(gender_for_chart, aes(fill = Gender, Group, perc)) +
 
 Male pupils were over-represented amongst children who had been cautioned or sentenced for an offence and children who had been cautioned or sentenced for a serious violence offence -  `r gender$prop_any_count_M`% of those that had been cautioned or sentenced for any offence were male, and `r gender$prop_sv_count_M`% of those that were cautioned or sentenced for a serious violence offence were male. In comparison, `r gender$prop_count_M`% of the all-pupil cohort that attended school in `r gender$SCHOOL_LA` was male. For children who had been cautioned or sentenced for a serious violence offence, the difference between these results and the national figure was `r (significance_testing$gender)`.  
 
-```{r gender chart, echo=FALSE, fig.cap="**The gender breakdown of offending and pupil group, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: 1.2.1]**"}
+```{r gender chart, echo=FALSE, fig.cap="**The gender breakdown of offending and pupil group, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table 1.2.1]**"}
 gender_chart
 ```
 
-```{r age, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
+```{r age, include=FALSE}
 
 age <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                   sheet = 'Age_first_offence_sclLA(SAFE)') %>%
@@ -583,11 +582,11 @@ The most common age at first serious violence offence for all those that were ca
 
 `r if("*" %in% age$prop_off | "*" %in% age$prop_sv){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r age chart, echo=FALSE, fig.cap="**The proportion of children relative to their age at first offence by offending group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.3.1]**"}
+```{r age chart, echo=FALSE, fig.cap="**The proportion of children relative to their age at first offence by offending group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 1.3.1]**"}
 age_chart
 ```
 
-```{r ethnicity, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
+```{r ethnicity, include=FALSE}
 
 ethnic_minor <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                            sheet = 'Ethnicity_minor_sclLA(SAFE)') %>%
@@ -670,12 +669,12 @@ The most common major ethnic group amongst all pupils with a school LA of `r eth
 
 `r if("*" %in% ethnic_major$prop_all | "*" %in% ethnic_major$prop_off | "*" %in% ethnic_major$prop_sv){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r ethnicity chart, echo=FALSE, fig.cap="**The proportion of all pupils split by ethnic group major, offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.4.1]**"}
+```{r ethnicity chart, echo=FALSE, fig.cap="**The proportion of all pupils split by ethnic group major, offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 1.4.1]**"}
 
 ethnic_major_chart
 ```
 
-```{r FSM, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
+```{r FSM, include=FALSE}
 
 ever_flags <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                          sheet = 'Everflag_sclLA(SAFE)') %>%
@@ -774,7 +773,7 @@ Children who had been cautioned or sentenced for an offence that attended school
 
 `r ever_flags_no_star$any_prop_count_FSM`% of all children who had been cautioned or sentenced for an offence and had attended school in `r home_vs_school_no_star$HOME_LA` had ever been eligible for FSM (approximately `r format(IFERROR(round(as.numeric(ever_flags_no_star$any_count_FSM), -1)), big.mark=',')` children), compared to `r ever_flags_no_star$sv_prop_count_FSM`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r home_vs_school_no_star$HOME_LA` (approximately `r format(IFERROR(round(as.numeric(ever_flags_no_star$sv_count_FSM), -1)), big.mark=',')` children). This compares to `r ever_flags_no_star$prop_count_FSM`% of all pupils who attended school in `r home_vs_school_no_star$HOME_LA` and had ever been eligible for FSM (approximately `r format(IFERROR(round(as.numeric(ever_flags_no_star$count_FSM), -1)), big.mark=',')` children). For children who had been cautioned or sentenced for a serious violence offence, the difference between these results and the national figure was `r (significance_testing$FSM)`.  
 
-```{r FSM chart, echo=FALSE, fig.cap="**Proportion of all pupils eligible for free school meals (FSM) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 1.5.1]**"}
+```{r FSM chart, echo=FALSE, fig.cap="**Proportion of all pupils eligible for free school meals (FSM) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 1.5.1]**"}
 FSM_chart
 ```
 
@@ -782,7 +781,7 @@ FSM_chart
 
 However, whilst the majority of children who had been cautioned or sentenced for an offence and had attended school in `r home_vs_school_no_star$HOME_LA` had ever been eligible for FSM, it is not the case that the majority of children eligible for FSM were also cautioned or sentenced for an offence: only `r ever_flags_no_star$also_any_prop_count_FSM`% of those that had ever been eligible for FSM and had attended school in `r home_vs_school_no_star$HOME_LA` had also ever been cautioned or sentenced for an offence, and only `r ever_flags_no_star$also_sv_prop_count_FSM`% had ever been cautioned or sentenced for a serious violence offence.
 
-```{r FSM waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been eligible for free school meals (FSM), and all pupils who had ever been eligible for FSM, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 1.5.1]**"}
+```{r FSM waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been eligible for free school meals (FSM), and all pupils who had ever been eligible for FSM, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table 1.5.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -790,7 +789,7 @@ par(mfrow=c(1,2))
 grid.arrange(FSM_LHS_waffle, FSM_RHS_waffle, ncol=2, widths=c(1,2))
 ```
 
-```{r attainment, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
+```{r attainment, include=FALSE}
 KS4_attainment <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                              sheet = 'KS4_attain_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
@@ -881,7 +880,7 @@ National Curriculum tests results: [National curriculum assessments: KS2 and KS3
 
 KS2 attainment in `r offender_counts_school$SCHOOL_LA` differed across English and Maths, with children who had been cautioned or sentenced for any offence tending to perform worse in English compared to Maths. `r KS2_attainment$propcount_EngL4orabove_offenders`% of children who had been cautioned or sentenced for an offence and `r KS2_attainment$propcount_EngL4orabove_SV_offenders`% of children who been cautioned or sentenced for a serious violence offence achieved a level 4 or above in English. In comparison, `r KS2_attainment$propcount_MatL4orabove_offenders`% of children who had been cautioned or sentenced for an offence and `r KS2_attainment$propcount_MatL4orabove_SV_offenders`% of children who had been cautioned or sentenced for a serious violence offence achieved a level 4 or above in Maths. This compares to `r KS2_attainment$propcount_EngL4orabove`% of the all-pupil cohort that achieved a level 4 or above in English and `r KS2_attainment$propcount_MatL4orabove`% of the all-pupil cohort that achieved a level 4 or above in Maths.  
 
-```{r KS2 attainment chart,  echo=FALSE, fig.cap="**Proportion of all pupils who achieved level 4 or above in English and Mathematics at key stage 2 (KS2) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.1.1]**"}
+```{r KS2 attainment chart,  echo=FALSE, fig.cap="**Proportion of all pupils who achieved level 4 or above in English and Mathematics at key stage 2 (KS2) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 2.1.1]**"}
 KS2_attainment_chart
 ```
 
@@ -898,12 +897,12 @@ Similarly, for those that achieved 5 or more GCSE (or equivalent) passes at grad
 `r if("*" %in% KS4_attainment$propcount_anypass | "*" %in% KS4_attainment$propcount_5AG | "*" %in% KS4_attainment$propcount_5AC | "*" %in% KS4_attainment$propanycount_anypass | "*" %in% KS4_attainment$propanycount_5AG | "*" %in% KS4_attainment$propanycount_5AC | "*" %in% KS4_attainment$propsvcount_anypass | "*" %in% KS4_attainment$propsvcount_5AG | "*" %in% KS4_attainment$propsvcount_5AC){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
 
-```{r KS4 attainment chart,  echo=FALSE, fig.cap="**Proportion of all pupils who achieved various key stage 4 (KS4) benchmarks by offending and pupil group, for pupils matched to KS4 academic year 2014/15 only. [Source: DfE-MoJ data share, table: 2.2.1]**"}
+```{r KS4 attainment chart,  echo=FALSE, fig.cap="**Proportion of all pupils who achieved various key stage 4 (KS4) benchmarks by offending and pupil group, for pupils matched to KS4 academic year 2014/15 only. [Source: DfE-MoJ data share, table 2.2.1]**"}
 KS4_attainment_chart
 ```
 
 
-```{r absence, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
+```{r absence, include=FALSE}
 #Same excel tabs as FSM for "ever"
 
 Absence_timing <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
@@ -1057,16 +1056,15 @@ Schools use a set of national codes to record the reasons for any absences. As t
 
 The absence reason 'persistent absence for "unauthorised other" reasons' (PAUO) is used as a closest available proxy for persistent truancy. Looking at this reason code in isolation, `r ever_flags_no_star$any_prop_count_PAUO`% of children who had been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA` had ever been PAUO, compared to `r ever_flags_no_star$sv_prop_count_PAUO`% of children who had been cautioned or sentenced for a serious violence offence. This compares to `r ever_flags_no_star$prop_count_PAUO`% of the all-pupil cohort that had attended school in `r offender_counts_school$SCHOOL_LA`. For children who had been cautioned or sentenced for a serious violence offence, the difference between these results and the national figure was `r (significance_testing$PAUO)`.  
 
-\newpage
-
-```{r Absence chart, echo=FALSE, fig.cap="**Proportion of all pupils who had ever been persistently absent or persistently absent (unauthorised other) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.3.1**"}
+```{r Absence chart, echo=FALSE, fig.cap="**Proportion of all pupils who had ever been persistently absent or persistently absent (unauthorised other) by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 2.3.1]**"}
 Absence_chart
+
 ```
 
 
 Looking at the proportion of the persistently absent pupils who had ever been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA`: `r ever_flags_no_star$also_any_prop_count_PA`% of pupils who had ever been persistently absent pupils had been cautioned or sentenced for an offence, compared to `r ever_flags_no_star$also_sv_prop_count_PA`% who had been cautioned or sentenced for a serious violence offence. Therefore, whilst it can be said that the majority of children who had been cautioned or sentenced for a serious violence offence had ever been persistently absent, it is not the case that the majority of persistently absent pupils had also ever been cautioned or sentenced for a serious violence offence.  
 
-```{r PA waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had been persistently absent, and all pupils who had ever been persistently absent, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 2.3.1]**"}
+```{r PA waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had been persistently absent, and all pupils who had ever been persistently absent, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table 2.3.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -1100,11 +1098,11 @@ Almost all (`r Absence_timing$prop_PA_Before_SV`%) children who had been caution
 
 `r if("*" %in% Absence_timing$prop_PASame_Term | "*" %in% Absence_timing$prop_PA_After_SV | "*" %in% Absence_timing$prop_PAUOSame_Term | "*" %in% Absence_timing$prop_PAUO_After_SV){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r Absence timing chart, echo=FALSE, fig.cap="**Timing of first record of persistent absence or persistent absence (unauthorised other) relative to the timing of children's first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.4.1]**"}
+```{r Absence timing chart, echo=FALSE, fig.cap="**Timing of first record of persistent absence or persistent absence (unauthorised other) relative to the timing of children's first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 2.4.1]**"}
 Absence_timing_chart
 ```
 
-```{r exclusions and suspensions, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
+```{r exclusions and suspensions, include=FALSE}
 #Same excel tabs as FSM for "ever"
 
 #Excluded/suspended chart
@@ -1452,7 +1450,7 @@ Children who had been cautioned or sentenced for an offence and had attended sch
 
 Overall, `r ever_flags_no_star$any_prop_count_Excl`% of children who had been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA` had been permanently excluded (approximately `r format(IFERROR(round(as.numeric(ever_flags_no_star$any_count_Excl), -1)), big.mark=',')` children), compared with `r ever_flags_no_star$sv_prop_count_Excl`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r offender_counts_school$SCHOOL_LA` (approximately `r format(IFERROR(round(as.numeric(ever_flags_no_star$sv_count_Excl), -1)), big.mark=',')` children). This compares to `r ever_flags_no_star$prop_count_Excl`% of the all-pupil cohort that had attended school in `r offender_counts_school$SCHOOL_LA` (approximately `r format(IFERROR(round(as.numeric(ever_flags_no_star$count_Excl), -1)), big.mark=',')` children).  For children who had been cautioned or sentenced for a serious violence offence, the difference between these results and the national figure was `r (significance_testing$exclusions)`.   
 
-```{r ExclSus chart, echo=FALSE, fig.cap="**The proportion of all pupils who had a record of being suspended or permanently excluded by offending and pupil group, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.5.1]**"}
+```{r ExclSus chart, echo=FALSE, fig.cap="**The proportion of all pupils who had a record of being suspended or permanently excluded by offending and pupil group, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 2.5.1]**"}
 ExclSus_chart
 ```
 
@@ -1461,7 +1459,7 @@ ExclSus_chart
 In comparison to the proportions seen above, `r ever_flags_no_star$also_any_prop_count_Sus`% of suspended pupils that had attended school in `r offender_counts_school$SCHOOL_LA` had ever
 been cautioned or sentenced for an offence, compared to `r ever_flags_no_star$also_sv_prop_count_Sus`% who had been cautioned or sentenced for a serious violence offence. This shows us that, whilst the majority of children who had been cautioned or sentenced for a serious violence offence had also been suspended, it is not the case that most suspended pupils have been cautioned or sentenced for a serious violence offence.  
 
-```{r Sus waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 2.5.1]**"}
+```{r Sus waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table 2.5.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -1473,7 +1471,7 @@ grid.arrange(Sus_LHS_waffle, Sus_RHS_waffle, ncol=2, widths=c(1,2))
 
 When looking at all children that had ever been permanently excluded and had attended school in `r offender_counts_school$SCHOOL_LA`, `r ever_flags_no_star$also_any_prop_count_Excl`% had ever been cautioned or sentenced for an offence, compared to `r ever_flags_no_star$also_sv_prop_count_Excl`% who had been cautioned or sentenced for a serious violence offence.  
 
-```{r Excl waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 2.5.1]**"}
+```{r Excl waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table 2.5.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -1493,7 +1491,7 @@ Most children who had been cautioned or sentenced for a serious violence offence
 
 `r if("*" %in% first_sus_timing$prop_susfirst_all | "*" %in% first_sus_timing$prop_svfirst_all ){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r first_sus chart, echo=FALSE, fig.cap="**Timing of children's first suspension relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: 2.6.3]**"}
+```{r first_sus chart, echo=FALSE, fig.cap="**Timing of children's first suspension relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table 2.6.3]**"}
 first_sus_timing_chart  
 ```
 
@@ -1503,7 +1501,7 @@ Many children who had been cautioned or sentenced for a serious violence offence
 
 `r if(offender_counts_home$HOME_LA == 'Birmingham' & ("*" %in% first_excl_timing$prop_susfirst_all | "*" %in% first_excl_timing$prop_svfirst_all)){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r first_excl chart, echo=FALSE, eval=offender_counts_home$HOME_LA == 'Birmingham', fig.cap="**Timing of children's first exclusion relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: 2.6.1]**"}
+```{r first_excl chart, echo=FALSE, eval=offender_counts_home$HOME_LA == 'Birmingham', fig.cap="**Timing of children's first exclusion relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table 2.6.1]**"}
 first_excl_timing_chart
 ```
 
@@ -1521,19 +1519,19 @@ Similar to the first suspension or permanent exclusion seen above, many children
 
 `r if("*" %in% closest_sus_timing$prop_susfirst_all | "*" %in% closest_sus_timing$prop_svfirst_all ){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r closest_sus chart, echo=FALSE, fig.cap="**Timing of children's closest suspension relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: 2.6.7]**"}
+```{r closest_sus chart, echo=FALSE, fig.cap="**Timing of children's closest suspension relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table 2.6.7]**"}
 closest_sus_timing_chart  
 ```
 
 `r if(offender_counts_home$HOME_LA == 'Birmingham' & ("*" %in% closest_excl_timing$prop_susfirst_all | "*" %in% closest_excl_timing$prop_svfirst_all)){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
-```{r closest_excl chart, echo=FALSE,  eval=offender_counts_home$HOME_LA == 'Birmingham', fig.cap="**Timing of children's closest permanent exclusion relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table: 2.6.5]**"}
+```{r closest_excl chart, echo=FALSE,  eval=offender_counts_home$HOME_LA == 'Birmingham', fig.cap="**Timing of children's closest permanent exclusion relative to their first serious violence offence, for all pupils matched to KS4 academic years 2012/13, 2013/14, 2014/15. [Source: DfE-MoJ data share, table 2.6.5]**"}
 closest_excl_timing_chart
 ```
 
 `r if(offender_counts_home$HOME_LA %!in% 'Birmingham'){"*Chart has been suppressed due to small numbers.*"}`
 
-```{r AP, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
+```{r AP, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table ...]"}
 #Same excel tabs as FSM for "ever"
 
 AP_for_chart <- ever_flags %>%
@@ -1677,7 +1675,7 @@ Children who had been cautioned or sentenced for an offence and had attended sch
 
 `r ever_flags_no_star$any_prop_count_AP`% of all children who had been cautioned or sentenced for an offence and had attended school in `r offender_counts_school$SCHOOL_LA` had ever been registered at an AP setting (approximately `r format(round(ever_flags_no_star$any_count_AP, -1), big.mark=',')` children), compared to `r ever_flags_no_star$sv_prop_count_AP`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r offender_counts_school$SCHOOL_LA` (approximately `r format(round(ever_flags_no_star$sv_count_AP, -1), big.mark=',')` children). This compares to only `r ever_flags_no_star$prop_count_AP`% of the all-pupil cohort in `r offender_counts_school$SCHOOL_LA` (approximately `r format(round(ever_flags_no_star$count_AP, -1), big.mark=',')` children). For children who had been cautioned or sentenced for a serious violence offence, the difference between these results and the national figure was `r (significance_testing$AP)`.    
 
-```{r AP chart, echo=FALSE, fig.cap="**The proportion of all pupils who had ever attended alternative provision by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.7.1]**"}
+```{r AP chart, echo=FALSE, fig.cap="**The proportion of all pupils who had ever attended alternative provision by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 2.7.1]**"}
 AP_chart
 ```
 
@@ -1685,7 +1683,7 @@ AP_chart
 
 Looking only at pupils that had ever been registered at an AP setting and had attended school in `r offender_counts_school$SCHOOL_LA`, `r ever_flags_no_star$also_any_prop_count_AP`% had ever been cautioned or sentenced for an offence. In addition, `r ever_flags_no_star$also_sv_prop_count_AP`% of those that had ever been registered at an AP setting and had attended school in `r offender_counts_school$SCHOOL_LA` had ever been cautioned or sentenced for a serious violence offence.  
 
-```{r AP waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 2.7.1]**"}
+```{r AP waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table 2.7.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -1701,13 +1699,13 @@ grid.arrange(AP_LHS_waffle, AP_RHS_waffle, ncol=2, widths=c(1,2))
   
 For children who had been cautioned or sentenced for a serious violence offence, attended school in `r offender_counts_school$SCHOOL_LA`, and had ever been registered at an AP setting, `r AP_timing_no_star$prop_AP_Before_SV`% first attended AP before their first serious violence offence and `r AP_timing_no_star$prop_AP_After_SV`% first attended AP after their first serious violence offence, whilst `r AP_timing_no_star$prop_APSame_Term`% first attended AP in the same term as their first serious violence offence.  
 
-```{r AP timing chart, echo=FALSE, eval=NA %!in% AP_timing_for_chart$`% with AP timing`, fig.cap="**The first term children attended alternative provision (AP) relative to the timing of their first offence, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.8.1]**"}
+```{r AP timing chart, echo=FALSE, eval=NA %!in% AP_timing_for_chart$`% with AP timing`, fig.cap="**The first term children attended alternative provision (AP) relative to the timing of their first offence, for all pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 2.8.1]**"}
 AP_timing_chart
 ```
 
 `r if(NA %in% AP_timing_for_chart$'% with AP timing'){"*Chart has been suppressed due to small numbers.*"}`
 
-```{r SEN, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
+```{r SEN, include=FALSE}
 SEN <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                   sheet = 'SEN_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
@@ -2024,7 +2022,7 @@ Of children who had been cautioned or sentenced for any offence and had attended
 
 \newpage
 
-```{r SEN chart, echo=FALSE, fig.cap="**Special Educational Needs (SEN) of all pupils by offending and pupil group, for those that were ever recorded with SEN, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.9.1]**"}
+```{r SEN chart, echo=FALSE, fig.cap="**Special Educational Needs (SEN) of all pupils by offending and pupil group, for those that were ever recorded with SEN, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 2.9.1]**"}
 SEN_chart
 ```
 
@@ -2032,7 +2030,7 @@ SEN_chart
 
 `r SEN$prop_SEN_support_SV`% of children who had been cautioned or sentenced for a serious violence offence and had attended school in `r offender_counts_school$SCHOOL_LA` had ever had SEN Support (without an EHC plan), however only `r SEN$prop_also_SEN_support_SV`% of children who had ever had SEN Support and had attended school in `r offender_counts_school$SCHOOL_LA` were children who were cautioned or sentenced for a serious violence offence.  
 
-```{r SEN Support waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 2.9.1]**"}
+```{r SEN Support waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table 2.9.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 # Use grid.arrange to put plots in columns
@@ -2043,7 +2041,7 @@ grid.arrange(SEN_support_LHS_waffle, SEN_support_RHS_waffle, ncol=2, widths=c(1,
 
 When looking at children who had ever had an EHC plan, `r SEN$prop_also_EHCP_SV`% of those that had attended school in `r offender_counts_school$SCHOOL_LA` were children who were cautioned or sentenced for a serious violence offence.  
 
-```{r EHCP waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 2.9.1]**"}
+```{r EHCP waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table 2.9.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 # Use grid.arrange to put plots in columns
@@ -2075,7 +2073,7 @@ For children who had been cautioned or sentenced for a serious violence offence,
 
 [^37th_footnote]: This analysis aims to differentiate between children who had been cautioned or sentenced for an offence, or a serious violence offence, that have received different levels of support. As such, the analysis distinguishes between those that have had SEN Support, but have never had an EHC plan, and those that have had an EHC plan, and when they were first recorded as receiving that support. It is important to note that this does not necessarily equate to when the child was first identified as having SEN. 
 
-```{r EHCP timing chart, echo=FALSE, eval=NA %!in% EHCP_timing_for_chart$`% with timing`, fig.cap="**The first term children had an EHC plan, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.10.1]**"}
+```{r EHCP timing chart, echo=FALSE, eval=NA %!in% EHCP_timing_for_chart$`% with timing`, fig.cap="**The first term children had an EHC plan, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 2.10.1]**"}
 EHCP_timing_chart
 ```
 
@@ -2083,7 +2081,7 @@ EHCP_timing_chart
 
 For children who had been cautioned or sentenced for a serious violence offence, attended school in `r offender_counts_school$SCHOOL_LA`, and had ever been recorded with SEN (either with or without an EHC plan), `r SEN_timing$prop_SEN_Before_SV`% were first recorded with SEN before their first serious violence offence. 
 
-```{r SEN timing chart, echo=FALSE, eval=NA %!in% SEN_timing_for_chart$`% with timing`, fig.cap="**The first term children had been recorded with SEN, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.10.1]**"}
+```{r SEN timing chart, echo=FALSE, eval=NA %!in% SEN_timing_for_chart$`% with timing`, fig.cap="**The first term children had been recorded with SEN, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 2.10.1]**"}
 SEN_timing_chart
 ```
 
@@ -2097,13 +2095,13 @@ As SEMH is consistently the most common recorded SEN type amongst children who h
 
 For children who had been cautioned or sentenced for a serious violence offence, had attended school in `r offender_counts_school$SCHOOL_LA` and had ever been recorded with SEMH (either with or without an EHC plan), `r SEMH_timing$prop_SEMH_Before_SV`% were first recorded with SEMH before their first serious violence offence.  
 
-```{r SEMH timing chart, echo=FALSE, eval=NA %!in% SEMH_timing_for_chart$`% with SEMH timing`, fig.cap="**The first term children had SEMH, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.10.3]**"}
+```{r SEMH timing chart, echo=FALSE, eval=NA %!in% SEMH_timing_for_chart$`% with SEMH timing`, fig.cap="**The first term children had SEMH, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table 2.10.3]**"}
 SEMH_timing_chart
 ```
 
 `r if(NA %in% SEMH_timing_for_chart$'% with SEMH timing'){"*Chart has been suppressed due to small numbers.*"}`
 
-```{r CSC, echo=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
+```{r CSC, echo=FALSE}
 CSC <- read_excel("130722_outputs_SAFE_suppressed_FINAL.xlsx", 
                   sheet = 'CiN_CLA_sclLA(SAFE)') %>%
   filter(SCHOOL_LA == i)
@@ -2271,7 +2269,7 @@ compared with `r CSC_no_star$propsv_count_CLA`% of children who had been caution
 
 [^32nd_footnote]:  Children are included in this CLA analysis if they had been recorded as a child being looked after on the 31st March in any period between the ages of 6 - 16. Those matched to earlier years in the KS4 attainment data will as a result have less coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 8 and above.
 
-```{r CSC chart, echo=FALSE, fig.cap="**The proportion of children who had been recorded as being CIN/CLA on 31st March in any given year, by offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: 2.12.1]**"}
+```{r CSC chart, echo=FALSE, fig.cap="**The proportion of children who had been recorded as being CIN/CLA on 31st March in any given year, by offending and pupil group, for pupils matched to KS4 academic year 2014/15 only. [Source: DfE-MoJ data share, table 2.11.1]**"}
 CSC_chart
 ```
 
@@ -2280,7 +2278,7 @@ CSC_chart
 Looking at the CIN and CLA cohorts that had attended school in `r offender_counts_school$SCHOOL_LA`, `r CSC_no_star$also_propsv_count_CIN`% of those who were CIN and `r CSC_no_star$also_propsv_count_CLA`% of those who were CLA, on 31st March in any given year had ever also been
 cautioned or sentenced for a serious violence offence. Meaning that, although high proportions of children who had been cautioned or sentenced for a serious violence offence had ever been recorded as CIN or CLA, it is not the case that most children that were ever recorded as CIN or CLA were also cautioned or sentenced for a serious violence offence.
 
-```{r CIN waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15 [Source: DfE-MoJ data share, table: 2.12.1]**"}
+```{r CIN waffle, echo=FALSE, fig.cap="**The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4 academic year 2014/15 only. [Source: DfE-MoJ data share, table 2.11.1]**"}
 # set the plotting area into a 1*2 array
 par(mfrow=c(1,2)) 
 
@@ -2373,7 +2371,7 @@ Education, Health and Care plan setting out
 their complex needs and how these will be
 met",
                    
-                   "A suspension is where a pupil has been temporarily removed from the school (including during lunchtime). Prior to 2019/20, a suspension was referred to as a fixed period exclusion."
+                   "A suspension is where a pupil has been temporarily removed from the school (including during lunchtime). Prior to 2019/20, suspensions were referred to as a fixed period exclusion."
                    
   ),
   
