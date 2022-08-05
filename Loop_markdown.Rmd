@@ -2381,7 +2381,7 @@ Education, Health and Care plan setting out
 their complex needs and how these will be
 me",
 
-                   "A suspension is where a pupil has been temporarily removed from the school (including during lunchtime). Prior to 2019/20, suspensions were referred to as a fixed period exclusion. Please see here for more information: [Exclusion from maintained schools, academies and pupil referral units in England](https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1092493/20170831_Exclusion_Stat_guidance.pdf)"
+                   "A suspension is where a pupil has been temporarily removed from the school (including during lunchtime). Prior to 2019/20, suspensions were referred to as a fixed period exclusion. Please see here for more information: "
 
   ),
 
@@ -2537,7 +2537,7 @@ ethnicity_major_annex_table <-  data.frame(
 kable((ethnicity_major_annex_table),
       col.names = gsub(" 1","/1",gsub("Academic Year ","",gsub("[.]"," ",names(ethnicity_major_annex_table)))),
       caption = "Ethnic Group Major categories",
-      format='latex') %>%
+      format='latex',longtable=T, position='!h') %>%
   row_spec(0, bold = T, background = "#9FB9C8")
 ```
 
@@ -2553,7 +2553,7 @@ ethnicity_minor_annex_table <-  data.frame(
 kable((ethnicity_minor_annex_table),
       col.names = gsub(" 1","/1",gsub("Academic Year ","",gsub("[.]"," ",names(ethnicity_minor_annex_table)))),
       caption = "Ethnic Group Minor categories",
-      format='latex') %>%
+      format='latex', longtable=T, longtable=T, position='!h') %>%
   row_spec(0, bold = T, background = "#9FB9C8")
 ```
 
