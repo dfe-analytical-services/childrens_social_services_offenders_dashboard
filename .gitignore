@@ -4,3 +4,9 @@
 .Ruserdata
 *.pdf
 *.html
+data/130722_outputs_SAFE_suppressed_FINAL.xlsx
+data/20072022_sig_testing.xlsx
+*.pdf
+*.tex
+*.log
+20072022_sig_testing.xlsx
