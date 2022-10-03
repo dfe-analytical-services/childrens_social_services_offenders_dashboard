@@ -1,4 +1,4 @@
-bioconductor.version:
+bioconductor.version: >>>>>>> 878616a15c8b539ab5ec76d472a406cb3a23e31b
 external.libraries:
 ignored.packages:
 package.dependency.fields: Imports, Depends, LinkingTo
