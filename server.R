@@ -126,8 +126,125 @@ server <- function(input, output, session) {
       write.csv(dfRevBal, file)
     }
   )
+  
+  # LA  table in Demographics tab
+  output$demotable <- renderDataTable({
+    info_table <- info_table %>% filter(indicator==input$indichoice, LA %in% c(input$LAchoice, input$LAchoice2)) %>%
+      rename("Local authority" = LA,
+             "Number of pupils" = all,
+             "Number of children cautioned or sentenced\nfor an offence" = offenders,
+             "Number of children cautioned or sentences for a serious violence offence" = sv,
+             "Proportion of children cautioned or sentenced for\nan offence" = prop_off, 
+             "Proportion of children cautioned or sentences for a serious violence offence" = prop_sv, 
+             "Number of children cautioned or sentenced for a serious violence offence with a prior offence" = count_previous, 
+             "Proportion of children cautioned or sentenced for a serious violence offence with a prior offence" = prop_previous,
+             "Number of children who live or go to school in different LA" = count_all_dif, 
+             "Number of children cautioned or sentenced for an offence who live or go to school in different LA" = count_any_dif , 
+             "Number of children cautioned or sentenced for a serious violence offence who live or go to school in different LA" = count_sv_dif,
+             "Proportion of children who live or go to school in different LA" = prop_count_all_dif, 
+             "Proportion of children cautioned or sentenced for an offence who live or go to school in different LA" = prop_count_any_dif, 
+             "Proportion of children cautioned or sentenced for a serious violence offence who live or go to school in different LA" = prop_count_sv_dif) 
+    
+    info_table <- t(info_table)
+    
+  }, rownames = TRUE, options = list(pageLength = 15))  
+  
+  # Gender plot 1
+  output$GenderPlot1 <-  renderPlotly({
+    Genderplot <- Gender %>% filter(indicator==input$indichoice, LA==input$LAchoice, group %in% c(input$groupchoice))
+    ggplotly(createGenderPlot(Genderplot, input$LAchoice) %>% 
+        config(displayModeBar = F))
+    })
+  
+  # Gender plot 2
+  output$GenderPlot2 <-  renderPlotly({
+    Genderplot <- Gender %>% filter(indicator==input$indichoice, LA==input$LAchoice2, group %in% c(input$groupchoice))
+    ggplotly(createGenderPlot(Genderplot, input$LAchoice2) %>%
+               config(displayModeBar = F))
+  })
 
-
+  # Ethnicity plot 1
+  output$EthPlot1 <-  renderPlotly({
+    ethplot <- Ethnicity %>% filter(indicator==input$indichoice, LA==input$LAchoice, group %in% c(input$groupchoice))
+    ggplotly(createEthPlot(ethplot, input$LAchoice) %>%
+               config(displayModeBar = F))
+  })
+  
+  # Ethnicity plot 2
+  output$EthPlot2 <-  renderPlotly({
+    ethplot <- Ethnicity %>% filter(indicator==input$indichoice, LA==input$LAchoice2, group %in% c(input$groupchoice))
+    ggplotly(createEthPlot(ethplot, input$LAchoice2) %>%
+               config(displayModeBar = F))
+  })
+  
+  # Output - FSM chart 1
+  output$fsmPlot1 <- renderPlotly({
+    fsmplot <- FSM %>% filter(indicator==input$indichoice, LA==input$LAchoice, group %in% c(input$groupchoice))
+    ggplotly(createFSMPlot(fsmplot, input$LAchoice) %>%
+               config(displayModeBar = F))
+  })
+  
+  # Output - FSM chart 2
+  output$fsmPlot2 <- renderPlotly({
+    fsmplot <- FSM %>% filter(indicator==input$indichoice, LA==input$LAchoice2, group %in% c(input$groupchoice))
+    ggplotly(createFSMPlot(fsmplot, input$LAchoice2) %>%
+               config(displayModeBar = F))
+  })
+  
+  # Output - FSM waffle 1
+  output$waffle_FSM1 <- renderPlot({
+    FSM_waffle <- FSM_waffle %>% filter(indicator==input$indichoice, LA==input$LAchoice)
+    createWaffle_FSM(FSM_waffle, input$LAchoice) 
+  })
+  
+  # Output - FSM waffle 2
+  output$waffle_FSM2 <- renderPlot({
+    FSM_waffle <- FSM_waffle %>% filter(indicator==input$indichoice, LA==input$LAchoice2)
+    createWaffle_FSM(FSM_waffle, input$LAchoice2) 
+  })
+  
+  # Output - age first offence chart 1
+  output$ageofplot1 <- renderPlotly({
+    age_plot <- age_offence %>% filter(indicator==input$indichoice, LA==input$LAchoice, group %in% c(input$groupchoice))
+    ggplotly(createAgeOffence(age_plot, input$LAchoice) %>%
+               config(displayModeBar = F))
+  })
+  
+  # Output - age first offence chart 2
+  output$ageofplot2 <- renderPlotly({
+    age_plot <- age_offence %>% filter(indicator==input$indichoice, LA==input$LAchoice2, group %in% c(input$groupchoice))
+    ggplotly(createAgeOffence(age_plot, input$LAchoice2) %>%
+               config(displayModeBar = F))
+  })
+  
+  # Output - KS2 attainment chart 1
+  output$ks2attainplot1 <- renderPlotly({
+    KS2_attain <- KS2_attain %>% filter(indicator==input$indichoice, LA==input$LAchoice, group %in% c(input$groupchoice))
+    ggplotly(createKS2plot(KS2_attain, input$LAchoice) %>%
+               config(displayModeBar = F))
+  })
+  
+  # Output - KS2 attainment chart 2
+  output$ks2attainplot2 <- renderPlotly({
+    KS2_attain <- KS2_attain %>% filter(indicator==input$indichoice, LA==input$LAchoice2, group %in% c(input$groupchoice))
+    ggplotly(createKS2plot(KS2_attain, input$LAchoice2) %>%
+               config(displayModeBar = F))
+  })
+  
+  # Output - KS4 attainment chart 1
+  output$ks4attainplot1 <- renderPlotly({
+    KS4_attain <- KS4_attain %>% filter(indicator==input$indichoice, LA==input$LAchoice, group %in% c(input$groupchoice))
+    ggplotly(createKS4plot(KS4_attain, input$LAchoice) %>%
+               config(displayModeBar = F))
+  })
+  
+  # Output - KS4 attainment chart 2
+  output$ks4attainplot2 <- renderPlotly({
+    KS4_attain <- KS4_attain %>% filter(indicator==input$indichoice, LA==input$LAchoice2, group %in% c(input$groupchoice))
+    ggplotly(createKS4plot(KS4_attain, input$LAchoice2) %>%
+               config(displayModeBar = F))
+  })
+  
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {

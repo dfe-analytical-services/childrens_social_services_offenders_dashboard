@@ -173,3 +173,267 @@ dashboard_panel <- function() {
           )
   )
 }
+
+
+Demographics <- function() {
+  tabPanel(
+    value = "tab_demo",
+    "Demographics",
+    
+    gov_main_layout(
+      gov_row(
+        column(
+          width=12,
+          h1("Overall content title for this dashboard page (h1)"),
+        ),
+        column(
+          width=12,
+          div(
+            class = "well",
+            style = "min-height: 100%; height: 100%; overflow-y: visible",
+            gov_row(
+              column(
+                width = 6,
+                selectizeInput("LAchoice", 
+                               "LA", 
+                               choices = choicesLA
+                )),
+              column(
+                width = 6,
+                selectizeInput("LAchoice2", 
+                               "LA (choice 2)", 
+                               choices = choicesLA,
+                               select = "xSgZ6" # Will need to change this to England with real data
+                )
+              ), 
+              column(
+                width = 6,
+                radioButtons("indichoice", 
+                             "Indicator", 
+                             choices = choiceIndicator$Indicator,
+                             selected = "School"
+                             )
+                ),
+              column(
+                width = 6,
+                checkboxGroupInput("groupchoice", 
+                                   "Pupil group", 
+                                   choices = choiceGroup$group, 
+                                   selected = choiceGroup$group
+                )
+              ))
+          )
+        ),
+        
+        column(
+          width=12,
+          tabsetPanel(id = "tabsetpanels2",
+                      tabPanel(
+                        "LA info",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 0 (h2)"),
+                            box(
+                              width = 12,
+                              dataTableOutput("demotable")
+                            )
+                            
+                            
+                          )
+                        )
+                      ),
+                      tabPanel(
+                        "Gender",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 1 (h2)"),
+                            box(
+                              width=12,
+                              plotlyOutput("GenderPlot1"),
+                              plotlyOutput("GenderPlot2"))
+                            )
+                        )
+                      ),
+                      tabPanel(
+                        "Ethnicity",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 2 (h2)"),
+                            box(
+                              width = 12,
+                              plotlyOutput("EthPlot1"),
+                              plotlyOutput("EthPlot2")
+                            )
+                            )
+                        )
+                      ),
+                      tabPanel(
+                        "Free school meals",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 3 (h2)"),
+                            tabBox(width = 12, title = NULL, id="FSMsubtabs",
+                                   tabPanel("Charts", plotlyOutput("fsmPlot1"), plotlyOutput("fsmPlot2")),
+                                   tabPanel("Waffle", plotOutput("waffle_FSM1"), plotOutput("waffle_FSM2")))
+                            ),
+                            
+                        )
+                      ),
+                      tabPanel(
+                        "Age at first offence",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 4 (h2)"),
+                            box(
+                              width = 12,
+                              plotlyOutput("ageofplot1"),
+                              plotlyOutput("ageofplot2")
+                            )
+                            )
+                        )
+                      )
+          )
+        )
+      )
+    )
+  )
+}
+
+SchoolExp <- function() {
+  tabPanel(
+    value = "tab_scl",
+    "School Experience",
+    
+    gov_main_layout(
+      gov_row(
+        column(
+          width=12,
+          h1("Overall content title for this dashboard page (h1)"),
+        ),
+        column(
+          width=12,
+          div(
+            class = "well",
+            style = "min-height: 100%; height: 100%; overflow-y: visible",
+            gov_row(
+              column(
+                width = 6,
+                selectizeInput("LAchoice", 
+                               "LA", 
+                               choices = choicesLA
+                )),
+              column(
+                width = 6,
+                selectizeInput("LAchoice2", 
+                               "LA (choice 2)", 
+                               choices = choicesLA,
+                               select = "xSgZ6" # Will need to change this to England with real data
+                )
+              ), 
+              column(
+                width = 6,
+                radioButtons("indichoice", 
+                             "Indicator", 
+                             choices = choiceIndicator$Indicator,
+                             selected = "School"
+                )
+              ),
+              column(
+                width = 6,
+                checkboxGroupInput("groupchoice", 
+                                   "Pupil group", 
+                                   choices = choiceGroup$group, 
+                                   selected = choiceGroup$group
+                )
+              ))
+          )
+        ),
+        
+        column(
+          width=12,
+          tabsetPanel(id = "tabsetpanels3",
+                      tabPanel(
+                        "Attainment",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 0 (h2)"),
+                            tabBox(width = 12, title = NULL, id="atn_subtabs",
+                                   tabPanel("KS2 attainment", plotlyOutput("ks2attainplot1"), plotlyOutput("ks2attainplot2")),
+                                   tabPanel("KS4 attainment", plotlyOutput("ks4attainplot1"), plotlyOutput("ks4attainplot2")))
+                          )
+                        )
+                      ),
+                      tabPanel(
+                        "PA",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 1 (h2)"),
+                            tabBox(width = 12, title = NULL, id="pa_subtabs",
+                                   tabPanel("Ever PA/PAUO"),
+                                   tabPanel("Timing of PA/PAUO"))
+                          )
+                        )
+                      ),
+                      tabPanel(
+                        "Suspension",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 2 (h2)"),
+                            tabBox(width = 12, title = NULL, id="sus_subtabs",
+                                   tabPanel("Ever suspended"),
+                                   tabPanel("Timing of closest/first suspension"))
+                          )
+                        )
+                      ),
+                      tabPanel(
+                        "Exclusion",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 3 (h2)"),
+                            tabBox(width = 12, title = NULL, id="excl_subtabs",
+                                   tabPanel("Ever excluded"),
+                                   tabPanel("Timing of closest/first exclusion"))
+                          )
+                          
+                        )
+                      ),
+                      tabPanel(
+                        "AP",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 4 (h2)"),
+                            tabBox(width = 12, title = NULL, id="ap_subtabs",
+                                   tabPanel("Ever AP"),
+                                   tabPanel("Timing of AP"))
+                          )
+                        )
+                      ),
+                      tabPanel(
+                        "SEN",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 5 (h2)"),
+                            tabBox(width = 12, title = NULL, id="sen_subtabs",
+                                   tabPanel("Ever SEN_support/EHCP"),
+                                   tabPanel("Timing of SEN support/EHCP"),
+                                   tabPanel("Timing of SEMH"))
+                          )
+                        )
+                      )
+          )
+        )
+      )
+    )
+  )
+}

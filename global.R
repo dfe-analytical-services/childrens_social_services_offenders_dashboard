@@ -23,6 +23,13 @@ shhh(library(ggplot2))
 shhh(library(plotly))
 shhh(library(DT))
 shhh(library(xfun))
+shhh(library(tidyverse)) #added
+shhh(library(readxl)) #added install.packages('readxl')
+shhh(library(openxlsx)) #added install.packages('openxlsx')
+shhh(library(writexl)) #added install.packages('writexl')
+shhh(library(waffle)) #added
+shhh(library(gridExtra)) #added
+
 
 # Functions ---------------------------------------------------------------------------------
 
@@ -106,3 +113,21 @@ choicesAreas <- dfAreas %>%
 choicesYears <- unique(dfRevBal$time_period)
 
 choicesPhase <- unique(dfRevBal$school_phase)
+
+# Read in cohort data
+dfCohort <- read_cohort_data()
+
+# Read in Dummy data
+#alldata <- read_alldata() # Can delete this now as no longer needed
+
+# Read in data needed for dashboard 
+read_dash_data(file ="data/Demographics.xlsx") # Can read this in for different files to get data for diff tabs
+read_dash_data(file = "data/SchoolExp.xlsx")
+
+# Add tables currently needed from alldata to environment
+# Use this table to get a list of LAs to be used as choices
+choicesLA <- Gender %>% select(LA) %>% distinct()
+choiceIndicator <- data.frame(Indicator = c("Home", "School"))
+choiceGroup <- data.frame(group = c("All Pupils", "Any Offence", "Serious Violence Offence"))
+
+
