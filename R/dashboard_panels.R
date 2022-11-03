@@ -194,13 +194,13 @@ Demographics <- function() {
             gov_row(
               column(
                 width = 6,
-                selectizeInput("LAchoice", 
+                selectizeInput("demLAchoice", 
                                "LA", 
                                choices = choicesLA
                 )),
               column(
                 width = 6,
-                selectizeInput("LAchoice2", 
+                selectizeInput("demLAchoice2", 
                                "LA (choice 2)", 
                                choices = choicesLA,
                                select = "xSgZ6" # Will need to change this to England with real data
@@ -323,13 +323,13 @@ SchoolExp <- function() {
             gov_row(
               column(
                 width = 6,
-                selectizeInput("LAchoice", 
+                selectizeInput("sclLAchoice", 
                                "LA", 
                                choices = choicesLA
                 )),
               column(
                 width = 6,
-                selectizeInput("LAchoice2", 
+                selectizeInput("sclLAchoice2", 
                                "LA (choice 2)", 
                                choices = choicesLA,
                                select = "xSgZ6" # Will need to change this to England with real data
