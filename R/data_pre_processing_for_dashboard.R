@@ -301,35 +301,43 @@ SusExcl_waffle <- Everflag %>% select(LA, indicator, sv_prop_count_Excl, also_sv
 
 # Closest / First sus / excl
 First_sus_timing_sclLA <- First_sus_timing_sclLA %>%
-  mutate(indicator = "School", SusExcl = "Suspended", Time = "First") %>% rename(LA = SCHOOL_LA) %>%
-  select(!contains(c("count","all")))
+  mutate(indicator = "School", SusExcl = "Suspended", Time = "First") %>% rename(LA = SCHOOL_LA, prop_absencefirst_all= prop_susfirst_all) %>%
+  select(!contains(c("count")) & !c(prop_svfirst, prop_susfirst))
 First_sus_timing_hmLA <- First_sus_timing_hmLA %>%
-  mutate(indicator = "Home", SusExcl = "Suspended", Time = "First") %>% rename(LA = HOME_LA)%>%
-  select(!contains(c("count","all")))
+  mutate(indicator = "Home", SusExcl = "Suspended", Time = "First") %>% rename(LA = HOME_LA, prop_absencefirst_all= prop_susfirst_all)%>%
+  select(!contains(c("count")) & !c(prop_svfirst, prop_susfirst))
 First_excl_timing_sclLA <- First_excl_timing_sclLA %>%
-  mutate(indicator = "School", SusExcl = "Permanently excluded", Time = "First") %>% rename(LA = SCHOOL_LA)%>%
-  select(!contains(c("count","all")))
+  mutate(indicator = "School", SusExcl = "Permanently excluded", Time = "First") %>% rename(LA = SCHOOL_LA, prop_absencefirst_all = prop_exclfirst_all)%>%
+  select(!contains(c("count")) & !c(prop_svfirst, prop_exclfirst))
 First_excl_timing_hmLA <-  First_excl_timing_hmLA %>%
-  mutate(indicator = "Home", SusExcl = "Permanently excluded", Time = "First") %>% rename(LA = HOME_LA)%>%
-  select(!contains(c("count","all")))
+  mutate(indicator = "Home", SusExcl = "Permanently excluded", Time = "First") %>% rename(LA = HOME_LA, prop_absencefirst_all = prop_exclfirst_all)%>%
+  select(!contains(c("count")) & !c(prop_svfirst, prop_exclfirst))
 Closest_sus_timing_sclLA <- Closest_sus_timing_sclLA %>%
-  mutate(indicator = "School", SusExcl = "Suspended", Time = "Closest") %>% rename(LA = SCHOOL_LA)%>%
-  select(!contains(c("count","all")))
+  mutate(indicator = "School", SusExcl = "Suspended", Time = "Closest") %>% rename(LA = SCHOOL_LA, prop_absencefirst_all= prop_susfirst_all)%>%
+  select(!contains(c("count")) & !c(prop_svfirst, prop_susfirst))
 Closest_sus_timing_hmLA <- Closest_sus_timing_hmLA %>%
-  mutate(indicator = "Home", SusExcl = "Suspended", Time = "Closest") %>% rename(LA = HOME_LA)%>%
-  select(!contains(c("count","all")))
+  mutate(indicator = "Home", SusExcl = "Suspended", Time = "Closest") %>% rename(LA = HOME_LA, prop_absencefirst_all= prop_susfirst_all)%>%
+  select(!contains(c("count")) & !c(prop_svfirst, prop_susfirst))
 Closest_excl_timing_sclLA <- Closest_excl_timing_sclLA %>%
-  mutate(indicator = "School", SusExcl = "Permanently excluded", Time = "Closest") %>% rename(LA = SCHOOL_LA)%>%
-  select(!contains(c("count","all")))
+  mutate(indicator = "School", SusExcl = "Permanently excluded", Time = "Closest") %>% rename(LA = SCHOOL_LA, prop_absencefirst_all = prop_exclfirst_all)%>%
+  select(!contains(c("count")) & !c(prop_svfirst, prop_exclfirst))
 Closest_excl_timing_hmLA <- Closest_excl_timing_hmLA %>%
-  mutate(indicator = "Home", SusExcl = "Permanently excluded", Time = "Closest") %>% rename(LA = HOME_LA)%>%
-  select(!contains(c("count","all")))
+  mutate(indicator = "Home", SusExcl = "Permanently excluded", Time = "Closest") %>% rename(LA = HOME_LA, prop_absencefirst_all = prop_exclfirst_all)%>%
+  select(!contains(c("count")) & !c(prop_svfirst, prop_exclfirst))
 
 fst.clst_SusExcl <- bind_rows(First_sus_timing_sclLA, First_sus_timing_hmLA, First_excl_timing_sclLA, First_excl_timing_hmLA,
                               Closest_sus_timing_sclLA, Closest_sus_timing_hmLA, Closest_excl_timing_sclLA, Closest_excl_timing_hmLA)
 
 rm(First_sus_timing_sclLA, First_sus_timing_hmLA, First_excl_timing_sclLA, First_excl_timing_hmLA,
              Closest_sus_timing_sclLA, Closest_sus_timing_hmLA, Closest_excl_timing_sclLA, Closest_excl_timing_hmLA)
+
+fst.clst_SusExcl <- fst.clst_SusExcl %>% pivot_longer(cols = c(prop_svfirst_all, prop_absencefirst_all),
+                                          names_to = "key",
+                                          values_to = "Perc") %>%
+  mutate(time_group = ifelse(str_detect(key,"svfirst")==TRUE, "Absense after offence", "Absense before offence")) %>%
+  filter(!(key =='prop_absencefirst_all' & grouped_overall =='On same day')) %>%
+  mutate(time_group = ifelse(grouped_overall =='On same day', "Absense on same day as offence", time_group)) %>%
+  select(!key)
 
 
 # Alternative provision --------------------------------------------------------

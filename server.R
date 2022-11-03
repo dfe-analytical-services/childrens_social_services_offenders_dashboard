@@ -245,6 +245,80 @@ server <- function(input, output, session) {
                config(displayModeBar = F))
   })
   
+  # Output - PA/PAUO chart 1
+  output$PAPlot1 <- renderPlotly({
+    EverPAPAUO <- EverPAPAUO %>% filter(indicator==input$indichoice, LA==input$LAchoice, group %in% c(input$groupchoice))
+    ggplotly(createPAPlot(EverPAPAUO, input$LAchoice) %>%
+               config(displayModeBar = F))
+  })
+  
+  # Output - PA/PAUO chart 2
+  output$PAPlot2 <- renderPlotly({
+    EverPAPAUO <- EverPAPAUO %>% filter(indicator==input$indichoice, LA==input$LAchoice2, group %in% c(input$groupchoice))
+    ggplotly(createPAPlot(EverPAPAUO, input$LAchoice2) %>%
+               config(displayModeBar = F))
+  })
+  
+  # Output - PA waffle 1
+  output$waffle_PA1 <- renderPlot({
+    PA_waffle <- PA_waffle %>% filter(indicator==input$indichoice, LA==input$LAchoice)
+    createWaffle_PA(PA_waffle, input$LAchoice) 
+  })
+  
+  # Output - PA waffle 2
+  output$waffle_PA2 <- renderPlot({
+    PA_waffle <- PA_waffle %>% filter(indicator==input$indichoice, LA==input$LAchoice2)
+    createWaffle_PA(PA_waffle, input$LAchoice2) 
+  })
+  
+  # Output - PA timing 1
+  output$timing_PA1 <- renderPlotly({
+    PAPAUO_timing <- PAPAUO_timing %>% filter(indicator==input$indichoice, LA==input$LAchoice)
+    createPATimingPlot(PAPAUO_timing, input$LAchoice) 
+  })
+  
+  # Output - PA timing 2
+  output$timing_PA2 <- renderPlotly({
+    PAPAUO_timing <- PAPAUO_timing %>% filter(indicator==input$indichoice, LA==input$LAchoice2)
+    createPATimingPlot(PAPAUO_timing, input$LAchoice2) 
+  })
+  
+  # Output - Sus/Excl 1
+  output$SusExclPlot1 <- renderPlotly({
+    EverSusExcl <- EverSusExcl %>% filter(indicator==input$indichoice, LA==input$LAchoice)
+    createSusExclPlot(EverSusExcl, input$LAchoice) 
+  })
+  
+  # Output - Sus/Excl 2
+  output$SusExclPlot2 <- renderPlotly({
+    EverSusExcl <- EverSusExcl %>% filter(indicator==input$indichoice, LA==input$LAchoice2)
+    createSusExclPlot(EverSusExcl, input$LAchoice2) 
+  })
+  
+  # Output - Suspension waffle 1
+  output$waffle_Sus1 <- renderPlot({
+    SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$indichoice, LA==input$LAchoice)
+    createWaffle_Sus(SusExcl_waffle, input$LAchoice) 
+  })
+  
+  # Output - Suspension waffle 2
+  output$waffle_Sus2 <- renderPlot({
+    SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$indichoice, LA==input$LAchoice2)
+    createWaffle_Sus(SusExcl_waffle, input$LAchoice2) 
+  })
+  
+  # Output - Exclusion waffle 1
+  output$waffle_Excl1 <- renderPlot({
+    SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$indichoice, LA==input$LAchoice)
+    createWaffle_Excl(SusExcl_waffle, input$LAchoice) 
+  })
+  
+  # Output - Exclusion waffle 2
+  output$waffle_Excl2 <- renderPlot({
+    SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$indichoice, LA==input$LAchoice2)
+    createWaffle_Excl(SusExcl_waffle, input$LAchoice2) 
+  })
+  
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {

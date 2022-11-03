@@ -376,20 +376,32 @@ SchoolExp <- function() {
                             width=12,
                             h2("Outputs 1 (h2)"),
                             tabBox(width = 12, title = NULL, id="pa_subtabs",
-                                   tabPanel("Ever PA/PAUO"),
-                                   tabPanel("Timing of PA/PAUO"))
+                                   tabPanel("Ever PA/PAUO",
+                                            tabBox(width = 12, title = NULL, id="pa_subtabs2",
+                                            tabPanel("Chart", plotlyOutput("PAPlot1"), plotlyOutput("PAPlot2")),
+                                            tabPanel("Waffle", plotOutput("waffle_PA1"), plotOutput("waffle_PA2")))),
+                                   tabPanel("Timing of PA/PAUO", plotlyOutput("timing_PA1"), plotlyOutput("timing_PA2")))
                           )
                         )
                       ),
                       tabPanel(
-                        "Suspension",
+                        "Suspension & Exclusions",
                         fluidRow(
                           column(
                             width=12,
                             h2("Outputs 2 (h2)"),
-                            tabBox(width = 12, title = NULL, id="sus_subtabs",
-                                   tabPanel("Ever suspended"),
-                                   tabPanel("Timing of closest/first suspension"))
+                            tabBox(width = 12, title = NULL, id="SusExcl_subtabs",
+                                   tabPanel("Ever suspended/excluded",
+                                            tabBox(width=12, title = NULL, id="SusExcl_subtabs2",
+                                            tabPanel("Chart", plotlyOutput("SusExclPlot1"), plotlyOutput("SusExclPlot2")),
+                                            tabPanel("Suspension Waffle", plotOutput("waffle_Sus1"), plotOutput("waffle_Sus2")),
+                                            tabPanel("Exclusion Waffle",plotOutput("waffle_Excl1"), plotOutput("waffle_Excl2")))),
+                                   tabPanel("Timing of closest/first suspension",
+                                            tabBox(width = 12, title = NULL, id="SusExcl_subtabs3",
+                                                   tabPanel("First suspension", plotlyOutput("FstSusTime1")),
+                                                   tabPanel("Closest suspension"),
+                                                   tabPanel("First exclusion"),
+                                                   tabPanel("Closest exclusion"))))
                           )
                         )
                       ),
