@@ -334,11 +334,16 @@ rm(First_sus_timing_sclLA, First_sus_timing_hmLA, First_excl_timing_sclLA, First
 fst.clst_SusExcl <- fst.clst_SusExcl %>% pivot_longer(cols = c(prop_svfirst_all, prop_absencefirst_all),
                                           names_to = "key",
                                           values_to = "Perc") %>%
-  mutate(time_group = ifelse(str_detect(key,"svfirst")==TRUE, "Absense after offence", "Absense before offence")) %>%
+  mutate(time_group = ifelse(str_detect(key,"svfirst")==TRUE, "C - Absense after offence", "A - Absense before offence")) %>%
   filter(!(key =='prop_absencefirst_all' & grouped_overall =='On same day')) %>%
-  mutate(time_group = ifelse(grouped_overall =='On same day', "Absense on same day as offence", time_group)) %>%
+  mutate(time_group = ifelse(grouped_overall =='On same day', "B - Absense on same day as offence", time_group)) %>%
   select(!key)
 
+fst.clst_SusExcl <- fst.clst_SusExcl %>% group_by(LA, indicator, SusExcl, Time) %>% arrange(LA, indicator, SusExcl, Time, time_group) 
+# Add a rank for plotting so events are in order (2 yrs before ... -> same day -> ... 2 yrs after)
+rank_for_plot = data.frame(rank = as.numeric(rep(c(7,6,5,4,3,2,1,8,9,10,11,12,13,14,15),times = 1216)))
+
+fst.clst_SusExcl <- bind_cols(fst.clst_SusExcl, rank_for_plot)
 
 # Alternative provision --------------------------------------------------------
 # AP -> Ever (incl waffle) , ((??Time missed due to AP)) , Timing of AP

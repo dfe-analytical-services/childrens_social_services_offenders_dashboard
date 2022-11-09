@@ -208,7 +208,7 @@ Demographics <- function() {
               ), 
               column(
                 width = 6,
-                radioButtons("indichoice", 
+                radioButtons("demindichoice", 
                              "Indicator", 
                              choices = choiceIndicator$Indicator,
                              selected = "School"
@@ -216,7 +216,7 @@ Demographics <- function() {
                 ),
               column(
                 width = 6,
-                checkboxGroupInput("groupchoice", 
+                checkboxGroupInput("demgroupchoice", 
                                    "Pupil group", 
                                    choices = choiceGroup$group, 
                                    selected = choiceGroup$group
@@ -337,7 +337,7 @@ SchoolExp <- function() {
               ), 
               column(
                 width = 6,
-                radioButtons("indichoice", 
+                radioButtons("sclindichoice", 
                              "Indicator", 
                              choices = choiceIndicator$Indicator,
                              selected = "School"
@@ -345,7 +345,7 @@ SchoolExp <- function() {
               ),
               column(
                 width = 6,
-                checkboxGroupInput("groupchoice", 
+                checkboxGroupInput("sclgroupchoice", 
                                    "Pupil group", 
                                    choices = choiceGroup$group, 
                                    selected = choiceGroup$group
@@ -398,24 +398,11 @@ SchoolExp <- function() {
                                             tabPanel("Exclusion Waffle",plotOutput("waffle_Excl1"), plotOutput("waffle_Excl2")))),
                                    tabPanel("Timing of closest/first suspension",
                                             tabBox(width = 12, title = NULL, id="SusExcl_subtabs3",
-                                                   tabPanel("First suspension", plotlyOutput("FstSusTime1")),
-                                                   tabPanel("Closest suspension"),
-                                                   tabPanel("First exclusion"),
-                                                   tabPanel("Closest exclusion"))))
+                                                   tabPanel("First suspension", plotlyOutput("FstSusTime1"), plotlyOutput("FstSusTime2")),
+                                                   tabPanel("Closest suspension", plotlyOutput("clstSusTime1"),plotlyOutput("clstSusTime2")),
+                                                   tabPanel("First exclusion", plotlyOutput("FstExclTime1"), plotlyOutput("FstExclTime2")),
+                                                   tabPanel("Closest exclusion", plotlyOutput("clstExclTime1"),plotlyOutput("clstExclTime2")))))
                           )
-                        )
-                      ),
-                      tabPanel(
-                        "Exclusion",
-                        fluidRow(
-                          column(
-                            width=12,
-                            h2("Outputs 3 (h2)"),
-                            tabBox(width = 12, title = NULL, id="excl_subtabs",
-                                   tabPanel("Ever excluded"),
-                                   tabPanel("Timing of closest/first exclusion"))
-                          )
-                          
                         )
                       ),
                       tabPanel(
@@ -424,8 +411,11 @@ SchoolExp <- function() {
                           column(
                             width=12,
                             h2("Outputs 4 (h2)"),
-                            tabBox(width = 12, title = NULL, id="ap_subtabs",
-                                   tabPanel("Ever AP"),
+                            tabBox(width = 12, title = NULL, id="AP_subtabs",
+                                   tabPanel("Ever AP",
+                                            tabBox(width=12, title = NULL, id="AP_subtabs2",
+                                                   tabPanel("Chart", plotlyOutput("APchart1"), plotlyOutput("APchart2")),
+                                                   tabPanel("Waffle"))),
                                    tabPanel("Timing of AP"))
                           )
                         )

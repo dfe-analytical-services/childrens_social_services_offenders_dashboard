@@ -27,7 +27,7 @@ server <- function(input, output, session) {
   hide(id = "loading-content", anim = TRUE, animType = "fade")
   show("app-content")
 
-  # Code to sync inputs across tabs:
+  # Code to sync inputs across tabs: LA choice
   observeEvent(input$demLAchoice,{
     if(input$navlistPanel=='tab_demo'){
       updateSelectInput(session, "sclLAchoice", selected=input$demLAchoice)
@@ -52,8 +52,32 @@ server <- function(input, output, session) {
     }
   })
   
+  # Code to sync inputs across tabs: indichoice (Home or School)
+  observeEvent(input$demindichoice,{
+    if(input$navlistPanel=='tab_demo'){
+      updateSelectInput(session, "sclindichoice", selected=input$demindichoice)
+    }
+  })
   
-      
+  observeEvent(input$sclindichoice,{
+    if(input$navlistPanel=='tab_scl'){
+      updateSelectInput(session, "demindichoice", selected=input$sclindichoice)
+    }
+  })
+  
+  # Code to sync inputs across tabs: groupchoice (all pupils, offenders, sv offenders)
+  observeEvent(input$demgroupchoice,{
+    if(input$navlistPanel=='tab_demo'){
+      updateSelectInput(session, "sclgroupchoice", selected=input$demgroupchoice)
+    }
+  })
+  
+  observeEvent(input$sclgroupchoice,{
+    if(input$navlistPanel=='tab_scl'){
+      updateSelectInput(session, "demgroupchoice", selected=input$sclgroupchoice)
+    }
+  })
+  
   # Simple server stuff goes here ------------------------------------------------------------
   reactiveRevBal <- reactive({
     dfRevBal %>% filter(
@@ -156,7 +180,7 @@ server <- function(input, output, session) {
   
   # LA  table in Demographics tab
   output$demotable <- renderDataTable({
-    info_table <- info_table %>% filter(indicator==input$indichoice, LA %in% c(input$demLAchoice, input$demLAchoice2)) %>%
+    info_table <- info_table %>% filter(indicator==input$demindichoice, LA %in% c(input$demLAchoice, input$demLAchoice2)) %>%
       rename("Local authority" = LA,
              "Number of pupils" = all,
              "Number of children cautioned or sentenced\nfor an offence" = offenders,
@@ -178,172 +202,234 @@ server <- function(input, output, session) {
   
   # Gender plot 1
   output$GenderPlot1 <-  renderPlotly({
-    Genderplot <- Gender %>% filter(indicator==input$indichoice, LA==input$demLAchoice, group %in% c(input$groupchoice))
+    Genderplot <- Gender %>% filter(indicator==input$demindichoice, LA==input$demLAchoice, group %in% c(input$demgroupchoice))
     ggplotly(createGenderPlot(Genderplot, input$demLAchoice) %>% 
         config(displayModeBar = F))
     })
   
   # Gender plot 2
   output$GenderPlot2 <-  renderPlotly({
-    Genderplot <- Gender %>% filter(indicator==input$indichoice, LA==input$demLAchoice2, group %in% c(input$groupchoice))
+    Genderplot <- Gender %>% filter(indicator==input$demindichoice, LA==input$demLAchoice2, group %in% c(input$demgroupchoice))
     ggplotly(createGenderPlot(Genderplot, input$demLAchoice2) %>%
                config(displayModeBar = F))
   })
 
   # Ethnicity plot 1
   output$EthPlot1 <-  renderPlotly({
-    ethplot <- Ethnicity %>% filter(indicator==input$indichoice, LA==input$demLAchoice, group %in% c(input$groupchoice))
+    ethplot <- Ethnicity %>% filter(indicator==input$demindichoice, LA==input$demLAchoice, group %in% c(input$demgroupchoice))
     ggplotly(createEthPlot(ethplot, input$demLAchoice) %>%
                config(displayModeBar = F))
   })
   
   # Ethnicity plot 2
   output$EthPlot2 <-  renderPlotly({
-    ethplot <- Ethnicity %>% filter(indicator==input$indichoice, LA==input$demLAchoice2, group %in% c(input$groupchoice))
+    ethplot <- Ethnicity %>% filter(indicator==input$demindichoice, LA==input$demLAchoice2, group %in% c(input$demgroupchoice))
     ggplotly(createEthPlot(ethplot, input$demLAchoice2) %>%
                config(displayModeBar = F))
   })
   
   # Output - FSM chart 1
   output$fsmPlot1 <- renderPlotly({
-    fsmplot <- FSM %>% filter(indicator==input$indichoice, LA==input$demLAchoice, group %in% c(input$groupchoice))
+    fsmplot <- FSM %>% filter(indicator==input$demindichoice, LA==input$demLAchoice, group %in% c(input$demgroupchoice))
     ggplotly(createFSMPlot(fsmplot, input$demLAchoice) %>%
                config(displayModeBar = F))
   })
   
   # Output - FSM chart 2
   output$fsmPlot2 <- renderPlotly({
-    fsmplot <- FSM %>% filter(indicator==input$indichoice, LA==input$demLAchoice2, group %in% c(input$groupchoice))
+    fsmplot <- FSM %>% filter(indicator==input$demindichoice, LA==input$demLAchoice2, group %in% c(input$demgroupchoice))
     ggplotly(createFSMPlot(fsmplot, input$demLAchoice2) %>%
                config(displayModeBar = F))
   })
   
   # Output - FSM waffle 1
   output$waffle_FSM1 <- renderPlot({
-    FSM_waffle <- FSM_waffle %>% filter(indicator==input$indichoice, LA==input$demLAchoice)
+    FSM_waffle <- FSM_waffle %>% filter(indicator==input$demindichoice, LA==input$demLAchoice)
     createWaffle_FSM(FSM_waffle, input$demLAchoice) 
   })
   
   # Output - FSM waffle 2
   output$waffle_FSM2 <- renderPlot({
-    FSM_waffle <- FSM_waffle %>% filter(indicator==input$indichoice, LA==input$demLAchoice2)
+    FSM_waffle <- FSM_waffle %>% filter(indicator==input$demindichoice, LA==input$demLAchoice2)
     createWaffle_FSM(FSM_waffle, input$demLAchoice2) 
   })
   
   # Output - age first offence chart 1
   output$ageofplot1 <- renderPlotly({
-    age_plot <- age_offence %>% filter(indicator==input$indichoice, LA==input$demLAchoice, group %in% c(input$groupchoice))
+    age_plot <- age_offence %>% filter(indicator==input$demindichoice, LA==input$demLAchoice, group %in% c(input$demgroupchoice))
     ggplotly(createAgeOffence(age_plot, input$demLAchoice) %>%
                config(displayModeBar = F))
   })
   
   # Output - age first offence chart 2
   output$ageofplot2 <- renderPlotly({
-    age_plot <- age_offence %>% filter(indicator==input$indichoice, LA==input$demLAchoice2, group %in% c(input$groupchoice))
+    age_plot <- age_offence %>% filter(indicator==input$demindichoice, LA==input$demLAchoice2, group %in% c(input$demgroupchoice))
     ggplotly(createAgeOffence(age_plot, input$demLAchoice2) %>%
                config(displayModeBar = F))
   })
   
   # Output - KS2 attainment chart 1
   output$ks2attainplot1 <- renderPlotly({
-    KS2_attain <- KS2_attain %>% filter(indicator==input$indichoice, LA==input$sclLAchoice, group %in% c(input$groupchoice))
+    KS2_attain <- KS2_attain %>% filter(indicator==input$demindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
     ggplotly(createKS2plot(KS2_attain, input$sclLAchoice) %>%
                config(displayModeBar = F))
   })
   
   # Output - KS2 attainment chart 2
   output$ks2attainplot2 <- renderPlotly({
-    KS2_attain <- KS2_attain %>% filter(indicator==input$indichoice, LA==input$sclLAchoice2, group %in% c(input$groupchoice))
+    KS2_attain <- KS2_attain %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
     ggplotly(createKS2plot(KS2_attain, input$sclLAchoice2) %>%
                config(displayModeBar = F))
   })
   
   # Output - KS4 attainment chart 1
   output$ks4attainplot1 <- renderPlotly({
-    KS4_attain <- KS4_attain %>% filter(indicator==input$indichoice, LA==input$sclLAchoice, group %in% c(input$groupchoice))
+    KS4_attain <- KS4_attain %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
     ggplotly(createKS4plot(KS4_attain, input$sclLAchoice) %>%
                config(displayModeBar = F))
   })
   
   # Output - KS4 attainment chart 2
   output$ks4attainplot2 <- renderPlotly({
-    KS4_attain <- KS4_attain %>% filter(indicator==input$indichoice, LA==input$sclLAchoice2, group %in% c(input$groupchoice))
+    KS4_attain <- KS4_attain %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
     ggplotly(createKS4plot(KS4_attain, input$LAchoice2) %>%
                config(displayModeBar = F))
   })
   
   # Output - PA/PAUO chart 1
   output$PAPlot1 <- renderPlotly({
-    EverPAPAUO <- EverPAPAUO %>% filter(indicator==input$indichoice, LA==input$sclLAchoice, group %in% c(input$groupchoice))
+    EverPAPAUO <- EverPAPAUO %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
     ggplotly(createPAPlot(EverPAPAUO, input$sclLAchoice) %>%
                config(displayModeBar = F))
   })
   
   # Output - PA/PAUO chart 2
   output$PAPlot2 <- renderPlotly({
-    EverPAPAUO <- EverPAPAUO %>% filter(indicator==input$indichoice, LA==input$sclLAchoice2, group %in% c(input$groupchoice))
+    EverPAPAUO <- EverPAPAUO %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
     ggplotly(createPAPlot(EverPAPAUO, input$sclLAchoice2) %>%
                config(displayModeBar = F))
   })
   
   # Output - PA waffle 1
   output$waffle_PA1 <- renderPlot({
-    PA_waffle <- PA_waffle %>% filter(indicator==input$indichoice, LA==input$sclLAchoice)
+    PA_waffle <- PA_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
     createWaffle_PA(PA_waffle, input$sclLAchoice) 
   })
   
   # Output - PA waffle 2
   output$waffle_PA2 <- renderPlot({
-    PA_waffle <- PA_waffle %>% filter(indicator==input$indichoice, LA==input$sclLAchoice2)
+    PA_waffle <- PA_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
     createWaffle_PA(PA_waffle, input$sclLAchoice2) 
   })
   
   # Output - PA timing 1
   output$timing_PA1 <- renderPlotly({
-    PAPAUO_timing <- PAPAUO_timing %>% filter(indicator==input$indichoice, LA==input$sclLAchoice)
+    PAPAUO_timing <- PAPAUO_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
     createPATimingPlot(PAPAUO_timing, input$sclLAchoice) 
   })
   
   # Output - PA timing 2
   output$timing_PA2 <- renderPlotly({
-    PAPAUO_timing <- PAPAUO_timing %>% filter(indicator==input$indichoice, LA==input$sclLAchoice2)
+    PAPAUO_timing <- PAPAUO_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
     createPATimingPlot(PAPAUO_timing, input$sclLAchoice2) 
   })
   
   # Output - Sus/Excl 1
   output$SusExclPlot1 <- renderPlotly({
-    EverSusExcl <- EverSusExcl %>% filter(indicator==input$indichoice, LA==input$sclLAchoice)
+    EverSusExcl <- EverSusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
     createSusExclPlot(EverSusExcl, input$sclLAchoice) 
   })
   
   # Output - Sus/Excl 2
   output$SusExclPlot2 <- renderPlotly({
-    EverSusExcl <- EverSusExcl %>% filter(indicator==input$indichoice, LA==input$sclLAchoice2)
+    EverSusExcl <- EverSusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
     createSusExclPlot(EverSusExcl, input$sclLAchoice2) 
   })
   
   # Output - Suspension waffle 1
   output$waffle_Sus1 <- renderPlot({
-    SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$indichoice, LA==input$sclLAchoice)
+    SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
     createWaffle_Sus(SusExcl_waffle, input$sclLAchoice) 
   })
   
   # Output - Suspension waffle 2
   output$waffle_Sus2 <- renderPlot({
-    SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$indichoice, LA==input$sclLAchoice2)
+    SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
     createWaffle_Sus(SusExcl_waffle, input$sclLAchoice2) 
   })
   
   # Output - Exclusion waffle 1
   output$waffle_Excl1 <- renderPlot({
-    SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$indichoice, LA==input$sclLAchoice)
+    SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
     createWaffle_Excl(SusExcl_waffle, input$sclLAchoice) 
   })
   
   # Output - Exclusion waffle 2
   output$waffle_Excl2 <- renderPlot({
-    SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$indichoice, LA==input$sclLAchoice2)
+    SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
     createWaffle_Excl(SusExcl_waffle, input$sclLAchoice2) 
+  })
+  
+  # Output - first suspension timing 1
+  output$FstSusTime1 <- renderPlotly({
+    fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    createSusTimePlot(fst.clst_SusExcl, input$sclLAchoice, "First") 
+  })
+  
+  # Output - first suspension timing 2
+  output$FstSusTime2 <- renderPlotly({
+    fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    createSusTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "First") 
+  })
+  
+  # Output - closest suspension timing 1
+  output$clstSusTime1 <- renderPlotly({
+    fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    createSusTimePlot(fst.clst_SusExcl, input$sclLAchoice, "Closest") 
+  })
+  
+  # Output - closest suspension timing 2
+  output$clstExclTime2 <- renderPlotly({
+    fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "Closest") 
+  })
+  
+  # Output - first suspension timing 1
+  output$FstExclTime1 <- renderPlotly({
+    fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice, "First") 
+  })
+  
+  # Output - first suspension timing 2
+  output$FstExclTime2 <- renderPlotly({
+    fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "First") 
+  })
+  
+  # Output - closest suspension timing 1
+  output$clstExclTime1 <- renderPlotly({
+    fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice, "Closest") 
+  })
+  
+  # Output - closest suspension timing 2
+  output$clstExclTime2 <- renderPlotly({
+    fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "Closest") 
+  })
+  
+  # Output - AP chart 1
+  output$APchart1 <- renderPlotly({
+    EverAP <- EverAP %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
+    ggplotly(createAPPlot(EverAP, input$sclLAchoice) %>%
+               config(displayModeBar = F))
+  })
+  
+  # Output - AP chart 1
+  output$APchart2 <- renderPlotly({
+    EverAP <- EverAP %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
+    ggplotly(createAPPlot(EverAP, input$sclLAchoice2) %>%
+               config(displayModeBar = F))
   })
   
   # Stop app ---------------------------------------------------------------------------------

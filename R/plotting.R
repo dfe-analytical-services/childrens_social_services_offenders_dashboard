@@ -436,3 +436,80 @@ createWaffle_Excl <- function(data, LAchoice){
   grid.arrange(grobs = list(sus_LHS_waffle, sus_RHS_waffle), top=title, ncol=2, widths=c(1,2))
   
 }
+
+createSusTimePlot <- function(data, LAchoice, time){
+  
+  data <- data %>% filter(SusExcl=="Suspended", Time == time)
+  
+  title1 <- paste0("Timing of children's " , time," suspension relative to their first\nserious violence offence, for ", LAchoice)
+  labels1 <- c(paste0(time, " suspension\nprior to first\nserious violence offence"),
+               paste0(time, " suspension\non same day as first\nserious violence offence"),
+               paste0(time, " suspension\nafter first\nserious violence offence"))
+  
+  ggplot(data, aes(x=rank, y=Perc, fill = time_group)) +
+    geom_bar(position = 'dodge', stat = 'identity') +
+    labs(x=NULL, y="% with\ntiming", title = title1) +
+    geom_text(aes(label = paste0(Perc, "%")), vjust =-0.4, position = position_dodge(width = 1)) +
+    theme_classic() +
+    theme(legend.position = "bottom", legend.title=element_blank(), 
+          axis.text = element_text(color="black", angle = 45, vjust = 0.5, hjust=1)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6"), 
+                      labels=labels1) +
+    scale_x_discrete(labels = c("Over 2 years", "1 - 2 years",  "180 -365 days", "90 - 179 days","60 - 80 days",  
+                                "30 - 59 days","1 - 29 days", "On same day", "1 - 29 days",  "30 - 59 days", 
+                                "60 - 89 days", "90 - 179 days", "180 -365 days", "1 - 2 years", "Over 2 years")) +
+    ylim(0,100) + 
+    theme(text=element_text(size=12),
+          axis.text=element_text(size=12),
+          axis.title=element_text(size=12),
+          plot.title = element_text(hjust = 0.5), 
+          axis.title.y=element_text(angle=0))
+}
+
+createExclTimePlot <- function(data, LAchoice, time){
+  
+  data <- data %>% filter(SusExcl=="Permanently excluded", Time == time)
+  
+  title1 <- paste0("Timing of children's " , time,"\npermanently exclusion relative to their first\nserious violence offence, for ", LAchoice)
+  labels1 <- c(paste0(time, " permanent exclusion\nprior to first\nserious violence offence"),
+               paste0(time, " permanent exclusion\non same day as first\nserious violence offence"),
+               paste0(time, " permanent exclusion\nafter first\nserious violence offence"))
+  
+  ggplot(data, aes(x=rank, y=Perc, fill = time_group)) +
+    geom_bar(position = 'dodge', stat = 'identity') +
+    labs(x=NULL, y="% with\ntiming", title = title1) +
+    geom_text(aes(label = paste0(Perc, "%")), vjust =-0.4, position = position_dodge(width = 1)) +
+    theme_classic() +
+    theme(legend.position = "bottom", legend.title=element_blank(), 
+          axis.text = element_text(color="black", angle = 45, vjust = 0.5, hjust=1)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6"), 
+                      labels=labels1) +
+    scale_x_discrete(labels = c("Over 2 years", "1 - 2 years",  "180 -365 days", "90 - 179 days","60 - 80 days",  
+                                "30 - 59 days","1 - 29 days", "On same day", "1 - 29 days",  "30 - 59 days", 
+                                "60 - 89 days", "90 - 179 days", "180 -365 days", "1 - 2 years", "Over 2 years")) +
+    ylim(0,100) + 
+    theme(text=element_text(size=12),
+          axis.text=element_text(size=12),
+          axis.title=element_text(size=12),
+          plot.title = element_text(hjust = 0.5), 
+          axis.title.y=element_text(angle=0))
+}
+
+createAPPlot <- function(data, LAchoice){
+  
+  title1 <- paste0("Proportion of all pupils who had ever attended alternative provision\nby offending and pupil group for ", LAchoice)
+  
+  ggplot(data, aes(x=perc, y=group, fill = group)) +
+    geom_bar(position = 'dodge', stat = 'identity') +
+    labs(x="% ever attended AP", y=NULL, title = title1) +
+    geom_text(aes(label = paste0(perc, "%")), hjust =-0.1, position = position_dodge(width = 1), size=4) +
+    theme_classic() +
+    theme(legend.position = "none", legend.title=element_blank(), axis.text = element_text(color="black", size=12)) +
+    scale_fill_manual(values = c("#08306b", "#08306b", "#08306b")) +
+    xlim(0,100) + 
+    theme(text=element_text(size=12),
+          axis.text=element_text(size=12),
+          axis.title=element_text(size=12),
+          plot.title = element_text(hjust = 0.5), 
+          axis.title.y=element_text(angle=0))
+}
