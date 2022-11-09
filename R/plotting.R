@@ -513,3 +513,56 @@ createAPPlot <- function(data, LAchoice){
           plot.title = element_text(hjust = 0.5), 
           axis.title.y=element_text(angle=0))
 }
+
+createWaffle_AP <- function(data, LAchoice){
+  title <- paste0("The proportion of children who had been\ncautioned or sentenced for a serious violence offence\nand had ever attended alternative provision,\nand all pupils who had ever attended alternative provision,\nfor ", LAchoice)
+  
+  # automated text for waffle - LHS
+  AP_LHS_text <- data.frame(x1 = paste0(data$sv_prop_count_AP, "%\nAttended AP"),
+                            x2 = paste0(data$prop_sv_not_AP, "%\nDid not\nattend AP"))
+  
+  AP_LHS_waffle <- waffle(data[c("sv_prop_count_AP","prop_sv_not_AP")], rows=10, size=0.6, flip=TRUE, 
+                          colors=c("#08306b", "#2171b5"), 
+                          title="Children who were cautioned\nor sentenced for a\nserious violence offence",  
+                          xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"), 
+                      labels = c(AP_LHS_text$x1, 
+                                 AP_LHS_text$x2)) +
+    theme(text=element_text(size=12), 
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12)) 
+  
+  # automated text for waffle - RHS
+  AP_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_AP, "%\nChildren cautioned or sentenced\nfor a serious violence offence"),
+                            x2 = paste0(data$not_also_sv_prop_count_AP, "%\nAll other\npupils"))
+  
+  AP_RHS_waffle <- waffle(data[c("also_sv_prop_count_AP","not_also_sv_prop_count_AP")], rows=10, size=0.6, flip=TRUE,
+                          colors=c("#08306b", "#6BACE6"), 
+                          title="All pupils who had ever\nattended AP",
+                          xlab="1 square = 1 %") + 
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#6BACE6"), 
+                      labels = c(AP_RHS_text$x1, 
+                                 AP_RHS_text$x2)) +
+    theme(text=element_text(size=12), #change font size of all text
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12))  
+  # Use grid.arrange to put plots in columns
+  grid.arrange(grobs = list(AP_LHS_waffle, AP_RHS_waffle), top=title, ncol=2, widths=c(1,2))
+  
+}

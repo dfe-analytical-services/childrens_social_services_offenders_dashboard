@@ -31,24 +31,42 @@ server <- function(input, output, session) {
   observeEvent(input$demLAchoice,{
     if(input$navlistPanel=='tab_demo'){
       updateSelectInput(session, "sclLAchoice", selected=input$demLAchoice)
+      updateSelectInput(session, "cscLAchoice", selected=input$demLAchoice)
     }
   })
 
   observeEvent(input$demLAchoice2,{
     if(input$navlistPanel=='tab_demo'){
       updateSelectInput(session, "sclLAchoice2", selected=input$demLAchoice2)
+      updateSelectInput(session, "cscLAchoice2", selected=input$demLAchoice2)
     }
   })
   
   observeEvent(input$sclLAchoice,{
     if(input$navlistPanel=='tab_scl'){
       updateSelectInput(session, "demLAchoice", selected=input$sclLAchoice)
+      updateSelectInput(session, "cscLAchoice", selected=input$sclLAchoice)
     }
   })
   
   observeEvent(input$sclLAchoice2,{
     if(input$navlistPanel=='tab_scl'){
       updateSelectInput(session, "demLAchoice2", selected=input$sclLAchoice2)
+      updateSelectInput(session, "cscLAchoice", selected=input$sclLAchoice2)
+    }
+  })
+  
+  observeEvent(input$cscLAchoice,{
+    if(input$navlistPanel=='tab_csc'){
+      updateSelectInput(session, "demLAchoice", selected=input$cscLAchoice)
+      updateSelectInput(session, "sclLAchoice", selected=input$cscLAchoice)
+    }
+  })
+  
+  observeEvent(input$cscLAchoice2,{
+    if(input$navlistPanel=='tab_csc'){
+      updateSelectInput(session, "demLAchoice2", selected=input$cscLAchoice2)
+      updateSelectInput(session, "sclLAchoice2", selected=input$cscLAchoice2)
     }
   })
   
@@ -56,12 +74,21 @@ server <- function(input, output, session) {
   observeEvent(input$demindichoice,{
     if(input$navlistPanel=='tab_demo'){
       updateSelectInput(session, "sclindichoice", selected=input$demindichoice)
+      updateSelectInput(session, "cscindichoice", selected=input$demindichoice)
     }
   })
   
   observeEvent(input$sclindichoice,{
     if(input$navlistPanel=='tab_scl'){
       updateSelectInput(session, "demindichoice", selected=input$sclindichoice)
+      updateSelectInput(session, "cscindichoice", selected=input$sclindichoice)
+    }
+  })
+  
+  observeEvent(input$cscindichoice,{
+    if(input$navlistPanel=='tab_csc'){
+      updateSelectInput(session, "demindichoice", selected=input$cscindichoice)
+      updateSelectInput(session, "sclindichoice", selected=input$cscindichoice)
     }
   })
   
@@ -69,12 +96,21 @@ server <- function(input, output, session) {
   observeEvent(input$demgroupchoice,{
     if(input$navlistPanel=='tab_demo'){
       updateSelectInput(session, "sclgroupchoice", selected=input$demgroupchoice)
+      updateSelectInput(session, "cscgroupchoice", selected=input$demgroupchoice)
     }
   })
   
   observeEvent(input$sclgroupchoice,{
     if(input$navlistPanel=='tab_scl'){
       updateSelectInput(session, "demgroupchoice", selected=input$sclgroupchoice)
+      updateSelectInput(session, "cscgroupchoice", selected=input$sclgroupchoice)
+    }
+  })
+  
+  observeEvent(input$cscgroupchoice,{
+    if(input$navlistPanel=='tab_csc'){
+      updateSelectInput(session, "demgroupchoice", selected=input$cscgroupchoice)
+      updateSelectInput(session, "sclgroupchoice", selected=input$cscgroupchoice)
     }
   })
   
@@ -394,25 +430,25 @@ server <- function(input, output, session) {
     createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "Closest") 
   })
   
-  # Output - first suspension timing 1
+  # Output - first Exclusion timing 1
   output$FstExclTime1 <- renderPlotly({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
     createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice, "First") 
   })
   
-  # Output - first suspension timing 2
+  # Output - first Exclusion timing 2
   output$FstExclTime2 <- renderPlotly({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
     createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "First") 
   })
   
-  # Output - closest suspension timing 1
+  # Output - closest Exclusion timing 1
   output$clstExclTime1 <- renderPlotly({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
     createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice, "Closest") 
   })
   
-  # Output - closest suspension timing 2
+  # Output - closest Exclusion timing 2
   output$clstExclTime2 <- renderPlotly({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
     createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "Closest") 
@@ -425,13 +461,32 @@ server <- function(input, output, session) {
                config(displayModeBar = F))
   })
   
-  # Output - AP chart 1
+  # Output - AP chart 2
   output$APchart2 <- renderPlotly({
     EverAP <- EverAP %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
     ggplotly(createAPPlot(EverAP, input$sclLAchoice2) %>%
                config(displayModeBar = F))
   })
   
+  # Output - AP waffle 1
+  output$waffle_AP1 <- renderPlot({
+    AP_waffle <- AP_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    createWaffle_AP(AP_waffle, input$sclLAchoice) 
+  })
+  
+  # Output - AP waffle 2
+  output$waffle_AP2 <- renderPlot({
+    AP_waffle <- AP_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    createWaffle_AP(AP_waffle, input$sclLAchoice2) 
+  })
+  
+  # Test inputs are syncing for CSC tab / scs tab / scl tab
+  output$GenderPlot3 <- renderPlotly({
+      Genderplot <- Gender %>% filter(indicator==input$cscindichoice, LA==input$cscLAchoice, group %in% c(input$cscgroupchoice))
+      ggplotly(createGenderPlot(Genderplot, input$cscLAchoice) %>% 
+                 config(displayModeBar = F))
+    })
+    
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {

@@ -97,6 +97,7 @@ ui <- function(input, output, session) {
       dashboard_panel(),
       Demographics(),
       SchoolExp(),
+      CSCExp(),
       a11y_panel(),
       support_links()
     ),

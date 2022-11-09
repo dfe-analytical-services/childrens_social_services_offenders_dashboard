@@ -415,7 +415,7 @@ SchoolExp <- function() {
                                    tabPanel("Ever AP",
                                             tabBox(width=12, title = NULL, id="AP_subtabs2",
                                                    tabPanel("Chart", plotlyOutput("APchart1"), plotlyOutput("APchart2")),
-                                                   tabPanel("Waffle"))),
+                                                   tabPanel("Waffle", plotOutput("waffle_AP1"), plotOutput("waffle_AP2")))),
                                    tabPanel("Timing of AP"))
                           )
                         )
@@ -430,6 +430,94 @@ SchoolExp <- function() {
                                    tabPanel("Ever SEN_support/EHCP"),
                                    tabPanel("Timing of SEN support/EHCP"),
                                    tabPanel("Timing of SEMH"))
+                          )
+                        )
+                      )
+          )
+        )
+      )
+    )
+  )
+}
+
+CSCExp <- function() {
+  tabPanel(
+    value = "tab_csc",
+    "Children's social care Experience",
+    
+    gov_main_layout(
+      gov_row(
+        column(
+          width=12,
+          h1("Overall content title for this dashboard page (h1)"),
+        ),
+        column(
+          width=12,
+          div(
+            class = "well",
+            style = "min-height: 100%; height: 100%; overflow-y: visible",
+            gov_row(
+              column(
+                width = 6,
+                selectizeInput("cscLAchoice", 
+                               "LA", 
+                               choices = choicesLA
+                )),
+              column(
+                width = 6,
+                selectizeInput("cscLAchoice2", 
+                               "LA (choice 2)", 
+                               choices = choicesLA,
+                               select = "xSgZ6" # Will need to change this to England with real data
+                )
+              ), 
+              column(
+                width = 6,
+                radioButtons("cscindichoice", 
+                             "Indicator", 
+                             choices = choiceIndicator$Indicator,
+                             selected = "School"
+                )
+              ),
+              column(
+                width = 6,
+                checkboxGroupInput("cscgroupchoice", 
+                                   "Pupil group", 
+                                   choices = choiceGroup$group, 
+                                   selected = choiceGroup$group
+                )
+              ))
+          )
+        ),
+        
+        column(
+          width=12,
+          tabsetPanel(id = "tabsetpanels3",
+                      tabPanel(
+                        "Ever CIN/CLA",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 0 (h2)"),
+                            tabBox(width = 12, title = NULL, id="csc_subtabs",
+                                   tabPanel("Chart", plotlyOutput("GenderPlot3"), plotlyOutput("GenderPlot4")),
+                                   tabPanel("Waffle"))
+                          )
+                        )
+                      ),
+                      tabPanel(
+                        "Timing of CSC",
+                        fluidRow(
+                          column(
+                            width=12,
+                            h2("Outputs 1 (h2)"),
+                            tabBox(width = 12, title = NULL, id="csc_subtabs",
+                                   tabPanel("Timing CSC",
+                                            tabBox(width = 12, title = NULL, id="csc_subtabs2",
+                                                   tabPanel("CIN"),
+                                                   tabPanel("CLA"),
+                                                   tabPanel("CPP"))),
+                                   tabPanel("Timing of ..."))
                           )
                         )
                       )
