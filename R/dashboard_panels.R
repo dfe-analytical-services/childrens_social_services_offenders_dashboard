@@ -416,7 +416,7 @@ SchoolExp <- function() {
                                             tabBox(width=12, title = NULL, id="AP_subtabs2",
                                                    tabPanel("Chart", plotlyOutput("APchart1"), plotlyOutput("APchart2")),
                                                    tabPanel("Waffle", plotOutput("waffle_AP1"), plotOutput("waffle_AP2")))),
-                                   tabPanel("Timing of AP"))
+                                   tabPanel("Timing of AP", plotlyOutput("timing_AP1"), plotlyOutput("timing_AP2")))
                           )
                         )
                       ),
@@ -427,9 +427,16 @@ SchoolExp <- function() {
                             width=12,
                             h2("Outputs 5 (h2)"),
                             tabBox(width = 12, title = NULL, id="sen_subtabs",
-                                   tabPanel("Ever SEN_support/EHCP"),
-                                   tabPanel("Timing of SEN support/EHCP"),
-                                   tabPanel("Timing of SEMH"))
+                                   tabPanel("Ever SEN",
+                                            tabBox(width=12, title = NULL, id="sen_subtab2",
+                                                   tabPanel("Ever Chart", plotlyOutput("SENchart1"), plotlyOutput("SENchart2")),
+                                                   tabPanel("SEN support Waffle", plotOutput("waffle_SEN1"), plotOutput("waffle_SEN2")),
+                                                   tabPanel("EHCP waffle", plotOutput("waffle_EHCP1"), plotOutput("waffle_EHCP2")))),
+                                   tabPanel("Timing",
+                                            tabBox(width=12, title = NULL, id="sen_subtab3",
+                                                   tabPanel("SEN timing", plotlyOutput("timing_SEN1"), plotlyOutput("timing_SEN2")),
+                                                   tabPanel("EHCP timing", plotlyOutput("timing_EHCP1"), plotlyOutput("timing_EHCP2")))),
+                                   tabPanel("Timing of SEMH", plotlyOutput("timing_SEMH1"), plotlyOutput("timing_SEMH2")))
                           )
                         )
                       )

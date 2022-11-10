@@ -480,13 +480,90 @@ server <- function(input, output, session) {
     createWaffle_AP(AP_waffle, input$sclLAchoice2) 
   })
   
-  # Test inputs are syncing for CSC tab / scs tab / scl tab
-  output$GenderPlot3 <- renderPlotly({
-      Genderplot <- Gender %>% filter(indicator==input$cscindichoice, LA==input$cscLAchoice, group %in% c(input$cscgroupchoice))
-      ggplotly(createGenderPlot(Genderplot, input$cscLAchoice) %>% 
-                 config(displayModeBar = F))
-    })
+  # Output - AP timing 1
+  output$timing_AP1 <- renderPlotly({
+    AP_timing <- AP_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    createAPTimingPlot(AP_timing, input$sclLAchoice) 
+  })
+  
+  # Output - AP timing 2
+  output$timing_AP2 <- renderPlotly({
+    AP_timing <- AP_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    createAPTimingPlot(AP_timing, input$sclLAchoice2) 
+  })
+  
+  # Output - SEN chart 1
+  output$SENchart1 <- renderPlotly({
+    EverSEN <- EverSEN %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    createSENPlot(EverSEN, input$sclLAchoice) 
+  })
+  
+  # Output - SEN chart 2
+  output$SENchart2 <- renderPlotly({
+    EverSEN <- EverSEN %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    createSENPlot(EverSEN, input$sclLAchoice2) 
+  })
     
+  # Output - SEN waffle 1
+  output$waffle_SEN1 <- renderPlot({
+    SEN_waffle <- SEN_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    createWaffle_SEN(SEN_waffle, input$sclLAchoice) 
+  })
+  
+  # Output - SEN waffle 2
+  output$waffle_SEN2 <- renderPlot({
+    SEN_waffle <- SEN_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    createWaffle_SEN(SEN_waffle, input$sclLAchoice2) 
+  })
+  
+  # Output - EHCP waffle 1
+  output$waffle_EHCP1 <- renderPlot({
+    EHCP_waffle <- EHCP_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    createWaffle_EHCP(EHCP_waffle, input$sclLAchoice) 
+  })
+  
+  # Output - EHCP waffle 2
+  output$waffle_EHCP2 <- renderPlot({
+    EHCP_waffle <- EHCP_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    createWaffle_EHCP(EHCP_waffle, input$sclLAchoice2) 
+  })
+  
+  # Output - SEN timing 1
+  output$timing_SEN1 <- renderPlotly({
+    SEN_timing <- SEN_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    createSENTimingPlot(SEN_timing, input$sclLAchoice) 
+  })
+  
+  # Output - SEN timing 2
+  output$timing_SEN2 <- renderPlotly({
+    SEN_timing <- SEN_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    createSENTimingPlot(SEN_timing, input$sclLAchoice2) 
+  })
+  
+  # Output - EHCP timing 1
+  output$timing_EHCP1 <- renderPlotly({
+    EHCP_timing <- EHCP_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    createEHCPTimingPlot(EHCP_timing, input$sclLAchoice) 
+  })
+  
+  # Output - EHCP timing 2
+  output$timing_EHCP2 <- renderPlotly({
+    EHCP_timing <- EHCP_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    createEHCPTimingPlot(EHCP_timing, input$sclLAchoice2) 
+  })
+  
+  # Output - SEMH timing 1
+  output$timing_SEMH1 <- renderPlotly({
+    SEMH_timing <- SEMH_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    createSEMHTimingPlot(SEMH_timing, input$sclLAchoice) 
+  })
+  
+  # Output - SEMH timing 2
+  output$timing_SEMH2 <- renderPlotly({
+    SEMH_timing <- SEMH_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    createSEMHTimingPlot(SEMH_timing, input$sclLAchoice2) 
+  })
+
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {

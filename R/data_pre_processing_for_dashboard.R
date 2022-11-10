@@ -419,7 +419,7 @@ EHCP_waffle <- EverSEN_all %>%
   select(LA, indicator, prop_EHCP_SV, prop_also_EHCP_SV) %>%
   mutate(prop_not_EHCP_SV = 100 - prop_EHCP_SV,
          not_prop_also_EHCP_SV = 100 - prop_also_EHCP_SV)
-
+rm(EverSEN_all)
 
 # Timing of SEN
 SEN_timing_sclLA <- SEN_timing_sclLA %>% mutate(indicator = "School") %>% rename(LA = SCHOOL_LA)

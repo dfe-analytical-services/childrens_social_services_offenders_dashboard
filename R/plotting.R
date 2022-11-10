@@ -566,3 +566,214 @@ createWaffle_AP <- function(data, LAchoice){
   grid.arrange(grobs = list(AP_LHS_waffle, AP_RHS_waffle), top=title, ncol=2, widths=c(1,2))
   
 }
+
+createAPTimingPlot <- function(data, LAchoice){
+  
+  title1 <- paste0("The first term children attended alternative provision (AP)\nrelative to the timing of their first serious violence offence,\nfor ", LAchoice)
+  
+  data <- data %>% mutate(group="Serious Violence Offence")
+  
+  ggplot(data, aes(x=perc, y=group, fill = Timing )) +
+    geom_bar(position='stack', stat = "identity", width = 0.7) +
+    labs(x = "% with AP timing", y=NULL, title = title1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-9.5, hjust=0) +
+    theme_classic() +
+    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=12)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6")) +
+    xlim(0,105) +
+    theme(text=element_text(size=12),
+          axis.text=element_text(size=12),
+          axis.title=element_text(size=12), 
+          legend.text=element_text(size=12),
+          plot.title = element_text(hjust = 0.5)) 
+}
+
+createSENPlot <- function(data, LAchoice){
+  
+  title1 <- paste0("Special Educational Needs (SEN)\nof all pupils by offending and pupil group,\nfor those that were ever recorded with SEN,\nfor ", LAchoice)
+  
+  data <- data %>% mutate(perc = abs(perc)) # REMOVE THIS WHEN USING REAL DATA
+  
+  ggplot(data, aes(x=perc, y=group, fill = SEN_type)) +
+    geom_bar(position='stack', stat = "identity", width = 0.7) +
+    labs(x = "% of SEN", y=NULL, title = title1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-3.5, hjust=0) +
+    theme_classic() +
+    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=12)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6")) +
+    #xlim(0,105) +
+    theme(text=element_text(size=12),
+          axis.text=element_text(size=12),
+          axis.title=element_text(size=12), 
+          legend.text=element_text(size=12),
+          plot.title = element_text(hjust = 0.5)) 
+}
+
+createWaffle_SEN <- function(data, LAchoice){
+  title <- paste0("The proportion of children who had been cautioned or sentenced for a serious violence offence\nand had ever had SEN support, and all pupils who had ever had SEN support,\nfor ", LAchoice)
+  
+  # automated text for waffle - LHS
+  SEN_LHS_text <- data.frame(x1 = paste0(data$prop_SEN_support_SV, "%\nSEN Support"),
+                            x2 = paste0(data$prop_not_SEN_support_SV, "%\nNOT\nSEN Support"))
+  
+  SEN_LHS_waffle <- waffle(data[c("prop_SEN_support_SV","prop_not_SEN_support_SV")], rows=10, size=0.6, flip=TRUE, 
+                          colors=c("#08306b", "#2171b5"), 
+                          title="Children who were cautioned\nor sentenced for a\nserious violence offence",  
+                          xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"), 
+                      labels = c(SEN_LHS_text$x1, 
+                                 SEN_LHS_text$x2)) +
+    theme(text=element_text(size=12), 
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12)) 
+  
+  # automated text for waffle - RHS
+  SEN_RHS_text <- data.frame(x1 = paste0(data$prop_also_SEN_support_SV, "%\nChildren cautioned or sentenced\nfor a serious violence offence"),
+                            x2 = paste0(data$not_also_SEN_support_SV, "%\nAll other\npupils"))
+  
+  SEN_RHS_waffle <- waffle(data[c("prop_also_SEN_support_SV","not_also_SEN_support_SV")], rows=10, size=0.6, flip=TRUE,
+                          colors=c("#08306b", "#6BACE6"), 
+                          title="All pupils who had ever\nhad SEN support",
+                          xlab="1 square = 1 %") + 
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#6BACE6"), 
+                      labels = c(SEN_RHS_text$x1, 
+                                 SEN_RHS_text$x2)) +
+    theme(text=element_text(size=12), #change font size of all text
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12))  
+  # Use grid.arrange to put plots in columns
+  grid.arrange(grobs = list(SEN_LHS_waffle, SEN_RHS_waffle), top=title, ncol=2, widths=c(1,2))
+  
+}
+
+createWaffle_EHCP <- function(data, LAchoice){
+  title <- paste0("The proportion of children who had been cautioned or sentenced for a serious violence offence\nand had ever had an EHC plan, and all pupils who had ever had an EHC plan,\nfor ", LAchoice)
+  
+  # automated text for waffle - LHS
+  EHC_LHS_text <- data.frame(x1 = paste0(data$prop_EHCP_SV , "%\nEHC plan"),
+                            x2 = paste0(data$prop_not_EHCP_SV, "%\nNo\nEHC plan"))
+  
+  EHC_LHS_waffle <- waffle(data[c("prop_EHCP_SV","prop_not_EHCP_SV")], rows=10, size=0.6, flip=TRUE, 
+                          colors=c("#08306b", "#2171b5"), 
+                          title="Children who were cautioned\nor sentenced for a\nserious violence offence",  
+                          xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"), 
+                      labels = c(EHC_LHS_text$x1, 
+                                 EHC_LHS_text$x2)) +
+    theme(text=element_text(size=12), 
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12)) 
+  
+  # automated text for waffle - RHS
+  EHC_RHS_text <- data.frame(x1 = paste0(data$prop_also_EHCP_SV, "%\nChildren cautioned or sentenced\nfor a serious violence offence"),
+                            x2 = paste0(data$not_prop_also_EHCP_SV, "%\nAll other\npupils"))
+  
+  EHC_RHS_waffle <- waffle(data[c("prop_also_EHCP_SV","not_prop_also_EHCP_SV")], rows=10, size=0.6, flip=TRUE,
+                          colors=c("#08306b", "#6BACE6"), 
+                          title="All pupils who had ever\nhad an EHC plan",
+                          xlab="1 square = 1 %") + 
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#6BACE6"), 
+                      labels = c(EHC_RHS_text$x1, 
+                                 EHC_RHS_text$x2)) +
+    theme(text=element_text(size=12), #change font size of all text
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12))  
+  # Use grid.arrange to put plots in columns
+  grid.arrange(grobs = list(EHC_LHS_waffle, EHC_RHS_waffle), top=title, ncol=2, widths=c(1,2))
+  
+}
+
+createSENTimingPlot <- function(data, LAchoice){
+  
+  title1 <- paste0("The first term children had been recorded with SEN\nrelative to the timing of their first serious violence offence,\nfor ", LAchoice)
+  
+  data <- data %>% mutate(group="Serious Violence Offence")
+  
+  ggplot(data, aes(x=perc, y=group, fill = Timing )) +
+    geom_bar(position='stack', stat = "identity", width = 0.7) +
+    labs(x = "% with timing", y=NULL, title = title1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-9.5, hjust=0) +
+    theme_classic() +
+    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=12)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6")) +
+    xlim(0,105) +
+    theme(text=element_text(size=12),
+          axis.text=element_text(size=12),
+          axis.title=element_text(size=12), 
+          legend.text=element_text(size=12),
+          plot.title = element_text(hjust = 0.5)) 
+}
+
+createEHCPTimingPlot <- function(data, LAchoice){
+  
+  title1 <- paste0("The first term children had an EHC plan,\nrelative to the timing of their first serious violence offence,\nfor ", LAchoice)
+  
+  data <- data %>% mutate(group="Serious Violence Offence")
+  
+  ggplot(data, aes(x=perc, y=group, fill = Timing )) +
+    geom_bar(position='stack', stat = "identity", width = 0.7) +
+    labs(x = "% with timing", y=NULL, title = title1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-9.5, hjust=0) +
+    theme_classic() +
+    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=12)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6")) +
+    xlim(0,105) +
+    theme(text=element_text(size=12),
+          axis.text=element_text(size=12),
+          axis.title=element_text(size=12), 
+          legend.text=element_text(size=12),
+          plot.title = element_text(hjust = 0.5)) 
+}
+
+createSEMHTimingPlot <- function(data, LAchoice){
+  
+  title1 <- paste0("The first term children had SEMH,\nrelative to the timing of their first serious violence offence,\nfor  ", LAchoice)
+  
+  data <- data %>% mutate(group="Serious Violence Offence")
+  
+  ggplot(data, aes(x=perc, y=group, fill = Timing )) +
+    geom_bar(position='stack', stat = "identity", width = 0.7) +
+    labs(x = "% with timing", y=NULL, title = title1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-9.5, hjust=0) +
+    theme_classic() +
+    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=12)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6")) +
+    xlim(0,105) +
+    theme(text=element_text(size=12),
+          axis.text=element_text(size=12),
+          axis.title=element_text(size=12), 
+          legend.text=element_text(size=12),
+          plot.title = element_text(hjust = 0.5)) 
+}
