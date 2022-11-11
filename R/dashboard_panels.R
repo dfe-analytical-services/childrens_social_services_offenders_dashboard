@@ -507,8 +507,8 @@ CSCExp <- function() {
                             width=12,
                             h2("Outputs 0 (h2)"),
                             tabBox(width = 12, title = NULL, id="csc_subtabs",
-                                   tabPanel("Chart", plotlyOutput("GenderPlot3"), plotlyOutput("GenderPlot4")),
-                                   tabPanel("Waffle"))
+                                   tabPanel("Chart", plotlyOutput("CSCPlot1"), plotlyOutput("CSCPlot2")),
+                                   tabPanel("Waffle", plotOutput("waffle_CIN1"), plotOutput("waffle_CIN2")))
                           )
                         )
                       ),
@@ -519,12 +519,7 @@ CSCExp <- function() {
                             width=12,
                             h2("Outputs 1 (h2)"),
                             tabBox(width = 12, title = NULL, id="csc_subtabs",
-                                   tabPanel("Timing CSC",
-                                            tabBox(width = 12, title = NULL, id="csc_subtabs2",
-                                                   tabPanel("CIN"),
-                                                   tabPanel("CLA"),
-                                                   tabPanel("CPP"))),
-                                   tabPanel("Timing of ..."))
+                                   tabPanel("Timing CSC", plotlyOutput("timing_CSC1"), plotlyOutput("timing_CSC2")))
                           )
                         )
                       )

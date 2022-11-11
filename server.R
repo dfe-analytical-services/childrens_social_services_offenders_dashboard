@@ -372,13 +372,13 @@ server <- function(input, output, session) {
   
   # Output - Sus/Excl 1
   output$SusExclPlot1 <- renderPlotly({
-    EverSusExcl <- EverSusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    EverSusExcl <- EverSusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
     createSusExclPlot(EverSusExcl, input$sclLAchoice) 
   })
   
   # Output - Sus/Excl 2
   output$SusExclPlot2 <- renderPlotly({
-    EverSusExcl <- EverSusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    EverSusExcl <- EverSusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
     createSusExclPlot(EverSusExcl, input$sclLAchoice2) 
   })
   
@@ -494,13 +494,13 @@ server <- function(input, output, session) {
   
   # Output - SEN chart 1
   output$SENchart1 <- renderPlotly({
-    EverSEN <- EverSEN %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    EverSEN <- EverSEN %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
     createSENPlot(EverSEN, input$sclLAchoice) 
   })
   
   # Output - SEN chart 2
   output$SENchart2 <- renderPlotly({
-    EverSEN <- EverSEN %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    EverSEN <- EverSEN %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
     createSENPlot(EverSEN, input$sclLAchoice2) 
   })
     
@@ -564,6 +564,42 @@ server <- function(input, output, session) {
     createSEMHTimingPlot(SEMH_timing, input$sclLAchoice2) 
   })
 
+  # Output - CSC chart 1
+  output$CSCPlot1 <- renderPlotly({
+    EverCINCLA <- EverCINCLA %>% filter(indicator==input$cscindichoice, LA==input$cscLAchoice, group %in% c(input$cscgroupchoice))
+    createCSCPlot(EverCINCLA, input$cscLAchoice) 
+  })
+  
+  # Output - CSC chart 2
+  output$CSCPlot2 <- renderPlotly({
+    EverCINCLA <- EverCINCLA %>% filter(indicator==input$cscindichoice, LA==input$cscLAchoice2, group %in% c(input$cscgroupchoice))
+    createCSCPlot(EverCINCLA, input$cscLAchoice2) 
+  })
+  
+  # Output - CIN waffle 1
+  output$waffle_CIN1 <- renderPlot({
+    CIN_waffle <- CIN_waffle %>% filter(indicator==input$cscindichoice, LA==input$cscLAchoice)
+    createWaffle_CIN(CIN_waffle, input$cscLAchoice) 
+  })
+  
+  # Output - CIN waffle 2
+  output$waffle_CIN2 <- renderPlot({
+    CIN_waffle <- CIN_waffle %>% filter(indicator==input$cscindichoice, LA==input$cscLAchoice2)
+    createWaffle_CIN(CIN_waffle, input$cscLAchoice2) 
+  })
+  
+  # Output - CSC timing 1
+  output$timing_CSC1 <- renderPlotly({
+    CSC_timing <- CSC_timing %>% filter(indicator==input$cscindichoice, LA==input$cscLAchoice)
+    createCSCTimingPlot(CSC_timing, input$cscLAchoice) 
+  })
+  
+  # Output - CSC timing 2
+  output$timing_CSC2 <- renderPlotly({
+    CSC_timing <- CSC_timing %>% filter(indicator==input$cscindichoice, LA==input$cscLAchoice2)
+    createCSCTimingPlot(CSC_timing, input$cscLAchoice2) 
+  })
+  
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {

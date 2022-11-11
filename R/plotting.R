@@ -777,3 +777,95 @@ createSEMHTimingPlot <- function(data, LAchoice){
           legend.text=element_text(size=12),
           plot.title = element_text(hjust = 0.5)) 
 }
+
+createCSCPlot <- function(data, LAchoice){
+  
+  title1 <- paste0("The proportion of children who had been recorded as being CIN/CLA\non 31st March in any given year, by offending and pupil group,\nfor ", LAchoice)
+  
+  ggplot(data, aes(x=CINCLA, y=perc, fill = group)) +
+    geom_bar(position = 'dodge', stat = 'identity') +
+    labs(x=NULL, y="% recorded as\nCIN/CLA", title = title1) +
+    geom_text(aes(label = paste0(perc, "%")), vjust =-0.4, hjust = 0.5, position = position_dodge(width = 1), size=4) +
+    theme_classic() +
+    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=12)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6")) +
+    scale_x_discrete(labels = c("Children in need", "Children who are\nlooked after")) +
+    ylim(0,100) + 
+    theme(text=element_text(size=12),
+          axis.text=element_text(size=12),
+          axis.title=element_text(size=12),
+          plot.title = element_text(hjust = 0.5), 
+          axis.title.y=element_text(angle=0))
+}
+
+createWaffle_CIN <- function(data, LAchoice){
+  title <- paste0("The proportion of children who had been cautioned or sentenced for a\nserious violence offence and had ever been CIN on 31st March in any given year,\nand all pupils who had ever been CIN on 31st March in any given year,\nfor ", LAchoice)
+  
+  # automated text for waffle - LHS
+  CIN_LHS_text <- data.frame(x1 = paste0(data$propsv_count_CIN , "%\nCIN"),
+                             x2 = paste0(data$propsv_count_not_CIN, "%\nNot\nCIN"))
+  
+  CIN_LHS_waffle <- waffle(data[c("propsv_count_CIN","propsv_count_not_CIN")], rows=10, size=0.6, flip=TRUE, 
+                           colors=c("#08306b", "#2171b5"), 
+                           title="Children who were cautioned\nor sentenced for a\nserious violence offence",  
+                           xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"), 
+                      labels = c(CIN_LHS_text$x1, 
+                                 CIN_LHS_text$x2)) +
+    theme(text=element_text(size=12), 
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12)) 
+  
+  # automated text for waffle - RHS
+  CIN_RHS_text <- data.frame(x1 = paste0(data$also_propsv_count_CIN, "%\nChildren cautioned or sentenced\nfor a serious violence offence"),
+                             x2 = paste0(data$not_also_propsv_count_CIN, "%\nAll other\npupils"))
+  
+  CIN_RHS_waffle <- waffle(data[c("also_propsv_count_CIN","not_also_propsv_count_CIN")], rows=10, size=0.6, flip=TRUE,
+                           colors=c("#08306b", "#6BACE6"), 
+                           title="All pupils who had ever\nbeen CIN",
+                           xlab="1 square = 1 %") + 
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#6BACE6"), 
+                      labels = c(CIN_RHS_text$x1, 
+                                 CIN_RHS_text$x2)) +
+    theme(text=element_text(size=12), #change font size of all text
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12))  
+  # Use grid.arrange to put plots in columns
+  grid.arrange(grobs = list(CIN_LHS_waffle, CIN_RHS_waffle), top=title, ncol=2, widths=c(1,2))
+  
+}
+
+createCSCTimingPlot <- function(data, LAchoice){
+  
+  title1 <- paste0("The first record of children being a child in need, having a\nchild protection plan or being a child who was looked after, relative to\nthe timing of their first serious violence offence,\nfor ", LAchoice)
+  
+  ggplot(data, aes(x = perc, y = CSC_subset, fill = Timing)) +
+    geom_bar(position='stack', stat = "identity", width = 0.7) +
+    labs(x = "% with timing", y=NULL, title = title1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-9.5, hjust=0) +
+    theme_classic() +
+    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=12)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6")) +
+    xlim(0,105) +
+    theme(text=element_text(size=12),
+          axis.text=element_text(size=12),
+          axis.title=element_text(size=12), 
+          legend.text=element_text(size=12),
+          plot.title = element_text(hjust = 0.5)) 
+}

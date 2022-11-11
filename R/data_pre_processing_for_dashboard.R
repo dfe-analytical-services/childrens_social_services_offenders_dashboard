@@ -176,7 +176,7 @@ write_xlsx(list(info_table = info_table, Gender = Gender, Ethnicity = Ethnicity,
                FSM = FSM, FSM_waffle = FSM_waffle, age_offence = age_offence),
           'C:/Users/msettle/OneDrive - Department for Education/Documents/Projects (R)/childrens_social_services_offenders_dashboard/data/Demographics.xlsx')
 
-# Data needed for "School Experience" tab ------------------------------------
+# Data needed for "School Experience" tab --------------------------------------
 
 # Attainment -> KS2 attainment , KS4 attainment , KS4 attainment by suspension/exclusion/PA
 # PA -> EverPA/PAUO (incl waffle) , Time missed due to PA , Timing of PA
@@ -473,5 +473,92 @@ write_xlsx(list(KS2_attain = KS2_attain, KS4_attain = KS4_attain, EverPAPAUO = E
            'C:/Users/msettle/OneDrive - Department for Education/Documents/Projects (R)/childrens_social_services_offenders_dashboard/data/SchoolExp.xlsx')
 
 
+# Data needed for "Children's Social Care Experience" tab ----------------------
+
+# Ever CIN/CLA on 31st March
+# CIN waffle
+# CIN/CPP/CLA timing
+
+# Ever CIN/CLA  ----------------------------------------------------------------
+
+# Add tables currently needed to environment
+list2env(alldata[c("CiN_CLA_sclLA","CiN_CLA_hmLA")], envir = .GlobalEnv) 
+# Create an indicator for home or school and change Home/school_LA to LA
+CiN_CLA_sclLA <- CiN_CLA_sclLA %>% mutate(indicator = "School") %>% rename(LA = SCHOOL_LA)
+CiN_CLA_hmLA <- CiN_CLA_hmLA %>% mutate(indicator = "Home") %>% rename(LA = HOME_LA)
+# Join above tables
+EverCINCLA_all <- bind_rows(CiN_CLA_sclLA, CiN_CLA_hmLA)
+rm(CiN_CLA_sclLA, CiN_CLA_hmLA)
+
+EverCINCLA <- EverCINCLA_all %>% select(LA, indicator, 
+                                    propcount_CIN, propany_count_CIN, propsv_count_CIN, 
+                                    propcount_CLA, propany_count_CLA, propsv_count_CLA) %>%
+  pivot_longer(cols = c(propcount_CIN, propany_count_CIN, propsv_count_CIN, 
+                        propcount_CLA, propany_count_CLA, propsv_count_CLA),
+               names_to = "tempCINCLA", values_to = "perc") %>%
+  mutate(group = ifelse(str_detect(tempCINCLA,"sv_")==TRUE , "Serious Violence Offence",
+                        ifelse(str_detect(tempCINCLA,"any_")==TRUE, "Any Offence", "All Pupils"))) %>%
+  mutate(CINCLA = ifelse(str_detect(tempCINCLA,"CIN")==TRUE , "Children in need",
+                          "Children who are looked after")) %>%
+  select(!tempCINCLA)
+
+# CIN waffle -------------------------------------------------------------------
+
+CIN_waffle <- EverCINCLA_all %>%
+  select(LA, indicator, propsv_count_CIN, also_propsv_count_CIN) %>%
+  mutate(propsv_count_not_CIN = 100 - propsv_count_CIN,
+         not_also_propsv_count_CIN = 100 - also_propsv_count_CIN)
+rm(EverCINCLA_all)
+
+# # CIN/CPP/CLA timing ---------------------------------------------------------
+# Add tables currently needed to environment
+list2env(alldata[c("CLA_timing_sclLA", "CLA_timing_hmLA", "CSC_timing_sclLA", "CSC_timing_hmLA")], envir = .GlobalEnv) 
+
+# Create an indicator for home or school and change Home/school_LA to LA
+CLA_timing_sclLA <- CLA_timing_sclLA %>% mutate(indicator = "School") %>% rename(LA = SCHOOL_LA)
+CLA_timing_hmLA <- CLA_timing_hmLA %>% mutate(indicator = "Home") %>% rename(LA = HOME_LA)
+CLA_timing <- bind_rows(CLA_timing_sclLA, CLA_timing_hmLA)
+rm(CLA_timing_sclLA, CLA_timing_hmLA)
+
+CSC_timing_sclLA <- CSC_timing_sclLA %>% mutate(indicator = "School") %>% rename(LA = SCHOOL_LA)
+CSC_timing_hmLA <- CSC_timing_hmLA %>% mutate(indicator = "Home") %>% rename(LA = HOME_LA)
+CSC_timing <- bind_rows(CSC_timing_sclLA, CSC_timing_hmLA)
+rm(CSC_timing_sclLA, CSC_timing_hmLA)
+
+# CSC
+CSC_timing <- CSC_timing %>% select(LA, indicator, 
+                                        prop_CINP_Before_SV, prop_CINPSame_Term, prop_CINP_After_SV,
+                                        prop_CPP_Before_SV, prop_CPPSame_Term, prop_CPP_After_SV) %>%
+  
+  pivot_longer(cols = c(prop_CINP_Before_SV, prop_CINPSame_Term, prop_CINP_After_SV,
+                        prop_CPP_Before_SV, prop_CPPSame_Term, prop_CPP_After_SV),
+               names_to = "tempCINCLA", values_to = "perc") %>%
+  mutate(Timing = ifelse(str_detect(tempCINCLA,"Before")==TRUE , "Before the first serious violence offence",
+                        ifelse(str_detect(tempCINCLA,"Same")==TRUE, "In the same term as the first serious violence offence", 
+                               "After the first serious violence offence"))) %>%
+  mutate(CSC_subset = ifelse(str_detect(tempCINCLA,"CINP")==TRUE , "CIN", "CPP")) %>%
+  select(!tempCINCLA)
+# CLA
+CLA_timing <- CLA_timing %>% select(LA, indicator, prop_CLA_Before_SV, prop_CLASame_Term, prop_CLA_After_SV) %>%
+  
+  pivot_longer(cols = c(prop_CLA_Before_SV, prop_CLASame_Term, prop_CLA_After_SV),
+               names_to = "tempCINCLA", values_to = "perc") %>%
+  mutate(Timing = ifelse(str_detect(tempCINCLA,"Before")==TRUE , "Before the first serious violence offence",
+                         ifelse(str_detect(tempCINCLA,"Same")==TRUE, "In the same term as the first serious violence offence", 
+                                "After the first serious violence offence"))) %>%
+  mutate(CSC_subset = ifelse(str_detect(tempCINCLA,"CLA")==TRUE , "CLA", NA)) %>%
+  select(!tempCINCLA)
+
+# Join above timetables 
+CSC_timing <- bind_rows(CSC_timing, CLA_timing)
+rm(CLA_timing)
+
+# Write excel file for all data in csc experience tab -----------------------
+# Join 'Scsc' tables together and write.xlsx 
+write_xlsx(list(EverCINCLA = EverCINCLA, CIN_waffle = CIN_waffle, CSC_timing = CSC_timing),
+           'C:/Users/msettle/OneDrive - Department for Education/Documents/Projects (R)/childrens_social_services_offenders_dashboard/data/CSCExp.xlsx')
+
+
 
 }
+
