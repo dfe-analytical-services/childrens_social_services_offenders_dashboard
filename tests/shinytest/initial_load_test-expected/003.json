@@ -1,0 +1,1201 @@
+{
+  "input": {
+    ".clientValue-default-plotlyCrosstalkOpts": {
+      "on": "plotly_click",
+      "persistent": false,
+      "dynamic": false,
+      "selectize": false,
+      "opacityDim": 0.2,
+      "selected": {
+        "opacity": 1
+      },
+      "debounce": 0,
+      "color": [
+
+      ]
+    },
+    "AP_subtabs": "Ever AP",
+    "AP_subtabs2": "Chart",
+    "atn_subtabs": "KS2 attainment",
+    "csc_subtabs": "Chart",
+    "csc_subtabs_b": "Timing CSC",
+    "cscgroupchoice": [
+      "All Pupils",
+      "Any Offence",
+      "Serious Violence Offence"
+    ],
+    "cscindichoice": "School",
+    "cscLAchoice": "HmPsw",
+    "cscLAchoice2": "xSgZ6",
+    "demgroupchoice": [
+      "All Pupils",
+      "Any Offence",
+      "Serious Violence Offence"
+    ],
+    "demindichoice": "School",
+    "demLAchoice": "HmPsw",
+    "demLAchoice2": "xSgZ6",
+    "demotable_cell_clicked": {
+
+    },
+    "demotable_cells_selected": [
+
+    ],
+    "demotable_columns_selected": null,
+    "demotable_rows_all": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "demotable_rows_current": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "demotable_rows_selected": null,
+    "demotable_search": "",
+    "demotable_state": {
+      "start": 0,
+      "length": 15,
+      "order": [
+
+      ],
+      "search": {
+        "search": "",
+        "smart": true,
+        "regex": false,
+        "caseInsensitive": true
+      },
+      "columns": [
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        }
+      ]
+    },
+    "FSMsubtabs": "Charts",
+    "link_to_app_content_tab": 0,
+    "navlistPanel": "tab_scl",
+    "pa_subtabs": "Ever PA/PAUO",
+    "pa_subtabs2": "Chart",
+    "plotly_afterplot-A": "\"ks2attainplot1\"",
+    "sclgroupchoice": [
+      "All Pupils",
+      "Any Offence",
+      "Serious Violence Offence"
+    ],
+    "sclindichoice": "School",
+    "sclLAchoice": "HmPsw",
+    "sclLAchoice2": "xSgZ6",
+    "selectArea": "England",
+    "selectBenchLAs": null,
+    "selectPhase": "All LA maintained schools",
+    "sen_subtab2": "Ever Chart",
+    "sen_subtab3": "SEN timing",
+    "sen_subtabs": "Ever SEN",
+    "SusExcl_subtabs": "Ever suspended/excluded",
+    "SusExcl_subtabs2": "Chart",
+    "SusExcl_subtabs3": "First suspension",
+    "tabsetpanels": "Example panel 1",
+    "tabsetpanels_csc": "Ever CIN/CLA",
+    "tabsetpanels2": "LA info",
+    "tabsetpanels3": "Attainment"
+  },
+  "output": {
+    "demotable": {
+      "x": {
+        "filter": "none",
+        "vertical": false,
+        "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>",
+        "options": {
+          "pageLength": 15,
+          "columnDefs": [
+            {
+              "orderable": false,
+              "targets": 0
+            }
+          ],
+          "order": [
+
+          ],
+          "autoWidth": false,
+          "orderClasses": false,
+          "lengthMenu": [
+            10,
+            15,
+            25,
+            50,
+            100
+          ],
+          "ajax": {
+            "type": "POST",
+            "data": "function(d) {\nd.search.caseInsensitive = true;\nd.search.smart = true;\nd.escape = true;\nvar encodeAmp = function(x) { x.value = x.value.replace(/&/g, \"%26\"); }\nencodeAmp(d.search);\n$.each(d.columns, function(i, v) {encodeAmp(v.search);});\n}"
+          },
+          "serverSide": true,
+          "processing": true
+        },
+        "selection": {
+          "mode": "multiple",
+          "selected": null,
+          "target": "row",
+          "selectable": null
+        }
+      },
+      "evals": [
+        "options.ajax.data"
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "jquery",
+          "version": "3.6.0",
+          "src": {
+            "href": "jquery-3.6.0"
+          },
+          "meta": null,
+          "script": "jquery-3.6.0.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "dt-core",
+          "version": "1.11.3",
+          "src": {
+            "href": "dt-core-1.11.3"
+          },
+          "meta": null,
+          "script": "js/jquery.dataTables.min.js",
+          "stylesheet": [
+            "css/jquery.dataTables.min.css",
+            "css/jquery.dataTables.extra.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "package": null,
+          "all_files": false
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    },
+    "ks2attainplot1": {
+      "x": {
+        "data": [
+          {
+            "orientation": "v",
+            "width": [
+              84,
+              73,
+              52
+            ],
+            "base": [
+              0.55,
+              1.55,
+              2.55
+            ],
+            "x": [
+              42,
+              36.5,
+              26
+            ],
+            "y": [
+              0.45,
+              0.45,
+              0.45
+            ],
+            "text": [
+              "perc: 84<br />Subject: English",
+              "perc: 73<br />Subject: English",
+              "perc: 52<br />Subject: English"
+            ],
+            "type": "bar",
+            "textposition": "none",
+            "marker": {
+              "autocolorscale": false,
+              "color": "rgba(8,48,107,1)",
+              "line": {
+                "width": 1.88976377952756,
+                "color": "transparent"
+              }
+            },
+            "name": "English",
+            "legendgroup": "English",
+            "showlegend": true,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "orientation": "v",
+            "width": [
+              84,
+              73,
+              52
+            ],
+            "base": [
+              1,
+              2,
+              3
+            ],
+            "x": [
+              42,
+              36.5,
+              26
+            ],
+            "y": [
+              0.45,
+              0.45,
+              0.45
+            ],
+            "text": [
+              "perc: 84<br />Subject: Maths",
+              "perc: 73<br />Subject: Maths",
+              "perc: 52<br />Subject: Maths"
+            ],
+            "type": "bar",
+            "textposition": "none",
+            "marker": {
+              "autocolorscale": false,
+              "color": "rgba(33,113,181,1)",
+              "line": {
+                "width": 1.88976377952756,
+                "color": "transparent"
+              }
+            },
+            "name": "Maths",
+            "legendgroup": "Maths",
+            "showlegend": true,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              84,
+              73,
+              52
+            ],
+            "y": [
+              0.75,
+              1.75,
+              2.75
+            ],
+            "text": [
+              "84%",
+              "73%",
+              "52%"
+            ],
+            "hovertext": [
+              "perc: 84<br />Subject: English<br />paste0(perc, \"%\"): 84%",
+              "perc: 73<br />Subject: English<br />paste0(perc, \"%\"): 73%",
+              "perc: 52<br />Subject: English<br />paste0(perc, \"%\"): 52%"
+            ],
+            "textfont": {
+              "size": 14.6645669291339,
+              "color": "rgba(0,0,0,1)"
+            },
+            "type": "scatter",
+            "mode": "text",
+            "hoveron": "points",
+            "name": "English",
+            "legendgroup": "English",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              84,
+              73,
+              52
+            ],
+            "y": [
+              1.25,
+              2.25,
+              3.25
+            ],
+            "text": [
+              "84%",
+              "73%",
+              "52%"
+            ],
+            "hovertext": [
+              "perc: 84<br />Subject: Maths<br />paste0(perc, \"%\"): 84%",
+              "perc: 73<br />Subject: Maths<br />paste0(perc, \"%\"): 73%",
+              "perc: 52<br />Subject: Maths<br />paste0(perc, \"%\"): 52%"
+            ],
+            "textfont": {
+              "size": 14.6645669291339,
+              "color": "rgba(0,0,0,1)"
+            },
+            "type": "scatter",
+            "mode": "text",
+            "hoveron": "points",
+            "name": "Maths",
+            "legendgroup": "Maths",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 41.6814722568147,
+            "r": 7.30593607305936,
+            "b": 45.2746644527466,
+            "l": 202.241594022416
+          },
+          "plot_bgcolor": "rgba(255,255,255,1)",
+          "paper_bgcolor": "rgba(255,255,255,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 15.9402241594022
+          },
+          "title": {
+            "text": "The proportion of all pupils who achieved level 4 or above<br />in English and Mathematics at key stage 2 (KS2)<br />by offending and pupil group<br />for HmPsw",
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 15.9402241594022
+            },
+            "x": 0.5,
+            "xref": "paper"
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              -5,
+              105
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "0",
+              "25",
+              "50",
+              "75",
+              "100"
+            ],
+            "tickvals": [
+              0,
+              25,
+              50,
+              75,
+              100
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "0",
+              "25",
+              "50",
+              "75",
+              "100"
+            ],
+            "nticks": null,
+            "ticks": "outside",
+            "tickcolor": "rgba(51,51,51,1)",
+            "ticklen": 3.65296803652968,
+            "tickwidth": 0.66417600664176,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 15.9402241594022
+            },
+            "tickangle": 0,
+            "showline": true,
+            "linecolor": "rgba(0,0,0,1)",
+            "linewidth": 0.66417600664176,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "% at level 4 or above",
+              "font": {
+                "color": "rgba(0,0,0,1)",
+                "family": "",
+                "size": 15.9402241594022
+              }
+            },
+            "hoverformat": ".2f"
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              0.4,
+              3.6
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "All Pupils",
+              "Any Offence",
+              "Serious Violence Offence"
+            ],
+            "tickvals": [
+              1,
+              2,
+              3
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "All Pupils",
+              "Any Offence",
+              "Serious Violence Offence"
+            ],
+            "nticks": null,
+            "ticks": "outside",
+            "tickcolor": "rgba(51,51,51,1)",
+            "ticklen": 3.65296803652968,
+            "tickwidth": 0.66417600664176,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 15.9402241594022
+            },
+            "tickangle": 0,
+            "showline": true,
+            "linecolor": "rgba(0,0,0,1)",
+            "linewidth": 0.66417600664176,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "",
+              "font": {
+                "color": "rgba(0,0,0,1)",
+                "family": "",
+                "size": 15.9402241594022
+              }
+            },
+            "hoverformat": ".2f"
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": true,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.88976377952756,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 15.9402241594022
+            },
+            "title": {
+              "text": "Subject",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            }
+          },
+          "hovermode": "closest",
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.2,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.5.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.5.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.5.1",
+          "src": {
+            "href": "plotly-main-2.5.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "ks2attainplot2": {
+      "x": {
+        "data": [
+          {
+            "orientation": "v",
+            "width": [
+              84,
+              null,
+              51
+            ],
+            "base": [
+              0.55,
+              1.55,
+              2.55
+            ],
+            "x": [
+              42,
+              null,
+              25.5
+            ],
+            "y": [
+              0.45,
+              0.45,
+              0.45
+            ],
+            "text": [
+              "perc: 84<br />Subject: English",
+              "perc: NA<br />Subject: English",
+              "perc: 51<br />Subject: English"
+            ],
+            "type": "bar",
+            "textposition": "none",
+            "marker": {
+              "autocolorscale": false,
+              "color": "rgba(8,48,107,1)",
+              "line": {
+                "width": 1.88976377952756,
+                "color": "transparent"
+              }
+            },
+            "name": "English",
+            "legendgroup": "English",
+            "showlegend": true,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "orientation": "v",
+            "width": [
+              84,
+              null,
+              51
+            ],
+            "base": [
+              1,
+              2,
+              3
+            ],
+            "x": [
+              42,
+              null,
+              25.5
+            ],
+            "y": [
+              0.45,
+              0.45,
+              0.45
+            ],
+            "text": [
+              "perc: 84<br />Subject: Maths",
+              "perc: NA<br />Subject: Maths",
+              "perc: 51<br />Subject: Maths"
+            ],
+            "type": "bar",
+            "textposition": "none",
+            "marker": {
+              "autocolorscale": false,
+              "color": "rgba(33,113,181,1)",
+              "line": {
+                "width": 1.88976377952756,
+                "color": "transparent"
+              }
+            },
+            "name": "Maths",
+            "legendgroup": "Maths",
+            "showlegend": true,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              84,
+              null,
+              51
+            ],
+            "y": [
+              0.75,
+              1.75,
+              2.75
+            ],
+            "text": [
+              "84%",
+              "NA%",
+              "51%"
+            ],
+            "hovertext": [
+              "perc: 84<br />Subject: English<br />paste0(perc, \"%\"): 84%",
+              "perc: NA<br />Subject: English<br />paste0(perc, \"%\"): NA%",
+              "perc: 51<br />Subject: English<br />paste0(perc, \"%\"): 51%"
+            ],
+            "textfont": {
+              "size": 14.6645669291339,
+              "color": "rgba(0,0,0,1)"
+            },
+            "type": "scatter",
+            "mode": "text",
+            "hoveron": "points",
+            "name": "English",
+            "legendgroup": "English",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              84,
+              null,
+              51
+            ],
+            "y": [
+              1.25,
+              2.25,
+              3.25
+            ],
+            "text": [
+              "84%",
+              "NA%",
+              "51%"
+            ],
+            "hovertext": [
+              "perc: 84<br />Subject: Maths<br />paste0(perc, \"%\"): 84%",
+              "perc: NA<br />Subject: Maths<br />paste0(perc, \"%\"): NA%",
+              "perc: 51<br />Subject: Maths<br />paste0(perc, \"%\"): 51%"
+            ],
+            "textfont": {
+              "size": 14.6645669291339,
+              "color": "rgba(0,0,0,1)"
+            },
+            "type": "scatter",
+            "mode": "text",
+            "hoveron": "points",
+            "name": "Maths",
+            "legendgroup": "Maths",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 41.6814722568147,
+            "r": 7.30593607305936,
+            "b": 45.2746644527466,
+            "l": 202.241594022416
+          },
+          "plot_bgcolor": "rgba(255,255,255,1)",
+          "paper_bgcolor": "rgba(255,255,255,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 15.9402241594022
+          },
+          "title": {
+            "text": "The proportion of all pupils who achieved level 4 or above<br />in English and Mathematics at key stage 2 (KS2)<br />by offending and pupil group<br />for xSgZ6",
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 15.9402241594022
+            },
+            "x": 0.5,
+            "xref": "paper"
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              -5,
+              105
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "0",
+              "25",
+              "50",
+              "75",
+              "100"
+            ],
+            "tickvals": [
+              0,
+              25,
+              50,
+              75,
+              100
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "0",
+              "25",
+              "50",
+              "75",
+              "100"
+            ],
+            "nticks": null,
+            "ticks": "outside",
+            "tickcolor": "rgba(51,51,51,1)",
+            "ticklen": 3.65296803652968,
+            "tickwidth": 0.66417600664176,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 15.9402241594022
+            },
+            "tickangle": 0,
+            "showline": true,
+            "linecolor": "rgba(0,0,0,1)",
+            "linewidth": 0.66417600664176,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "% at level 4 or above",
+              "font": {
+                "color": "rgba(0,0,0,1)",
+                "family": "",
+                "size": 15.9402241594022
+              }
+            },
+            "hoverformat": ".2f"
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              0.4,
+              3.6
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "All Pupils",
+              "Any Offence",
+              "Serious Violence Offence"
+            ],
+            "tickvals": [
+              1,
+              2,
+              3
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "All Pupils",
+              "Any Offence",
+              "Serious Violence Offence"
+            ],
+            "nticks": null,
+            "ticks": "outside",
+            "tickcolor": "rgba(51,51,51,1)",
+            "ticklen": 3.65296803652968,
+            "tickwidth": 0.66417600664176,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 15.9402241594022
+            },
+            "tickangle": 0,
+            "showline": true,
+            "linecolor": "rgba(0,0,0,1)",
+            "linewidth": 0.66417600664176,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "",
+              "font": {
+                "color": "rgba(0,0,0,1)",
+                "family": "",
+                "size": 15.9402241594022
+              }
+            },
+            "hoverformat": ".2f"
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": true,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.88976377952756,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 15.9402241594022
+            },
+            "title": {
+              "text": "Subject",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            }
+          },
+          "hovermode": "closest",
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.2,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.5.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.5.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.5.1",
+          "src": {
+            "href": "plotly-main-2.5.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    }
+  },
+  "export": {
+
+  }
+}

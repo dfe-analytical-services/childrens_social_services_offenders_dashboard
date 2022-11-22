@@ -95,6 +95,9 @@ ui <- function(input, output, session) {
       well = FALSE,
       homepage_panel(),
       dashboard_panel(),
+      Demographics(),
+      SchoolExp(),
+      CSCExp(),
       a11y_panel(),
       support_links()
     ),
