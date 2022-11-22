@@ -1,0 +1,232 @@
+{
+  "input": {
+    "AP_subtabs": "Ever AP",
+    "AP_subtabs2": "Chart",
+    "atn_subtabs": "KS2 attainment",
+    "csc_subtabs": "Chart",
+    "csc_subtabs_b": "Timing CSC",
+    "cscgroupchoice": [
+      "All Pupils",
+      "Any Offence",
+      "Serious Violence Offence"
+    ],
+    "cscindichoice": "School",
+    "cscLAchoice": "HmPsw",
+    "cscLAchoice2": "xSgZ6",
+    "demgroupchoice": [
+      "All Pupils",
+      "Any Offence",
+      "Serious Violence Offence"
+    ],
+    "demindichoice": "School",
+    "demLAchoice": "HmPsw",
+    "demLAchoice2": "xSgZ6",
+    "demotable_cell_clicked": {
+
+    },
+    "demotable_cells_selected": [
+
+    ],
+    "demotable_columns_selected": null,
+    "demotable_rows_all": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "demotable_rows_current": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "demotable_rows_selected": null,
+    "demotable_search": "",
+    "demotable_state": {
+      "start": 0,
+      "length": 15,
+      "order": [
+
+      ],
+      "search": {
+        "search": "",
+        "smart": true,
+        "regex": false,
+        "caseInsensitive": true
+      },
+      "columns": [
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        }
+      ]
+    },
+    "FSMsubtabs": "Charts",
+    "link_to_app_content_tab": 0,
+    "navlistPanel": "tab_demo",
+    "pa_subtabs": "Ever PA/PAUO",
+    "pa_subtabs2": "Chart",
+    "sclgroupchoice": [
+      "All Pupils",
+      "Any Offence",
+      "Serious Violence Offence"
+    ],
+    "sclindichoice": "School",
+    "sclLAchoice": "HmPsw",
+    "sclLAchoice2": "xSgZ6",
+    "selectArea": "England",
+    "selectBenchLAs": null,
+    "selectPhase": "All LA maintained schools",
+    "sen_subtab2": "Ever Chart",
+    "sen_subtab3": "SEN timing",
+    "sen_subtabs": "Ever SEN",
+    "SusExcl_subtabs": "Ever suspended/excluded",
+    "SusExcl_subtabs2": "Chart",
+    "SusExcl_subtabs3": "First suspension",
+    "tabsetpanels": "Example panel 1",
+    "tabsetpanels_csc": "Ever CIN/CLA",
+    "tabsetpanels2": "LA info",
+    "tabsetpanels3": "Attainment"
+  },
+  "output": {
+    "demotable": {
+      "x": {
+        "filter": "none",
+        "vertical": false,
+        "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>V1<\/th>\n      <th>V2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>",
+        "options": {
+          "pageLength": 15,
+          "columnDefs": [
+            {
+              "orderable": false,
+              "targets": 0
+            }
+          ],
+          "order": [
+
+          ],
+          "autoWidth": false,
+          "orderClasses": false,
+          "lengthMenu": [
+            10,
+            15,
+            25,
+            50,
+            100
+          ],
+          "ajax": {
+            "type": "POST",
+            "data": "function(d) {\nd.search.caseInsensitive = true;\nd.search.smart = true;\nd.escape = true;\nvar encodeAmp = function(x) { x.value = x.value.replace(/&/g, \"%26\"); }\nencodeAmp(d.search);\n$.each(d.columns, function(i, v) {encodeAmp(v.search);});\n}"
+          },
+          "serverSide": true,
+          "processing": true
+        },
+        "selection": {
+          "mode": "multiple",
+          "selected": null,
+          "target": "row",
+          "selectable": null
+        }
+      },
+      "evals": [
+        "options.ajax.data"
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "jquery",
+          "version": "3.6.0",
+          "src": {
+            "href": "jquery-3.6.0"
+          },
+          "meta": null,
+          "script": "jquery-3.6.0.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "dt-core",
+          "version": "1.11.3",
+          "src": {
+            "href": "dt-core-1.11.3"
+          },
+          "meta": null,
+          "script": "js/jquery.dataTables.min.js",
+          "stylesheet": [
+            "css/jquery.dataTables.min.css",
+            "css/jquery.dataTables.extra.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "package": null,
+          "all_files": false
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    }
+  },
+  "export": {
+
+  }
+}
