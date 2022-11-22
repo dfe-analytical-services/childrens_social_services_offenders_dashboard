@@ -57,6 +57,15 @@ info_table <- bind_rows(tables_scl, tables_hm)
 rm(tables_scl, tables_hm,No_pupils_sclLA, scl_with_dif_hm,previous_offence_sclLA, No_pupils_hmLA, hm_with_dif_scl,previous_offence_hmLA)
 info_table <- info_table %>% select(LA, indicator, all, offenders, sv, prop_off, prop_sv, count_previous, prop_previous,
                                     count_all_dif, count_any_dif, count_sv_dif, prop_count_all_dif, prop_count_any_dif, prop_count_sv_dif)
+# Mutate so reads nicer in table
+info_table <- info_table %>% mutate(
+  offenders_perc = ifelse(!(is.na(offenders)), paste0(offenders, " (", prop_off, "%)"), NA),
+  sv_perc = ifelse(!(is.na(sv)), paste0(sv, " (", prop_sv, "%)"), NA),
+  prev_perc = ifelse(!(is.na(count_previous)), paste0(count_previous, " (", prop_previous, "%)"), NA),
+  all_dif_perc = ifelse(!(is.na(count_all_dif)), paste0(count_all_dif, " (", prop_count_all_dif, "%)"), NA),
+  off_dif_perc = ifelse(!(is.na(count_any_dif)), paste0(count_any_dif, " (", prop_count_any_dif, "%)"), NA),
+  sv_dif_perc = ifelse(!(is.na(count_sv_dif)), paste0(count_sv_dif, " (", prop_count_sv_dif, "%)"), NA)) %>%
+  select(LA, indicator, all, offenders_perc, sv_perc, prev_perc, all_dif_perc, off_dif_perc, sv_dif_perc)
 
 
 # Gender -----------------------------------------------------------------------

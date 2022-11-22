@@ -217,65 +217,55 @@ server <- function(input, output, session) {
   # LA  table in Demographics tab
   output$demotable <- renderDataTable({
     info_table <- info_table %>% filter(indicator==input$demindichoice, LA %in% c(input$demLAchoice, input$demLAchoice2)) %>%
-      rename("Local authority" = LA,
-             "Number of pupils" = all,
-             "Number of children cautioned or sentenced\nfor an offence" = offenders,
-             "Number of children cautioned or sentences for a serious violence offence" = sv,
-             "Proportion of children cautioned or sentenced for\nan offence" = prop_off, 
-             "Proportion of children cautioned or sentences for a serious violence offence" = prop_sv, 
-             "Number of children cautioned or sentenced for a serious violence offence with a prior offence" = count_previous, 
-             "Proportion of children cautioned or sentenced for a serious violence offence with a prior offence" = prop_previous,
-             "Number of children who live or go to school in different LA" = count_all_dif, 
-             "Number of children cautioned or sentenced for an offence who live or go to school in different LA" = count_any_dif , 
-             "Number of children cautioned or sentenced for a serious violence offence who live or go to school in different LA" = count_sv_dif,
-             "Proportion of children who live or go to school in different LA" = prop_count_all_dif, 
-             "Proportion of children cautioned or sentenced for an offence who live or go to school in different LA" = prop_count_any_dif, 
-             "Proportion of children cautioned or sentenced for a serious violence offence who live or go to school in different LA" = prop_count_sv_dif) 
+      rename(
+        "Local authority" = LA,
+        "Number of pupils" = all,
+        "Number of children cautioned or sentenced\nfor an offence (%)" = offenders_perc,
+        "Number of children cautioned or sentences for a serious violence offence (%)" = sv_perc,
+        "[3*] Number of children cautioned or sentenced for a serious violence offence with a prior offence (%)" = prev_perc, 
+        "Number of children who live or go to school in different LA (%)" = all_dif_perc, 
+        "Number of children cautioned or sentenced for an offence who live or go to school in different LA (%)" = off_dif_perc, 
+        "Number of children cautioned or sentenced for a serious violence offence who live or go to school in different LA (%)" = sv_dif_perc) %>%
+      select(!indicator)
     
     info_table <- t(info_table)
     
-  }, rownames = TRUE, options = list(pageLength = 15))  
+  }, rownames = TRUE, options = list(pageLength = 8, searchable = FALSE))  
   
   # Gender plot 1
-  output$GenderPlot1 <-  renderPlotly({
+  output$GenderPlot1 <-  renderPlot({
     Genderplot <- Gender %>% filter(indicator==input$demindichoice, LA==input$demLAchoice, group %in% c(input$demgroupchoice))
-    ggplotly(createGenderPlot(Genderplot, input$demLAchoice) %>% 
-        config(displayModeBar = F))
+    createGenderPlot(Genderplot, input$demLAchoice)
     })
   
   # Gender plot 2
-  output$GenderPlot2 <-  renderPlotly({
+  output$GenderPlot2 <-  renderPlot({
     Genderplot <- Gender %>% filter(indicator==input$demindichoice, LA==input$demLAchoice2, group %in% c(input$demgroupchoice))
-    ggplotly(createGenderPlot(Genderplot, input$demLAchoice2) %>%
-               config(displayModeBar = F))
+    createGenderPlot(Genderplot, input$demLAchoice2)
   })
 
   # Ethnicity plot 1
-  output$EthPlot1 <-  renderPlotly({
+  output$EthPlot1 <-  renderPlot({
     ethplot <- Ethnicity %>% filter(indicator==input$demindichoice, LA==input$demLAchoice, group %in% c(input$demgroupchoice))
-    ggplotly(createEthPlot(ethplot, input$demLAchoice) %>%
-               config(displayModeBar = F))
+    createEthPlot(ethplot, input$demLAchoice)
   })
   
   # Ethnicity plot 2
-  output$EthPlot2 <-  renderPlotly({
+  output$EthPlot2 <-  renderPlot({
     ethplot <- Ethnicity %>% filter(indicator==input$demindichoice, LA==input$demLAchoice2, group %in% c(input$demgroupchoice))
-    ggplotly(createEthPlot(ethplot, input$demLAchoice2) %>%
-               config(displayModeBar = F))
+    createEthPlot(ethplot, input$demLAchoice2)
   })
   
   # Output - FSM chart 1
-  output$fsmPlot1 <- renderPlotly({
+  output$fsmPlot1 <- renderPlot({
     fsmplot <- FSM %>% filter(indicator==input$demindichoice, LA==input$demLAchoice, group %in% c(input$demgroupchoice))
-    ggplotly(createFSMPlot(fsmplot, input$demLAchoice) %>%
-               config(displayModeBar = F))
+    createFSMPlot(fsmplot, input$demLAchoice)
   })
   
   # Output - FSM chart 2
-  output$fsmPlot2 <- renderPlotly({
+  output$fsmPlot2 <- renderPlot({
     fsmplot <- FSM %>% filter(indicator==input$demindichoice, LA==input$demLAchoice2, group %in% c(input$demgroupchoice))
-    ggplotly(createFSMPlot(fsmplot, input$demLAchoice2) %>%
-               config(displayModeBar = F))
+    createFSMPlot(fsmplot, input$demLAchoice2)
   })
   
   # Output - FSM waffle 1
@@ -290,60 +280,68 @@ server <- function(input, output, session) {
     createWaffle_FSM(FSM_waffle, input$demLAchoice2) 
   })
   
+  # Output - FSM waffle Text 1
+  output$WaffleTextFSM1 <- renderText({
+    WaffleText <- FSM_waffle %>% filter(indicator==input$demindichoice, LA==input$demLAchoice)
+    paste0(WaffleText$sv_prop_count_FSM , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever been eligible for FSM. However, ", WaffleText$also_sv_prop_count_FSM, "% of those who had ever been eligible 
+    for FSM were children who were cautioned or sentenced for a serious violence offence")
+  })
+  
+  # Output - FSM waffle Text 2
+  output$WaffleTextFSM2 <- renderText({
+    WaffleText <- FSM_waffle %>% filter(indicator==input$demindichoice, LA==input$demLAchoice2)
+    paste0(WaffleText$sv_prop_count_FSM , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever been eligible for FSM. However, ", WaffleText$also_sv_prop_count_FSM, "% of those who had ever been eligible 
+    for FSM were children who were cautioned or sentenced for a serious violence offence")
+  })
+  
   # Output - age first offence chart 1
-  output$ageofplot1 <- renderPlotly({
+  output$ageofplot1 <- renderPlot({
     age_plot <- age_offence %>% filter(indicator==input$demindichoice, LA==input$demLAchoice, group %in% c(input$demgroupchoice))
-    ggplotly(createAgeOffence(age_plot, input$demLAchoice) %>%
-               config(displayModeBar = F))
+    createAgeOffence(age_plot, input$demLAchoice)
   })
   
   # Output - age first offence chart 2
-  output$ageofplot2 <- renderPlotly({
+  output$ageofplot2 <- renderPlot({
     age_plot <- age_offence %>% filter(indicator==input$demindichoice, LA==input$demLAchoice2, group %in% c(input$demgroupchoice))
-    ggplotly(createAgeOffence(age_plot, input$demLAchoice2) %>%
-               config(displayModeBar = F))
+    createAgeOffence(age_plot, input$demLAchoice2)
   })
   
   # Output - KS2 attainment chart 1
-  output$ks2attainplot1 <- renderPlotly({
-    KS2_attain <- KS2_attain %>% filter(indicator==input$demindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
-    ggplotly(createKS2plot(KS2_attain, input$sclLAchoice) %>%
-               config(displayModeBar = F))
+  output$ks2attainplot1 <- renderPlot({
+    KS2_attain <- KS2_attain %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
+    createKS2plot(KS2_attain, input$sclLAchoice)
   })
   
   # Output - KS2 attainment chart 2
-  output$ks2attainplot2 <- renderPlotly({
+  output$ks2attainplot2 <- renderPlot({
     KS2_attain <- KS2_attain %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
-    ggplotly(createKS2plot(KS2_attain, input$sclLAchoice2) %>%
-               config(displayModeBar = F))
+    createKS2plot(KS2_attain, input$sclLAchoice2)
   })
   
   # Output - KS4 attainment chart 1
-  output$ks4attainplot1 <- renderPlotly({
+  output$ks4attainplot1 <- renderPlot({
     KS4_attain <- KS4_attain %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
-    ggplotly(createKS4plot(KS4_attain, input$sclLAchoice) %>%
-               config(displayModeBar = F))
+    createKS4plot(KS4_attain, input$sclLAchoice)
   })
   
   # Output - KS4 attainment chart 2
-  output$ks4attainplot2 <- renderPlotly({
+  output$ks4attainplot2 <- renderPlot({
     KS4_attain <- KS4_attain %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
-    ggplotly(createKS4plot(KS4_attain, input$LAchoice2) %>%
-               config(displayModeBar = F))
+    createKS4plot(KS4_attain, input$sclLAchoice2)
   })
   
   # Output - PA/PAUO chart 1
-  output$PAPlot1 <- renderPlotly({
+  output$PAPlot1 <- renderPlot({
     EverPAPAUO <- EverPAPAUO %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
-    ggplotly(createPAPlot(EverPAPAUO, input$sclLAchoice) %>%
-               config(displayModeBar = F))
+    createPAPlot(EverPAPAUO, input$sclLAchoice)
   })
   
   # Output - PA/PAUO chart 2
-  output$PAPlot2 <- renderPlotly({
+  output$PAPlot2 <- renderPlot({
     EverPAPAUO <- EverPAPAUO %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
-    ggplotly(createPAPlot(EverPAPAUO, input$sclLAchoice2) %>%
-               config(displayModeBar = F))
+    createPAPlot(EverPAPAUO, input$sclLAchoice2)
   })
   
   # Output - PA waffle 1
@@ -358,28 +356,44 @@ server <- function(input, output, session) {
     createWaffle_PA(PA_waffle, input$sclLAchoice2) 
   })
   
+  # Output - PA waffle text 1
+  output$waffleText_PA1 <- renderText({
+      WaffleText <- PA_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+      paste0(WaffleText$sv_prop_count_PA , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever been persistently absent. However, ", WaffleText$also_sv_prop_count_PA, "% of those who had ever been persistently absent 
+             were children who were cautioned or sentenced for a serious violence offence")
+    })
+  
+  # Output - PA waffle text 2
+  output$waffleText_PA2 <- renderText({
+    WaffleText <- PA_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    paste0(WaffleText$sv_prop_count_PA , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever been persistently absent. However, ", WaffleText$also_sv_prop_count_PA, "% of those who had ever been persistently absent 
+    for FSM were children who were cautioned or sentenced for a serious violence offence")
+  })
+    
   # Output - PA timing 1
-  output$timing_PA1 <- renderPlotly({
+  output$timing_PA1 <- renderPlot({
     PAPAUO_timing <- PAPAUO_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
     createPATimingPlot(PAPAUO_timing, input$sclLAchoice) 
   })
   
   # Output - PA timing 2
-  output$timing_PA2 <- renderPlotly({
+  output$timing_PA2 <- renderPlot({
     PAPAUO_timing <- PAPAUO_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
     createPATimingPlot(PAPAUO_timing, input$sclLAchoice2) 
   })
   
   # Output - Sus/Excl 1
-  output$SusExclPlot1 <- renderPlotly({
+  output$SusExclPlot1 <- renderPlot({
     EverSusExcl <- EverSusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
-    createSusExclPlot(EverSusExcl, input$sclLAchoice) 
+    createSusExclPlot(EverSusExcl, input$sclLAchoice)
   })
   
   # Output - Sus/Excl 2
-  output$SusExclPlot2 <- renderPlotly({
+  output$SusExclPlot2 <- renderPlot({
     EverSusExcl <- EverSusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
-    createSusExclPlot(EverSusExcl, input$sclLAchoice2) 
+    createSusExclPlot(EverSusExcl, input$sclLAchoice2)
   })
   
   # Output - Suspension waffle 1
@@ -397,7 +411,7 @@ server <- function(input, output, session) {
   # Output - Exclusion waffle 1
   output$waffle_Excl1 <- renderPlot({
     SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
-    createWaffle_Excl(SusExcl_waffle, input$sclLAchoice) 
+    createWaffle_Excl(SusExcl_waffle, input$sclLAchoice)
   })
   
   # Output - Exclusion waffle 2
@@ -405,67 +419,97 @@ server <- function(input, output, session) {
     SusExcl_waffle <- SusExcl_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
     createWaffle_Excl(SusExcl_waffle, input$sclLAchoice2) 
   })
+
+  # Output - sus waffle text 1
+  output$waffleText_sus1 <- renderText({
+    WaffleText <- SusExcl_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    paste0(WaffleText$sv_prop_count_Sus , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever been suspended. However, ", WaffleText$also_sv_prop_count_Sus, "% of those who had ever been suspended 
+           were children who were cautioned or sentenced for a serious violence offence")
+  })
+  
+  # Output - sus waffle text 2
+  output$waffleText_sus2 <- renderText({
+    WaffleText <- SusExcl_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    paste0(WaffleText$sv_prop_count_Sus , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever been suspended. However, ", WaffleText$also_sv_prop_count_Sus, "% of those who had ever been suspended 
+           were children who were cautioned or sentenced for a serious violence offence")
+  })
+  
+  # Output - Excl waffle text 1
+  output$waffleText_excl1 <- renderText({
+    WaffleText <- SusExcl_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    paste0(WaffleText$sv_prop_count_Excl , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever been permanently excluded. However, ", WaffleText$also_sv_prop_count_Excl, "% of those who had ever been permanently 
+    excluded were children who were cautioned or sentenced for a serious violence offence")
+  })
+  
+  # Output - Excl waffle text 2
+  output$waffleText_excl2 <- renderText({
+    WaffleText <- SusExcl_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    paste0(WaffleText$sv_prop_count_Excl , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever been permanently excluded. However, ", WaffleText$also_sv_prop_count_Excl, "% of those who had ever been permanently 
+    excluded were children who were cautioned or sentenced for a serious violence offence")
+  })
   
   # Output - first suspension timing 1
-  output$FstSusTime1 <- renderPlotly({
+  output$FstSusTime1 <- renderPlot({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
-    createSusTimePlot(fst.clst_SusExcl, input$sclLAchoice, "First") 
+    createSusTimePlot(fst.clst_SusExcl, input$sclLAchoice, "First")
   })
   
   # Output - first suspension timing 2
-  output$FstSusTime2 <- renderPlotly({
+  output$FstSusTime2 <- renderPlot({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
-    createSusTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "First") 
+    createSusTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "First")
   })
   
   # Output - closest suspension timing 1
-  output$clstSusTime1 <- renderPlotly({
+  output$clstSusTime1 <- renderPlot({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
-    createSusTimePlot(fst.clst_SusExcl, input$sclLAchoice, "Closest") 
+    createSusTimePlot(fst.clst_SusExcl, input$sclLAchoice, "Closest")
   })
   
   # Output - closest suspension timing 2
-  output$clstExclTime2 <- renderPlotly({
+  output$clstSusTime2 <- renderPlot({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
-    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "Closest") 
+    createSusTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "Closest")
   })
   
   # Output - first Exclusion timing 1
-  output$FstExclTime1 <- renderPlotly({
+  output$FstExclTime1 <- renderPlot({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
-    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice, "First") 
+    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice, "First")
   })
   
   # Output - first Exclusion timing 2
-  output$FstExclTime2 <- renderPlotly({
+  output$FstExclTime2 <- renderPlot({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
-    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "First") 
+    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "First")
   })
   
   # Output - closest Exclusion timing 1
-  output$clstExclTime1 <- renderPlotly({
+  output$clstExclTime1 <- renderPlot({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
-    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice, "Closest") 
+    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice, "Closest")
   })
   
   # Output - closest Exclusion timing 2
-  output$clstExclTime2 <- renderPlotly({
+  output$clstExclTime2 <- renderPlot({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
-    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "Closest") 
+    createExclTimePlot(fst.clst_SusExcl, input$sclLAchoice2, "Closest")
   })
   
   # Output - AP chart 1
-  output$APchart1 <- renderPlotly({
+  output$APchart1 <- renderPlot({
     EverAP <- EverAP %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
-    ggplotly(createAPPlot(EverAP, input$sclLAchoice) %>%
-               config(displayModeBar = F))
+    createAPPlot(EverAP, input$sclLAchoice)
   })
   
   # Output - AP chart 2
-  output$APchart2 <- renderPlotly({
+  output$APchart2 <- renderPlot({
     EverAP <- EverAP %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
-    ggplotly(createAPPlot(EverAP, input$sclLAchoice2) %>%
-               config(displayModeBar = F))
+    createAPPlot(EverAP, input$sclLAchoice2)
   })
   
   # Output - AP waffle 1
@@ -480,28 +524,44 @@ server <- function(input, output, session) {
     createWaffle_AP(AP_waffle, input$sclLAchoice2) 
   })
   
+  # Output - AP waffle text 1
+  output$waffleText_AP1 <- renderText({
+    WaffleText <- AP_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    paste0(WaffleText$sv_prop_count_AP , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever attended alternative provision. However, ", WaffleText$also_sv_prop_count_AP, "% of those who had ever attended alternative 
+    provision were children who were cautioned or sentenced for a serious violence offence")
+  })
+  
+  # Output - AP waffle text 2
+  output$waffleText_AP2 <- renderText({
+    WaffleText <- AP_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    paste0(WaffleText$sv_prop_count_AP , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever attended alternative provision. However, ", WaffleText$also_sv_prop_count_AP, "% of those who had ever attended alternative 
+    provision were children who were cautioned or sentenced for a serious violence offence")
+  })
+
   # Output - AP timing 1
-  output$timing_AP1 <- renderPlotly({
+  output$timing_AP1 <- renderPlot({
     AP_timing <- AP_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
-    createAPTimingPlot(AP_timing, input$sclLAchoice) 
+    createAPTimingPlot(AP_timing, input$sclLAchoice)
   })
   
   # Output - AP timing 2
-  output$timing_AP2 <- renderPlotly({
+  output$timing_AP2 <- renderPlot({
     AP_timing <- AP_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
     createAPTimingPlot(AP_timing, input$sclLAchoice2) 
   })
   
   # Output - SEN chart 1
-  output$SENchart1 <- renderPlotly({
+  output$SENchart1 <- renderPlot({
     EverSEN <- EverSEN %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice, group %in% c(input$sclgroupchoice))
-    createSENPlot(EverSEN, input$sclLAchoice) 
+    createSENPlot(EverSEN, input$sclLAchoice)
   })
   
   # Output - SEN chart 2
-  output$SENchart2 <- renderPlotly({
+  output$SENchart2 <- renderPlot({
     EverSEN <- EverSEN %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2, group %in% c(input$sclgroupchoice))
-    createSENPlot(EverSEN, input$sclLAchoice2) 
+    createSENPlot(EverSEN, input$sclLAchoice2)
   })
     
   # Output - SEN waffle 1
@@ -528,52 +588,84 @@ server <- function(input, output, session) {
     createWaffle_EHCP(EHCP_waffle, input$sclLAchoice2) 
   })
   
+  # Output - SEN waffle text 1
+  output$waffleText_SEN1 <- renderText({
+    WaffleText <- SEN_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    paste0(WaffleText$prop_SEN_support_SV , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever had SEN Support. However, ", WaffleText$prop_also_SEN_support_SV, "% of those who had ever had SEN Support 
+    were children who were cautioned or sentenced for a serious violence offence")
+  })
+  
+  # Output - SEN waffle text 2
+  output$waffleText_SEN2 <- renderText({
+    WaffleText <- SEN_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    paste0(WaffleText$prop_SEN_support_SV , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever had SEN Support. However, ", WaffleText$prop_also_SEN_support_SV, "% of those who had ever had SEN Support 
+    were children who were cautioned or sentenced for a serious violence offence")
+  })
+  
+  # Output - EHCP waffle text 1
+  output$waffleText_EHCP1 <- renderText({
+    WaffleText <- EHCP_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
+    paste0(WaffleText$prop_EHCP_SV , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever had an EHC Plan. However, ", WaffleText$prop_also_EHCP_SV, "% of those who had ever had an EHC Plan 
+    were children who were cautioned or sentenced for a serious violence offence")
+  })
+  
+  # Output - EHCP waffle text 2
+  output$waffleText_EHCP2 <- renderText({
+    WaffleText <- EHCP_waffle %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
+    paste0(WaffleText$prop_EHCP_SV , "% of children who were cautioned or sentenced for a serious violence offence 
+    had ever had an EHC Plan. However, ", WaffleText$prop_also_EHCP_SV, "% of those who had ever had an EHC Plan 
+    were children who were cautioned or sentenced for a serious violence offence")
+  })
+  
   # Output - SEN timing 1
-  output$timing_SEN1 <- renderPlotly({
+  output$timing_SEN1 <- renderPlot({
     SEN_timing <- SEN_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
-    createSENTimingPlot(SEN_timing, input$sclLAchoice) 
+    createSENTimingPlot(SEN_timing, input$sclLAchoice)
   })
   
   # Output - SEN timing 2
-  output$timing_SEN2 <- renderPlotly({
+  output$timing_SEN2 <- renderPlot({
     SEN_timing <- SEN_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
-    createSENTimingPlot(SEN_timing, input$sclLAchoice2) 
+    createSENTimingPlot(SEN_timing, input$sclLAchoice2)
   })
   
   # Output - EHCP timing 1
-  output$timing_EHCP1 <- renderPlotly({
+  output$timing_EHCP1 <- renderPlot({
     EHCP_timing <- EHCP_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
-    createEHCPTimingPlot(EHCP_timing, input$sclLAchoice) 
+    createEHCPTimingPlot(EHCP_timing, input$sclLAchoice)
   })
   
   # Output - EHCP timing 2
-  output$timing_EHCP2 <- renderPlotly({
+  output$timing_EHCP2 <- renderPlot({
     EHCP_timing <- EHCP_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
-    createEHCPTimingPlot(EHCP_timing, input$sclLAchoice2) 
+    createEHCPTimingPlot(EHCP_timing, input$sclLAchoice2)
   })
   
   # Output - SEMH timing 1
-  output$timing_SEMH1 <- renderPlotly({
+  output$timing_SEMH1 <- renderPlot({
     SEMH_timing <- SEMH_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice)
-    createSEMHTimingPlot(SEMH_timing, input$sclLAchoice) 
+    createSEMHTimingPlot(SEMH_timing, input$sclLAchoice)
   })
   
   # Output - SEMH timing 2
-  output$timing_SEMH2 <- renderPlotly({
+  output$timing_SEMH2 <- renderPlot({
     SEMH_timing <- SEMH_timing %>% filter(indicator==input$sclindichoice, LA==input$sclLAchoice2)
-    createSEMHTimingPlot(SEMH_timing, input$sclLAchoice2) 
+    createSEMHTimingPlot(SEMH_timing, input$sclLAchoice2)
   })
 
   # Output - CSC chart 1
-  output$CSCPlot1 <- renderPlotly({
+  output$CSCPlot1 <- renderPlot({
     EverCINCLA <- EverCINCLA %>% filter(indicator==input$cscindichoice, LA==input$cscLAchoice, group %in% c(input$cscgroupchoice))
-    createCSCPlot(EverCINCLA, input$cscLAchoice) 
+    createCSCPlot(EverCINCLA, input$cscLAchoice)
   })
   
   # Output - CSC chart 2
-  output$CSCPlot2 <- renderPlotly({
+  output$CSCPlot2 <- renderPlot({
     EverCINCLA <- EverCINCLA %>% filter(indicator==input$cscindichoice, LA==input$cscLAchoice2, group %in% c(input$cscgroupchoice))
-    createCSCPlot(EverCINCLA, input$cscLAchoice2) 
+    createCSCPlot(EverCINCLA, input$cscLAchoice2)
   })
   
   # Output - CIN waffle 1
@@ -589,15 +681,15 @@ server <- function(input, output, session) {
   })
   
   # Output - CSC timing 1
-  output$timing_CSC1 <- renderPlotly({
+  output$timing_CSC1 <- renderPlot({
     CSC_timing <- CSC_timing %>% filter(indicator==input$cscindichoice, LA==input$cscLAchoice)
-    createCSCTimingPlot(CSC_timing, input$cscLAchoice) 
+    createCSCTimingPlot(CSC_timing, input$cscLAchoice)
   })
   
   # Output - CSC timing 2
-  output$timing_CSC2 <- renderPlotly({
+  output$timing_CSC2 <- renderPlot({
     CSC_timing <- CSC_timing %>% filter(indicator==input$cscindichoice, LA==input$cscLAchoice2)
-    createCSCTimingPlot(CSC_timing, input$cscLAchoice2) 
+    createCSCTimingPlot(CSC_timing, input$cscLAchoice2)
   })
   
   # Stop app ---------------------------------------------------------------------------------
