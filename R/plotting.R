@@ -629,7 +629,7 @@ createWaffle_SEN <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   SEN_LHS_text <- data.frame(x1 = paste0(data$prop_SEN_support_SV, "%\nSEN Support"),
-                            x2 = paste0(data$prop_not_SEN_support_SV, "%\nNOT\nSEN Support"))
+                            x2 = paste0(data$prop_not_SEN_support_SV, "%\nNot\nSEN Support"))
   
   SEN_LHS_waffle <- waffle(data[c("prop_SEN_support_SV","prop_not_SEN_support_SV")], rows=10, size=0.6, flip=TRUE, 
                           colors=c("#08306b", "#2171b5"), 
@@ -739,7 +739,7 @@ createSENTimingPlot <- function(data, LAchoice){
   ggplot(data, aes(x=perc, y=group, fill = Timing )) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
     labs(x = "% with timing", y=NULL, title = title1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-9.5, hjust=0) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-7.5, hjust=0, size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6")) +
@@ -760,7 +760,7 @@ createEHCPTimingPlot <- function(data, LAchoice){
   ggplot(data, aes(x=perc, y=group, fill = Timing )) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
     labs(x = "% with timing", y=NULL, title = title1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-9.5, hjust=0) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-7.5, hjust=0, size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6")) +
@@ -781,7 +781,7 @@ createSEMHTimingPlot <- function(data, LAchoice){
   ggplot(data, aes(x=perc, y=group, fill = Timing )) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
     labs(x = "% with timing", y=NULL, title = title1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-9.5, hjust=0) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-7.5, hjust=0, size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6")) +
@@ -802,7 +802,7 @@ createCSCPlot <- function(data, LAchoice){
     labs(x=NULL, y="% recorded as\nCIN/CLA", title = title1) +
     geom_text(aes(label = paste0(perc, "%")), vjust =-0.4, hjust = 0.5, position = position_dodge(width = 1), size = 6) +
     theme_classic() +
-    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size = 15)) +
+    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size = 15), legend.text = element_text(size = 15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6")) +
     scale_x_discrete(labels = c("Children in need", "Children who are\nlooked after")) +
     ylim(0,100) + 
