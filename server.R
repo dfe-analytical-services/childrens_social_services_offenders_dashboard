@@ -685,6 +685,22 @@ server <- function(input, output, session) {
     createWaffle_CIN(CIN_waffle, input$cscLAchoice2)
   })
 
+  # Output - CIN waffle text 1
+  output$waffleText_CIN1 <- renderText({
+    WaffleText <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
+    paste0(WaffleText$propsv_count_CIN, "% of children who were cautioned or sentenced for a serious violence offence
+    had ever been CIN on 31st March in any given year. However, ", WaffleText$also_propsv_count_CIN, "% of those who had ever been 
+    CIN on 31st March in any given year were children who were cautioned or sentenced for a serious violence offence")
+  })
+  
+  # Output - CIN waffle text 2
+  output$waffleText_CIN2 <- renderText({
+    WaffleText <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice2)
+    paste0(WaffleText$propsv_count_CIN, "% of children who were cautioned or sentenced for a serious violence offence
+    had ever been CIN on 31st March in any given year. However, ", WaffleText$also_propsv_count_CIN, "% of those who had ever been 
+    CIN on 31st March in any given year were children who were cautioned or sentenced for a serious violence offence")
+  })
+  
   # Output - CSC timing 1
   output$timing_CSC1 <- renderPlot({
     CSC_timing <- CSC_timing %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
