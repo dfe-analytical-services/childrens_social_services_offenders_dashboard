@@ -3,66 +3,6 @@ homepage_panel <- function() {
     "Homepage",
     gov_main_layout(
       gov_row(
-        column(
-          12,
-          h1("Education, children's social care and offending", tags$br(), "Descriptive statistics"),
-          br(),
-          h4("This is some overview text about the dashboard etc etc .... "),
-          br()
-        ),
-        
-        ## Left panel -------------------------------------------------------
-        
-        column(
-          6,
-          div(
-            div(
-              class = "panel panel-info",
-              div(
-                class = "panel-heading",
-                style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-                h2("Contents (h2)")
-              ),
-              div(
-                class = "panel-body",
-                tags$div(
-                  title = "This section is useful if you want to understand how well different industries retain graduates.",
-                  h3("Introduction (h3)"),
-                  p("This app demonstrates the DfE Analytical Services R-Shiny data dashboard template."),
-                  p("You might want to add some brief introductory text here alongside some links to different tabs within your dashboard. Here's an example of a link working:"),
-                  p(actionLink("link_to_app_content_tab", "Dashboard panel")),
-                  p("You need to add an observeEvent() function to the server.R script for any link that navigates within your App.")
-                ),
-                br()
-              )
-            )
-          ),
-        ),
-        
-        ## Right panel ------------------------------------------------------
-        
-        column(
-          6,
-          div(
-            div(
-              class = "panel panel-info",
-              div(
-                class = "panel-heading",
-                style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-                h2("Background Info (h2)")
-              ),
-              div(
-                class = "panel-body",
-                h3("Context and purpose (h3)"),
-                p("This app is the DfE Analytical Service's R-Shiny template demonstration app and is being developed to provide a coherent styling for DfE dashboards alongside some useful example componenets that teams can adapt for their own uses."),
-                p("DfE teams using this template should avoid changing the styling and layout, keeping the header, footer and side navigation list formats."),
-                                p("You might want to add some relevant background information for your users here. For example some useful links to your EES publication, data sources and other relevant resources."),
-                h3("Guidance sources (h3)"),
-                p("For example, here we'll add some of the key resources we draw on to guide styling and vizualisation...")
-              )
-            )
-          )
-        ),
         
         ## Bottom panel ------------------------------------------------------
         
@@ -74,24 +14,165 @@ homepage_panel <- function() {
               div(
                 class = "panel-heading",
                 style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-                h2("A wider column")
+                h2("Title tbc...")
               ),
               div(
                 class = "panel-body",
                 tags$div(
                   title = "This section is useful for .......",
-                  h3("Introduction..."),
-                  p("This is a paragraph text ..."),
+                  h3("Aims"),
+                  h4("This dashboard was created to complement the previously published", 
+                     tags$a(href = "https://www.gov.uk/government/publications/education-childrens-social-care-and-offending", 
+                            "Education, children’s social care and offending"),
+                     "descriptive analysis with the aim of providing Local Authority specific breakdowns, for each Local Authority in England, where possible."),
                   br(),
                   tabBox(width = 12, title = NULL, id="overview_tabs",
-                         tabPanel("Overview 1", 
-                                  h3("Overview 1 text"), 
-                                  br()
+                         tabPanel("Dashboard overview", 
+                                  h3("Contents"),
+                                  p("To navigate through the dashboard, please click on the tabs on the left (list tab names here). Within each tab, you will be given 
+                                     several options to select:" ,
+                                   tags$br(),  
+                                   tags$br(), 
+                                   "1.	Two different Local Authorities to compare, with the option to compare to England too.",  
+                                   tags$br(), 
+                                   " 2.	Either home or school LA – this selects whether the analysis focuses on the LA in which a child resides, or the LA in which a 
+                                    child attends school (please see the Data Overview tab for more information).", 
+                                   tags$br(), 
+                                   " 3.	All pupils, offenders or Serious Violence offenders – this selection will dictate which pupil groups appear in the charts and 
+                                    text on the page.",
+                                   tags$br(), 
+                                   " There is also the option to select sub-tabs within these tabs, to look at more specific variables within each page, with 
+                                    explanatory text included where necessary.",
+                                   tags$br(),  tags$br(), 
+                                   "The dashboard includes information on the following:",
+                                   tags$br(), 
+                                   tags$br(), 
+                                   "•	Previous offending", 
+                                   tags$br(), 
+                                   "•	Gender",
+                                   tags$br(), 
+                                   "•	Age",
+                                   tags$br(), 
+                                   "•	Ethnicity",
+                                   tags$br(), 
+                                   "•	Free School Meals eligibility",
+                                   tags$br(), 
+                                   "•	Attainment",
+                                   tags$br(), 
+                                   "•	Persistent Absence",
+                                   tags$br(), 
+                                   "•	Permanent exclusions and suspensions",
+                                   tags$br(), 
+                                   "•	Alternative Provision",
+                                   tags$br(), 
+                                   "•	Special Educational Needs",
+                                   tags$br(), 
+                                   "•	Children with a Social Worker",
+                                   tags$br(),""),
+                                  h3("Previous publications"),
+                                  p("This dashboard follows a previous national level publication [link] that looked at the education and 
+                                    social care background of children in England that had been cautioned or sentenced for an offence across 
+                                    England and Wales, and 10 LA level publications focusing on the ten SAFE (Support, Attend, Fulfil, Exceed) 
+                                    Taskforces (for more information see", 
+                                    tags$a(href = "https://www.gov.uk/government/news/support-for-vulnerable-young-people-in-serious-violence-hotspots", 
+                                           "Support for vulnerable young people in serious violence hotspots"), ").")
                                   ),
-                         tabPanel("Overview 2", 
-                                  h3("Overview 2 text"), 
+                         tabPanel("Data Overview", 
+                                  h3("The DfE-MoJ data-share"), 
                                   br(),
-                                  tableOutput("CohortTable")
+                                  p("This section sets out details of the data share between the Ministry of Justice (MoJ) and Department for 
+                                    Education (DfE), and the matching process between the MoJ and National Pupil Database data. Data sources Data
+                                    from several large datasets were brought together in this data share, as permitted by the Ministry of Justice’s 
+                                    common law powers and various prescribed legislative data sharing powers available to DfE. A brief description of
+                                    the two main datasets is included below: "),
+                                  br(),
+                                  p("National Pupil Database (NPD) – DfE. A wide range of information about pupils and students which provides evidence on 
+                                    educational performance and context. The data includes detailed information about pupils’ test and exam results, prior attainment, 
+                                    and progression between each key stage for all state schools in England. It also includes information about the characteristics of pupils
+                                    in the state sector and non-maintained special schools, such as their gender, ethnicity, first language, eligibility for Free School 
+                                    Meals, awarding of bursary funding for 16-19-year-olds, information about Special Educational Needs, and detailed information about any
+                                    absences and exclusions."),
+                                  br(),
+                                  p("Police National Computer (PNC) – MoJ. This dataset includes recordable offences committed, with separate entries for each offence committed by a person, 
+                                    although only some information (e.g. personal characteristics) will be available through the linked data. The data analysed in this report is a subset of
+                                    the total number of individuals. All individuals who commit an offence are recorded on the Police National Computer (PNC), this report is based on offenders
+                                    from the PNC that were successfully matched to the NPD, covering the period 2000 – 2021."),
+                                  br(),
+                                  p("For more information please see the previously published technical note [link to be added]."),
+                                  br(),
+                                  h3("Cohorts"),
+                                  p("The cohorts of children within this analysis include all pupils who finished key stage 2 (KS2) in 2007/08, 2008/09, 2009/10, 2010/11, 2011/12 
+                                    or 2012/13, and were aged 10 at the start of these academic years, and attended school in Birmingham. Therefore, this cohort has a key stage 4 
+                                    (KS4) academic year of 2012/13, 2013/14, 2013/14, 2014/15, 2015/16 or 2017/18, amounting to approximately x children. For these children, all 
+                                    their records from Year 1 to Year 13 (or equivalent) are included. Pupils who do not have a KS4 record are not included. Pupils who attended an 
+                                    independent primary or secondary school have been excluded from the data as their characteristics are not recorded, except for those registered 
+                                    in independent Alternative Provision (AP) settings. The cohorts were selected in this way to maximise data coverage and balance data availability 
+                                    across each of the datasets provided in the share. Children that appear on a school census at the end of KS2 and the end of KS4 have been included
+                                    in this analysis, with allowances for those that have moved ahead or been kept behind by one or more school years. Independent school that provide
+                                    alternative provision have been included, however those with KS4 results at mainstream independent schools have been removed. This publication
+                                    will present statistics relating to the Local Authority (LA) of a child’s school during the school year they entered when they were aged 15. We 
+                                    selected age 15 as this is the most common age at which children who had been cautioned or sentenced for a serious violence offence commit their
+                                    first serious violence offence. Where this isn’t possible, the closest previous year has been used. We have also conducted analysis using the 
+                                    records of the LA of the child’s home address when they were aged 15, which can be found in the accompanying tables."),
+                                  br(),
+                                  tableOutput("CohortTable"),
+                                  br(),
+                                  details(
+                                    inputId = "off_def",
+                                    label = "Defining the offending groups",
+                                    help_text = tags$p("‘Children who had been cautioned or sentenced for an offence’ relates to all children and young people
+                                                       in the linked data who were in the academic years described above, and who been cautioned or sentenced for
+                                                       any offence recorded on the Police National Computer over the defined coverage period. All cohorts in this 
+                                                       analysis are limited to ages 10-17. This means that for each cohort, the last year of offending data would 
+                                                       be during Year 13 (or equivalent). This is to ensure that each child had the same amount of time to offend - 
+                                                       if the data was not limited by age, then children born in earlier years would have more years of data available 
+                                                       to record offences, thereby skewing the results. As well as ‘children who had been cautioned or sentenced for 
+                                                       an offence’, ‘children who had been cautioned or sentenced for a serious violence offence’ have also been 
+                                                       included in this analysis. The definition of serious violence offences is based broadly on the following 
+                                                       categories of offence groups and offence types: indictable only ‘violence against the person’ offences, 
+                                                       indictable only ‘robbery offences’, and triable either way or indictable only ‘possession of weapons offences’.")
+                                  ),
+                                  br(),
+                                  details(
+                                    inputId = "ever_def",
+                                    label = "Defining 'the offending groups'ever'",
+                                    help_text = tags$p("It is important to note that this analysis will not be directly comparable with other published government statistics. 
+                                                       Unless otherwise specified, when referencing whether a child has ‘ever’ had a certain characteristic, the analysis considers 
+                                                       all periods up to the end of KS4. This methodology may differ from that of other published statistics where, for example, only
+                                                       the previous six years are considered. For this reason, figures discussed here may appear higher than those available in other 
+                                                       publications.")
+                                  ),
+                                  br(),
+                                  details(
+                                    inputId = "satsig_def",
+                                    label = "Statistical significance",
+                                    help_text = tags$p("Tests for statistical significance have been performed on the findings relating to children who had been cautioned or sentenced 
+                                                       for a serious violence offence only (not the all-pupil cohort or children who had been cautioned or sentenced for any offence). 
+                                                       We report this by saying: For children who had been cautioned or sentenced for a serious violence offence, the difference between these 
+                                                       results and the national figure [was / was not] statistically significant. Running a test for statistical significance is an analytical
+                                                       method which tells us if the difference in a finding at the population level (in this case England) and the sample level (the LA of interest) 
+                                                       is due to random chance (variation) in the data, or if it is a true difference between the two groups. If a finding is marked as statistically 
+                                                       significant, we can be relatively confident that this difference is genuine. If a finding is marked as not statistically significant, we cannot
+                                                       have that confidence and should therefore take more caution in how we interpret or apply the finding. The result of these statistical significance 
+                                                       tests do not tell us how the result in question compares to any other results beyond if they are by chance or not. These tests do not give us any 
+                                                       information about how a local area’s rates of one characteristic and rates of serious violence interrelate. We cannot determine anything from these 
+                                                       tests except how confident we can be that the result is genuine difference to the population average or not. We are also able to determine a measure
+                                                       of this confidence, i.e. how much possibility is there that the results are due to random chance? We have used a 5% measure, meaning we can conclude 
+                                                       that there is less than a 5% chance that the results are due to random chance alone. Where we have undertaken this analysis, we have noted this in the 
+                                                       text. When reading this publication, readers may want to compare with the national figures which are available here. Significance testing has been 
+                                                       performed using the prop.test function in R, which is used for testing the null hypothesis that the proportions (probabilities of success) in several 
+                                                       groups are the same, or that they equal certain values.")
+                                  ),
+                                  br(),
+                                  details(
+                                    inputId = "small_def",
+                                    label = "Reporting on small numbers of children",
+                                    help_text = tags$p("In order to prevent the disclosure of sensitive data, any numbers in this publication that relate to less than 6 pupils have been replaced
+                                                       by the words ‘number too small to report’. Where there are further risks of identification (for example where a suppressed number can
+                                                       be calculated using other numbers), numbers have been further suppressed. Due to the size variation across the Local Authority areas,
+                                                       this happens more for some LAs than others..")
+                                  ),
+                                  br()
                                   )
                          )
                   ),
@@ -110,7 +191,7 @@ homepage_panel <- function() {
 dashboard_panel <- function() {
   tabPanel(
     value = "dashboard",
-    "Dashboard",
+    "Template tab - please ignore",
     
     # Define UI for application that draws a histogram
     
