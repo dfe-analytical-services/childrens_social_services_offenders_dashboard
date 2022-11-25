@@ -214,6 +214,9 @@ server <- function(input, output, session) {
     }
   )
 
+  # Output - Cohort table (Homepage)
+  output$CohortTable <- renderTable(dfCohort, na = "")
+  
   # LA  table in Demographics tab
   output$demotable <- renderDataTable(
     {
