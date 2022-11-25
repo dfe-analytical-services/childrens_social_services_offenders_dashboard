@@ -28,7 +28,7 @@ read_cohort_data <- function(file='data/Cohort.csv'){
   # This reads in an data showing cohorts used in data share
   dfCohort <- read.csv(file)
   # Change col names
-  colnames(dfCohort)[1:4] <- c("Academic Year", "Cohort 1", "Cohort 2", "Cohort 3")
+  colnames(dfCohort)[1:7] <- c("Academic Year",  "Cohort 6", "Cohort 5", "Cohort 4", "Cohort 5", "Cohort 2", "Cohort 1")
   return(dfCohort)
 }
 

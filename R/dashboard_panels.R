@@ -5,7 +5,7 @@ homepage_panel <- function() {
       gov_row(
         column(
           12,
-          h1("DfE Analytical Services R-Shiny data dashboard template (h1)"),
+          h1("Education, children's social care and offending", tags$br(), "Descriptive statistics"),
           br(),
           h4("This is some overview text about the dashboard etc etc .... "),
           br()
@@ -90,7 +90,8 @@ homepage_panel <- function() {
                                   ),
                          tabPanel("Overview 2", 
                                   h3("Overview 2 text"), 
-                                  br()
+                                  br(),
+                                  tableOutput("CohortTable")
                                   )
                          )
                   ),
