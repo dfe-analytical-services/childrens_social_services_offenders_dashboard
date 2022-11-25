@@ -77,31 +77,32 @@ homepage_panel <- function() {
                                     tags$a(href = "https://www.gov.uk/government/news/support-for-vulnerable-young-people-in-serious-violence-hotspots", 
                                            "Support for vulnerable young people in serious violence hotspots"), ").")
                                   ),
-                         tabPanel("Data Overview", 
-                                  h3("The DfE-MoJ data-share"), 
+                         tabPanel("Data Overview",  
                                   br(),
-                                  p("This section sets out details of the data share between the Ministry of Justice (MoJ) and Department for 
+                                  details(
+                                    inputId = "datashare_def",
+                                    label = "The DfE-MoJ data-share",
+                                    help_text = tags$p("This section sets out details of the data share between the Ministry of Justice (MoJ) and Department for 
                                     Education (DfE), and the matching process between the MoJ and National Pupil Database data. Data sources Data
                                     from several large datasets were brought together in this data share, as permitted by the Ministry of Justice’s 
                                     common law powers and various prescribed legislative data sharing powers available to DfE. A brief description of
-                                    the two main datasets is included below: "),
-                                  br(),
-                                  p("National Pupil Database (NPD) – DfE. A wide range of information about pupils and students which provides evidence on 
+                                    the two main datasets is included below:", tags$br(),
+                                  "National Pupil Database (NPD) – DfE. A wide range of information about pupils and students which provides evidence on 
                                     educational performance and context. The data includes detailed information about pupils’ test and exam results, prior attainment, 
                                     and progression between each key stage for all state schools in England. It also includes information about the characteristics of pupils
                                     in the state sector and non-maintained special schools, such as their gender, ethnicity, first language, eligibility for Free School 
                                     Meals, awarding of bursary funding for 16-19-year-olds, information about Special Educational Needs, and detailed information about any
-                                    absences and exclusions."),
-                                  br(),
-                                  p("Police National Computer (PNC) – MoJ. This dataset includes recordable offences committed, with separate entries for each offence committed by a person, 
+                                    absences and exclusions.", tags$br(),
+                                  "Police National Computer (PNC) – MoJ. This dataset includes recordable offences committed, with separate entries for each offence committed by a person, 
                                     although only some information (e.g. personal characteristics) will be available through the linked data. The data analysed in this report is a subset of
                                     the total number of individuals. All individuals who commit an offence are recorded on the Police National Computer (PNC), this report is based on offenders
-                                    from the PNC that were successfully matched to the NPD, covering the period 2000 – 2021."),
+                                    from the PNC that were successfully matched to the NPD, covering the period 2000 – 2021.", tags$br(),
+                                  "For more information please see the previously published technical note [link to be added].")),
                                   br(),
-                                  p("For more information please see the previously published technical note [link to be added]."),
-                                  br(),
-                                  h3("Cohorts"),
-                                  p("The cohorts of children within this analysis include all pupils who finished key stage 2 (KS2) in 2007/08, 2008/09, 2009/10, 2010/11, 2011/12 
+                                  details(
+                                    inputId = "cohort_def",
+                                    label = "Cohorts",
+                                    help_text = tags$p("The cohorts of children within this analysis include all pupils who finished key stage 2 (KS2) in 2007/08, 2008/09, 2009/10, 2010/11, 2011/12 
                                     or 2012/13, and were aged 10 at the start of these academic years, and attended school in Birmingham. Therefore, this cohort has a key stage 4 
                                     (KS4) academic year of 2012/13, 2013/14, 2013/14, 2014/15, 2015/16 or 2017/18, amounting to approximately x children. For these children, all 
                                     their records from Year 1 to Year 13 (or equivalent) are included. Pupils who do not have a KS4 record are not included. Pupils who attended an 
@@ -113,8 +114,9 @@ homepage_panel <- function() {
                                     will present statistics relating to the Local Authority (LA) of a child’s school during the school year they entered when they were aged 15. We 
                                     selected age 15 as this is the most common age at which children who had been cautioned or sentenced for a serious violence offence commit their
                                     first serious violence offence. Where this isn’t possible, the closest previous year has been used. We have also conducted analysis using the 
-                                    records of the LA of the child’s home address when they were aged 15, which can be found in the accompanying tables."),
+                                    records of the LA of the child’s home address when they were aged 15, which can be found in the accompanying tables.")),
                                   br(),
+                                  p("NOTE: The cohort table will be added to 'Cohorts' drop down (above)"),
                                   tableOutput("CohortTable"),
                                   br(),
                                   details(
@@ -135,7 +137,7 @@ homepage_panel <- function() {
                                   br(),
                                   details(
                                     inputId = "ever_def",
-                                    label = "Defining 'the offending groups'ever'",
+                                    label = "Defining 'ever'",
                                     help_text = tags$p("It is important to note that this analysis will not be directly comparable with other published government statistics. 
                                                        Unless otherwise specified, when referencing whether a child has ‘ever’ had a certain characteristic, the analysis considers 
                                                        all periods up to the end of KS4. This methodology may differ from that of other published statistics where, for example, only
