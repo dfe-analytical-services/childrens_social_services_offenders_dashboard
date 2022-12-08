@@ -1151,6 +1151,7 @@ CSCExp <- function() {
               ))
           )
         ),
+        column(width=12,
         bsPopover(id = "cscindichoice", title="", content = "Select <b>Home</b> to view children who <b>live</b> in given local authority. Select <b>School</b> to view children who <b>go to school</b> in given local authority", 
                   trigger="hover", placement="bottom", options = list(container = "body")),
         h3("Children with a Social Worker"),
@@ -1166,55 +1167,47 @@ CSCExp <- function() {
                         remanded to youth detention accommodation as a result of being charged with or convicted of an offence will be ‘looked after’ by the 
                         designated local authority",tags$sup("[5]"), ". Therefore, caution should be taken when considering the findings related to CLA and offending, as the child 
                         may have become CLA due to the offending.", style = "font-size:16px"), br(),
-        column(
-          width=6,
-          span(textOutput("CSCTitle1"), style="font-size:28px"),
           tabsetPanel(id = "tabsetpanels3",
                       tabPanel(
                         "Ever CIN/CLA",
                         fluidRow(
+                          column(12,
+                                 radioGroupButtons(                  
+                                   inputId = "csc_plot_switch", 
+                                   label = "Choose plot type",
+                                   choiceNames = c("% CIN", "% cautioned/sentanced"),
+                                   choiceValues = c("bar", "waffle"),
+                                 )
+                                 ),
                           column(
-                            width=12,
-                            tabBox(width = 12, 
-                                   title = NULL, 
-                                   id="csc_subtabs_LA1",
-                                   tabPanel("Chart", 
-                                            h3("The proportion of children who had been recorded as being CIN/CLA on 31st March in any 
-                                   given year, by offending and pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
-                                            br(), 
-                                            plotOutput("CSCPlot1"), 
-                                            br()),
-                                   tabPanel("Waffle", 
-                                            h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st 
-                                   March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4 
-                                      academic years XXXX/XX - XXXX/XX"), 
-                                            br(), 
-                                            plotOutput("waffle_CIN1"), 
-                                            br(), 
-                                            textOutput("waffleText_CIN1"), 
-                                            br()
-                                   )
-                            )
+                            width=6,
+                            h3(textOutput("CSCTitle1")),
+                            uiOutput("csc_plot_la1"),
+                            ),
+                            column(6,
+                            h3(textOutput("CSCTitle2")), 
+                            uiOutput("csc_plot_la2"),
                           )
-                        )
+                          )
                       ),
                       tabPanel(
                         "Timing of CSC",
-                        h4("Did the first record of a child being known to children’s social care commonly precede the first serious violence offence?"), br(),
-                        p("The focus of this analysis is to understand the sequencing of a child’s journey between different social care groups relative to the 
+                        column(12,
+                               h4("Did the first record of a child being known to children’s social care commonly precede the first serious violence offence?"), br(),
+                               p("The focus of this analysis is to understand the sequencing of a child’s journey between different social care groups relative to the 
                         interaction(s) with the criminal justice system they may have had. It looks at children who had been cautioned or sentenced for a 
                         serious violence offence and whether their first record of being a child in need, a child on a child protection plan, and/or a child being 
                         looked after occurred before, after or during the same school term as their first serious violence offence (for those recorded as CIN, 
                         including CLA, as defined by the Children Act 1989, at any point in a given school term between 2011/12 – 2017/18 for CIN, and 
                           2004/05 - 2017/18 for CLA)."), br(),
-                        p("The analysis presented here utilises a different dataset", tags$sup("[8]"), "to that used in the previous section of this 
+                               p("The analysis presented here utilises a different dataset", tags$sup("[8]"), "to that used in the previous section of this 
                         publication, enabling more granular examination of those recorded in the children’s social care system at any point during the year, 
                         not just on 31st March, and to look at changes in their social care group throughout the year."), br(),
-                        p("Children who had been cautioned or sentenced for a serious violence offence have been classifed here as being CIN, CPP or CLA 
+                               p("Children who had been cautioned or sentenced for a serious violence offence have been classifed here as being CIN, CPP or CLA 
                         in an academic term, if at any point in that term they have been recorded as CIN, CPP or CLA", tags$sup("[9]"), "."),
-                        fluidRow(
-                          column(
-                            width=12,
+                        ),
+                        column(6,
+                               h3(textOutput("CSCTitle1b")),
                             tabBox(width = 12, 
                                    title = NULL, 
                                    id="csc_subtabsTime_LA1",
@@ -1227,72 +1220,23 @@ CSCExp <- function() {
                                             br()
                                    )
                             )
-                          )
-                        )
-                      )
-          ),
-        ),
-        column(
-          width=6,
-          span(textOutput("CSCTitle2"), style="font-size:28px"), 
-          tabsetPanel(id = "tabsetpanels3_LA2",
-                      tabPanel(
-                        "Ever CIN/CLA",
-                        fluidRow(
-                          column(
-                            width=12,
-                            tabBox(width = 12, title = NULL, id="csc_subtabs",
-                                   tabPanel("Chart", 
-                                            h3("The proportion of children who had been recorded as being CIN/CLA on 31st March in any 
-                                   given year, by offending and pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
-                                            br(), 
-                                            plotOutput("CSCPlot2"), 
-                                            br()),
-                                   tabPanel("Waffle", 
-                                            h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st
-                                   March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4 
-                                      academic years XXXX/XX - XXXX/XX"), 
-                                            br(), 
-                                            plotOutput("waffle_CIN2"), 
-                                            br(), 
-                                            textOutput("waffleText_CIN2"), br()
-                                   )
-                            )
-                          )
-                        )
-                      ),
-                      tabPanel(
-                        "Timing of CSC",
-                        h4("Did the first record of a child being known to children’s social care commonly precede the first serious violence offence?"), br(),
-                        p("The focus of this analysis is to understand the sequencing of a child’s journey between different social care groups relative to the 
-                        interaction(s) with the criminal justice system they may have had. It looks at children who had been cautioned or sentenced for a 
-                        serious violence offence and whether their first record of being a child in need, a child on a child protection plan, and/or a child being 
-                        looked after occurred before, after or during the same school term as their first serious violence offence (for those recorded as CIN, 
-                        including CLA, as defined by the Children Act 1989, at any point in a given school term between 2011/12 – 2017/18 for CIN, and 
-                          2004/05 - 2017/18 for CLA)."), br(),
-                        p("The analysis presented here utilises a different dataset", tags$sup("[8]"), "to that used in the previous section of this 
-                        publication, enabling more granular examination of those recorded in the children’s social care system at any point during the year, 
-                        not just on 31st March, and to look at changes in their social care group throughout the year."), br(),
-                        p("Children who had been cautioned or sentenced for a serious violence offence have been classifed here as being CIN, CPP or CLA 
-                        in an academic term, if at any point in that term they have been recorded as CIN, CPP or CLA", tags$sup("[9]"), "."),
-                        fluidRow(
-                          column(
-                            width=12,
-                            tabBox(width = 12, title = NULL, id="csc_subtabsTime_LA2",
-                                   tabPanel("Timing CSC", 
-                                            h3("The first record of children being a child in need, having a child protection plan or 
+                        ),
+                        column(6,
+                               h3(textOutput("CSCTitle2b")), 
+                                   tabBox(width = 12, title = NULL, id="csc_subtabsTime_LA2",
+                                          tabPanel("Timing CSC", 
+                                                   h3("The first record of children being a child in need, having a child protection plan or 
                                    being a child who was looked after, relative to the timing of their first offence, for all pupils matched to KS4 
                                    academic year XXXX/XX - XXXX/XX"), 
-                                            br(), 
-                                            plotOutput("timing_CSC2")))
-                          )
-                        )
-                      )
-          )
+                                                   br(), 
+                                                   plotOutput("timing_CSC2")))
+                                 )
+                               )
         ),
-        br(),
-        br(),
-        strong("Footnotes"),
+
+        column(
+          width=12,
+                strong("Footnotes"),
         br(),
         paste("1. It is important to note on using this measure, the analysis takes no account of how long the children 
           were in need, or in care, and does not count those who were in need, or looked after, during the period 
@@ -1346,6 +1290,8 @@ CSCExp <- function() {
         paste("12. The date used to calculate any findings relating to timing of first offence use the date the offence took place 
                 rather than when it was processed through the courts."),
         br()
+        )
+        )
       )
     )
   )
