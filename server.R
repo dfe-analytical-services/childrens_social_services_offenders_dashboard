@@ -664,6 +664,18 @@ server <- function(input, output, session) {
     createSEMHTimingPlot(SEMH_timing, input$sclLAchoice2)
   })
 
+  # Output - CSC column 1 LA title
+  output$CSCTitle1 <- renderText({
+    CSCText <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
+    paste0("Children's Social Care: ",  CSCText$LA)
+  })
+  
+  # Output - CSC column 2 LA title
+  output$CSCTitle2 <- renderText({
+    CSCText <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice2)
+    paste0("Children's Social Care: ",  CSCText$LA)
+  })
+  
   # Output - CSC chart 1
   output$CSCPlot1 <- renderPlot({
     EverCINCLA <- EverCINCLA %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice, group %in% c(input$cscgroupchoice))
