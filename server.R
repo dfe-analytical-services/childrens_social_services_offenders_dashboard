@@ -666,14 +666,70 @@ server <- function(input, output, session) {
 
   # Output - CSC column 1 LA title
   output$CSCTitle1 <- renderText({
-    CSCText <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
-    paste0("Children's Social Care: ",  CSCText$LA)
+    (CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice))$LA
   })
   
   # Output - CSC column 2 LA title
   output$CSCTitle2 <- renderText({
+    (CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice2))$LA
+  })
+  
+  output$csc_plot_la1 <- renderUI(
+    if(input$csc_plot_switch=='bar'){
+      tagList(
+              h3("The proportion of children who had been recorded as being CIN/CLA on 31st March in any 
+                                   given year, by offending and pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
+      br(), 
+      plotOutput("CSCPlot1"), 
+      br())
+    } else {
+        tagList(                                            h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st 
+                                   March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4 
+                                      academic years XXXX/XX - XXXX/XX"), 
+                                                            br(), 
+                                                            plotOutput("waffle_CIN1"), 
+                                                            br(), 
+                                                            textOutput("waffleText_CIN1"), 
+                                                            br()
+        )
+    }
+    
+  )
+
+  output$csc_plot_la2 <- renderUI(
+    if(input$csc_plot_switch=='bar'){
+      tagList(
+        h3("The proportion of children who had been recorded as being CIN/CLA on 31st March in any 
+                                   given year, by offending and pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
+        br(), 
+        plotOutput("CSCPlot2"), 
+        br()
+        )
+    } else {
+      tagList(
+        h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st
+                                   March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4 
+                                      academic years XXXX/XX - XXXX/XX"), 
+        br(), 
+        plotOutput("waffle_CIN2"), 
+        br(), 
+        textOutput("waffleText_CIN2"), 
+        br()
+      )
+    }
+    
+  )
+
+  # Output - CSC column 1 LA title
+  output$CSCTitle1b <- renderText({
+    CSCText <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
+    CSCText$LA
+  })
+  
+  # Output - CSC column 2 LA title
+  output$CSCTitle2b <- renderText({
     CSCText <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice2)
-    paste0("Children's Social Care: ",  CSCText$LA)
+    CSCText$LA
   })
   
   # Output - CSC chart 1
