@@ -986,7 +986,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   # Output - CSC column 1 LA title
   output$CSCTitle1b <- renderText({
     CSCText <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
@@ -1015,12 +1015,12 @@ server <- function(input, output, session) {
   output$CSCTitle1_waf <- renderText({
     (CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice))$LA
   })
-  
+
   # Output - CSC waffle column 2 LA title
   output$CSCTitle2_waf <- renderText({
     (CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice2))$LA
   })
-  
+
   # Output - CIN waffle 1
   output$waffle_CIN1 <- renderPlot({
     CIN_waffle <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
@@ -1049,17 +1049,17 @@ server <- function(input, output, session) {
     CIN on 31st March in any given year were children who were cautioned or sentenced for a serious violence offence")
   })
 
-  
+
   # Output - CSC timing column 1 LA title
   output$CSCTitle1_time <- renderText({
     (CSC_timing %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - CSC timing column 2 LA title
   output$CSCTitle2_time <- renderText({
     (CSC_timing %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - CSC timing 1
   output$timing_CSC1 <- renderPlot({
     CSC_timing <- CSC_timing %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
