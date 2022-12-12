@@ -20,7 +20,6 @@
 
 
 server <- function(input, output, session) {
-
   # Loading screen ---------------------------------------------------------------------------
   # Call initial loading screen
 
@@ -139,39 +138,41 @@ server <- function(input, output, session) {
   })
 
   output$colBenchmark <- renderPlotly({
-    ggplotly(plotAvgRevBenchmark(reactiveBenchmark()) %>%
-      config(displayModeBar = F),
-    height = 420
+    ggplotly(
+      plotAvgRevBenchmark(reactiveBenchmark()) %>%
+        config(displayModeBar = F),
+      height = 420
     )
   })
 
   output$tabBenchmark <- renderDataTable({
-    datatable(reactiveBenchmark() %>%
-      select(
-        Area = area_name,
-        `Average Revenue Balance (£)` = average_revenue_balance,
-        `Total Revenue Balance (£m)` = total_revenue_balance_million
-      ),
-    options = list(
-      scrollX = TRUE,
-      paging = FALSE
-    )
+    datatable(
+      reactiveBenchmark() %>%
+        select(
+          Area = area_name,
+          `Average Revenue Balance (£)` = average_revenue_balance,
+          `Total Revenue Balance (£m)` = total_revenue_balance_million
+        ),
+      options = list(
+        scrollX = TRUE,
+        paging = FALSE
+      )
     )
   })
 
   # Define server logic to create a box
 
   output$boxavgRevBal <- renderValueBox({
-
     # Put value into box to plug into app
     valueBox(
       # take input number
-      paste0("£", format((reactiveRevBal() %>% filter(
-        year == max(year),
-        area_name == input$selectArea,
-        school_phase == input$selectPhase
-      ))$average_revenue_balance,
-      big.mark = ","
+      paste0("£", format(
+        (reactiveRevBal() %>% filter(
+          year == max(year),
+          area_name == input$selectArea,
+          school_phase == input$selectPhase
+        ))$average_revenue_balance,
+        big.mark = ","
       )),
       # add subtitle to explain what it's hsowing
       paste0("This is the latest value for the selected inputs"),
@@ -216,7 +217,7 @@ server <- function(input, output, session) {
 
   # Output - Cohort table (Homepage)
   output$CohortTable <- renderTable(dfCohort, na = "")
-  
+
   # LA 1  table in Demographics tab
   output$demotable <- renderDataTable(datatable(
     {
@@ -233,27 +234,27 @@ server <- function(input, output, session) {
           "Number of children cautioned or sentenced for a serious violence offence who live or go to school in different LA (%)" = sv_dif_perc
         ) %>%
         select(!indicator)
-      
+
       info_table <- t(info_table)
       info_table <- as.data.frame(info_table)
-      info_table <- info_table %>% rename("Loal Authority 1" = V1, "Local Authority 2" = V2) 
+      info_table <- info_table %>% rename("Local Authority 1" = V1, "Local Authority 2" = V2)
     },
     rownames = TRUE,
-    options = list(pageLength = 8, searchable = FALSE, dom = 't'),
-    filter=c("none"),
+    options = list(pageLength = 8, searchable = FALSE, dom = "t"),
+    filter = c("none"),
     selection = c("none")
   ))
-  
+
   # Output - Gender column 1 LA title
   output$DemTitle1 <- renderText({
     (Gender %>% filter(indicator == input$demindichoice, LA == input$demLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - Gender column 2 LA title
   output$DemTitle2 <- renderText({
     (Gender %>% filter(indicator == input$demindichoice, LA == input$demLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Gender plot 1
   output$GenderPlot1 <- renderPlot({
     Genderplot <- Gender %>% filter(indicator == input$demindichoice, LA == input$demLAchoice, group %in% c(input$demgroupchoice))
@@ -265,12 +266,12 @@ server <- function(input, output, session) {
     Genderplot <- Gender %>% filter(indicator == input$demindichoice, LA == input$demLAchoice2, group %in% c(input$demgroupchoice))
     createGenderPlot(Genderplot, input$demLAchoice2)
   })
-  
+
   # Output - Ethnicity column 1 LA title
   output$DemTitle1_eth <- renderText({
     (Ethnicity %>% filter(indicator == input$demindichoice, LA == input$demLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - Ethnicity column 2 LA title
   output$DemTitle2_eth <- renderText({
     (Ethnicity %>% filter(indicator == input$demindichoice, LA == input$demLAchoice2) %>% slice_head())$LA
@@ -287,22 +288,22 @@ server <- function(input, output, session) {
     ethplot <- Ethnicity %>% filter(indicator == input$demindichoice, LA == input$demLAchoice2, group %in% c(input$demgroupchoice))
     createEthPlot(ethplot, input$demLAchoice2)
   })
-  
+
   # Output - FSM chart column 1 LA title
   output$DemTitle1_FSM1 <- renderText({
     (FSM %>% filter(indicator == input$demindichoice, LA == input$demLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - FSM chart column 2 LA title
   output$DemTitle1_FSM2 <- renderText({
     (FSM %>% filter(indicator == input$demindichoice, LA == input$demLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - FSM waffle column 1 LA title
   output$DemTitle2_FSM1 <- renderText({
     (FSM %>% filter(indicator == input$demindichoice, LA == input$demLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - FSM waffle column 2 LA title
   output$DemTitle2_FSM2 <- renderText({
     (FSM %>% filter(indicator == input$demindichoice, LA == input$demLAchoice2) %>% slice_head())$LA
@@ -347,17 +348,17 @@ server <- function(input, output, session) {
     had ever been eligible for FSM. However, ", WaffleText$also_sv_prop_count_FSM, "% of those who had ever been eligible
     for FSM were children who were cautioned or sentenced for a serious violence offence")
   })
-  
+
   # Output - age_offence column 1 LA title
-  output$DemTitle1_age<- renderText({
+  output$DemTitle1_age <- renderText({
     (age_offence %>% filter(indicator == input$demindichoice, LA == input$demLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - age_offence column 2 LA title
   output$DemTitle2_age <- renderText({
     (age_offence %>% filter(indicator == input$demindichoice, LA == input$demLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - age first offence chart 1
   output$ageofplot1 <- renderPlot({
     age_plot <- age_offence %>% filter(indicator == input$demindichoice, LA == input$demLAchoice, group %in% c(input$demgroupchoice))
@@ -369,17 +370,17 @@ server <- function(input, output, session) {
     age_plot <- age_offence %>% filter(indicator == input$demindichoice, LA == input$demLAchoice2, group %in% c(input$demgroupchoice))
     createAgeOffence(age_plot, input$demLAchoice2)
   })
-  
+
   # Output - KS2 attainment column 1 LA title
-  output$sclTitle1_ks2<- renderText({
+  output$sclTitle1_ks2 <- renderText({
     (KS2_attain %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - KS2 attainment column 2 LA title
   output$sclTitle2_ks2 <- renderText({
     (KS2_attain %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - KS2 attainment chart 1
   output$ks2attainplot1 <- renderPlot({
     KS2_attain <- KS2_attain %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice, group %in% c(input$sclgroupchoice))
@@ -391,17 +392,17 @@ server <- function(input, output, session) {
     KS2_attain <- KS2_attain %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2, group %in% c(input$sclgroupchoice))
     createKS2plot(KS2_attain, input$sclLAchoice2)
   })
-  
+
   # Output - KS4 attainment column 1 LA title
   output$sclTitle1_ks4 <- renderText({
     (KS4_attain %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - KS4 attainment column 2 LA title
   output$sclTitle2_ks4 <- renderText({
     (KS4_attain %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - KS4 attainment chart 1
   output$ks4attainplot1 <- renderPlot({
     KS4_attain <- KS4_attain %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice, group %in% c(input$sclgroupchoice))
@@ -413,12 +414,12 @@ server <- function(input, output, session) {
     KS4_attain <- KS4_attain %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2, group %in% c(input$sclgroupchoice))
     createKS4plot(KS4_attain, input$sclLAchoice2)
   })
-  
+
   # Output - PA column 1 LA title
   output$sclTitle1_PA <- renderText({
     (EverPAPAUO %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - PA column 2 LA title
   output$sclTitle2_PA <- renderText({
     (EverPAPAUO %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
@@ -435,17 +436,17 @@ server <- function(input, output, session) {
     EverPAPAUO <- EverPAPAUO %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2, group %in% c(input$sclgroupchoice))
     createPAPlot(EverPAPAUO, input$sclLAchoice2)
   })
-  
+
   # Output - PA waffle column 1 LA title
   output$sclTitle1_PAwaf <- renderText({
     (PA_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - PA waffle column 2 LA title
   output$sclTitle2_PAwaf <- renderText({
     (PA_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - PA waffle 1
   output$waffle_PA1 <- renderPlot({
     PA_waffle <- PA_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -478,12 +479,12 @@ server <- function(input, output, session) {
   output$sclTitle1_PAtime <- renderText({
     (PAPAUO_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - PA timing column 2 LA title
   output$sclTitle2_PAtime <- renderText({
     (PAPAUO_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - PA timing 1
   output$timing_PA1 <- renderPlot({
     PAPAUO_timing <- PAPAUO_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -500,12 +501,12 @@ server <- function(input, output, session) {
   output$sclTitle1_sus <- renderText({
     (EverSusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - Sus column 2 LA title
   output$sclTitle2_sus <- renderText({
     (EverSusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - Sus/Excl 1
   output$SusExclPlot1 <- renderPlot({
     EverSusExcl <- EverSusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice, group %in% c(input$sclgroupchoice))
@@ -522,12 +523,12 @@ server <- function(input, output, session) {
   output$sclTitle1_suswaf <- renderText({
     (SusExcl_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - Sus waffle column 2 LA title
   output$sclTitle2_suswaf <- renderText({
     (SusExcl_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - Suspension waffle 1
   output$waffle_Sus1 <- renderPlot({
     SusExcl_waffle <- SusExcl_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -539,17 +540,17 @@ server <- function(input, output, session) {
     SusExcl_waffle <- SusExcl_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2)
     createWaffle_Sus(SusExcl_waffle, input$sclLAchoice2)
   })
-  
+
   # Output - Excl waffle column 1 LA title
   output$sclTitle1_exclwaf <- renderText({
     (SusExcl_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - Excl waffle column 2 LA title
   output$sclTitle2_exclwaf <- renderText({
     (SusExcl_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - Exclusion waffle 1
   output$waffle_Excl1 <- renderPlot({
     SusExcl_waffle <- SusExcl_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -598,42 +599,42 @@ server <- function(input, output, session) {
   output$sclTitle1_fstsus <- renderText({
     (fst.clst_SusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - first sus column 2 LA title
   output$sclTitle2_fstsus <- renderText({
     (fst.clst_SusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - close sus column 1 LA title
   output$sclTitle1_clssus <- renderText({
     (fst.clst_SusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - close sus column 2 LA title
   output$sclTitle2_clssus <- renderText({
     (fst.clst_SusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - first excl column 1 LA title
   output$sclTitle1_fstexcl <- renderText({
     (fst.clst_SusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - first excl column 2 LA title
   output$sclTitle2_fstexcl <- renderText({
     (fst.clst_SusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - close excl column 1 LA title
   output$sclTitle1_clsexcl <- renderText({
     (fst.clst_SusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - close excl column 2 LA title
   output$sclTitle2_clsexcl <- renderText({
     (fst.clst_SusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - first suspension timing 1
   output$FstSusTime1 <- renderPlot({
     fst.clst_SusExcl <- fst.clst_SusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -686,12 +687,12 @@ server <- function(input, output, session) {
   output$sclTitle1_AP <- renderText({
     (EverAP %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - AP column 2 LA title
   output$sclTitle2_AP <- renderText({
     (EverAP %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - AP chart 1
   output$APchart1 <- renderPlot({
     EverAP <- EverAP %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice, group %in% c(input$sclgroupchoice))
@@ -703,17 +704,17 @@ server <- function(input, output, session) {
     EverAP <- EverAP %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2, group %in% c(input$sclgroupchoice))
     createAPPlot(EverAP, input$sclLAchoice2)
   })
-  
+
   # Output - AP waffle column 1 LA title
   output$sclTitle1_APwaf <- renderText({
     (AP_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - AP waffle column 2 LA title
   output$sclTitle2_APwaf <- renderText({
     (AP_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - AP waffle 1
   output$waffle_AP1 <- renderPlot({
     AP_waffle <- AP_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -746,12 +747,12 @@ server <- function(input, output, session) {
   output$sclTitle1_APtime <- renderText({
     (AP_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - AP timing column 2 LA title
   output$sclTitle2_APtime <- renderText({
     (AP_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - AP timing 1
   output$timing_AP1 <- renderPlot({
     AP_timing <- AP_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -768,12 +769,12 @@ server <- function(input, output, session) {
   output$sclTitle1_SEN <- renderText({
     (EverSEN %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - SEN column 2 LA title
   output$sclTitle2_SEN <- renderText({
     (EverSEN %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - SEN chart 1
   output$SENchart1 <- renderPlot({
     EverSEN <- EverSEN %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice, group %in% c(input$sclgroupchoice))
@@ -790,12 +791,12 @@ server <- function(input, output, session) {
   output$sclTitle1_SENwaf <- renderText({
     (SEN_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - SEN waffle column 2 LA title
   output$sclTitle2_SENwaf <- renderText({
     (SEN_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - SEN waffle 1
   output$waffle_SEN1 <- renderPlot({
     SEN_waffle <- SEN_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -807,17 +808,17 @@ server <- function(input, output, session) {
     SEN_waffle <- SEN_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2)
     createWaffle_SEN(SEN_waffle, input$sclLAchoice2)
   })
-  
+
   # Output - EHCP column 1 LA title
   output$sclTitle1_EHCPwaf <- renderText({
     (EHCP_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - EHCP column 2 LA title
   output$sclTitle2_EHCPwaf <- renderText({
     (EHCP_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - EHCP waffle 1
   output$waffle_EHCP1 <- renderPlot({
     EHCP_waffle <- EHCP_waffle %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -861,12 +862,12 @@ server <- function(input, output, session) {
     had ever had an EHC Plan. However, ", WaffleText$prop_also_EHCP_SV, "% of those who had ever had an EHC Plan
     were children who were cautioned or sentenced for a serious violence offence")
   })
-  
+
   # Output - SEN timing column 1 LA title
   output$sclTitle1_SENtime <- renderText({
     (SEN_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - SEN timing column 2 LA title
   output$sclTitle2_SENtime <- renderText({
     (SEN_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
@@ -883,12 +884,12 @@ server <- function(input, output, session) {
     SEN_timing <- SEN_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2)
     createSENTimingPlot(SEN_timing, input$sclLAchoice2)
   })
-  
+
   # Output - EHCP timing column 1 LA title
   output$sclTitle1_EHCPtime <- renderText({
     (EHCP_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - EHCP timing column 2 LA title
   output$sclTitle2_EHCPtime <- renderText({
     (EHCP_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
@@ -905,17 +906,17 @@ server <- function(input, output, session) {
     EHCP_timing <- EHCP_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2)
     createEHCPTimingPlot(EHCP_timing, input$sclLAchoice2)
   })
-  
+
   # Output - SEMH timing column 1 LA title
   output$sclTitle1_SEMHtime <- renderText({
     (SEMH_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
   })
-  
+
   # Output - SEMH timing column 2 LA title
   output$sclTitle2_SEMHtime <- renderText({
     (SEMH_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice2) %>% slice_head())$LA
   })
-  
+
   # Output - SEMH timing 1
   output$timing_SEMH1 <- renderPlot({
     SEMH_timing <- SEMH_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -932,72 +933,72 @@ server <- function(input, output, session) {
   output$CSCTitle1 <- renderText({
     (CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice))$LA
   })
-  
+
   # Output - CSC column 2 LA title
   output$CSCTitle2 <- renderText({
     (CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice2))$LA
   })
-  
-  output$csc_plot_la1 <- renderUI(
-    if(input$csc_plot_switch=='bar'){
-      tagList(
-              h3("The proportion of children who had been recorded as being CIN/CLA on 31st March in any 
-                                   given year, by offending and pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
-      br(), 
-      plotOutput("CSCPlot1"), 
-      br())
-    } else {
-        tagList(                                            h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st 
-                                   March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4 
-                                      academic years XXXX/XX - XXXX/XX"), 
-                                                            br(), 
-                                                             textOutput("waffleText_CIN1"), 
-                                                            br(), 
-                                                            br(),
-                                                           plotOutput("waffle_CIN1"), 
-                                                            br()
-        )
-    }
-    
-  )
 
-  output$csc_plot_la2 <- renderUI(
-    if(input$csc_plot_switch=='bar'){
+  output$csc_plot_la1 <- renderUI(
+    if (input$csc_plot_switch == "bar") {
       tagList(
-        h3("The proportion of children who had been recorded as being CIN/CLA on 31st March in any 
-                                   given year, by offending and pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
-        br(), 
-        plotOutput("CSCPlot2"), 
+        h3("The proportion of children who had been recorded as being CIN/CLA on 31st March in any
+                                   given year, by offending and pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"),
+        br(),
+        plotOutput("CSCPlot1"),
         br()
-        )
+      )
     } else {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st
-                                   March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4 
-                                      academic years XXXX/XX - XXXX/XX"), 
-        br(), 
-        textOutput("waffleText_CIN2"), 
-        br(), 
+                                   March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4
+                                      academic years XXXX/XX - XXXX/XX"),
         br(),
-        plotOutput("waffle_CIN2"), 
+        textOutput("waffleText_CIN1"),
+        br(),
+        br(),
+        plotOutput("waffle_CIN1"),
         br()
       )
     }
-    
   )
 
+  output$csc_plot_la2 <- renderUI(
+    if (input$csc_plot_switch == "bar") {
+      tagList(
+        h3("The proportion of children who had been recorded as being CIN/CLA on 31st March in any
+                                   given year, by offending and pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"),
+        br(),
+        plotOutput("CSCPlot2"),
+        br()
+      )
+    } else {
+      tagList(
+        h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st
+                                   March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4
+                                      academic years XXXX/XX - XXXX/XX"),
+        br(),
+        textOutput("waffleText_CIN2"),
+        br(),
+        br(),
+        plotOutput("waffle_CIN2"),
+        br()
+      )
+    }
+  )
+  
   # Output - CSC column 1 LA title
   output$CSCTitle1b <- renderText({
     CSCText <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
     CSCText$LA
   })
-  
+
   # Output - CSC column 2 LA title
   output$CSCTitle2b <- renderText({
     CSCText <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice2)
     CSCText$LA
   })
-  
+
   # Output - CSC chart 1
   output$CSCPlot1 <- renderPlot({
     EverCINCLA <- EverCINCLA %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice, group %in% c(input$cscgroupchoice))
@@ -1010,6 +1011,16 @@ server <- function(input, output, session) {
     createCSCPlot(EverCINCLA, input$cscLAchoice2)
   })
 
+  # Output - CSC waffle column 1 LA title
+  output$CSCTitle1_waf <- renderText({
+    (CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice))$LA
+  })
+  
+  # Output - CSC waffle column 2 LA title
+  output$CSCTitle2_waf <- renderText({
+    (CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice2))$LA
+  })
+  
   # Output - CIN waffle 1
   output$waffle_CIN1 <- renderPlot({
     CIN_waffle <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
@@ -1026,16 +1037,27 @@ server <- function(input, output, session) {
   output$waffleText_CIN1 <- renderText({
     WaffleText <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
     paste0(WaffleText$propsv_count_CIN, "% of children who were cautioned or sentenced for a serious violence offence
-    had ever been CIN on 31st March in any given year. However, ", WaffleText$also_propsv_count_CIN, "% of those who had ever been 
+    had ever been CIN on 31st March in any given year. However, ", WaffleText$also_propsv_count_CIN, "% of those who had ever been
     CIN on 31st March in any given year were children who were cautioned or sentenced for a serious violence offence")
   })
-  
+
   # Output - CIN waffle text 2
   output$waffleText_CIN2 <- renderText({
     WaffleText <- CIN_waffle %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice2)
     paste0(WaffleText$propsv_count_CIN, "% of children who were cautioned or sentenced for a serious violence offence
-    had ever been CIN on 31st March in any given year. However, ", WaffleText$also_propsv_count_CIN, "% of those who had ever been 
+    had ever been CIN on 31st March in any given year. However, ", WaffleText$also_propsv_count_CIN, "% of those who had ever been
     CIN on 31st March in any given year were children who were cautioned or sentenced for a serious violence offence")
+  })
+
+  
+  # Output - CSC timing column 1 LA title
+  output$CSCTitle1_time <- renderText({
+    (CSC_timing %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice) %>% slice_head())$LA
+  })
+  
+  # Output - CSC timing column 2 LA title
+  output$CSCTitle2_time <- renderText({
+    (CSC_timing %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice2) %>% slice_head())$LA
   })
   
   # Output - CSC timing 1
