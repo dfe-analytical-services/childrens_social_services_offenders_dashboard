@@ -94,7 +94,6 @@ ui <- function(input, output, session) {
       widths = c(2, 8),
       well = FALSE,
       homepage_panel(),
-      dashboard_panel(),
       Demographics(),
       SchoolExp(),
       CSCExp(),

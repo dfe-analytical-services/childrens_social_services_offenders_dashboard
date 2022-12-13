@@ -76,7 +76,9 @@ homepage_panel <- function() {
                                    "•	Children with a Social Worker",
                                    tags$br(),"", style = "font-size:16px"),
                                   h3(tags$b("Previous publications")),
-                                  p("This dashboard follows a previous national level publication [link] that looked at the education and 
+                                  p("This dashboard follows a previous national level", 
+                                  tags$a(href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1059556/Education_children_s_social_care_and_offending_descriptive_stats_FINAL.pdf", "publication"),
+                                  "that looked at the education and 
                                     social care background of children in England that had been cautioned or sentenced for an offence across 
                                     England and Wales, and 10 LA level publications focusing on the ten SAFE (Support, Attend, Fulfil, Exceed) 
                                     Taskforces (for more information see", 
@@ -106,7 +108,8 @@ homepage_panel <- function() {
                                   "The first iteration of the share was carried out in 2019 and covered offending data up to the end of 2017 and education data up to
                                   the end of the 17/18 academic year. The second ieration of the share was completed in 2022 and includes offending data up to the end of 2020 and education data
                                   up to the end of the 2020/21 academic year. The share is intended to be updated on an annual basis going forward.", tags$br(), tags$br(), 
-                                  "Applications to access the data share can be made by ONS accredited researchers, by submitting the application form (link to be added) to MoJ and DfE. 
+                                  "Applications to access the data share can be made by ONS accredited researchers, by submitting the", 
+                                  tags$a(href="https://www.gov.uk/government/publications/moj-data-first-application-form-for-secure-access-to-data", "application form"), "to MoJ and DfE. 
                                   Successful applicants will access the data through the ONS Secure Research Service (SRS).", tags$br(), tags$br(),
                                   "For more information please see the previously published", 
                                   tags$a(href = "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1059557/Education_children_s_social_care_and_offending_descriptive_stats_Technical_Note_FINAL.pdf", 
@@ -114,9 +117,11 @@ homepage_panel <- function() {
                                   details(
                                     inputId = "cohort_def",
                                     label = "Cohorts",
-                                    help_text = tags$p("The cohorts of children within this analysis include all pupils who finished key stage 2 (KS2) in 2007/08, 2008/09, 2009/10, 2010/11, 2011/12 
+                                    help_text = tags$p(tags$i("The below text describes the cohorts we will be using in the final dashboard, so does not directly apply to the data currently included"), 
+                                    tags$br(), tags$br(),
+                                    "The cohorts of children within this analysis include all pupils who finished key stage 2 (KS2) in 2007/08, 2008/09, 2009/10, 2010/11, 2011/12 
                                     or 2012/13, and were aged 10 at the start of these academic years. Therefore, this cohort has a key stage 4 
-                                    (KS4) academic year of 2012/13, 2013/14, 2013/14, 2014/15, 2015/16 or 2017/18, amounting to approximately x children.", tags$br(), tags$br(), 
+                                    (KS4) academic year of 2012/13, 2013/14, 2013/14, 2014/15, 2015/16 or 2017/18, amounting to approximately [Number to be added] children.", tags$br(), tags$br(), 
                                     "For these children, all their records from Year 1 to Year 13 (or equivalent) are included. Pupils who do not have a KS4 record are not included. 
                                     Pupils who attended an independent primary or secondary school have been excluded from the data as their characteristics are not recorded, except for those 
                                     registered in independent Alternative Provision (AP) settings.", tags$br(), tags$br(),
@@ -333,37 +338,6 @@ homepage_panel <- function() {
                                                        characterstic before and after an offence took place, unless otherwise specified.")
                                   ),
                                   details(
-                                    inputId = "satsig_def",
-                                    label = "Statistical significance",
-                                    help_text = tags$p("Tests for statistical significance have been performed on the findings relating to children who had been cautioned or sentenced 
-                                                       for a serious violence offence only (not the all-pupil cohort or children who had been cautioned or sentenced for any offence).", 
-                                                       tags$br(), tags$br(), 
-                                                       "We report this by saying:", tags$br(), "For children who had been cautioned or sentenced for a serious violence offence, the difference between these 
-                                                       results and the national figure [was / was not] statistically significant.", 
-                                                       tags$br(), tags$br(), 
-                                                       "Running a test for statistical significance is an analytical
-                                                       method which tells us if the difference in a finding at the population level (in this case England) and the sample level (the LA of interest) 
-                                                       is due to random chance (variation) in the data, or if it is a true difference between the two groups. If a finding is marked as statistically 
-                                                       significant, we can be relatively confident that this difference is genuine. If a finding is marked as not statistically significant, we cannot
-                                                       have that confidence and should therefore take more caution in how we interpret or apply the finding.", 
-                                                       tags$br(), tags$br(),  
-                                                       "The result of these statistical significance 
-                                                       tests do not tell us how the result in question compares to any other results beyond if they are by chance or not. These tests do not give us any 
-                                                       information about how a local area’s rates of one characteristic and rates of serious violence interrelate. We cannot determine anything from these 
-                                                       tests except how confident we can be that the result is genuine difference to the population average or not.", 
-                                                       tags$br(), tags$br(),  
-                                                       "We are also able to determine a measure
-                                                       of this confidence, i.e. how much possibility is there that the results are due to random chance? We have used a 5% measure, meaning we can conclude 
-                                                       that there is less than a 5% chance that the results are due to random chance alone. Where we have undertaken this analysis, we have noted this in the 
-                                                       text.", 
-                                                       tags$br(), tags$br(),  
-                                                       "When reading this publication, readers may want to compare with the national figures which are available", 
-                                                       tags$a(href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1059556/Education_children_s_social_care_and_offending_descriptive_stats_FINAL.pdf", "here"),
-                                                       ". Significance testing has been 
-                                                       performed using the prop.test function in R, which is used for testing the null hypothesis that the proportions (probabilities of success) in several 
-                                                       groups are the same, or that they equal certain values.")
-                                  ),
-                                  details(
                                     inputId = "small_def",
                                     label = "Reporting on small numbers of children",
                                     help_text = tags$p("In order to prevent the disclosure of sensitive data, any numbers in this publication that relate to less than 6 pupils have been replaced
@@ -384,113 +358,6 @@ homepage_panel <- function() {
   )
   
 }
-
-
-dashboard_panel <- function() {
-  tabPanel(
-    value = "dashboard",
-    "Template tab - please ignore",
-    
-    # Define UI for application that draws a histogram
-    
-    # Sidebar with a slider input for number of bins
-    gov_main_layout(
-      gov_row(
-        column(
-          width=12,
-        h1("Overall content title for this dashboard page (h1)"),
-        ),
-        column(
-          width=12,
-          div(
-            class = "well",
-            style = "min-height: 100%; height: 100%; overflow-y: visible",
-            gov_row(
-            column(
-              width = 6,
-              selectizeInput("selectPhase",
-                    "Select a school phase",
-                    choices = choicesPhase
-                    )),
-            column(
-              width = 6,
-          selectizeInput(
-            inputId = "selectArea",
-            label = "Choose an area:",
-            choices = choicesAreas$area_name
-        )
-        ), 
-        column(
-          width = 12,
-          paste("Download the underlying data for this dashboard:"), br(),
-          downloadButton(
-            outputId = "download_data",
-            label= "Download data",
-            icon = shiny::icon("download"),
-            class = "downloadButton"
-          )
-        ))
-          )
-        ),
-        
-        column(
-          width=12,
-               tabsetPanel(id = "tabsetpanels",
-                 tabPanel(
-                   "Example panel 1",
-                   fluidRow(
-                     column(
-                       width=12,
-          h2("Outputs 1 (h2)"),
-          valueBoxOutput("boxavgRevBal", width = 6),
-          valueBoxOutput("boxpcRevBal", width = 6),
-          box(
-            width=12,
-          plotlyOutput("lineRevBal")))
-        )
-        ),
-        tabPanel(
-          "Example panel 2",
-          fluidRow(
-            column(
-              width=12,
-          h2("Outputs 2 (h2)"),
-          p("This is the standard paragraph style for adding guiding info around data content."),
-          column(
-            width=6,
-            box(
-              width=12,
-              plotlyOutput("colBenchmark")
-            )
-          ),
-          column(
-            width=6,
-            div(
-              class = "well",
-              style = "min-height: 100%; height: 100%; overflow-y: visible",
-              fluidRow(
-                column(
-                  width=12,
-                  selectizeInput("selectBenchLAs",
-                                 "Select benchamrk LAs",
-                                 choices = choicesLAs$area_name,
-                                 multiple=TRUE,
-                                 options = list(maxItems = 3)
-                  )
-                )
-                  )
-              ),
-                dataTableOutput("tabBenchmark")
-          ))
-        ))
-              )
-        )
-        # add box to show user input
-)
-          )
-  )
-}
-
 
 Demographics <- function() {
   tabPanel(
@@ -527,7 +394,7 @@ Demographics <- function() {
               column(
                 width = 6,
                 radioButtons("demindichoice", 
-                             p("Indicator", HTML('&nbsp;'), tags$i(class = "fa-solid fa-info-circle")), 
+                             "Indicator", 
                              choices = choiceIndicator$Indicator,
                              selected = "School"
                              )
@@ -541,7 +408,7 @@ Demographics <- function() {
                 )
               ),
               bsPopover(id = "demindichoice", title="", content = "Select <b>Home</b> to view children who <b>live</b> in given local authority. Select <b>School</b> to view children who <b>go to school</b> in given local authority", 
-                        trigger="click", placement="auto right", options = list(container = "body"))
+                        trigger="hover", placement="auto right", options = list(container = "body"))
               )
           )
         ),
@@ -762,7 +629,7 @@ SchoolExp <- function() {
               column(
                 width = 6,
                 radioButtons("sclindichoice", 
-                             p("Indicator", HTML('&nbsp;'), tags$i(class = "fa-solid fa-info-circle")), 
+                             "Indicator", 
                              choices = choiceIndicator$Indicator,
                              selected = "School"
                 )
@@ -1392,7 +1259,7 @@ SchoolExp <- function() {
           )
         ),  
         bsPopover(id = "sclindichoice", title="", content = "Select <b>Home</b> to view children who <b>live</b> in given local authority. Select <b>School</b> to view children who <b>go to school</b> in given local authority", 
-                  trigger="click", placement="auto right", options = list(container = "body"))
+                  trigger="hover", placement="auto right", options = list(container = "body"))
       )
     )
   )
@@ -1434,7 +1301,7 @@ CSCExp <- function() {
               column(
                 width = 6,
                 radioButtons("cscindichoice", 
-                             p("Indicator", HTML('&nbsp;'), tags$i(class = "fa-solid fa-info-circle")),
+                             "Indicator",
                              choices = choiceIndicator$Indicator,
                              selected = "School"
                              )
@@ -1452,7 +1319,7 @@ CSCExp <- function() {
           ),
         column(width=12, 
                bsPopover(id = "cscindichoice", title="", content = "Select <b>Home</b> to view children who <b>live</b> in given local authority. Select <b>School</b> to view children who <b>go to school</b> in given local authority", 
-                  trigger="click", placement="auto right", options = list(container = "body")),
+                  trigger="hover", placement="auto right", options = list(container = "body")),
         h3("Children with a Social Worker"),
         p("The next set of findings look at the proportion of children who had been cautioned or sentenced for an offence that were recorded 
                         as being children in need (CIN) or children who are looked after (CLA) on 31st March in any given year, as defined by the Children Act 1989,
@@ -1465,83 +1332,88 @@ CSCExp <- function() {
                         Sentencing and Punishment of Offenders Act 2012 (LASPOA) meant that, from 3rd December 2012, children up to the age of 18 who are 
                         remanded to youth detention accommodation as a result of being charged with or convicted of an offence will be ‘looked after’ by the 
                         designated local authority",tags$sup("[5]"), ". Therefore, caution should be taken when considering the findings related to CLA and offending, as the child 
-                        may have become CLA due to the offending.", style = "font-size:16px"), br(), br(),
-          tabsetPanel(id = "tabsetpanels3",
-                      tabPanel(
-                        "Ever CIN/CLA",
-                        fluidRow(
-                          column(12,
-                                 radioGroupButtons(                  
-                                   inputId = "csc_plot_switch", 
-                                   label = "Choose plot type",
-                                   choiceNames = c("% CIN", "% cautioned/sentanced"),
-                                   choiceValues = c("bar", "waffle"),
+                        may have become CLA due to the offending.", style = "font-size:16px"), br(), 
+        tabsetPanel(id = "tabsetpanels3",
+                    tabPanel(
+                      "Ever CIN/CLA",
+                      fluidRow(
+                        column(
+                          width=12,
+                          br(),
+                          h5(tags$b("Choose plot type")),
+                          tabBox(width = 12, title = NULL, id="csc_subtabs",
+                                 tabPanel(
+                                   p(tags$u("Bar chart (All pupil groups)")), 
+                                   h3("The proportion of children who had been recorded as being CIN/CLA on 31st March in any 
+                                   given year, by offending and pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
+                                 column(h3(textOutput("CSCTitle1")),
+                                        width=6, 
+                                        box(width = 12,
+                                 plotOutput("CSCPlot1"))), 
+                                 column(h3(textOutput("CSCTitle2")),
+                                        width=6, 
+                                        box(width = 12,br(), plotOutput("CSCPlot2")))),
+                                 
+                                 tabPanel(
+                                   p(tags$u("Waffle plot (All Pupils:Serious Violence Offence)")), 
+                                   h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st 
+                                        March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4
+                                        academic years XXXX/XX - XXXX/XX"), 
+                                   column(h3(textOutput("CSCTitle1_waf")),
+                                          width=6, 
+                                          box(width = 12,
+                                              br(),
+                                              textOutput("waffleText_CIN1"),
+                                              br(),
+                                              plotOutput("waffle_CIN1"), 
+                                              br())), 
+                                   column(h3(textOutput("CSCTitle2_waf")),
+                                          width=6, 
+                                          box(width = 12,
+                                              br(),
+                                              textOutput("waffleText_CIN2"),
+                                              br(),
+                                              plotOutput("waffle_CIN2"), 
+                                              br()))
+                                   )
                                  )
-                                 ),
-                          column(
-                            width=6,
-                            h3(textOutput("CSCTitle1")),
-                            box(width = 12, uiOutput("csc_plot_la1")),
-                            ),
-                            column(6,
-                            h3(textOutput("CSCTitle2")), 
-                            box(width = 12, uiOutput("csc_plot_la2")),
                           )
-                          )
+                        )
                       ),
-                      tabPanel(
-                        "Timing of CSC",
-                        column(12,
-                               h4("Did the first record of a child being known to children’s social care commonly precede the first serious violence offence?"), br(),
-                               p("The focus of this analysis is to understand the sequencing of a child’s journey between different social care groups relative to the 
+                    tabPanel(
+                      "Timing of CSC",
+                      h4("Did the first record of a child being known to children’s social care commonly precede the first serious violence offence?"), br(),
+                      p("The focus of this analysis is to understand the sequencing of a child’s journey between different social care groups relative to the 
                         interaction(s) with the criminal justice system they may have had. It looks at children who had been cautioned or sentenced for a 
                         serious violence offence and whether their first record of being a child in need, a child on a child protection plan, and/or a child being 
                         looked after occurred before, after or during the same school term as their first serious violence offence (for those recorded as CIN, 
                         including CLA, as defined by the Children Act 1989, at any point in a given school term between 2011/12 – 2017/18 for CIN, and 
                           2004/05 - 2017/18 for CLA)."), br(),
-                               p("The analysis presented here utilises a different dataset", tags$sup("[8]"), "to that used in the previous section of this 
+                      p("The analysis presented here utilises a different dataset", tags$sup("[8]"), "to that used in the previous section of this 
                         publication, enabling more granular examination of those recorded in the children’s social care system at any point during the year, 
                         not just on 31st March, and to look at changes in their social care group throughout the year."), br(),
-                               p("Children who had been cautioned or sentenced for a serious violence offence have been classifed here as being CIN, CPP or CLA 
+                      p("Children who had been cautioned or sentenced for a serious violence offence have been classifed here as being CIN, CPP or CLA 
                         in an academic term, if at any point in that term they have been recorded as CIN, CPP or CLA", tags$sup("[9]"), "."),
-                        ),
-                        column(6,
-                               h3(textOutput("CSCTitle1b")),
-                            tabBox(width = 12, 
-                                   title = NULL, 
-                                   id="csc_subtabsTime_LA1",
-                                   tabPanel( 
-                                     box(width = 12,
-                                            h3("The first record of children being a child in need, having a child protection plan or 
-                                   being a child who was looked after, relative to the timing of their first offence, for all pupils matched to KS4 
-                                      academic year XXXX/XX - XXXX/XX"), 
-                                            br(), 
-                                            plotOutput("timing_CSC1")), 
-                                            br()
-                                   )
-                            )
-                        ),
-                        column(6,
-                               h3(textOutput("CSCTitle2b")), 
-                                   tabBox(width = 12, title = NULL, id="csc_subtabsTime_LA2",
-                                          tabPanel( 
-                                            box(width = 12,
-                                                   h3("The first record of children being a child in need, having a child protection plan or 
-                                   being a child who was looked after, relative to the timing of their first offence, for all pupils matched to KS4 
-                                   academic year XXXX/XX - XXXX/XX"), 
-                                                   br(), 
-                                                    plotOutput("timing_CSC2"))
-                                                   )
-                                          )
-                                 )
-                               )
+                        h3("The first record of children being a child in need, having a child protection plan or 
+                            being a child who was looked after, relative to the timing of their first offence, for all pupils matched to KS4 
+                             academic year XXXX/XX - XXXX/XX"), 
+                      column(h3(textOutput("CSCTitle1_time")),
+                             width=6, 
+                             box(width = 12,
+                                 plotOutput("timing_CSC1"))
+                             ), 
+                      column(h3(textOutput("CSCTitle2_time")),
+                             width=6, 
+                             box(width = 12, 
+                                 plotOutput("timing_CSC2"))
+                             )
+                      )
         ),
-
         column(
           width=12,
-                strong("Footnotes"),
-        br(),
-        paste("1. It is important to note on using this measure, the analysis takes no account of how long the children 
+          strong("Footnotes"),
+          br(),
+          paste("1. It is important to note on using this measure, the analysis takes no account of how long the children 
           were in need, or in care, and does not count those who were in need, or looked after, during the period 
           specified but were not in need, or looked after specifically on 31st March. As such, the figures stated will 
                 be an under-estimate of the true proportion of children in need and children who are looked after."),
