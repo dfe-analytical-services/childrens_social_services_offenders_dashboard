@@ -445,7 +445,7 @@ Demographics <- function() {
                       tabPanel(
                         "Gender",
                         fluidRow(
-                          h3("The gender breakdown of offending and pupil group, for all pupils matched to KS4 academic years XXXX/XX - XXXX/XX"),
+                          h3("The gender breakdown of offending and pupil group, for all pupils matched to KS4 academic years 2012/13 - 2014/15"),
                           h5("Gender information has been taken from the DfE school census. From 2011, this information could only be completed by the child or their parents. 
                                Where a pupil's gender has changed over time, the most recent record has been used. The gender recorded in the DfE school census may not be the
                                same as to which a child identifies."),
@@ -476,7 +476,7 @@ Demographics <- function() {
                       tabPanel(
                         "Age at first offence",
                         fluidRow(h3("The proportion of children relative to their age at first offence\nby offending group, for pupils matched 
-                               to KS4 academic years XXXX/XX - XXXX/XX"),
+                               to KS4 academic years 2012/13 - 2014/15"),
                           column(h3(textOutput("DemTitle1_age")),
                             width=6,
                             box(
@@ -513,7 +513,7 @@ Demographics <- function() {
                         "Ethnicity",
                         fluidRow(
                         h3("The proportion of all pupils split by ethnic group major, offending and pupil group, for pupils matched to KS4 academic years
-                               XXXX/XX - XXXX/XX"),
+                               2012/13 - 2014/15"),
                                h5("Ethnicity", tags$sup("[1]"), "has two different categorisations in the school census - ethnic group major
                             and ethnic group minor. Ethnic group major contains wider categories (Asian, Black,
                             Chinese, White, Mixed, Unclassified, Any Other Ethnic Group) whereas ethnic group minor is more detailed", tags$sup("[2]"),""),
@@ -558,7 +558,7 @@ Demographics <- function() {
                                    tabPanel(
                                    p(tags$u("Bar chart (All pupil groups)")), 
                                    h3("The proportion of all pupils eligible for free school meals (FSM) by offending and pupil group, 
-                                                         for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
+                                                         for pupils matched to KS4 academic years 2012/13 - 2014/15"), 
                                             column(width=6, h3(textOutput("DemTitle1_FSM1")), 
                                                    box(width = 12, plotOutput("fsmPlot1"))),
                                             column(width=6, h3(textOutput("DemTitle1_FSM2")), 
@@ -567,7 +567,7 @@ Demographics <- function() {
                                    p(tags$u("Waffle plot (All Pupils:Serious Violence Offence)")), 
                                    h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and 
                                    had ever been eligible for free school meals (FSM), and all pupils who had ever been eligible for FSM, for pupils matched 
-                                   to KS4 academic years XXXX/XX - XXXX/XX"), 
+                                   to KS4 academic years 2012/13 - 2014/15"), 
                                    column(width=6, h3(textOutput("DemTitle2_FSM1")), 
                                           box(width = 12, br(), textOutput("WaffleTextFSM1"), br(), plotOutput("waffle_FSM1"), br())),
                                    column(width=6, h3(textOutput("DemTitle2_FSM2")), 
@@ -659,7 +659,7 @@ SchoolExp <- function() {
                                      p("This analysis looks at the percentage of pupils meeting the expected standard in English and Maths at KS2.
                                               At the end of KS2 children are expected to be working to at least level 4 in English and Maths."),
                                               h3("The proportion of all pupils who achieved level 4 or above in English and Maths at key stage 2 (KS2) 
-                                            by offending and pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"),
+                                            by offending and pupil group, for pupils matched to KS4 academic years 2012/13 - 2014/15"),
                                      column(h3(textOutput("sclTitle1_ks2")),
                                             width=6,
                                             box(width = 12,
@@ -682,7 +682,7 @@ SchoolExp <- function() {
                                      p(tags$u("KS4 attainment")),
                                      p("This analysis looks at the percentage of pupils meeting various KS4 benchmarks."),
                                      h3("The proportion of all pupils who achieved various key stage 4 (KS4) benchmarks by offending and 
-                                            pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"),
+                                            pupil group, for pupils matched to KS4 academic year 2014/15"),
                                      column(h3(textOutput("sclTitle1_ks4")),
                                             width=6,
                                             box(width = 12,
@@ -742,7 +742,7 @@ SchoolExp <- function() {
                                             p(tags$u("Bar chart (All pupil groups)")), 
                                             h3("The proportion of all pupils who had ever been persistently absent or 
                                             persistently absent (unauthorised other) by offending and pupil group, for pupils matched to 
-                                                                 KS4 academic years XXXX/XX - XXXX/XX"), 
+                                                                 KS4 academic years 2012/13 - 2014/15"), 
                                             column(h3(textOutput("sclTitle1_PA")),
                                                    width=6,
                                                    box(width = 12,
@@ -755,7 +755,7 @@ SchoolExp <- function() {
                                             p(tags$u("Waffle plot (All Pupils:Serious Violence Offence)")), 
                                             h3("The proportion of children who had been cautioned or sentenced for a 
                                             serious violence offence and had been persistently absent, and all pupils who had ever been 
-                                                                  persistently absent, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"),
+                                                                  persistently absent, for pupils matched to KS4 academic years 2012/13 - 2014/15"),
                                             column(h3(textOutput("sclTitle1_PAwaf")),
                                                    width=6,
                                                    box(width = 12,
@@ -777,7 +777,7 @@ SchoolExp <- function() {
                                 p("For the following analysis termly absence data has been used. 
                                   Throughout the rest of the publication, annual absence data has been used."),
                                   h3("Timing of first record of persistent absence or persistent absence (unauthorised other) relative to the timing 
-                                    of children’s first serious violence offence, for all pupils matched to KS4 academic years XXXX/XX - XXXX/XX", tags$sup("[7]")),
+                                    of children’s first serious violence offence, for all pupils matched to KS4 academic years 2012/13 - 2014/15", tags$sup("[7]")),
                                 column(h3(textOutput("sclTitle1_PAtime")),
                                        width=6,
                                        box(width = 12, plotOutput("timing_PA1"))), 
@@ -851,7 +851,7 @@ SchoolExp <- function() {
                                             p(tags$u("Suspension Waffle plot (All Pupils:Serious Violence Offence)")), 
                                             h3("The proportion of children who had been cautioned or sentenced for a serious violence 
                                             offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years 
-                                                                            XXXX/XX - XXXX/XX"), 
+                                                                            2012/13 - 2014/15"), 
                                             column(h3(textOutput("sclTitle1_suswaf")),
                                                    width=6,
                                                    box(width = 12,
@@ -873,7 +873,7 @@ SchoolExp <- function() {
                                             p(tags$u("Exclusion Waffle plot (All Pupils:Serious Violence Offence)")), 
                                             h3("The proportion of children who had been cautioned or sentenced for a serious violence 
                                             offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched 
-                                            to KS4 academic years XXXX/XX - XXXX/XX"),  
+                                            to KS4 academic years 2012/13 - 2014/15"),  
                                             column(h3(textOutput("sclTitle1_exclwaf")),
                                                    width=6,
                                                    box(width = 12,
@@ -909,7 +909,7 @@ SchoolExp <- function() {
                                                    tabPanel
                                                    (p(tags$u("First suspension")), 
                                                    h3("Timing of children’s first suspension relative to their first serious violence offence,
-                                                      for all pupils matched to KS4 academic year XXXX/XX - XXXX/XX"),
+                                                      for all pupils matched to KS4 academic years 2012/13 - 2014/15"),
                                                      column(h3(textOutput("sclTitle1_fstsus")),
                                                             width=6,
                                                             box(width = 12,
@@ -922,7 +922,7 @@ SchoolExp <- function() {
                                                    tabPanel(
                                                    p(tags$u("Closest suspension")), 
                                                    h3("Timing of children’s closest suspension relative to their first serious violence offence, 
-                                                      for all pupils matched to KS4 academic year XXXX/XX - XXXX/XX"),
+                                                      for all pupils matched to KS4 academic years 2012/13 - 2014/15"),
                                                    column(h3(textOutput("sclTitle1_clssus")),
                                                           width=6,
                                                           box(width = 12,
@@ -935,7 +935,7 @@ SchoolExp <- function() {
                                                    tabPanel(
                                                    p(tags$u("First exclusion")), 
                                                    h3("Timing of children’s first permanent exlusion relative to their first serious violence offence, 
-                                                      for all pupils matched to KS4 academic year XXXX/XX - XXXX/XX"),
+                                                      for all pupils matched to KS4 academic years 2012/13 - 2014/15"),
                                                    column(h3(textOutput("sclTitle1_fstexcl")),
                                                           width=6,
                                                           box(width = 12,
@@ -947,7 +947,7 @@ SchoolExp <- function() {
                                                    tabPanel(
                                                    p(tags$u("Closest exclusion")), 
                                                    h3("Timing of children’s closest permanent exlusion relative to their first serious violence offence, 
-                                                      for all pupils matched to KS4 academic year XXXX/XX - XXXX/XX"), 
+                                                      for all pupils matched to KS4 academic years 2012/13 - 2014/15"), 
                                                    column(h3(textOutput("sclTitle1_clsexcl")),
                                                           width=6,
                                                           box(width = 12,
@@ -1008,7 +1008,7 @@ SchoolExp <- function() {
                                             tabPanel(
                                               p(tags$u("Bar chart (All pupil groups)")), 
                                             h3("The proportion of all pupils who had ever attended alternative provision by offending 
-                                                and pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
+                                                and pupil group, for pupils matched to KS4 academic years 2012/13 - 2014/15"), 
                                             column(h3(textOutput("sclTitle1_AP")),
                                                    width=6, 
                                                    box(width = 12,
@@ -1021,7 +1021,7 @@ SchoolExp <- function() {
                                               p(tags$u("Waffle plot (All Pupils:Serious Violence Offence)")), 
                                               h3("The proportion of children who had been cautioned or sentenced for a serious violence 
                                                    offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision, 
-                                                   for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
+                                                   for pupils matched to KS4 academic years 2012/13 - 2014/15"), 
                                               column(h3(textOutput("sclTitle1_APwaf")),
                                                      width=6, 
                                                      box(width = 12,
@@ -1042,7 +1042,7 @@ SchoolExp <- function() {
                                    tabPanel( 
                                    p(tags$u("Timing of AP")), 
                                    h3("The first term children attended alternative provision (AP) relative to the timing of their first 
-                                      offence, for all pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
+                                      offence, for all pupils matched to KS4 academic years 2012/13 - 2014/15"), 
                                    p("Did the first term a child attended alternative provision (AP) commonly precede the first serious violence offence?"),  
                                    column(h3(textOutput("sclTitle1_APtime")),
                                           width=6, 
@@ -1098,7 +1098,7 @@ SchoolExp <- function() {
                                             tabPanel(
                                               p(tags$u("Bar chart (All pupil groups)")), 
                                               h3("Special Educational Needs (SEN) of all pupils by offending and pupil group, for those that 
-                                                   were ever recorded with SEN, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
+                                                   were ever recorded with SEN, for pupils matched to KS4 academic years 2012/13 - 2014/15"), 
                                               column(h3(textOutput("sclTitle1_SEN")),
                                                      width=6, 
                                                      box(width = 12,
@@ -1112,7 +1112,7 @@ SchoolExp <- function() {
                                               p(tags$u("SEN Support Waffle plot (All Pupils:Serious Violence Offence)")), 
                                               h3("The proportion of children who had been cautioned or sentenced for a serious 
                                                   violence offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched 
-                                                  to KS4 academic years XXXX/XX - XXXX/XX"), 
+                                                  to KS4 academic years 2012/13 - 2014/15"), 
                                               column(h3(textOutput("sclTitle1_SENwaf")),
                                                      width=6, 
                                                      box(width = 12,
@@ -1134,7 +1134,7 @@ SchoolExp <- function() {
                                               p(tags$u("EHC plan waffle plot (All Pupils:Serious Violence Offence)")), 
                                               h3("The proportion of children who had been cautioned or sentenced for a serious violence 
                                                   offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to 
-                                                  KS4 academic years XXXX/XX - XXXX/XX"), 
+                                                  KS4 academic years 2012/13 - 2014/15"), 
                                               column(h3(textOutput("sclTitle1_EHCPwaf")),
                                                      width=6, 
                                                      box(width = 12, 
@@ -1159,7 +1159,7 @@ SchoolExp <- function() {
                                             tabPanel(
                                               p(tags$u("SEN timing")), 
                                               h3("The first term children had been recorded with SEN, relative to the timing of their first 
-                                         serious violence offence, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"),
+                                         serious violence offence, for pupils matched to KS4 academic years 2012/13 - 2014/15"),
                                               column(h3(textOutput("sclTitle1_SENtime")),
                                                      width=6, 
                                                      box(width = 12,
@@ -1172,7 +1172,7 @@ SchoolExp <- function() {
                                               tabPanel(
                                               p(tags$u("EHC plan timing")), 
                                               h3("The first term children had an EHC plan, relative to the timing of their first serious violence
-                                                  offence, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"),
+                                                  offence, for pupils matched to KS4 academic years 2012/13 - 2014/15"),
                                               column(h3(textOutput("sclTitle1_EHCPtime")),
                                                      width=6, 
                                                      box(width = 12,
@@ -1192,7 +1192,7 @@ SchoolExp <- function() {
                                        help_text = tags$p("For this analysis, both primary and secondary SEN type have been considered when exploring types of SEN.", 
                                                    tags$br(), tags$br(), "The most prevalent type of recorded SEN amongst children who had been cautioned or sentenced for 
                                                     an offence was Social, Emotional and Mental Health needs (SEMH)", tags$sup("[9][10]", "."))), 
-                                     h3("The first term children had SEMH, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"),
+                                     h3("The first term children had SEMH, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13 - 2014/15"),
                                      column(h3(textOutput("sclTitle1_SEMHtime")),
                                             width=6, 
                                             box(width = 12,
@@ -1345,7 +1345,7 @@ CSCExp <- function() {
                                  tabPanel(
                                    p(tags$u("Bar chart (All pupil groups)")), 
                                    h3("The proportion of children who had been recorded as being CIN/CLA on 31st March in any 
-                                   given year, by offending and pupil group, for pupils matched to KS4 academic years XXXX/XX - XXXX/XX"), 
+                                   given year, by offending and pupil group, for pupils matched to KS4 academic years 2014/15"), 
                                  column(h3(textOutput("CSCTitle1")),
                                         width=6, 
                                         box(width = 12,
@@ -1358,7 +1358,7 @@ CSCExp <- function() {
                                    p(tags$u("Waffle plot (All Pupils:Serious Violence Offence)")), 
                                    h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st 
                                         March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4
-                                        academic years XXXX/XX - XXXX/XX"), 
+                                        academic years 2014/15"), 
                                    column(h3(textOutput("CSCTitle1_waf")),
                                           width=6, 
                                           box(width = 12,
@@ -1396,7 +1396,7 @@ CSCExp <- function() {
                         in an academic term, if at any point in that term they have been recorded as CIN, CPP or CLA", tags$sup("[9]"), "."),
                         h3("The first record of children being a child in need, having a child protection plan or 
                             being a child who was looked after, relative to the timing of their first offence, for all pupils matched to KS4 
-                             academic year XXXX/XX - XXXX/XX"), 
+                             academic year 2014/15"), 
                       column(h3(textOutput("CSCTitle1_time")),
                              width=6, 
                              box(width = 12,
