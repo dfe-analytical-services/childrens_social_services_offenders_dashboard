@@ -58,11 +58,17 @@
 
 ui <- function(input, output, session) {
   fluidPage(
-    title = tags$head(tags$link(
+    title = tags$head(
+      tags$link(
       rel = "shortcut icon",
       href = "dfefavicon.png"
-    )),
+    ),
+    # Add title for browser tabs
+    tags$title("DfE Shiny Template")
+    ),
+    tags$html(lang = "en"),
     shinyjs::useShinyjs(),
+    customDisconnectMessage(),
     useShinydashboard(),
     tags$head(includeHTML(("google-analytics.html"))),
     tags$head(
