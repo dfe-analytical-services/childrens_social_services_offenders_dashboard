@@ -37,7 +37,10 @@ homepage_panel <- function() {
                                    tags$br(),  
                                    tags$br(), 
                                    tags$b("1."),
-                                   "Two different Local Authorities to compare, with the option to compare to England too.",  
+                                   "Two different Local Authorities to compare, with the option to compare with 10 nearest statistical neighbours and England. 
+                                   Please see", 
+                                   actionLink("link_to_sup_tab", "Support and feedback"),
+                                   "for more information on statistical neighbour used in the dashboard.",  
                                    tags$br(), 
                                    tags$b("2."),
                                    "Either home or school LA – this selects whether the analysis focuses on the LA in which a child resides, or the LA in which a 
@@ -100,7 +103,7 @@ homepage_panel <- function() {
                                   tags$b("Police National Computer (PNC)"), "– MoJ. This dataset includes recordable offences committed, with separate entries for each offence committed by a person, 
                                     although only some information (e.g. personal characteristics) will be available through the linked data. The data analysed in this report is a subset of
                                     the total number of individuals. All individuals who commit an offence are recorded on the Police National Computer (PNC), this report is based on offenders
-                                    from the PNC that were successfully matched to the NPD, covering the period 2000 – 2021.", tags$br(), tags$br(),
+                                    from the PNC that were successfully matched to the NPD, covering the period 2000 to the end of 2020.", tags$br(), tags$br(),
                                   "The first iteration of the share was carried out in 2019 and covered offending data up to the end of 2017 and education data up to
                                   the end of the 17/18 academic year. The second iteration of the share was completed in 2022 and includes offending data up to the end of 2020 and education data
                                   up to the end of the 2020/21 academic year. The share is intended to be updated on an annual basis going forward.", tags$br(), tags$br(), 
@@ -340,7 +343,7 @@ homepage_panel <- function() {
                                     inputId = "small_def",
                                     label = "Reporting on small numbers of children",
                                     help_text = tags$p("In order to prevent the disclosure of sensitive data, any numbers in this publication that relate to less than 6 pupils have been replaced
-                                                       by ‘ * ’. Where there are further risks of identification (for example where a suppressed number can
+                                                       by ‘ * ’ in data tables or gap in charts. Where there are further risks of identification (for example where a suppressed number can
                                                        be calculated using other numbers), numbers have been further suppressed. Due to the size variation across the Local Authority areas,
                                                        this happens more for some LAs than others.")
                                   )
@@ -384,11 +387,7 @@ Demographics <- function() {
                 )),
               column(
                 width = 6,
-                selectizeInput("demLAchoice2", 
-                               "Local Authority 2",
-                               choices = choicesLA,
-                               select = "Bradford" # Will need to change this to England with real data
-                )
+                uiOutput('demLAchoice2_')
               ), 
               column(
                 width = 6,
@@ -631,11 +630,7 @@ SchoolExp <- function() {
                 )),
               column(
                 width = 6,
-                selectizeInput("sclLAchoice2", 
-                               "Local Authority 2", 
-                               choices = choicesLA,
-                               select = "Bradford" # Will need to change this to England with real data
-                )
+                uiOutput('sclLAchoice2_')
               ), 
               column(
                 width = 6,
@@ -858,12 +853,12 @@ SchoolExp <- function() {
                               inputId = "sus_def",
                               label = "What is a suspension?",
                               help_text = tags$p("A suspension is where a pupil has been temporarily removed from the school", 
-                                                 tags$sup("[1]"), ".")
+                                                 tags$sup("[1] [2]"), ".")
                             ),
                             details(
                               inputId = "excl_def",
                               label = "What is a permanent exclusion?",
-                              help_text = tags$p("A permanent exclusion is when a pupil is no longer allowed to attend the school where they are currently on roll", tags$sup("[2]"), ".")
+                              help_text = tags$p("A permanent exclusion is when a pupil is no longer allowed to attend the school where they are currently on roll.")
                             ),
                             tabBox(width = 12, title = NULL, id="SusExcl_subtabs",
                                    tabPanel(
@@ -1349,11 +1344,7 @@ CSCExp <- function() {
                 ),
               column(
                 width = 6,
-                selectizeInput("cscLAchoice2", 
-                               "Local Authority 2", 
-                               choices = choicesLA,
-                               select = "Bradford" # Will need to change this to England with real data
-                               )
+                uiOutput('cscLAchoice2_')
                 ),
               column(
                 width = 6,

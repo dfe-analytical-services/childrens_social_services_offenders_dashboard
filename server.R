@@ -26,6 +26,11 @@ server <- function(input, output, session) {
   hide(id = "loading-content", anim = TRUE, animType = "fade")
   show("app-content")
 
+  # Nav link to Support and feedback tab
+  observeEvent(input$link_to_sup_tab, {
+    updateTabsetPanel(session, "navlistPanel", selected = "Support and feedback")
+  })
+  
   # Code to sync inputs across tabs: LA choice
   observeEvent(input$demLAchoice, {
     if (input$navlistPanel == "tab_demo") {
@@ -51,7 +56,7 @@ server <- function(input, output, session) {
   observeEvent(input$sclLAchoice2, {
     if (input$navlistPanel == "tab_scl") {
       updateSelectInput(session, "demLAchoice2", selected = input$sclLAchoice2)
-      updateSelectInput(session, "cscLAchoice", selected = input$sclLAchoice2)
+      updateSelectInput(session, "cscLAchoice2", selected = input$sclLAchoice2)
     }
   })
 
@@ -113,7 +118,49 @@ server <- function(input, output, session) {
     }
   })
 
-
+  # Adding interactivity for LA 2 stat neighbour (dem tab)
+  output$demLAchoice2_ = renderUI({
+    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$demLAchoice)
+    
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(input$demLAchoice, choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    
+    selectizeInput('demLAchoice2', 'Local Authority 2', choices = c('Statistical neighbour' = choicesLA_stat, "All other" = choicesLA_not_stat),
+                   multiple = TRUE,
+                   options = list(placeholder = 'Select a comparison', maxItems =  1))
+    
+    # Will need to Add England in another group
+  })
+  
+  # Adding interactivity for LA 2 stat neighbour (scl tab)
+  output$sclLAchoice2_= renderUI({
+    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$sclLAchoice)
+    
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(input$sclLAchoice, choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    
+    selectizeInput('sclLAchoice2', 'Local Authority 2', choices = c('Statistical neighbour' = choicesLA_stat, "All other" = choicesLA_not_stat),
+                   multiple = TRUE,
+                   options = list(placeholder = 'Select a comparison', maxItems =  1))
+    
+    # Will need to Add England in another group
+  })
+  
+# Adding interactivity for LA 2 stat neighbour (CSC tab)
+  output$cscLAchoice2_= renderUI({
+    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$cscLAchoice)
+    
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(input$cscLAchoice, choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    
+    selectizeInput('cscLAchoice2', 'Local Authority 2', choices = c('Statistical neighbour' = choicesLA_stat, "All other" = choicesLA_not_stat),
+                   multiple = TRUE,
+                   options = list(placeholder = 'Select a comparison', maxItems =  1))
+    
+    # Will need to Add England in another group
+  })
+  
+  
   # Simple server stuff goes here ------------------------------------------------------------
   reactiveRevBal <- reactive({
     dfRevBal %>% filter(
