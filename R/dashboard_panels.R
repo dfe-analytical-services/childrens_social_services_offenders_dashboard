@@ -10,7 +10,7 @@ homepage_panel <- function() {
           12,
           div(
             h1(tags$b("Education, children's social care and offending:"), tags$br(), tags$b("Descriptive statistics"),
-               tags$br(), tags$h2("National and Local Authority level data")),
+               tags$br(), tags$h2("National and local authority level data")),
             br(),
             div(
               class = "panel panel-info",
@@ -26,7 +26,7 @@ homepage_panel <- function() {
                   p("This dashboard was created to complement the previously published", 
                      tags$a(href = "https://www.gov.uk/government/publications/education-childrens-social-care-and-offending", 
                             "Education, children’s social care and offending", style = "font-size:16px"),
-                     "descriptive analysis with the aim of providing Local Authority specific breakdowns, for each Local Authority in England, where possible.",
+                     "descriptive analysis with the aim of providing local authority specific breakdowns, for each local authority in England, where possible.",
                     style = "font-size:16px"),
                   br(),
                   tabBox(width = 12, title = NULL, id="overview_tabs",
@@ -37,10 +37,10 @@ homepage_panel <- function() {
                                    tags$br(),  
                                    tags$br(), 
                                    tags$b("1."),
-                                   "Two different Local Authorities to compare, with the option to compare with 10 nearest statistical neighbours and England. 
+                                   "Two different local authorities (LA) to compare, with the option to compare with 10 nearest statistical neighbours and England. 
                                    Please see", 
                                    actionLink("link_to_sup_tab", "Support and feedback"),
-                                   "for more information on statistical neighbour used in the dashboard.",  
+                                   "for more information on statistical neighbours used in the dashboard.",  
                                    tags$br(), 
                                    tags$b("2."),
                                    "Either home or school LA – this selects whether the analysis focuses on the LA in which a child resides, or the LA in which a 
@@ -79,8 +79,8 @@ homepage_panel <- function() {
                                   tags$a(href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1059556/Education_children_s_social_care_and_offending_descriptive_stats_FINAL.pdf", "publication"),
                                   "that looked at the education and 
                                     social care background of children in England that had been cautioned or sentenced for an offence across 
-                                    England and Wales, and 10 LA level publications focusing on the ten SAFE (Support, Attend, Fulfil, Exceed) 
-                                    Taskforces (for more information see", 
+                                    England, and 10 LA level publications focussing on the ten SAFE (Support, Attend, Fulfil, Exceed) 
+                                    Taskforce areas (for more information see", 
                                     tags$a(href = "https://www.gov.uk/government/news/support-for-vulnerable-young-people-in-serious-violence-hotspots", 
                                            "Support for vulnerable young people in serious violence hotspots"), ").", style = "font-size:16px")
                                   ),
@@ -103,10 +103,10 @@ homepage_panel <- function() {
                                   tags$b("Police National Computer (PNC)"), "– MoJ. This dataset includes recordable offences committed, with separate entries for each offence committed by a person, 
                                     although only some information (e.g. personal characteristics) will be available through the linked data. The data analysed in this report is a subset of
                                     the total number of individuals. All individuals who commit an offence are recorded on the Police National Computer (PNC), this report is based on offenders
-                                    from the PNC that were successfully matched to the NPD, covering the period 2000 to the end of 2020.", tags$br(), tags$br(),
+                                    from the PNC that were successfully matched to the NPD, covering the period 2000 - 2020.", tags$br(), tags$br(),
                                   "The first iteration of the share was carried out in 2019 and covered offending data up to the end of 2017 and education data up to
                                   the end of the 17/18 academic year. The second iteration of the share was completed in 2022 and includes offending data up to the end of 2020 and education data
-                                  up to the end of the 2020/21 academic year. The share is intended to be updated on an annual basis going forward.", tags$br(), tags$br(), 
+                                  up to the end of the 2019/20 academic year. The share is intended to be updated on an annual basis going forward.", tags$br(), tags$br(), 
                                   "Applications to access the data share can be made by ONS accredited researchers, by submitting the", 
                                   tags$a(href="https://www.gov.uk/government/publications/moj-data-first-application-form-for-secure-access-to-data", "application form"), "to MoJ and DfE. 
                                   Successful applicants will access the data through the ONS Secure Research Service (SRS).", tags$br(), tags$br(),
@@ -126,9 +126,9 @@ homepage_panel <- function() {
                                     registered in independent Alternative Provision (AP) settings.", tags$br(), tags$br(),
                                     "The cohorts were selected in this way to maximise data coverage and balance data availability 
                                     across each of the datasets provided in the share. Children that appear on a school census at the end of KS2 and the end of KS4 have been included
-                                    in this analysis, with allowances for those that have moved ahead or been kept behind by one or more school years. Independent school that provide 
+                                    in this analysis, with allowances for those that have moved ahead or been kept behind by one or more school years. Independent schools that provide 
                                     alternative provision have been included, however those with KS4 results at mainstream independent schools have been removed.", tags$br(), tags$br(), 
-                                    "This publication will present statistics relating to the Local Authority (LA) of a child’s school during the school year they entered when they were 
+                                    "This publication will present statistics relating to the local authority (LA) of a child’s school during the school year they entered when they were 
                                     aged 15. We selected age 15 as this is the most common age at which children who had been cautioned or sentenced for a serious violence offence commit their
                                     first serious violence offence. Where this isn’t possible, the closest previous year has been used. We have also conducted analysis using the 
                                     records of the LA of the child’s home address when they were aged 15.",
@@ -312,7 +312,7 @@ homepage_panel <- function() {
                                     inputId = "off_def",
                                     label = "Defining the offending groups",
                                     help_text = tags$p(tags$b("'Children who had been cautioned or sentenced for an offence'"), "relates to all children and young people
-                                                       in the linked data who were in the academic years described above, and who been cautioned or sentenced for
+                                                       in the linked data who were in the academic years described above, and who had been cautioned or sentenced for
                                                        any offence recorded on the Police National Computer over the defined coverage period.", tags$br(), tags$br(),
                                                        "All cohorts in this analysis are limited to ages 10-17. This means that for each cohort, the last year of 
                                                        offending data would be during Year 13 (or equivalent). This is to ensure that each child had the same amount 
@@ -343,9 +343,12 @@ homepage_panel <- function() {
                                     inputId = "small_def",
                                     label = "Reporting on small numbers of children",
                                     help_text = tags$p("In order to prevent the disclosure of sensitive data, any numbers in this publication that relate to less than 6 pupils have been replaced
-                                                       by ‘ * ’ in data tables or gap in charts. Where there are further risks of identification (for example where a suppressed number can
-                                                       be calculated using other numbers), numbers have been further suppressed. Due to the size variation across the Local Authority areas,
-                                                       this happens more for some LAs than others.")
+                                                       by ‘ * ’ in data tables or a gap in charts. Where there are further risks of identification (for example where a suppressed number can
+                                                       be calculated using other numbers), numbers have been further suppressed. Due to the size variation across the local authority areas,
+                                                       this happens more for some LAs than others.", tags$br(), tags$br(), "Due to low numbers among the offending groups, LA level analysis
+                                                       has not been conducted for City of London, Isle of Scilly and XXX. Once more data becomes available, they may be included in future 
+                                                       updates/iterations of the dashboard. However, these LAs are included in the national level analysis as a result of this LA counts may
+                                                       not sum to England counts.")
                                   )
                                   )
                          )
@@ -445,7 +448,7 @@ Demographics <- function() {
                             br(),
                             paste("1. Percentages are rounded to the nearest 1%."),
                             br(),
-                            paste("2. '*' in the table indicate where data has been supressed due to small numbers."),
+                            paste("2. '*' in the table indicate where data has been suppressed due to small numbers."),
                             br(),
                             paste("3. In order to better understand offending trajectories for children who had been cautioned
                             or sentenced for a serious violence offence, this analysis looks at the volume of offending which 
@@ -457,8 +460,8 @@ Demographics <- function() {
                       tabPanel(
                         "Gender",
                         fluidRow(
-                          h3("The gender breakdown of offending and pupil group, for all pupils matched to KS4 academic years 2012/13 - 2014/15"),
-                          h5("Gender information has been taken from the DfE school census. From 2011, this information could only be completed by the child or their parents. 
+                          h3("The gender breakdown of offending and pupil group, for all pupils matched to KS4 academic years 2012/13 - 2017/18"),
+                          h5("Gender information has been taken from the DfE school census.
                                Where a pupil's gender has changed over time, the most recent record has been used. The gender recorded in the DfE school census may not be the
                                same as to which a child identifies."),
                           column(h3(textOutput("DemTitle1")),
@@ -486,7 +489,7 @@ Demographics <- function() {
                       tabPanel(
                         "Age at first offence",
                         fluidRow(h3("The proportion of children relative to their age at first offence\nby offending group, for pupils matched 
-                               to KS4 academic years 2012/13 - 2014/15"),
+                               to KS4 academic years 2012/13 - 2017/18"),
                           column(h3(textOutput("DemTitle1_age")),
                             width=6,
                             box(
@@ -507,8 +510,7 @@ Demographics <- function() {
                           br(),
                           paste("1. Percentages are rounded to the nearest 1%."),
                           br(),
-                          paste("2. The date used to calculate age at first offence is the date the offence took place rather
-                            than when it was processed through the courts."),
+                          paste("2. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
                           br(),
                           paste("3. All offences were included in the analysis of age at first offence for children who had been 
                             cautioned or sentenced for an offence irrespective of whether they were also serious violence offences. 
@@ -521,7 +523,7 @@ Demographics <- function() {
                         "Ethnicity",
                         fluidRow(
                         h3("The proportion of all pupils split by ethnic group major, offending and pupil group, for pupils matched to KS4 academic years
-                               2012/13 - 2014/15"),
+                               2012/13 - 2017/18"),
                                h5("Ethnicity", tags$sup("[1]"), "has two different categorisations in the school census - ethnic group major
                             and ethnic group minor. Ethnic group major contains wider categories (Asian, Black,
                             Chinese, White, Mixed, Unclassified, Any Other Ethnic Group) whereas ethnic group minor is more detailed", tags$sup("[2]"),"."),
@@ -564,7 +566,7 @@ Demographics <- function() {
                                    tabPanel(
                                    p(tags$u("Bar chart (All pupil groups)")), 
                                    h3("The proportion of all pupils eligible for free school meals (FSM) by offending and pupil group, 
-                                                         for pupils matched to KS4 academic years 2012/13 - 2014/15"), 
+                                                         for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
                                             column(width=6, h3(textOutput("DemTitle1_FSM1")), 
                                                    box(width = 12, plotOutput("fsmPlot1"))),
                                             column(width=6, h3(textOutput("DemTitle1_FSM2")), 
@@ -679,7 +681,7 @@ SchoolExp <- function() {
                                    tabPanel(
                                      p(tags$u("KS2 attainment")), 
                                      h3("The proportion of all pupils who achieved level 4 or above in English and Maths at key stage 2 (KS2) 
-                                            by offending and pupil group, for pupils matched to KS4 academic years 2012/13 - 2014/15"),
+                                            by offending and pupil group, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
                                      p("This analysis looks at the percentage of pupils meeting the expected standard in English and Maths at KS2.
                                               At the end of KS2 children are expected to be working to at least level 4 in English and Maths."),
                                      column(h3(textOutput("sclTitle1_ks2")),
@@ -697,11 +699,20 @@ SchoolExp <- function() {
                                             br(),
                                             paste("2. Possible attainment levels at KS2 range from Level 1 to Level 6."),
                                             br(),
-                                            paste("3. DPEPENDING ON FINAL COHORT ... some changes in assessments over time etc (eg Birmingham footnote 13)")),
+                                     paste(
+                                       "3. The figures discussed here are the combined results of all cohorts, of whom reached the end of
+                                            KS2 in 2007/08 - 2012/13. Based on the metrics used in this analysis, only a very small number
+                                            of results for the 2009/10 cohort were withheld, in light of the boycott of the delivery of end of KS2 National
+                                            Curriculum tests. It was determined that a sufficient volume of results were available for this cohort, and
+                                            that the results of all three cohorts could be combined. Please see here for more information regarding the
+                                            2009/10 KS2 National Curriculum tests results:"
+                                     ),
+                                     a(href = "https://www.gov.uk/government/statistics/national-curriculum-assessments-at-key-stage-2-and-3-in-england-academic-year-2009-to-2010-provisional",
+                                       "National curriculum assessments: KS2 and KS3, 2010"), "."), 
                                    tabPanel(
                                      p(tags$u("KS4 attainment")),
                                      h3("The proportion of all pupils who achieved various key stage 4 (KS4) benchmarks by offending and 
-                                            pupil group, for pupils matched to KS4 academic year 2014/15"),
+                                            pupil group, for pupils matched to KS4 academic year 2014/15 - 2017/18"),
                                      p("This analysis looks at the percentage of pupils meeting various KS4 benchmarks."),
                                      column(h3(textOutput("sclTitle1_ks4")),
                                             width=6,
@@ -715,7 +726,10 @@ SchoolExp <- function() {
                                             br(),
                                             paste("1. Percentages are rounded to the nearest 1%."),
                                             br(),
-                                            paste("2. DPEPENDING ON FINAL COHORT ... some changes in assessments over time etc (eg Birmingham footnote 14)")))
+                                            paste("2. The implementation of two major reforms in 2013/14 that affect the calculation of KS4 performance
+                                                  measures data mean that findings for KS4 attainment cannot be combined over all year groups, and
+                                                  the analysis will refer to the results of those with KS4 academic year 2014/15 - 2017/18.
+                                                  ")))
                           )
                         )
                       ),
@@ -733,7 +747,7 @@ SchoolExp <- function() {
                               For context, this would amount to between 6 and 7 days of a 13-week term or around 19 days for a school 
                               year", tags$sup("[1]"), ". This includes both authorised and unauthorised absences", tags$sup("[2]"), ".", tags$br(), tags$br(),
                               "It is worth noting that persistent absence can include various reasons for absence, including absence due to 
-                              being suspended or permanently excluded", tags$sup("[3]"), ".")
+                              being suspended or permanently excluded.")
                             ),
                             details(
                               inputId = "PAUO_def",
@@ -760,7 +774,7 @@ SchoolExp <- function() {
                                             p(tags$u("Bar chart (All pupil groups)")), 
                                             h3("The proportion of all pupils who had ever been persistently absent or 
                                             persistently absent (unauthorised other) by offending and pupil group, for pupils matched to 
-                                                                 KS4 academic years 2012/13 - 2014/15"), 
+                                                                 KS4 academic years 2012/13 - 2017/18"), 
                                             column(h3(textOutput("sclTitle1_PA")),
                                                    width=6,
                                                    box(width = 12,
@@ -793,21 +807,23 @@ SchoolExp <- function() {
                                      a(href = "https://explore-education-statistics.service.gov.uk/methodology/pupil-absence-in-schools-in-england", 
                                        "Pupil absence statistics: methodology"),
                                      paste(". This was changed from 15% to 10% in September 2015."),
-                                     br(),
+                                     br(), 
                                      paste("3. The definition of persistent absence includes all possible reasons for absence, including children whose 
                             absence was unauthorised, but the school was still provided with a reason for that absence (for example, an unagreed 
                             family holiday). The analysis has included this additional metric of absence (PAUO), as a way of differentiating those 
                             whose absence was not authorised and were unable to provide a reason for that absence, from those not attending school 
-                                  for any reason."),
-                                     br(), 
-                                     paste("4. Percentages are rounded to the nearest 1%."),
+                                  for any reason. From 2013/14, absence for extended family holiday was discontinued due to a change in regulation"),
+                                     br(),
+                                     paste("4. Breakdown of rates of persistent absence by reason code are included in the accompanying publication tables."),
+                                     br(),
+                                     paste("5. Percentages are rounded to the nearest 1%."),
                                      br()),
                               tabPanel(
                                 p(tags$u("Timing of PA/PAUO")), 
-                                p("For the following analysis termly absence data has been used. 
-                                  Throughout the rest of the publication, annual absence data has been used."),
+                                p("For the following analysis termly absence data has been used", tags$sup("[4]"), 
+                                  "Throughout the rest of the publication, annual absence data has been used."),
                                   h3("Timing of first record of persistent absence or persistent absence (unauthorised other) relative to the timing 
-                                    of children’s first serious violence offence, for all pupils matched to KS4 academic years 2012/13 - 2014/15", tags$sup("[7]")),
+                                    of children’s first serious violence offence, for all pupils matched to KS4 academic years 2012/13 - 2017/18", tags$sup("[5]")),
                                 column(h3(textOutput("sclTitle1_PAtime")),
                                        width=6,
                                        box(width = 12, plotOutput("timing_PA1"))), 
@@ -829,16 +845,20 @@ SchoolExp <- function() {
                             absence was unauthorised, but the school was still provided with a reason for that absence (for example, an unagreed 
                             family holiday). The analysis has included this additional metric of absence (PAUO), as a way of differentiating those 
                             whose absence was not authorised and were unable to provide a reason for that absence, from those not attending school 
-                                  for any reason."),
+                                  for any reason. From 2013/14 absence for extended family holiday was discontinued, due to a change in regulation"),
                                 br(), 
-                                paste("4. Percentages are rounded to the nearest 1%."),
+                                paste("4. Prior to the 2016/17 academic year absence information from special schools was collected on an annual basis only, 
+                                      this was be collected each year via the autumn school census. Termly absence data for special schools was collected by 
+                                      the Department for the first time in the autumn 2016 school census. Termly counts are likely to be underestimate as a result."),
                                 br(),
-                                paste("5. The date used to calculate any findings relating to timing of first offence use the date the offence took place rather than 
-                           when it was processed through the courts."),
-                                br(),
-                                paste("6. For children who were cautioned or sentenced for a serious violence offence, and had been persistently 
+                                paste("5. For children who were cautioned or sentenced for a serious violence offence, and had been persistently 
                             absent, the analysis compares whether the first school term they were fagged as persistently absent in, or 
-                                  PAUO, preceded the school term in which the serious violence offence took place.")
+                                  PAUO, preceded the school term in which the serious violence offence took place."),
+                                br(),
+                                paste("6. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
+                                br(),
+                               paste("7. Percentages are rounded to the nearest 1%."),
+                                br()
                                 )),
                           )
                         )
@@ -868,7 +888,7 @@ SchoolExp <- function() {
                                             tabPanel(
                                             p(tags$u("Bar chart (All pupil groups)")), 
                                             h3("The proportion of all pupils who had a record of being suspended or 
-                                            permanently excluded by offending and pupil group, for all pupils matched to KS4 academic years XXX/XX - XXXX/XX"), 
+                                            permanently excluded by offending and pupil group, for all pupils matched to KS4 academic years 2012/13 - 2017/18"), 
                                                      column(h3(textOutput("sclTitle1_sus")),
                                                             width=6,
                                                             box(width = 12, plotOutput("SusExclPlot1"))),  
@@ -911,12 +931,16 @@ SchoolExp <- function() {
                                      a(href = "https://explore-education-statistics.service.gov.uk/methodology/pupil-exclusion-statistics-methodology", 
                                        "Pupil exclusion statistics: methodology"),
                                      br(),
-                                     paste("3. Percentages are rounded to the nearest 1%."),
+                                     paste("3. Year-on-year comparisons of local authority (LA) data may be affected by schools converting to academies."),
+                                     br(),
+                                     paste("4. Percentages are rounded to the nearest 1%."),
+                                     br(),
+                                     paste("5. Caution is advised when comparing across Local Authorities, due to differences in local policies."),
                                      br()
                                      ),
                                    tabPanel(
                                      p(tags$u("Timing of first/closest suspension/exclusion")), 
-                                     p("The following analysis first investigates the sequencing of suspensions and permanent exclusions with serious violence 
+                                     p("The following analysis investigates the sequencing of suspensions and permanent exclusions with serious violence 
                                         offences. It looks at both the child’s first suspension or permanent exclusion and, in the case of multiple events, their 
                                             closest suspension or permanent exclusion relative to their first serious violence offence."), br(),
                                      details(
@@ -924,14 +948,14 @@ SchoolExp <- function() {
                                        label = "What do these charts tell us?",
                                        help_text = tags$p("Did first suspensions / permanent exclusions commonly precede or follow first serious violence offences?", 
                                                           tags$br(), tags$br(), 
-                                                          "Did the closest suspensions", tags$sup("[3]"), 
+                                                          "Did the closest suspensions", tags$sup("[4]"), 
                                                           "/ permanent exclusions commonly precede or follow first serious violence offences?")
                                             ),
                                             tabBox(width = 12, title = NULL, id="SusExcl_subtabs3",
                                                    tabPanel
                                                    (p(tags$u("First suspension")), 
                                                    h3("Timing of children’s first suspension relative to their first serious violence offence,
-                                                      for all pupils matched to KS4 academic years 2012/13 - 2014/15"),
+                                                      for all pupils matched to KS4 academic years 2012/13 - 2017/18"),
                                                      column(h3(textOutput("sclTitle1_fstsus")),
                                                             width=6,
                                                             box(width = 12,
@@ -944,7 +968,7 @@ SchoolExp <- function() {
                                                    tabPanel(
                                                    p(tags$u("Closest suspension")), 
                                                    h3("Timing of children’s closest suspension relative to their first serious violence offence, 
-                                                      for all pupils matched to KS4 academic years 2012/13 - 2014/15"),
+                                                      for all pupils matched to KS4 academic years 2012/13 - 2017/18"),
                                                    column(h3(textOutput("sclTitle1_clssus")),
                                                           width=6,
                                                           box(width = 12,
@@ -956,8 +980,8 @@ SchoolExp <- function() {
                                                    ),
                                                    tabPanel(
                                                    p(tags$u("First exclusion")), 
-                                                   h3("Timing of children’s first permanent exlusion relative to their first serious violence offence, 
-                                                      for all pupils matched to KS4 academic years 2012/13 - 2014/15"),
+                                                   h3("Timing of children’s first permanent exclusion relative to their first serious violence offence, 
+                                                      for all pupils matched to KS4 academic years 2012/13 - 2017/18"),
                                                    column(h3(textOutput("sclTitle1_fstexcl")),
                                                           width=6,
                                                           box(width = 12,
@@ -968,8 +992,8 @@ SchoolExp <- function() {
                                                    ),
                                                    tabPanel(
                                                    p(tags$u("Closest exclusion")), 
-                                                   h3("Timing of children’s closest permanent exlusion relative to their first serious violence offence, 
-                                                      for all pupils matched to KS4 academic years 2012/13 - 2014/15"), 
+                                                   h3("Timing of children’s closest permanent exclusion relative to their first serious violence offence, 
+                                                      for all pupils matched to KS4 academic years 2012/13 - 2017/18"), 
                                                    column(h3(textOutput("sclTitle1_clsexcl")),
                                                           width=6,
                                                           box(width = 12,
@@ -987,15 +1011,19 @@ SchoolExp <- function() {
                                      a(href = "https://explore-education-statistics.service.gov.uk/methodology/pupil-exclusion-statistics-methodology", 
                                        "Pupil exclusion statistics: methodology"),
                                      br(),
-                                     paste("3. Where children who had been cautioned or sentenced for an offence had received multiple suspensions/permanent exclusions, 
+                                     paste("3. Year-on-year comparisons of local authority (LA) data may be affected by schools converting to academies."),
+                                     br(), 
+                                     paste("4. Where children who had been cautioned or sentenced for a serious violence offence had received multiple suspensions/permanent exclusions, 
                           the analysis defined closest as the shortest amount of time between the start of the suspensions/permanent exclusions and the first 
                                 serious violence offence date"),
                                      br(),
-                                     paste("4.The date used to calculate any findings relating to timing of first offence use the date the offence took place rather than 
-                           when it was processed through the courts."),
+                                     paste("5.The analysis uses the date the offence took place rather than the date it was processed through the courts."),
                                      br(),
-                                     paste("5. Percentages are rounded to the nearest 1%."),
-                                     br())),
+                                     paste("6. Percentages are rounded to the nearest 1%."),
+                                     br(),
+                                     paste("7. Caution is advised when comparing across Local Authorities, due to differences in local policies."),
+                                     br()
+                                     )),
                           )
                         )
                       ),
@@ -1028,7 +1056,7 @@ SchoolExp <- function() {
                                             tabPanel(
                                               p(tags$u("Bar chart (All pupil groups)")), 
                                             h3("The proportion of all pupils who had ever attended alternative provision by offending 
-                                                and pupil group, for pupils matched to KS4 academic years 2012/13 - 2014/15"), 
+                                                and pupil group, for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
                                             column(h3(textOutput("sclTitle1_AP")),
                                                    width=6, 
                                                    box(width = 12,
@@ -1059,7 +1087,7 @@ SchoolExp <- function() {
                                    tabPanel( 
                                    p(tags$u("Timing of AP")), 
                                    h3("The first term children attended alternative provision (AP) relative to the timing of their first 
-                                      offence, for all pupils matched to KS4 academic years 2012/13 - 2014/15"), 
+                                      offence, for all pupils matched to KS4 academic years 2012/13 - 2017/18"), 
                                    p("Did the first term a child attended alternative provision (AP) commonly precede the first serious violence offence?"),  
                                    column(h3(textOutput("sclTitle1_APtime")),
                                           width=6, 
@@ -1074,8 +1102,7 @@ SchoolExp <- function() {
                                    paste("1. Please see here for more information on AP statutory guidance:"),
                                    a(href = "https://www.gov.uk/government/publications/alternative-provision", "Alternative Provision Statutory Guidance"),
                                    br(),
-                                   paste("2. The date used to calculate any findings relating to timing of first offence use the date the offence took place rather than
-                                         when it was processed through the courts."),
+                                   paste("2. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
                                    br(),
                                    paste("3. Percentages are rounded to the nearest 1%."),
                                    br())),
@@ -1113,7 +1140,7 @@ SchoolExp <- function() {
                                             tabPanel(
                                               p(tags$u("Bar chart (All pupil groups)")), 
                                               h3("Special Educational Needs (SEN) of all pupils by offending and pupil group, for those that 
-                                                   were ever recorded with SEN, for pupils matched to KS4 academic years 2012/13 - 2014/15"), 
+                                                   were ever recorded with SEN, for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
                                               column(h3(textOutput("sclTitle1_SEN")),
                                                      width=6, 
                                                      box(width = 12,
@@ -1177,7 +1204,10 @@ SchoolExp <- function() {
                                   been identified as having SEN, but never with an EHC plan."),
                                      br(),
                                      paste("5. Percentages are rounded to the nearest 1%."),
-                                     br()),
+                                     br(),
+                                     paste("6. Caution is advised when comparing across Local Authorities, due to differences in local policies."),
+                                     br(),
+                                     ),
                                    tabPanel(
                                      p(tags$u("Timing of SEN")),
                                      p("Did a child being identified as SEN commonly precede the first serious violence offence?", tags$sup("[4]"),"."),  
@@ -1185,7 +1215,7 @@ SchoolExp <- function() {
                                             tabPanel(
                                               p(tags$u("SEN timing")), 
                                               h3("The first term children had been recorded with SEN, relative to the timing of their first 
-                                         serious violence offence, for pupils matched to KS4 academic years 2012/13 - 2014/15"),
+                                         serious violence offence, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
                                               column(h3(textOutput("sclTitle1_SENtime")),
                                                      width=6, 
                                                      box(width = 12,
@@ -1198,7 +1228,7 @@ SchoolExp <- function() {
                                               tabPanel(
                                               p(tags$u("EHC plan timing")), 
                                               h3("The first term children had an EHC plan, relative to the timing of their first serious violence
-                                                  offence, for pupils matched to KS4 academic years 2012/13 - 2014/15"),
+                                                  offence, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
                                               column(h3(textOutput("sclTitle1_EHCPtime")),
                                                      width=6, 
                                                      box(width = 12,
@@ -1242,10 +1272,11 @@ SchoolExp <- function() {
                                      paste("5. The analysis throughout this publication refers to children with SEN Support as children that had ever 
                                       been identified as having SEN, but never with an EHC plan."),
                                      br(),
-                                     paste("6. The date used to calculate any findings relating to timing of first offence use the date the offence took place rather than 
-                                       when it was processed through the courts."),
+                                     paste("6. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
                                      br(),
                                      paste("7. Percentages are rounded to the nearest 1%."),
+                                     br(),
+                                     paste("8. Caution is advised when comparing across Local Authorities, due to differences in local policies."), 
                                      br()),
                                    tabPanel(
                                      p(tags$u("Timing of SEMH")), 
@@ -1254,10 +1285,11 @@ SchoolExp <- function() {
                                      details(
                                        inputId = "SENTypes_def",
                                        label = "What types of SEN are used in the analysis?",
-                                       help_text = tags$p("For this analysis, both primary and secondary SEN type have been considered when exploring types of SEN.", 
+                                       help_text = tags$p("For this analysis, both primary and secondary SEN type have been considered when exploring types of SEN",
+                                                          tags$sup("[4]", "."), 
                                                    tags$br(), tags$br(), "The most prevalent type of recorded SEN amongst children who had been cautioned or sentenced for 
-                                                    an offence was Social, Emotional and Mental Health needs (SEMH)", tags$sup("[4][5]", "."))), 
-                                     h3("The first term children had SEMH, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13 - 2014/15"),
+                                                    a serious violence offence was Social, Emotional and Mental Health needs (SEMH)", tags$sup("[5][6]", "."))), 
+                                     h3("The first term children had SEMH, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
                                      column(h3(textOutput("sclTitle1_SEMHtime")),
                                             width=6, 
                                             box(width = 12,
@@ -1292,19 +1324,24 @@ SchoolExp <- function() {
                             purposes of this analysis, ‘EHC plan’ will be used to describe both Statements of SEN and EHC plans 
                                   unless stated otherwise in the particular context."),
                                      br(),
-                                     paste("4. There were changes to the classification of type of need in 2015 when the previous code of ‘Behaviour, emotional and social 
+                                     paste("4. Primary and secondary SEN type was added to the AP census in 2017/18"),
+                                     br(),
+                                     paste("5. There were changes to the classification of type of need in 2015 when the previous code of ‘Behaviour, emotional and social 
                             difficulties (BESD)’ was removed, and a new code ‘Social, emotional and mental health (SEMH)’ was introduced. However, those with a primary 
                             need of BESD in 2014 were not all expected to move to SEMH in 2015. The analysis combined results for the two SEN types, whilst understanding 
                             that SEMH was not intended to be a direct replacement for BESD. Results for types of SEN prior to 2015 will include BESD rather than SEMH."),
                                      br(),
-                                     paste("5. As SEMH is consistently the most common recorded SEN type amongst children who had been cautioned or sentenced for an 
-                                  offence, further analysis has been carried out on the timing of the identification of SEMH. ... Could reference  our previous 
-                                  publication where SEMH was the most prevalent???"),
+                                     paste("6. As SEMH is consistently the most common recorded SEN type amongst children who had been cautioned or sentenced for a serious violence 
+                                  offence in England (See"), 
+                                     a(href = "https://www.gov.uk/government/publications/education-childrens-social-care-and-offending", 
+                                                   "previous publication"), 
+                                     "for more detail on recorded SEN types), further analysis has been carried out on the timing of the identification of SEMH",
                                      br(),
-                                     paste("6. The date used to calculate any findings relating to timing of first offence use the date the offence took place rather than 
-                           when it was processed through the courts."),
+                                     paste("7. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
                                      br(),
-                                     paste("7. Percentages are rounded to the nearest 1%."),
+                                     paste("8. Percentages are rounded to the nearest 1%."),
+                                     br(),
+                                     paste("9. Caution is advised when comparing across Local Authorities, due to differences in local policies."),
                                      br()
                                      )),
                             )
@@ -1327,7 +1364,7 @@ CSCExp <- function() {
         column(
           width=12,
           h1("Children's Social Care Experience"),
-          h4("This tab contains analysis that relates to children's experiences whilst in care")
+          h4("This tab contains analysis that relates to children's experiences with children's social care")
         ),
         column(
           width=12,
@@ -1382,18 +1419,18 @@ CSCExp <- function() {
             )
           ),
         column(width=12, 
-        h3("Children with a Social Worker"),
+        h3("Children known to children's social care"),
         p("The next set of findings look at the proportion of children who had been cautioned or sentenced for an offence that were recorded 
-                        as being children in need (CIN) or children who are looked after (CLA) on 31st March in any given year, as defined by the Children Act 1989,
-                        between 2011/12 – 2017/18 for CIN, and 2005/06 - 2017/18 for CLA", tags$sup("[1][2]"), ". CIN here refers to children who are designated under a number of
-                        different social care classifications: children on a child in need plan; children on a child protection plan", tags$sup("[3]"), "; and children who are looked 
-                        after", tags$sup("[4]"), ". As such, CLA figures are included in the figures for CIN. Since the CIN and CLA data cover different time periods, and CIN 
+                        as being children in need (CIN) or children who are looked after (CLA), as defined by the Children Act 1989,
+                        between 2011/12 – 2017/18 for CIN, and 2005/06 - 2017/18 for CLA", tags$sup("[1]"), ". CIN here refers to children who are designated under a number of
+                        different social care classifications: children on a child in need plan; children on a child protection plan", tags$sup("[2]"), "; and children who are looked 
+                        after", tags$sup("[3]"), ". As such, CLA figures are included in the figures for CIN. Since the CIN and CLA data cover different time periods, and CIN 
                         includes CLA for some of the same period, comparisons of CIN to CLA should be made with caution. To maximise coverage of the CIN data 
-                        and avoid skewed results, the analysis in this section is based on children matched to KS4 academic year XXXX/XX only."), br(),
+                        and avoid skewed results, the analysis in this section is based on children matched to KS4 academic year 2012/13 - 2017/18 only."), br(),
         p("When reading the findings related to children looked after (CLA), it is important to note that the introduction of the Legal Aid, 
                         Sentencing and Punishment of Offenders Act 2012 (LASPOA) meant that, from 3rd December 2012, children up to the age of 18 who are 
                         remanded to youth detention accommodation as a result of being charged with or convicted of an offence will be ‘looked after’ by the 
-                        designated local authority",tags$sup("[5]"), ". Therefore, caution should be taken when considering the findings related to CLA and offending, as the child 
+                        designated local authority",tags$sup("[4]"), ". Therefore, caution should be taken when considering the findings related to CLA and offending, as the child 
                         may have become CLA due to the offending."), br(), 
         tabsetPanel(id = "tabsetpanels3",
                     tabPanel(
@@ -1406,8 +1443,7 @@ CSCExp <- function() {
                           tabBox(width = 12, title = NULL, id="csc_subtabs",
                                  tabPanel(
                                    p(tags$u("Bar chart (All pupil groups)")), 
-                                   h3("The proportion of children who had been recorded as being CIN/CLA on 31st March in any 
-                                   given year, by offending and pupil group, for pupils matched to KS4 academic year 2014/15"), 
+                                   h3("The proportion of children who had been recorded as being CIN/CLA, by offending and pupil group, for pupils matched to KS4 academic year 2012/13 - 2017/18"), 
                                  column(h3(textOutput("CSCTitle1")),
                                         width=6, 
                                         box(width = 12,
@@ -1435,39 +1471,36 @@ CSCExp <- function() {
                         ),
                       strong("Footnotes"),
                       br(),
-                      paste("1. It is important to note on using this measure, the analysis takes no account of how long the children 
-          were in need, or in care, and does not count those who were in need, or looked after, during the period 
-          specified but were not in need, or looked after specifically on 31st March. As such, the figures stated will 
-                be an under-estimate of the true proportion of children in need and children who are looked after."),
-                      br(),
-                      paste("2. This diverges from the definition of Ever CIN used in the CIN Review, which looks at whether the child 
+                      paste("1. This diverges from the definition of Ever CIN used in the CIN Review, which looks at whether the child 
           was recorded as so in the previous 6 years. Please see here for further details:"),
                       a(href = "https://www.gov.uk/government/publications/children-in-need-of-help-and-protection-data-and-analysis", 
                         "Children in need of help and protection: data and analysis"),
                       br(),
-                      paste("3. Child Protection Plan (CPP) - support for a child where there is reasonable suspicion that child is 
+                      paste("2. Child Protection Plan (CPP) - support for a child where there is reasonable suspicion that child is 
                 suffering, or likely to suffer, significant harm."),
                       br(),
-                      paste("4. Children who are looked after (CLA) – a child who is looked after by a local authority if they fall into one 
+                      paste("3. Children who are looked after (CLA) – a child who is looked after by a local authority if they fall into one 
           of the following: is provided with accommodation, for a continuous period of more than 24 hours (Children Act 1989, 
           Section 20 and 21); is subject to a care order (Children Act 1989, Part IV), or is subject to a placement order. 
           The analysis has not analysed children on a child in need plan (CINP) separately, but rather have looked at all 
                 children in need, and the two categories of highest intervention."),
                       br(),
-                      paste("5. Please see here for more information:"),
+                      paste("4. Please see here for more information:"),
                       a(href = "https://www.gov.uk/government/publications/children-in-need-of-help-and-protection-data-and-analysis", 
                         "Children looked after return 2020 to 2021"),
                       br(),
-                      paste("6. Full CIN data is available from 2011/12, term 3. Children are included in this CIN analysis if they had 
-          been recorded as a child in need on the 31st March in any period between the ages of 12 - 16. Those matched to earlier 
+                      paste("5. Full CIN data is available from 2011/12, term 3. Children are included in this CIN analysis if they had 
+          been recorded as a child in need in any period between the ages of 12 - 16. Those matched to earlier 
           years in the KS4 attainment data will as a result have less coverage than those matched to later years. For example: 
                 those with KS4 academic year 2012/13 have coverage from age 14 and above."),
                       br(),
-                      paste("7. Children are included in this CLA analysis if they had been recorded as a child being looked after on the 31st March 
-          in any period between the ages of 6 - 16. Those matched to earlier years in the KS4 attainment data will as a result have less 
+                      paste("6. Children are included in this CLA analysis if they had been recorded as a child being looked after 
+                      in any period between the ages of 6 - 16. Those matched to earlier years in the KS4 attainment data will as a result have less 
           coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 8 and above."),
                       br(),
-                      paste("8. Percentages are rounded to the nearest 1%."),
+                      paste("7. Percentages are rounded to the nearest 1%."),
+                      br(),
+                      paste("8. Caution is advised when comparing across Local Authorities, due to differences in local policies."),
                       br()),
                     tabPanel(
                       "Timing of CSC",
@@ -1478,14 +1511,13 @@ CSCExp <- function() {
                         looked after occurred before, after or during the same school term as their first serious violence offence (for those recorded as CIN, 
                         including CLA, as defined by the Children Act 1989, at any point in a given school term between 2011/12 – 2017/18 for CIN, and 
                           2004/05 - 2017/18 for CLA)."), br(),
-                      p("The analysis presented here utilises a different dataset", tags$sup("[6]"), "to that used in the previous section of this 
-                        publication, enabling more granular examination of those recorded in the children’s social care system at any point during the year, 
-                        not just on 31st March, and to look at changes in their social care group throughout the year."), br(),
+                      p("The analysis presented here utilises a different dataset", tags$sup("[5]"), "to that used in the previous tab (Ever CIN/CLA), enabling more granular examination of those recorded in the children’s social care system at any point during the year,
+                        and to look at changes in their social care group throughout the year."), br(),
                       p("Children who had been cautioned or sentenced for a serious violence offence have been classifed here as being CIN, CPP or CLA 
-                        in an academic term, if at any point in that term they have been recorded as CIN, CPP or CLA", tags$sup("[7]"), "."),
+                        in an academic term, if at any point in that term they have been recorded as CIN, CPP or CLA", tags$sup("[6]"), "."),
                         h3("The first record of children being a child in need, having a child protection plan or 
                             being a child who was looked after, relative to the timing of their first offence, for all pupils matched to KS4 
-                             academic year 2014/15"), 
+                             academic year 2012/13 - 2017/18"), 
                       column(h3(textOutput("CSCTitle1_time")),
                              width=6, 
                              box(width = 12,
@@ -1499,33 +1531,28 @@ CSCExp <- function() {
                       ,
                       strong("Footnotes"),
                       br(),
-                      paste("1. It is important to note on using this measure, the analysis takes no account of how long the children 
-          were in need, or in care, and does not count those who were in need, or looked after, during the period 
-          specified but were not in need, or looked after specifically on 31st March. As such, the figures stated will 
-                be an under-estimate of the true proportion of children in need and children who are looked after."),
-                      br(),
-                      paste("2. This diverges from the definition of Ever CIN used in the CIN Review, which looks at whether the child 
+                      paste("1. This diverges from the definition of Ever CIN used in the CIN Review, which looks at whether the child 
           was recorded as so in the previous 6 years. Please see here for further details:"),
                       a(href = "https://www.gov.uk/government/publications/children-in-need-of-help-and-protection-data-and-analysis", 
                         "Children in need of help and protection: data and analysis"),
                       br(),
-                      paste("3. Child Protection Plan (CPP) - support for a child where there is reasonable suspicion that child is 
+                      paste("2. Child Protection Plan (CPP) - support for a child where there is reasonable suspicion that child is 
                 suffering, or likely to suffer, significant harm."),
                       br(),
-                      paste("4. Children who are looked after (CLA) – a child who is looked after by a local authority if they fall into one 
+                      paste("3. Children who are looked after (CLA) – a child who is looked after by a local authority if they fall into one 
           of the following: is provided with accommodation, for a continuous period of more than 24 hours (Children Act 1989, 
           Section 20 and 21); is subject to a care order (Children Act 1989, Part IV), or is subject to a placement order. 
           The analysis has not analysed children on a child in need plan (CINP) separately, but rather have looked at all 
                 children in need, and the two categories of highest intervention."),
                       br(),
-                      paste("5. Please see here for more information:"),
+                      paste("4. Please see here for more information:"),
                       a(href = "https://www.gov.uk/government/publications/children-in-need-of-help-and-protection-data-and-analysis", 
                         "Children looked after return 2020 to 2021"),
                       br(),
-                      paste("6. Termly CIN and CLA datasets were provided internally to enable us to complete this analysis. This data is not currently 
+                      paste("5. Termly CIN and CLA datasets were provided internally to enable us to complete this analysis. This data is not currently 
                 available within the MoJ-DfE data share."),
                       br(),
-                      paste("7. A child can move between various stages of the social care system within and between terms, including into and out of need. 
+                      paste("6. A child can move between various stages of the social care system within and between terms, including into and out of need. 
           Each child was assigned a termly activity label based on the following hierarchy: CLA – if a child has been looked after for at least 
           one day in that term; CPP – if a child is not labelled as CLA and has been on a child protection plan for at least one day in that term; 
           CIN – a child that falls into any of the two previous categories, or if they are CINP - if a child is not labelled as CLA or CPP and has 
@@ -1535,10 +1562,11 @@ CSCExp <- function() {
                       a(href = "https://www.gov.uk/government/publications/children-in-need-of-help-and-protection-data-and-analysis", 
                         "Children in need of help and protection: data and analysis"),
                       br(),
-                      paste("8. The date used to calculate any findings relating to timing of first offence use the date the offence took place 
-                rather than when it was processed through the courts."),
+                      paste("7. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
                       br(),
-                      paste("9. Percentages are rounded to the nearest 1%."),
+                      paste("8. Percentages are rounded to the nearest 1%."),
+                      br(),
+                      paste("9. Caution is advised when comparing across Local Authorities, due to differences in local policies."),
                       br())
         ),
         )

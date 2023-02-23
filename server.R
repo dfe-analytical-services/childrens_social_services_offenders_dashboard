@@ -126,7 +126,7 @@ server <- function(input, output, session) {
     choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
     
     selectizeInput('demLAchoice2', 'Local Authority 2', choices = c('Statistical neighbour' = choicesLA_stat, "All other" = choicesLA_not_stat),
-                   multiple = TRUE,
+                   multiple = TRUE, selected=character(0),
                    options = list(placeholder = 'Select a comparison', maxItems =  1))
     
     # Will need to Add England in another group
@@ -140,7 +140,7 @@ server <- function(input, output, session) {
     choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
     
     selectizeInput('sclLAchoice2', 'Local Authority 2', choices = c('Statistical neighbour' = choicesLA_stat, "All other" = choicesLA_not_stat),
-                   multiple = TRUE,
+                   multiple = TRUE, selected=character(0),
                    options = list(placeholder = 'Select a comparison', maxItems =  1))
     
     # Will need to Add England in another group
@@ -154,7 +154,7 @@ server <- function(input, output, session) {
     choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
     
     selectizeInput('cscLAchoice2', 'Local Authority 2', choices = c('Statistical neighbour' = choicesLA_stat, "All other" = choicesLA_not_stat),
-                   multiple = TRUE,
+                   multiple = TRUE, selected=character(0),
                    options = list(placeholder = 'Select a comparison', maxItems =  1))
     
     # Will need to Add England in another group
@@ -276,7 +276,7 @@ server <- function(input, output, session) {
           "Indicator" = indicator,
           "Number of pupils" = all,
           "Number of children cautioned or sentenced\nfor an offence (%)" = offenders_perc,
-          "Number of children cautioned or sentences for a serious violence offence (%)" = sv_perc,
+          "Number of children cautioned or sentenced for a serious violence offence (%)" = sv_perc,
           "Number of children cautioned or sentenced for a serious violence offence with a prior offence (%)" = prev_perc,
           "Number of children who live or go to school in different LA (%)" = all_dif_perc,
           "Number of children cautioned or sentenced for an offence who live or go to school in different LA (%)" = off_dif_perc,
@@ -305,7 +305,7 @@ server <- function(input, output, session) {
       
     },
     rownames = TRUE,
-    options = list(pageLength = 8, searchable = FALSE, dom = "t", ordering = F),
+    options = list(searchable = FALSE, dom = "t", ordering = F),
     filter = c("none"),
     selection = c("none")
   ))
@@ -448,7 +448,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and 
                                    had ever been eligible for free school meals (FSM), and all pupils who had ever been eligible for FSM, for pupils matched 
-                                   to KS4 academic years 2012/13 - 2014/15"), 
+                                   to KS4 academic years 2012/13 - 2017/18"), 
         column(width=6, 
                h3(textOutput("DemTitle2_FSM1_sv")), 
                box(width = 12, 
@@ -470,7 +470,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for an offence and 
             had ever been eligible for free school meals (FSM), and all pupils who had ever been eligible for FSM, for pupils matched 
-            to KS4 academic years 2012/13 - 2014/15"), 
+            to KS4 academic years 2012/13 - 2017/18"), 
         column(width=6, 
                h3(textOutput("DemTitle2_FSM1_sv")), 
                box(width = 12, 
@@ -652,7 +652,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for a 
             serious violence offence and had been persistently absent, and all pupils who had ever been 
-            persistently absent, for pupils matched to KS4 academic years 2012/13 - 2014/15"),
+            persistently absent, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
         column(h3(textOutput("sclTitle1_PAwaf")),
                width=6,
                box(width = 12,
@@ -674,7 +674,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for an 
             offence and had been persistently absent, and all pupils who had ever been 
-            persistently absent, for pupils matched to KS4 academic years 2012/13 - 2014/15"),
+            persistently absent, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
         
         column(h3(textOutput("sclTitle1_PAwaf")),
                width=6,
@@ -812,7 +812,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for a serious violence 
             offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years 
-            2012/13 - 2014/15"), 
+            2012/13 - 2017/18"), 
         column(h3(textOutput("sclTitle1_suswaf")),
                width=6,
                box(width = 12,
@@ -834,7 +834,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for an
             offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years 
-            2012/13 - 2014/15"), 
+            2012/13 - 2017/18"), 
         column(h3(textOutput("sclTitle1_suswaf")),
                width=6,
                box(width = 12,
@@ -927,7 +927,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for a serious violence 
             offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched 
-            to KS4 academic years 2012/13 - 2014/15"),  
+            to KS4 academic years 2012/13 - 2017/18"),  
         column(h3(textOutput("sclTitle1_exclwaf")),
                width=6,
                box(width = 12,
@@ -949,7 +949,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for an
             offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched 
-            to KS4 academic years 2012/13 - 2014/15"),  
+            to KS4 academic years 2012/13 - 2017/18"),  
         column(h3(textOutput("sclTitle1_exclwaf")),
                width=6,
                box(width = 12,
@@ -1152,7 +1152,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for a serious violence 
             offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision, 
-            for pupils matched to KS4 academic years 2012/13 - 2014/15"), 
+            for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
         column(h3(textOutput("sclTitle1_APwaf")),
                width=6, 
                box(width = 12,
@@ -1174,7 +1174,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for an 
             offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision, 
-            for pupils matched to KS4 academic years 2012/13 - 2014/15"), 
+            for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
         column(h3(textOutput("sclTitle1_APwaf")),
                width=6, 
                box(width = 12,
@@ -1311,7 +1311,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for a serious 
                                                   violence offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched 
-                                                  to KS4 academic years 2012/13 - 2014/15"), 
+                                                  to KS4 academic years 2012/13 - 2017/18"), 
         column(h3(textOutput("sclTitle1_SENwaf")),
                width=6, 
                box(width = 12,
@@ -1333,7 +1333,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for an
             offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched 
-            to KS4 academic years 2012/13 - 2014/15"), 
+            to KS4 academic years 2012/13 - 2017/18"), 
         column(h3(textOutput("sclTitle1_SENwaf")),
                width=6, 
                box(width = 12,
@@ -1426,7 +1426,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for a serious violence 
                                                   offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to 
-                                                  KS4 academic years 2012/13 - 2014/15"), 
+                                                  KS4 academic years 2012/13 - 2017/18"), 
         column(h3(textOutput("sclTitle1_EHCPwaf")),
                width=6, 
                box(width = 12, 
@@ -1448,7 +1448,7 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for an 
             offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to 
-            KS4 academic years 2012/13 - 2014/15"), 
+            KS4 academic years 2012/13 - 2017/18"), 
         column(h3(textOutput("sclTitle1_EHCPwaf")),
                width=6, 
                box(width = 12, 
@@ -1561,9 +1561,8 @@ server <- function(input, output, session) {
   output$csc_plot_la_waf <- renderUI(
     if (input$csc_plot_switch_waf == "sv_off") {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN on 31st 
-                                        March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4
-                                        academic year 2014/15"), 
+        h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN, and all pupils who had ever been CIN, for pupils matched to KS4
+            academic year 2012/13 - 2017/18"), 
         column(h3(textOutput("CSCTitle1_waf")),
                width=6, 
                box(width = 12,
@@ -1583,9 +1582,8 @@ server <- function(input, output, session) {
       )
     } else {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for an offence and had ever been CIN on 31st 
-            March in any given year, and all pupils who had ever been CIN on 31st March in any given year, for pupils matched to KS4
-            academic year 2014/15"), 
+        h3("The proportion of children who had been cautioned or sentenced for an offence and had ever been CIN, and all pupils who had ever been CIN, for pupils matched to KS4
+            academic year 2012/13 - 2017/18"), 
         column(h3(textOutput("CSCTitle1_waf")),
                width=6, 
                box(width = 12,
@@ -1621,16 +1619,16 @@ server <- function(input, output, session) {
   output$waffleText_CIN1_any <- renderText({
     WaffleText <- CIN_waffle_any %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
     paste0(WaffleText$propany_count_CIN, "% of children who were cautioned or sentenced for an offence
-    had ever been CIN on 31st March in any given year. However, ", WaffleText$also_propany_count_CIN, "% of those who had ever been
-    CIN on 31st March in any given year were children who were cautioned or sentenced for an offence.")
+    had ever been CIN. However, ", WaffleText$also_propany_count_CIN, "% of those who had ever been
+    CIN were children who were cautioned or sentenced for an offence.")
   })
   
   # Output - CIN waffle text 2 - offenders
   output$waffleText_CIN2_any <- renderText({
     WaffleText <- CIN_waffle_any %>% filter(indicator == input$cscindichoice2, LA == input$cscLAchoice2)
     paste0(WaffleText$propany_count_CIN, "% of children who were cautioned or sentenced for an offence
-    had ever been CIN on 31st March in any given year. However, ", WaffleText$also_propany_count_CIN, "% of those who had ever been
-    CIN on 31st March in any given year were children who were cautioned or sentenced for an offence.")
+    had ever been CIN. However, ", WaffleText$also_propany_count_CIN, "% of those who had ever been
+    CIN were children who were cautioned or sentenced for an offence.")
   })
   
   # Output - CIN waffle 1 - offenders
@@ -1661,16 +1659,16 @@ server <- function(input, output, session) {
   output$waffleText_CIN1_sv <- renderText({
     WaffleText <- CIN_waffle_sv %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
     paste0(WaffleText$propsv_count_CIN, "% of children who were cautioned or sentenced for a serious violence offence
-    had ever been CIN on 31st March in any given year. However, ", WaffleText$also_propsv_count_CIN, "% of those who had ever been
-    CIN on 31st March in any given year were children who were cautioned or sentenced for a serious violence offence.")
+    had ever been CIN. However, ", WaffleText$also_propsv_count_CIN, "% of those who had ever been
+    CIN were children who were cautioned or sentenced for a serious violence offence.")
   })
 
   # Output - CIN waffle text 2 - sv
   output$waffleText_CIN2_sv <- renderText({
     WaffleText <- CIN_waffle_sv %>% filter(indicator == input$cscindichoice2, LA == input$cscLAchoice2)
     paste0(WaffleText$propsv_count_CIN, "% of children who were cautioned or sentenced for a serious violence offence
-    had ever been CIN on 31st March in any given year. However, ", WaffleText$also_propsv_count_CIN, "% of those who had ever been
-    CIN on 31st March in any given year were children who were cautioned or sentenced for a serious violence offence.")
+    had ever been CIN. However, ", WaffleText$also_propsv_count_CIN, "% of those who had ever been
+    CIN were children who were cautioned or sentenced for a serious violence offence.")
   })
 
   # Output - CSC timing column 1 LA title

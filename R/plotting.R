@@ -62,10 +62,11 @@ createGenderPlot <- function(data, LAchoice){
           axis.text = element_text(color = "black", size = 15),
           text = element_text(size = 15), 
           legend.text = element_text(size = 15),
-          axis.title.y = element_text(angle = 0, size = 15),
+          axis.title.y = element_text(size = 15),
           plot.title = element_text(hjust = 0.5, size = 20),
           plot.subtitle = element_text(hjust = 0.5)) +
-    scale_fill_manual(values = c("#08306b", "#2171b5"), labels = c("Female", "Male")) 
+    scale_fill_manual(values = c("#08306b", "#2171b5"), labels = c("Female", "Male")) +
+    scale_x_discrete(labels = c("All pupils", "Any\nOffence", "Serious\nViolence\nOffence"))
 
 }
 
@@ -333,7 +334,7 @@ createWaffle_PA_sv <- function(data, LAchoice){
   
   PA_RHS_waffle <- waffle(data[c(4,6)], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#6BACE6"), 
-                           title="All pupils who were\npersistenly absent",
+                           title="All pupils who were\npersistently absent",
                            xlab="1 square = 1 %") + 
     theme_classic() +
     theme(axis.line = element_blank(),
@@ -386,7 +387,7 @@ createWaffle_PA_any <- function(data, LAchoice){
   
   PA_RHS_waffle <- waffle(data[c("also_any_prop_count_PA","not_also_any_prop_count_PA")], rows=10, size=0.6, flip=TRUE,
                           colors=c("#08306b", "#6BACE6"), 
-                          title="All pupils who were\npersistenly absent",
+                          title="All pupils who were\npersistentlyabsent",
                           xlab="1 square = 1 %") + 
     theme_classic() +
     theme(axis.line = element_blank(),
