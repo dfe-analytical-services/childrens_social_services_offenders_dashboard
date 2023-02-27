@@ -50,10 +50,11 @@ plotAvgRevBenchmark <- function(dfRevenueBalance,inputArea){
 createGenderPlot <- function(data, LAchoice){
   
   title1 <- paste0("Gender breakdown for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(fill = Gender, x = group, y = perc)) +
     geom_bar(stat = "identity") +
-    labs(x=NULL, y="% male/female", title = title1) +
+    labs(x=NULL, y="% male/female", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
     geom_text(aes(label = paste0(perc, "%"), group = Gender), color = "white", position = position_stack(vjust = 0.5), size=6) +
     theme_classic() +
     theme(legend.position = "bottom", 
@@ -61,19 +62,22 @@ createGenderPlot <- function(data, LAchoice){
           axis.text = element_text(color = "black", size = 15),
           text = element_text(size = 15), 
           legend.text = element_text(size = 15),
-          axis.title.y = element_text(angle = 0, size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20)) +
-    scale_fill_manual(values = c("#08306b", "#2171b5"), labels = c("Female", "Male")) 
+          axis.title.y = element_text(size = 15),
+          plot.title = element_text(hjust = 0.5, size = 20),
+          plot.subtitle = element_text(hjust = 0.5)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"), labels = c("Female", "Male")) +
+    scale_x_discrete(labels = c("All pupils", "Any\nOffence", "Serious\nViolence\nOffence"))
 
 }
 
 createEthPlot <- function(data, LAchoice){
   
   title1 <- paste0("Ethnicity breakdown for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=perc, y=EthnicGroupMajor, fill = EthnicGroupMajor )) +
     geom_bar(stat = "identity") +
-    labs(x = "% of ethnic group major", y=NULL, title = title1) +
+    labs(x = "% of ethnic group major", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
     geom_text(aes(label = paste0(perc, "%")), vjust = 0, hjust=-0.1, size=6) +
     theme_classic() +
     theme(legend.position = "none", axis.text = element_text(color="black", size=15)) +
@@ -93,10 +97,11 @@ createEthPlot <- function(data, LAchoice){
 createFSMPlot <- function(data, LAchoice){
   
   title1 <- paste0("Free school meals (FSM) for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=perc, y=group, fill = group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x="% eligible for FSM", y=NULL, title = title1) +
+    labs(x="% eligible for FSM", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
     geom_text(aes(label = paste0(perc, "%")), hjust =-0.1, position = position_dodge(width = 1), size=6) +
     theme_classic() +
     theme(legend.position = "none", axis.text = element_text(color="black", size=15)) +
@@ -108,8 +113,7 @@ createFSMPlot <- function(data, LAchoice){
           plot.title = element_text(hjust = 0.5, size = 20))
 }
 
-createWaffle_FSM <- function(data, LAchoice){
-  title <- paste0("Free school meals (FSM) for ", LAchoice)
+createWaffle_FSM_sv <- function(data, LAchoice){
   
    # automated text for waffle - LHS
   FSM_LHS_text <- data.frame(x1 = paste0(data$sv_prop_count_FSM, "%\nEligible\nfor FSM"),
@@ -157,17 +161,72 @@ createWaffle_FSM <- function(data, LAchoice){
           plot.title=element_text(size=12), 
           legend.text=element_text(size=12))  
   # Use grid.arrange to put plots in columns
-  grid.arrange(grobs = list(FSM_LHS_waffle, FSM_RHS_waffle), top=title, ncol=2, widths=c(1,2))
+  grid.arrange(grobs = list(FSM_LHS_waffle, FSM_RHS_waffle), ncol=2, widths=c(1,2), 
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
+  
+}
+
+createWaffle_FSM_any <- function(data, LAchoice){
+  
+  # automated text for waffle - LHS
+  FSM_LHS_text <- data.frame(x1 = paste0(data$any_prop_count_FSM, "%\nEligible\nfor FSM"),
+                             x2 = paste0(data$prop_any_not_FSM, "%\nNot eligible\nfor FSM"))
+  
+  FSM_LHS_waffle <- waffle(data[c("any_prop_count_FSM","prop_any_not_FSM")], rows=10, size=0.6, flip=TRUE, 
+                           colors=c("#08306b", "#2171b5"), 
+                           title="Children who were cautioned\nor sentenced for\nan offence",  
+                           xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"), 
+                      labels = c(FSM_LHS_text$x1, 
+                                 FSM_LHS_text$x2)) +
+    theme(text=element_text(size=12), 
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12)) 
+  
+  # automated text for waffle - RHS
+  FSM_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_FSM, "%\nChildren cautioned or sentenced\nfor an offence"),
+                             x2 = paste0(data$not_also_any_prop_count_FSM, "%\nAll other\npupils"))
+  
+  FSM_RHS_waffle <- waffle(data[c("also_any_prop_count_FSM","not_also_any_prop_count_FSM")], rows=10, size=0.6, flip=TRUE,
+                           colors=c("#08306b", "#6BACE6"), 
+                           title="All pupils\neligible for FSM",
+                           xlab="1 square = 1 %") + 
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#6BACE6"), 
+                      labels = c(FSM_RHS_text$x1, 
+                                 FSM_RHS_text$x2)) +
+    theme(text=element_text(size=12), #change font size of all text
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12))  
+  # Use grid.arrange to put plots in columns
+  grid.arrange(grobs = list(FSM_LHS_waffle, FSM_RHS_waffle), ncol=2, widths=c(1,2), 
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
   
 }
 
 createAgeOffence <- function(data, LAchoice){
   
   title1 <- paste0("Age at first offence for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=OffenceStartAge, y=perc, group=group)) + 
     geom_line(aes(color=group), size=1.5) + 
-    labs(x = "Age at first offence", y="% at age", title = title1) +
+    labs(x = "Age at first offence", y="% at age", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_color_manual(values = c("#08306b", "#2171b5")) +
@@ -180,10 +239,11 @@ createAgeOffence <- function(data, LAchoice){
 createKS2plot <- function(data, LAchoice){
   
   title1 <- paste0("KS2 attainment for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(fill=Subject, x=perc, y=group)) + 
     geom_bar(position='dodge', stat='identity') +
-    labs(x="% at level 4 or above", y=NULL, title=title1) +
+    labs(x="% at level 4 or above", y=NULL, title=title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
     geom_text(aes(label = paste0(perc, "%")), vjust = 0, hjust=-0.15, position = position_dodge(width = 1), size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank()) +
@@ -200,10 +260,11 @@ createKS2plot <- function(data, LAchoice){
 createKS4plot <- function(data, LAchoice){
   
   title1 <- paste0("KS4 attainment for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(fill=group, y=perc, x=rev(Subject))) + 
     geom_bar(position='dodge', stat='identity') +
-    labs(y="% at KS4\nbenchmark", x=NULL, title=title1) +
+    labs(y="% at KS4\nbenchmark", x=NULL, title=title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
     geom_text(aes(label = paste0(perc, "%")), vjust = -0.2, hjust = 0.25, position = position_dodge(width = 1), size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank()) +
@@ -224,10 +285,11 @@ createKS4plot <- function(data, LAchoice){
 createPAPlot <- function(data, LAchoice){
   
   title1 <- paste0("Persistent absence for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=Absence, y=perc, fill = group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x=NULL, y="% persistently\nabsent", title = title1) +
+    labs(x=NULL, y="% persistently\nabsent", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
     geom_text(aes(label = paste0(perc, "%")), vjust =-0.4, position = position_dodge(width = 1), size=6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
@@ -241,8 +303,7 @@ createPAPlot <- function(data, LAchoice){
           axis.title.y=element_text(angle=0))
 }
 
-createWaffle_PA <- function(data, LAchoice){
-  title <- paste0("Persistent absence for ", LAchoice)
+createWaffle_PA_sv <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   PA_LHS_text <- data.frame(x1 = paste0(data$sv_prop_count_PA, "%\nPersistently\nabsent"),
@@ -273,7 +334,7 @@ createWaffle_PA <- function(data, LAchoice){
   
   PA_RHS_waffle <- waffle(data[c(4,6)], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#6BACE6"), 
-                           title="All pupils who were\npersistenly absent",
+                           title="All pupils who were\npersistently absent",
                            xlab="1 square = 1 %") + 
     theme_classic() +
     theme(axis.line = element_blank(),
@@ -290,7 +351,61 @@ createWaffle_PA <- function(data, LAchoice){
           plot.title=element_text(size=12), 
           legend.text=element_text(size=12))  
   # Use grid.arrange to put plots in columns
-  grid.arrange(grobs = list(PA_LHS_waffle, PA_RHS_waffle), top=title, ncol=2, widths=c(1,2))
+  grid.arrange(grobs = list(PA_LHS_waffle, PA_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
+  
+}
+
+createWaffle_PA_any <- function(data, LAchoice){
+  
+  # automated text for waffle - LHS
+  PA_LHS_text <- data.frame(x1 = paste0(data$any_prop_count_PA, "%\nPersistently\nabsent"),
+                            x2 = paste0(data$prop_any_not_PA, "%\nNot\npersistently\nabsent"))
+  
+  PA_LHS_waffle <- waffle(data[c("any_prop_count_PA","prop_any_not_PA")], rows=10, size=0.6, flip=TRUE, 
+                          colors=c("#08306b", "#2171b5"), 
+                          title="Children who were cautioned\nor sentenced for an\noffence",  
+                          xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"), 
+                      labels = c(PA_LHS_text$x1, 
+                                 PA_LHS_text$x2)) +
+    theme(text=element_text(size=12), 
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12)) 
+  
+  # automated text for waffle - RHS
+  PA_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_PA, "%\nChildren cautioned or sentenced\nfor an offence"),
+                            x2 = paste0(data$not_also_any_prop_count_PA, "%\nAll other\npupils"))
+  
+  PA_RHS_waffle <- waffle(data[c("also_any_prop_count_PA","not_also_any_prop_count_PA")], rows=10, size=0.6, flip=TRUE,
+                          colors=c("#08306b", "#6BACE6"), 
+                          title="All pupils who were\npersistentlyabsent",
+                          xlab="1 square = 1 %") + 
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#6BACE6"), 
+                      labels = c(PA_RHS_text$x1, 
+                                 PA_RHS_text$x2)) +
+    theme(text=element_text(size=12), #change font size of all text
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12))  
+  # Use grid.arrange to put plots in columns
+  grid.arrange(grobs = list(PA_LHS_waffle, PA_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
   
 }
 
@@ -301,11 +416,12 @@ createPATimingPlot <- function(data, LAchoice){
                                                                 "After the first serious violence offence")))
   
   title1 <- paste0("Persistent absence timing for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=perc, y=rev(Absence), fill = Timing, group = rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% with persistent absence timing", y=NULL, title = title1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-3.5, hjust=0, size = 6) +
+    labs(x = "% with persistent absence timing", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-3, hjust=0, size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     
@@ -325,10 +441,11 @@ createPATimingPlot <- function(data, LAchoice){
 createSusExclPlot <- function(data, LAchoice){
   
   title1 <- paste0("Suspensions and permanent exclusions\nfor ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=rev(Absence), y=perc, fill = group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x=NULL, y="% suspended/\npermanently\nexcluded", title = title1) +
+    labs(x=NULL, y="% suspended/\npermanently\nexcluded", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
     geom_text(aes(label = paste0(perc, "%")), vjust =-0.4, position = position_dodge(width = 1), size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=12)) +
@@ -342,8 +459,7 @@ createSusExclPlot <- function(data, LAchoice){
           axis.title.y=element_text(angle=0))
 }
 
-createWaffle_Sus <- function(data, LAchoice){
-  title <- paste0("Suspensions for ", LAchoice)
+createWaffle_Sus_sv <- function(data, LAchoice){
 
   # automated text for waffle - LHS
   sus_LHS_text <- data.frame(x1 = paste0(data$sv_prop_count_Sus, "%\nSuspended"),
@@ -391,12 +507,65 @@ createWaffle_Sus <- function(data, LAchoice){
           plot.title=element_text(size=12),
           legend.text=element_text(size=12))
   # Use grid.arrange to put plots in columns
-  grid.arrange(grobs = list(sus_LHS_waffle, sus_RHS_waffle), top=title, ncol=2, widths=c(1,2))
+  grid.arrange(grobs = list(sus_LHS_waffle, sus_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
 
 }
 
-createWaffle_Excl <- function(data, LAchoice){
-  title <- paste0("Permanent exclusions for ", LAchoice)
+createWaffle_Sus_any <- function(data, LAchoice){
+  
+  # automated text for waffle - LHS
+  sus_LHS_text <- data.frame(x1 = paste0(data$any_prop_count_Sus, "%\nSuspended"),
+                             x2 = paste0(data$prop_any_not_Sus, "%\nNot\nsuspended"))
+  
+  sus_LHS_waffle <- waffle(data[c("any_prop_count_Sus","prop_any_not_Sus")], rows=10, size=0.6, flip=TRUE,
+                           colors=c("#08306b", "#2171b5"),
+                           title="Children who were cautioned\nor sentenced for an\noffence",
+                           xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"),
+                      labels = c(sus_LHS_text$x1,
+                                 sus_LHS_text$x2)) +
+    theme(text=element_text(size=12),
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12),
+          legend.text=element_text(size=12))
+  
+  # automated text for waffle - RHS
+  sus_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_Sus, "%\nChildren cautioned or sentenced\nfor an offence"),
+                             x2 = paste0(data$not_also_any_prop_count_Sus, "%\nAll other\npupils"))
+  
+  sus_RHS_waffle <- waffle(data[c("also_any_prop_count_Sus","not_also_any_prop_count_Sus")], rows=10, size=0.6, flip=TRUE,
+                           colors=c("#08306b", "#6BACE6"),
+                           title="All pupils who were\nsuspended",
+                           xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#6BACE6"),
+                      labels = c(sus_RHS_text$x1,
+                                 sus_RHS_text$x2)) +
+    theme(text=element_text(size=12), #change font size of all text
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12),
+          legend.text=element_text(size=12))
+  # Use grid.arrange to put plots in columns
+  grid.arrange(grobs = list(sus_LHS_waffle, sus_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
+  
+}
+
+createWaffle_Excl_sv <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   sus_LHS_text <- data.frame(x1 = paste0(data$sv_prop_count_Excl, "%\nPermanently\nexcluded"),
@@ -444,52 +613,77 @@ createWaffle_Excl <- function(data, LAchoice){
           plot.title=element_text(size=12),
           legend.text=element_text(size=12))
   # Use grid.arrange to put plots in columns
-  grid.arrange(grobs = list(sus_LHS_waffle, sus_RHS_waffle), top=title, ncol=2, widths=c(1,2))
+  grid.arrange(grobs = list(sus_LHS_waffle, sus_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
+  
+}
+
+createWaffle_Excl_any <- function(data, LAchoice){
+  
+  # automated text for waffle - LHS
+  sus_LHS_text <- data.frame(x1 = paste0(data$any_prop_count_Excl, "%\nPermanently\nexcluded"),
+                             x2 = paste0(data$prop_any_not_Excl, "%\nNot\npermanently\nexcluded"))
+  
+  sus_LHS_waffle <- waffle(data[c("any_prop_count_Excl","prop_any_not_Excl")], rows=10, size=0.6, flip=TRUE,
+                           colors=c("#08306b", "#2171b5"),
+                           title="Children who were cautioned\nor sentenced for an\noffence",
+                           xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"),
+                      labels = c(sus_LHS_text$x1,
+                                 sus_LHS_text$x2)) +
+    theme(text=element_text(size=12),
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12),
+          legend.text=element_text(size=12))
+  
+  # automated text for waffle - RHS
+  sus_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_Excl, "%\nChildren cautioned or sentenced\nfor an offence"),
+                             x2 = paste0(data$not_also_any_prop_count_Excl, "%\nAll other\npupils"))
+  
+  sus_RHS_waffle <- waffle(data[c("also_any_prop_count_Excl","not_also_any_prop_count_Excl")], rows=10, size=0.6, flip=TRUE,
+                           colors=c("#08306b", "#6BACE6"),
+                           title="All pupils who were\npermanently excluded",
+                           xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#6BACE6"),
+                      labels = c(sus_RHS_text$x1,
+                                 sus_RHS_text$x2)) +
+    theme(text=element_text(size=12), #change font size of all text
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12),
+          legend.text=element_text(size=12))
+  # Use grid.arrange to put plots in columns
+  grid.arrange(grobs = list(sus_LHS_waffle, sus_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
   
 }
 
 createSusTimePlot <- function(data, LAchoice, time){
   
   data <- data %>% filter(SusExcl=="Suspended", Time == time) %>% mutate(rank = as.factor(rank))
-
   
   title1 <- paste0(time," suspension timing for ", LAchoice)
-  labels1 <- c(paste0(time, " suspension\nprior to first\nserious violence offence"),
-               paste0(time, " suspension\non same day as first\nserious violence offence"),
-               paste0(time, " suspension\nafter first\nserious violence offence"))
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
+  labels1 <- c(paste0(time, " suspension\nprior to first\nserious violence\noffence"),
+               paste0(time, " suspension\non same day as first\nserious violence\noffence"),
+               paste0(time, " suspension\nafter first\nserious violence\noffence"))
   
   ggplot(data, aes(x=rank, y=Perc, fill = time_group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x=NULL, y="% with\ntiming", title = title1) +
-    geom_text(aes(label = paste0(Perc, "%")), vjust =-0.4, position = position_dodge(width = 1)) +
-    theme_classic() +
-    theme(legend.position = "bottom", legend.title=element_blank(), 
-          axis.text = element_text(color="black", angle = 45, vjust = 1, hjust=1)) +
-    scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6"), 
-                      labels=labels1) +
-    scale_x_discrete(labels = c("Over 2 years", "1 - 2 years",  "180 -365 days", "90 - 179 days","60 - 80 days",  
-                                "30 - 59 days","1 - 29 days", "On same day", "1 - 29 days",  "30 - 59 days", 
-                                "60 - 89 days", "90 - 179 days", "180 -365 days", "1 - 2 years", "Over 2 years")) +
-    geom_vline(xintercept ="8", linetype='dashed', color = 'grey') +
-    theme(text=element_text(size = 15),
-          axis.text=element_text(size = 15),
-          axis.title=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20), 
-          axis.title.y=element_text(angle=0))
-}
-
-createExclTimePlot <- function(data, LAchoice, time){
-  
-  data <- data %>% filter(SusExcl=="Permanently excluded", Time == time) %>% mutate(rank = as.factor(rank))
-  
-  title1 <- paste0(time," permanent exclusion timing for ", LAchoice)
-  labels1 <- c(paste0(time, " permanent\nexclusion\nprior to first\nserious violence offence"),
-               paste0(time, " permanent\nexclusion\non same day as first\nserious violence offence"),
-               paste0(time, " permanent\nexclusion\nafter first\nserious violence offence"))
-  
-  ggplot(data, aes(x=rank, y=Perc, fill = time_group)) +
-    geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x=NULL, y="% with\ntiming", title = title1) +
+    labs(x=NULL, y="% with\ntiming", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
     geom_text(aes(label = paste0(Perc, "%")), vjust =-0.4, position = position_dodge(width = 1)) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), 
@@ -504,16 +698,49 @@ createExclTimePlot <- function(data, LAchoice, time){
           axis.text=element_text(size = 15),
           axis.title=element_text(size = 15),
           plot.title = element_text(hjust = 0.5, size = 20), 
-          axis.title.y=element_text(angle=0))
+          axis.title.y=element_text(angle=0)) +
+    ylim(0,(max(data$Perc, na.rm = T) + 3))
+}
+
+createExclTimePlot <- function(data, LAchoice, time){
+  
+  data <- data %>% filter(SusExcl=="Permanently excluded", Time == time) %>% mutate(rank = as.factor(rank))
+  
+  title1 <- paste0(time," permanent exclusion timing for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
+  labels1 <- c(paste0(time, " permanent\nexclusion\nprior to first\nserious violence\noffence"),
+               paste0(time, " permanent\nexclusion\non same day as first\nserious violence\noffence"),
+               paste0(time, " permanent\nexclusion\nafter first\nserious violence\noffence"))
+  
+  ggplot(data, aes(x=rank, y=Perc, fill = time_group)) +
+    geom_bar(position = 'dodge', stat = 'identity') +
+    labs(x=NULL, y="% with\ntiming", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
+    geom_text(aes(label = paste0(Perc, "%")), vjust =-0.4, position = position_dodge(width = 1)) +
+    theme_classic() +
+    theme(legend.position = "bottom", legend.title=element_blank(), 
+          axis.text.x = element_text(color="black", angle = 45, vjust = 1, hjust=1)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6"), 
+                      labels=labels1) +
+    scale_x_discrete(labels = c("Over 2 years", "1 - 2 years",  "180 -365 days", "90 - 179 days","60 - 80 days",  
+                                "30 - 59 days","1 - 29 days", "On same day", "1 - 29 days",  "30 - 59 days", 
+                                "60 - 89 days", "90 - 179 days", "180 -365 days", "1 - 2 years", "Over 2 years")) +
+    geom_vline(xintercept ="8", linetype='dashed', color = 'grey') +
+    theme(text=element_text(size = 15),
+          axis.text=element_text(size = 15),
+          axis.title=element_text(size = 15),
+          plot.title = element_text(hjust = 0.5, size = 20), 
+          axis.title.y=element_text(angle=0)) +
+  ylim(0,(max(data$Perc, na.rm = T) + 3))
 }
 
 createAPPlot <- function(data, LAchoice){
   
   title1 <- paste0("Alternative provision for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=perc, y=group, fill = group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x="% ever attended AP", y=NULL, title = title1) +
+    labs(x="% ever attended AP", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
     geom_text(aes(label = paste0(perc, "%")), hjust =-0.1, position = position_dodge(width = 1), size = 6) +
     theme_classic() +
     theme(legend.position = "none", legend.title=element_blank(), axis.text = element_text(color="black", size = 15)) +
@@ -526,8 +753,7 @@ createAPPlot <- function(data, LAchoice){
           axis.title.y=element_text(angle=0))
 }
 
-createWaffle_AP <- function(data, LAchoice){
-  title <- paste0("Alternative provision for ", LAchoice)
+createWaffle_AP_sv <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   AP_LHS_text <- data.frame(x1 = paste0(data$sv_prop_count_AP, "%\nAttended AP"),
@@ -575,7 +801,61 @@ createWaffle_AP <- function(data, LAchoice){
           plot.title=element_text(size=12), 
           legend.text=element_text(size=12))  
   # Use grid.arrange to put plots in columns
-  grid.arrange(grobs = list(AP_LHS_waffle, AP_RHS_waffle), top=title, ncol=2, widths=c(1,2))
+  grid.arrange(grobs = list(AP_LHS_waffle, AP_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
+  
+}
+
+createWaffle_AP_any <- function(data, LAchoice){
+  
+  # automated text for waffle - LHS
+  AP_LHS_text <- data.frame(x1 = paste0(data$any_prop_count_AP, "%\nAttended AP"),
+                            x2 = paste0(data$prop_any_not_AP, "%\nDid not\nattend AP"))
+  
+  AP_LHS_waffle <- waffle(data[c("any_prop_count_AP","prop_any_not_AP")], rows=10, size=0.6, flip=TRUE, 
+                          colors=c("#08306b", "#2171b5"), 
+                          title="Children who were cautioned\nor sentenced for an\noffence",  
+                          xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"), 
+                      labels = c(AP_LHS_text$x1, 
+                                 AP_LHS_text$x2)) +
+    theme(text=element_text(size=12), 
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12)) 
+  
+  # automated text for waffle - RHS
+  AP_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_AP, "%\nChildren cautioned or sentenced\nfor an offence"),
+                            x2 = paste0(data$not_also_any_prop_count_AP, "%\nAll other\npupils"))
+  
+  AP_RHS_waffle <- waffle(data[c("also_any_prop_count_AP","not_also_any_prop_count_AP")], rows=10, size=0.6, flip=TRUE,
+                          colors=c("#08306b", "#6BACE6"), 
+                          title="All pupils who had ever\nattended AP",
+                          xlab="1 square = 1 %") + 
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#6BACE6"), 
+                      labels = c(AP_RHS_text$x1, 
+                                 AP_RHS_text$x2)) +
+    theme(text=element_text(size=12), #change font size of all text
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12))  
+  # Use grid.arrange to put plots in columns
+  grid.arrange(grobs = list(AP_LHS_waffle, AP_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
   
 }
 
@@ -586,18 +866,19 @@ createAPTimingPlot <- function(data, LAchoice){
                                                              "After the first serious violence offence")))
   
   title1 <- paste0("Alternative provision timing for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   data <- data %>% mutate(group="Serious\nViolence\nOffence")
   
   ggplot(data, aes(x=perc, y=group, fill = Timing, group = rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% with AP timing", y=NULL, title = title1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-6.5, hjust=0, size = 6) +
+    labs(x = "% with AP timing", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-5.5, hjust=0, size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"), 
                       labels = c("Before the first\nserious violence\noffence", 
-                                 "In the same term as the\nfirst serious violence\noffence", 
+                                 "In the same term as\nthe first serious\nviolence offence", 
                                  "After the first\nserious violence\noffence")) +
     xlim(0,105) +
     theme(text=element_text(size = 15),
@@ -611,18 +892,19 @@ createSENPlot <- function(data, LAchoice){
   
   data <- data %>% mutate(SEN_type = factor(SEN_type, levels = c("No identified SEN","SEN support", "EHCP")))
   
-  title1 <- paste0("Special Educational Needs for ", LAchoice)
+  title1 <- paste0("SEN for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   data <- data %>% mutate(perc = abs(perc)) # REMOVE THIS WHEN USING REAL DATA
   
   ggplot(data, aes(x=perc, y=group, fill = SEN_type, group=rev(SEN_type))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% of SEN", y=NULL, title = title1) +
+    labs(x = "% of SEN", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
     geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-2.5, hjust=0, size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size = 15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
-                      labels = c("No\nIdentified\nSEN", 
+                      labels = c("No Identified\nSEN", 
                                  "SEN\nSupport",
                                  "EHC\nplan")) +
     #xlim(0,105) +
@@ -633,8 +915,7 @@ createSENPlot <- function(data, LAchoice){
           plot.title = element_text(hjust = 0.5, size = 20)) 
 }
 
-createWaffle_SEN <- function(data, LAchoice){
-  title <- paste0("SEN support for ", LAchoice)
+createWaffle_SEN_sv <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   SEN_LHS_text <- data.frame(x1 = paste0(data$prop_SEN_support_SV, "%\nSEN\nSupport"),
@@ -682,12 +963,65 @@ createWaffle_SEN <- function(data, LAchoice){
           plot.title=element_text(size=12), 
           legend.text=element_text(size=12))  
   # Use grid.arrange to put plots in columns
-  grid.arrange(grobs = list(SEN_LHS_waffle, SEN_RHS_waffle), top=title, ncol=2, widths=c(1,2))
+  grid.arrange(grobs = list(SEN_LHS_waffle, SEN_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
   
 }
 
-createWaffle_EHCP <- function(data, LAchoice){
-  title <- paste0("EHC plan for ", LAchoice)
+createWaffle_SEN_any <- function(data, LAchoice){
+  
+  # automated text for waffle - LHS
+  SEN_LHS_text <- data.frame(x1 = paste0(data$prop_SEN_support_any, "%\nSEN\nSupport"),
+                             x2 = paste0(data$prop_not_SEN_support_any, "%\nNot\nSEN\nSupport"))
+  
+  SEN_LHS_waffle <- waffle(data[c("prop_SEN_support_any","prop_not_SEN_support_any")], rows=10, size=0.6, flip=TRUE, 
+                           colors=c("#08306b", "#2171b5"), 
+                           title="Children who were cautioned\nor sentenced for an\noffence",  
+                           xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"), 
+                      labels = c(SEN_LHS_text$x1, 
+                                 SEN_LHS_text$x2)) +
+    theme(text=element_text(size=12), 
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12)) 
+  
+  # automated text for waffle - RHS
+  SEN_RHS_text <- data.frame(x1 = paste0(data$prop_also_SEN_support_any, "%\nChildren cautioned or sentenced\nfor an offence"),
+                             x2 = paste0(data$not_also_SEN_support_any, "%\nAll other\npupils"))
+  
+  SEN_RHS_waffle <- waffle(data[c("prop_also_SEN_support_any","not_also_SEN_support_any")], rows=10, size=0.6, flip=TRUE,
+                           colors=c("#08306b", "#6BACE6"), 
+                           title="All pupils who had ever\nhad SEN support",
+                           xlab="1 square = 1 %") + 
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#6BACE6"), 
+                      labels = c(SEN_RHS_text$x1, 
+                                 SEN_RHS_text$x2)) +
+    theme(text=element_text(size=12), #change font size of all text
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12))  
+  # Use grid.arrange to put plots in columns
+  grid.arrange(grobs = list(SEN_LHS_waffle, SEN_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
+  
+}
+
+createWaffle_EHCP_sv <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   EHC_LHS_text <- data.frame(x1 = paste0(data$prop_EHCP_SV , "%\nEHC\nplan"),
@@ -735,7 +1069,61 @@ createWaffle_EHCP <- function(data, LAchoice){
           plot.title=element_text(size=12), 
           legend.text=element_text(size=12))  
   # Use grid.arrange to put plots in columns
-  grid.arrange(grobs = list(EHC_LHS_waffle, EHC_RHS_waffle), top=title, ncol=2, widths=c(1,2))
+  grid.arrange(grobs = list(EHC_LHS_waffle, EHC_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
+  
+}
+
+createWaffle_EHCP_any <- function(data, LAchoice){
+  
+  # automated text for waffle - LHS
+  EHC_LHS_text <- data.frame(x1 = paste0(data$prop_EHCP_any , "%\nEHC\nplan"),
+                             x2 = paste0(data$prop_not_EHCP_any, "%\nNo\nEHC\nplan"))
+  
+  EHC_LHS_waffle <- waffle(data[c("prop_EHCP_any","prop_not_EHCP_any")], rows=10, size=0.6, flip=TRUE, 
+                           colors=c("#08306b", "#2171b5"), 
+                           title="Children who were cautioned\nor sentenced for an\noffence",  
+                           xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"), 
+                      labels = c(EHC_LHS_text$x1, 
+                                 EHC_LHS_text$x2)) +
+    theme(text=element_text(size=12), 
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12)) 
+  
+  # automated text for waffle - RHS
+  EHC_RHS_text <- data.frame(x1 = paste0(data$prop_also_EHCP_any, "%\nChildren cautioned or sentenced\nfor an offence"),
+                             x2 = paste0(data$not_prop_also_EHCP_any, "%\nAll other\npupils"))
+  
+  EHC_RHS_waffle <- waffle(data[c("prop_also_EHCP_any","not_prop_also_EHCP_any")], rows=10, size=0.6, flip=TRUE,
+                           colors=c("#08306b", "#6BACE6"), 
+                           title="All pupils who had ever\nhad an EHC plan",
+                           xlab="1 square = 1 %") + 
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#6BACE6"), 
+                      labels = c(EHC_RHS_text$x1, 
+                                 EHC_RHS_text$x2)) +
+    theme(text=element_text(size=12), #change font size of all text
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12))  
+  # Use grid.arrange to put plots in columns
+  grid.arrange(grobs = list(EHC_LHS_waffle, EHC_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
   
 }
 
@@ -746,13 +1134,14 @@ createSENTimingPlot <- function(data, LAchoice){
                                                              "After the first serious violence offence")))
   
   title1 <- paste0("SEN timing for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   data <- data %>% mutate(group="Serious\nViolence\nOffence")
   
   ggplot(data, aes(x=perc, y=group, fill = Timing , group=rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% with timing", y=NULL, title = title1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-6.5, hjust=0, size = 6) +
+    labs(x = "% with timing", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-5.5, hjust=0, size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
@@ -774,13 +1163,14 @@ createEHCPTimingPlot <- function(data, LAchoice){
                                                              "After the first serious violence offence")))
   
   title1 <- paste0("EHC plan timing for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   data <- data %>% mutate(group="Serious\nViolence\nOffence")
   
   ggplot(data, aes(x=perc, y=group, fill = Timing ,group=rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% with timing", y=NULL, title = title1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-6.5, hjust=0, size = 6) +
+    labs(x = "% with timing", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-5.5, hjust=0, size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
@@ -802,18 +1192,19 @@ createSEMHTimingPlot <- function(data, LAchoice){
                                                              "After the first serious violence offence")))
   
   title1 <- paste0("SEMH timing for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   data <- data %>% mutate(group="Serious\nViolence\nOffence")
   
   ggplot(data, aes(x=perc, y=group, fill = Timing, group = rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% with timing", y=NULL, title = title1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-6.5, hjust=0, size = 6) +
+    labs(x = "% with timing", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-5.5, hjust=0, size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
                       labels = c("Before the first\nserious violence\noffence", 
-                                 "In the same term as the\nfirst serious violence\noffence", 
+                                 "In the same term as\nthe first serious\nviolence offence", 
                                  "After the first\nserious violence\noffence")) +
     xlim(0,105) +
     theme(text=element_text(size = 15),
@@ -826,10 +1217,11 @@ createSEMHTimingPlot <- function(data, LAchoice){
 createCSCPlot <- function(data, LAchoice){
   
   title1 <- paste0("CIN/CLA for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=CINCLA, y=perc, fill = group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x=NULL, y="% recorded as\nCIN/CLA", title = title1) +
+    labs(x=NULL, y="% recorded\nas CIN/CLA", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
     geom_text(aes(label = paste0(perc, "%")), vjust =-0.4, hjust = 0.5, position = position_dodge(width = 1), size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size = 15), legend.text = element_text(size = 15)) +
@@ -843,8 +1235,7 @@ createCSCPlot <- function(data, LAchoice){
           axis.title.y=element_text(angle=0))
 }
 
-createWaffle_CIN <- function(data, LAchoice){
-  title <- paste0("CIN for ", LAchoice)
+createWaffle_CIN_sv <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   CIN_LHS_text <- data.frame(x1 = paste0(data$propsv_count_CIN , "%\nCIN"),
@@ -892,7 +1283,61 @@ createWaffle_CIN <- function(data, LAchoice){
           plot.title=element_text(size=12), 
           legend.text=element_text(size=12))  
   # Use grid.arrange to put plots in columns
-  grid.arrange(grobs = list(CIN_LHS_waffle, CIN_RHS_waffle), top=title, ncol=2, widths=c(1,2))
+  grid.arrange(grobs = list(CIN_LHS_waffle, CIN_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
+  
+}
+
+createWaffle_CIN_any <- function(data, LAchoice){
+  
+  # automated text for waffle - LHS
+  CIN_LHS_text <- data.frame(x1 = paste0(data$propany_count_CIN , "%\nCIN"),
+                             x2 = paste0(data$propany_count_not_CIN, "%\nNot\nCIN"))
+  
+  CIN_LHS_waffle <- waffle(data[c("propany_count_CIN","propany_count_not_CIN")], rows=10, size=0.6, flip=TRUE, 
+                           colors=c("#08306b", "#2171b5"), 
+                           title="Children who were cautioned\nor sentenced for a\nan offence",  
+                           xlab="1 square = 1 %") +
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#2171b5"), 
+                      labels = c(CIN_LHS_text$x1, 
+                                 CIN_LHS_text$x2)) +
+    theme(text=element_text(size=12), 
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12)) 
+  
+  # automated text for waffle - RHS
+  CIN_RHS_text <- data.frame(x1 = paste0(data$also_propany_count_CIN, "%\nChildren cautioned or sentenced\nfor an offence"),
+                             x2 = paste0(data$not_also_propany_count_CIN, "%\nAll other\npupils"))
+  
+  CIN_RHS_waffle <- waffle(data[c("also_propany_count_CIN","not_also_propany_count_CIN")], rows=10, size=0.6, flip=TRUE,
+                           colors=c("#08306b", "#6BACE6"), 
+                           title="All pupils who had ever\nbeen CIN",
+                           xlab="1 square = 1 %") + 
+    theme_classic() +
+    theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          legend.position = "bottom",
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, size=9)) +
+    scale_fill_manual(values = c("#08306b", "#6BACE6"), 
+                      labels = c(CIN_RHS_text$x1, 
+                                 CIN_RHS_text$x2)) +
+    theme(text=element_text(size=12), #change font size of all text
+          axis.title=element_text(size=12),
+          plot.title=element_text(size=12), 
+          legend.text=element_text(size=12))  
+  # Use grid.arrange to put plots in columns
+  grid.arrange(grobs = list(CIN_LHS_waffle, CIN_RHS_waffle), ncol=2, widths=c(1,2),
+               bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
   
 }
 
@@ -901,14 +1346,15 @@ createCSCTimingPlot <- function(data, LAchoice){
   data <- data %>% mutate(Timing = factor(Timing, levels = c("Before the first serious violence offence",
                                                              "In the same term as the first serious violence offence",
                                                              "After the first serious violence offence")),
-                          CSC_subset = factor(CSC_subset, levels = c("CIN", "CPP", "CLA")))
+                          CSC_subset = factor(CSC_subset, levels = c("CLA", "CPP","CIN" )))
   
   title1 <- paste0("CSC timing for ", LAchoice)
+  caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x = perc, y = CSC_subset, fill = Timing, group = rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% with timing", y=NULL, title = title1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-2.5, hjust=0, size = 6) +
+    labs(x = "% with timing", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-2.2, hjust=0, size = 6) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
