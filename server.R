@@ -30,7 +30,7 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_sup_tab, {
     updateTabsetPanel(session, "navlistPanel", selected = "Support and feedback")
   })
-  
+
   # Code to sync inputs across tabs: LA choice
   observeEvent(input$demLAchoice, {
     if (input$navlistPanel == "tab_demo") {
@@ -95,7 +95,7 @@ server <- function(input, output, session) {
       updateSelectInput(session, "sclindichoice", selected = input$cscindichoice)
     }
   })
-  
+
   # Code to sync inputs across tabs: indichoice (Home or School) for LA 2
   observeEvent(input$demindichoice2, {
     if (input$navlistPanel == "tab_demo") {
@@ -103,14 +103,14 @@ server <- function(input, output, session) {
       updateSelectInput(session, "cscindichoice2", selected = input$demindichoice2)
     }
   })
-  
+
   observeEvent(input$sclindichoice2, {
     if (input$navlistPanel == "tab_scl") {
       updateSelectInput(session, "demindichoice2", selected = input$sclindichoice2)
       updateSelectInput(session, "cscindichoice2", selected = input$sclindichoice2)
     }
   })
-  
+
   observeEvent(input$cscindichoice2, {
     if (input$navlistPanel == "tab_csc") {
       updateSelectInput(session, "demindichoice2", selected = input$cscindichoice2)
@@ -119,48 +119,48 @@ server <- function(input, output, session) {
   })
 
   # Adding interactivity for LA 2 stat neighbour (dem tab)
-  output$demLAchoice2_ = renderUI({
+  output$demLAchoice2_ <- renderUI({
     choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$demLAchoice)
-    
-    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(input$demLAchoice, choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
     choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-    
-    selectizeInput('demLAchoice2', 'Local Authority 2', choices = c('Statistical neighbour' = choicesLA_stat, "All other" = choicesLA_not_stat),
-                   multiple = TRUE, selected=character(0),
-                   options = list(placeholder = 'Select a comparison', maxItems =  1))
-    
+
+    selectizeInput("demLAchoice2", "Local Authority 2",
+      choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
+    )
+
     # Will need to Add England in another group
   })
-  
+
   # Adding interactivity for LA 2 stat neighbour (scl tab)
-  output$sclLAchoice2_= renderUI({
+  output$sclLAchoice2_ <- renderUI({
     choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$sclLAchoice)
-    
-    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(input$sclLAchoice, choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
     choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-    
-    selectizeInput('sclLAchoice2', 'Local Authority 2', choices = c('Statistical neighbour' = choicesLA_stat, "All other" = choicesLA_not_stat),
-                   multiple = TRUE, selected=character(0),
-                   options = list(placeholder = 'Select a comparison', maxItems =  1))
-    
+
+    selectizeInput("sclLAchoice2", "Local Authority 2",
+      choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
+    )
+
     # Will need to Add England in another group
   })
-  
-# Adding interactivity for LA 2 stat neighbour (CSC tab)
-  output$cscLAchoice2_= renderUI({
+
+  # Adding interactivity for LA 2 stat neighbour (CSC tab)
+  output$cscLAchoice2_ <- renderUI({
     choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$cscLAchoice)
-    
-    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(input$cscLAchoice, choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
     choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-    
-    selectizeInput('cscLAchoice2', 'Local Authority 2', choices = c('Statistical neighbour' = choicesLA_stat, "All other" = choicesLA_not_stat),
-                   multiple = TRUE, selected=character(0),
-                   options = list(placeholder = 'Select a comparison', maxItems =  1))
-    
+
+    selectizeInput("cscLAchoice2", "Local Authority 2",
+      choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
+    )
+
     # Will need to Add England in another group
   })
-  
-  
+
+
   # Simple server stuff goes here ------------------------------------------------------------
   reactiveRevBal <- reactive({
     dfRevBal %>% filter(
@@ -280,11 +280,12 @@ server <- function(input, output, session) {
           "Number of children cautioned or sentenced for a serious violence offence with a prior offence (%)" = prev_perc,
           "Number of children who live or go to school in different LA (%)" = all_dif_perc,
           "Number of children cautioned or sentenced for an offence who live or go to school in different LA (%)" = off_dif_perc,
-          "Number of children cautioned or sentenced for a serious violence offence who live or go to school in different LA (%)" = sv_dif_perc) %>%
+          "Number of children cautioned or sentenced for a serious violence offence who live or go to school in different LA (%)" = sv_dif_perc
+        ) %>%
         t() %>%
         as.data.frame() %>%
         rename("Local Authority 1" = V1)
-      
+
       info_table_la2 <- info_table %>%
         filter(indicator == input$demindichoice2, LA == input$demLAchoice2) %>%
         rename(
@@ -296,13 +297,13 @@ server <- function(input, output, session) {
           "Number of children cautioned or sentenced for a serious violence offence with a prior offence (%)" = prev_perc,
           "Number of children who live or go to school in different LA (%)" = all_dif_perc,
           "Number of children cautioned or sentenced for an offence who live or go to school in different LA (%)" = off_dif_perc,
-          "Number of children cautioned or sentenced for a serious violence offence who live or go to school in different LA (%)" = sv_dif_perc) %>%
+          "Number of children cautioned or sentenced for a serious violence offence who live or go to school in different LA (%)" = sv_dif_perc
+        ) %>%
         t() %>%
         as.data.frame() %>%
         rename("Local Authority 2" = V1)
-      
+
       info_table_la <- bind_cols(info_table_la1, info_table_la2)
-      
     },
     rownames = TRUE,
     options = list(searchable = FALSE, dom = "t", ordering = F),
@@ -397,7 +398,7 @@ server <- function(input, output, session) {
     FSM_waffle_sv <- FSM_waffle_sv %>% filter(indicator == input$demindichoice2, LA == input$demLAchoice2)
     createWaffle_FSM_sv(FSM_waffle_sv, input$demLAchoice2)
   })
-  
+
   # Output - FSM waffle Text 1 - sv
   output$WaffleTextFSM1_sv <- renderText({
     WaffleText <- FSM_waffle_sv %>% filter(indicator == input$demindichoice, LA == input$demLAchoice)
@@ -413,7 +414,7 @@ server <- function(input, output, session) {
     had ever been eligible for FSM. However, ", WaffleText$also_sv_prop_count_FSM, "% of those who had ever been eligible
     for FSM were children who were cautioned or sentenced for a serious violence offence.")
   })
-  
+
   # Output - FSM waffle Text 1 - offenders
   output$WaffleTextFSM1_any <- renderText({
     WaffleText <- FSM_waffle_any %>% filter(indicator == input$demindichoice, LA == input$demLAchoice)
@@ -421,7 +422,7 @@ server <- function(input, output, session) {
     had ever been eligible for FSM. However, ", WaffleText$also_any_prop_count_FSM, "% of those who had ever been eligible
     for FSM were children who were cautioned or sentenced for an offence.")
   })
-  
+
   # Output - FSM waffle Text 2 - offenders
   output$WaffleTextFSM2_any <- renderText({
     WaffleText <- FSM_waffle_any %>% filter(indicator == input$demindichoice2, LA == input$demLAchoice2)
@@ -429,69 +430,84 @@ server <- function(input, output, session) {
     had ever been eligible for FSM. However, ", WaffleText$also_any_prop_count_FSM, "% of those who had ever been eligible
     for FSM were children who were cautioned or sentenced for an offence.")
   })
-  
+
   # Output - FSM waffle 1 - offenders
   output$waffle_FSM1_any <- renderPlot({
     FSM_waffle_any <- FSM_waffle_any %>% filter(indicator == input$demindichoice, LA == input$demLAchoice)
     createWaffle_FSM_any(FSM_waffle_any, input$demLAchoice)
   })
-  
+
   # Output - FSM waffle 2 - offenders
   output$waffle_FSM2_any <- renderPlot({
     FSM_waffle_any <- FSM_waffle_any %>% filter(indicator == input$demindichoice2, LA == input$demLAchoice2)
     createWaffle_FSM_any(FSM_waffle_any, input$demLAchoice2)
   })
-  
-  # Output - FSM plot switch between waffle (offenders / sv) 
+
+  # Output - FSM plot switch between waffle (offenders / sv)
   output$dem_plot_waf_fsm <- renderUI(
     if (input$fsm_plot_switch_waf == "sv_off") {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and 
-                                   had ever been eligible for free school meals (FSM), and all pupils who had ever been eligible for FSM, for pupils matched 
-                                   to KS4 academic years 2012/13 - 2017/18"), 
-        column(width=6, 
-               h3(textOutput("DemTitle2_FSM1_sv")), 
-               box(width = 12, 
-                   br(), 
-                   textOutput("WaffleTextFSM1_sv"), 
-                   br(), 
-                   plotOutput("waffle_FSM1_sv"), 
-                   br())),
-        column(width=6, 
-               h3(textOutput("DemTitle2_FSM2_sv")), 
-               box(width = 12, 
-                   br(), 
-                   textOutput("WaffleTextFSM2_sv"), 
-                   br(), 
-                   plotOutput("waffle_FSM2_sv"), 
-                   br()))
+        h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and
+                                   had ever been eligible for free school meals (FSM), and all pupils who had ever been eligible for FSM, for pupils matched
+                                   to KS4 academic years 2012/13 - 2017/18"),
+        column(
+          width = 6,
+          h3(textOutput("DemTitle2_FSM1_sv")),
+          box(
+            width = 12,
+            br(),
+            textOutput("WaffleTextFSM1_sv"),
+            br(),
+            plotOutput("waffle_FSM1_sv"),
+            br()
+          )
+        ),
+        column(
+          width = 6,
+          h3(textOutput("DemTitle2_FSM2_sv")),
+          box(
+            width = 12,
+            br(),
+            textOutput("WaffleTextFSM2_sv"),
+            br(),
+            plotOutput("waffle_FSM2_sv"),
+            br()
+          )
+        )
       )
     } else {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for an offence and 
-            had ever been eligible for free school meals (FSM), and all pupils who had ever been eligible for FSM, for pupils matched 
-            to KS4 academic years 2012/13 - 2017/18"), 
-        column(width=6, 
-               h3(textOutput("DemTitle2_FSM1_sv")), 
-               box(width = 12, 
-                   br(), 
-                   textOutput("WaffleTextFSM1_any"), 
-                   br(), 
-                   plotOutput("waffle_FSM1_any"), 
-                   br())),
-        column(width=6, 
-               h3(textOutput("DemTitle2_FSM2_sv")), 
-               box(width = 12, 
-                   br(), 
-                   textOutput("WaffleTextFSM2_any"), 
-                   br(), 
-                   plotOutput("waffle_FSM2_any"), 
-                   br()))
-        
+        h3("The proportion of children who had been cautioned or sentenced for an offence and
+            had ever been eligible for free school meals (FSM), and all pupils who had ever been eligible for FSM, for pupils matched
+            to KS4 academic years 2012/13 - 2017/18"),
+        column(
+          width = 6,
+          h3(textOutput("DemTitle2_FSM1_sv")),
+          box(
+            width = 12,
+            br(),
+            textOutput("WaffleTextFSM1_any"),
+            br(),
+            plotOutput("waffle_FSM1_any"),
+            br()
+          )
+        ),
+        column(
+          width = 6,
+          h3(textOutput("DemTitle2_FSM2_sv")),
+          box(
+            width = 12,
+            br(),
+            textOutput("WaffleTextFSM2_any"),
+            br(),
+            plotOutput("waffle_FSM2_any"),
+            br()
+          )
+        )
       )
     }
   )
-  
+
   # Output - age_offence column 1 LA title
   output$DemTitle1_age <- renderText({
     (age_offence %>% filter(indicator == input$demindichoice, LA == input$demLAchoice) %>% slice_head())$LA
@@ -623,13 +639,13 @@ server <- function(input, output, session) {
     PA_waffle_any <- PA_waffle_any %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
     createWaffle_PA_any(PA_waffle_any, input$sclLAchoice)
   })
-  
+
   # Output - PA waffle 2 - offender
   output$waffle_PA2_any <- renderPlot({
     PA_waffle_any <- PA_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
     createWaffle_PA_any(PA_waffle_any, input$sclLAchoice2)
   })
-  
+
   # Output - PA waffle text 1 - offender
   output$waffleText_PA1_any <- renderText({
     WaffleText <- PA_waffle_any %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -637,7 +653,7 @@ server <- function(input, output, session) {
     had ever been persistently absent. However, ", WaffleText$also_any_prop_count_PA, "% of those who had ever been persistently absent
              were children who were cautioned or sentenced for an offence.")
   })
-  
+
   # Output - PA waffle text 2 - offender
   output$waffleText_PA2_any <- renderText({
     WaffleText <- PA_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
@@ -645,57 +661,68 @@ server <- function(input, output, session) {
     had ever been persistently absent. However, ", WaffleText$also_any_prop_count_PA, "% of those who had ever been persistently absent
     for FSM were children who were cautioned or sentenced for an offence.")
   })
-  
-  # output - PA waffle switch 
+
+  # output - PA waffle switch
   output$scl_plot_waf_pa <- renderUI(
     if (input$pa_plot_switch_waf == "sv_off") {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for a 
-            serious violence offence and had been persistently absent, and all pupils who had ever been 
+        h3("The proportion of children who had been cautioned or sentenced for a
+            serious violence offence and had been persistently absent, and all pupils who had ever been
             persistently absent, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
         column(h3(textOutput("sclTitle1_PAwaf")),
-               width=6,
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_PA1_sv"), 
-                   br(),
-                   plotOutput("waffle_PA1_sv"),
-                   br())), 
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_PA1_sv"),
+            br(),
+            plotOutput("waffle_PA1_sv"),
+            br()
+          )
+        ),
         column(h3(textOutput("sclTitle2_PAwaf")),
-               width=6,
-               box(width = 12, 
-                   br(),
-                   textOutput("waffleText_PA2_sv"),
-                   br(),
-                   plotOutput("waffle_PA2_sv"),
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_PA2_sv"),
+            br(),
+            plotOutput("waffle_PA2_sv"),
+            br()
+          )
         )
+      )
     } else {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for an 
-            offence and had been persistently absent, and all pupils who had ever been 
+        h3("The proportion of children who had been cautioned or sentenced for an
+            offence and had been persistently absent, and all pupils who had ever been
             persistently absent, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
-        
         column(h3(textOutput("sclTitle1_PAwaf")),
-               width=6,
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_PA1_any"), 
-                   br(),
-                   plotOutput("waffle_PA1_any"),
-                   br())), 
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_PA1_any"),
+            br(),
+            plotOutput("waffle_PA1_any"),
+            br()
+          )
+        ),
         column(h3(textOutput("sclTitle2_PAwaf")),
-               width=6,
-               box(width = 12, 
-                   br(),
-                   textOutput("waffleText_PA2_any"),
-                   br(),
-                   plotOutput("waffle_PA2_any"),
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_PA2_any"),
+            br(),
+            plotOutput("waffle_PA2_any"),
+            br()
+          )
+        )
       )
     }
   )
-  
+
   # Output - PA timing column 1 LA title
   output$sclTitle1_PAtime <- renderText({
     (PAPAUO_timing %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
@@ -761,7 +788,7 @@ server <- function(input, output, session) {
     SusExcl_waffle_sv <- SusExcl_waffle_sv %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
     createWaffle_Sus_sv(SusExcl_waffle_sv, input$sclLAchoice2)
   })
-  
+
   # Output - sus waffle text 1 - sv
   output$waffleText_sus1_sv <- renderText({
     WaffleText <- SusExcl_waffle_sv %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -769,7 +796,7 @@ server <- function(input, output, session) {
     had ever been suspended. However, ", WaffleText$also_sv_prop_count_Sus, "% of those who had ever been suspended
            were children who were cautioned or sentenced for a serious violence offence.")
   })
-  
+
   # Output - sus waffle text 2 - sv
   output$waffleText_sus2_sv <- renderText({
     WaffleText <- SusExcl_waffle_sv %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
@@ -777,19 +804,19 @@ server <- function(input, output, session) {
     had ever been suspended. However, ", WaffleText$also_sv_prop_count_Sus, "% of those who had ever been suspended
            were children who were cautioned or sentenced for a serious violence offence.")
   })
-  
+
   # Output - Suspension waffle 1 - offenders
   output$waffle_Sus1_any <- renderPlot({
     SusExcl_waffle_any <- SusExcl_waffle_any %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
     createWaffle_Sus_any(SusExcl_waffle_any, input$sclLAchoice)
   })
-  
+
   # Output - Suspension waffle 2 - offenders
   output$waffle_Sus2_any <- renderPlot({
     SusExcl_waffle_any <- SusExcl_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
     createWaffle_Sus_any(SusExcl_waffle_any, input$sclLAchoice2)
   })
-  
+
   # Output - sus waffle text 1 - offenders
   output$waffleText_sus1_any <- renderText({
     WaffleText <- SusExcl_waffle_any %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -797,7 +824,7 @@ server <- function(input, output, session) {
     had ever been suspended. However, ", WaffleText$also_any_prop_count_Sus, "% of those who had ever been suspended
            were children who were cautioned or sentenced for an offence.")
   })
-  
+
   # Output - sus waffle text 2 - offenders
   output$waffleText_sus2_any <- renderText({
     WaffleText <- SusExcl_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
@@ -806,55 +833,67 @@ server <- function(input, output, session) {
            were children who were cautioned or sentenced for an offence.")
   })
 
-  # output - suspension waffle switch 
+  # output - suspension waffle switch
   output$scl_plot_waf_sus <- renderUI(
     if (input$sus_plot_switch_waf == "sv_off") {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for a serious violence 
-            offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years 
-            2012/13 - 2017/18"), 
+        h3("The proportion of children who had been cautioned or sentenced for a serious violence
+            offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years
+            2012/13 - 2017/18"),
         column(h3(textOutput("sclTitle1_suswaf")),
-               width=6,
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_sus1_sv"),
-                   br(),
-                   plotOutput("waffle_Sus1_sv"), 
-                   br())),
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_sus1_sv"),
+            br(),
+            plotOutput("waffle_Sus1_sv"),
+            br()
+          )
+        ),
         column(h3(textOutput("sclTitle2_suswaf")),
-               width=6,
-               box(width = 12,
-                   br(), 
-                   textOutput("waffleText_sus2_sv"),
-                   br(),
-                   plotOutput("waffle_Sus2_sv"), 
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_sus2_sv"),
+            br(),
+            plotOutput("waffle_Sus2_sv"),
+            br()
+          )
+        )
       )
     } else {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for an
-            offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years 
-            2012/13 - 2017/18"), 
+            offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years
+            2012/13 - 2017/18"),
         column(h3(textOutput("sclTitle1_suswaf")),
-               width=6,
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_sus1_any"),
-                   br(),
-                   plotOutput("waffle_Sus1_any"), 
-                   br())),
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_sus1_any"),
+            br(),
+            plotOutput("waffle_Sus1_any"),
+            br()
+          )
+        ),
         column(h3(textOutput("sclTitle2_suswaf")),
-               width=6,
-               box(width = 12,
-                   br(), 
-                   textOutput("waffleText_sus2_any"),
-                   br(),
-                   plotOutput("waffle_Sus2_any"), 
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_sus2_any"),
+            br(),
+            plotOutput("waffle_Sus2_any"),
+            br()
+          )
+        )
       )
     }
   )
-  
+
   # Output - Excl waffle column 1 LA title
   output$sclTitle1_exclwaf <- renderText({
     (SusExcl_waffle_sv %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
@@ -892,19 +931,19 @@ server <- function(input, output, session) {
     had ever been permanently excluded. However, ", WaffleText$also_sv_prop_count_Excl, "% of those who had ever been permanently
     excluded were children who were cautioned or sentenced for a serious violence offence.")
   })
-  
+
   # Output - Exclusion waffle 1 - offenders
   output$waffle_Excl1_any <- renderPlot({
     SusExcl_waffle_any <- SusExcl_waffle_any %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
     createWaffle_Excl_any(SusExcl_waffle_any, input$sclLAchoice)
   })
-  
+
   # Output - Exclusion waffle 2 - offenders
   output$waffle_Excl2_any <- renderPlot({
     SusExcl_waffle_any <- SusExcl_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
     createWaffle_Excl_any(SusExcl_waffle_any, input$sclLAchoice2)
   })
-  
+
   # Output - Excl waffle text 1 - offenders
   output$waffleText_excl1_any <- renderText({
     WaffleText <- SusExcl_waffle_any %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -912,7 +951,7 @@ server <- function(input, output, session) {
     had ever been permanently excluded. However, ", WaffleText$also_any_prop_count_Excl, "% of those who had ever been permanently
     excluded were children who were cautioned or sentenced for an offence.")
   })
-  
+
   # Output - Excl waffle text 2 - offenders
   output$waffleText_excl2_any <- renderText({
     WaffleText <- SusExcl_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
@@ -921,55 +960,67 @@ server <- function(input, output, session) {
     excluded were children who were cautioned or sentenced for an offence.")
   })
 
-  # output - exclusion waffle switch 
+  # output - exclusion waffle switch
   output$scl_plot_waf_excl <- renderUI(
     if (input$excl_plot_switch_waf == "sv_off") {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for a serious violence 
-            offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched 
-            to KS4 academic years 2012/13 - 2017/18"),  
+        h3("The proportion of children who had been cautioned or sentenced for a serious violence
+            offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched
+            to KS4 academic years 2012/13 - 2017/18"),
         column(h3(textOutput("sclTitle1_exclwaf")),
-               width=6,
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_excl1_sv"),
-                   br(),
-                   plotOutput("waffle_Excl1_sv"),
-                   br())),
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_excl1_sv"),
+            br(),
+            plotOutput("waffle_Excl1_sv"),
+            br()
+          )
+        ),
         column(h3(textOutput("sclTitle2_exclwaf")),
-               width=6,
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_excl2_sv"),
-                   br(),
-                   plotOutput("waffle_Excl2_sv"), 
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_excl2_sv"),
+            br(),
+            plotOutput("waffle_Excl2_sv"),
+            br()
+          )
+        )
       )
     } else {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for an
-            offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched 
-            to KS4 academic years 2012/13 - 2017/18"),  
+            offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched
+            to KS4 academic years 2012/13 - 2017/18"),
         column(h3(textOutput("sclTitle1_exclwaf")),
-               width=6,
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_excl1_any"),
-                   br(),
-                   plotOutput("waffle_Excl1_any"),
-                   br())),
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_excl1_any"),
+            br(),
+            plotOutput("waffle_Excl1_any"),
+            br()
+          )
+        ),
         column(h3(textOutput("sclTitle2_exclwaf")),
-               width=6,
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_excl2_any"),
-                   br(),
-                   plotOutput("waffle_Excl2_any"), 
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_excl2_any"),
+            br(),
+            plotOutput("waffle_Excl2_any"),
+            br()
+          )
+        )
       )
     }
   )
-  
+
   # Output - first sus column 1 LA title
   output$sclTitle1_fstsus <- renderText({
     (fst.clst_SusExcl %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
@@ -1123,13 +1174,13 @@ server <- function(input, output, session) {
     AP_waffle_any <- AP_waffle_any %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
     createWaffle_AP_any(AP_waffle_any, input$sclLAchoice)
   })
-  
+
   # Output - AP waffle 2 - offenders
   output$waffle_AP2_any <- renderPlot({
     AP_waffle_any <- AP_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
     createWaffle_AP_any(AP_waffle_any, input$sclLAchoice2)
   })
-  
+
   # Output - AP waffle text 1 - offenders
   output$waffleText_AP1_any <- renderText({
     WaffleText <- AP_waffle_any %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -1137,7 +1188,7 @@ server <- function(input, output, session) {
     had ever attended alternative provision. However, ", WaffleText$also_any_prop_count_AP, "% of those who had ever attended alternative
     provision were children who were cautioned or sentenced for an offence.")
   })
-  
+
   # Output - AP waffle text 2 - offenders
   output$waffleText_AP2_any <- renderText({
     WaffleText <- AP_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
@@ -1145,52 +1196,64 @@ server <- function(input, output, session) {
     had ever attended alternative provision. However, ", WaffleText$also_any_prop_count_AP, "% of those who had ever attended alternative
     provision were children who were cautioned or sentenced for an offence.")
   })
-  
-  # output - AP waffle switch 
+
+  # output - AP waffle switch
   output$scl_plot_waf_ap <- renderUI(
     if (input$ap_plot_switch_waf == "sv_off") {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for a serious violence 
-            offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision, 
-            for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
+        h3("The proportion of children who had been cautioned or sentenced for a serious violence
+            offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision,
+            for pupils matched to KS4 academic years 2012/13 - 2017/18"),
         column(h3(textOutput("sclTitle1_APwaf")),
-               width=6, 
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_AP1_sv"),
-                   br(),
-                   plotOutput("waffle_AP1_sv"), 
-                   br())),
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_AP1_sv"),
+            br(),
+            plotOutput("waffle_AP1_sv"),
+            br()
+          )
+        ),
         column(h3(textOutput("sclTitle2_APwaf")),
-               width=6,
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_AP2_sv"), 
-                   br(),
-                   plotOutput("waffle_AP2_sv"), 
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_AP2_sv"),
+            br(),
+            plotOutput("waffle_AP2_sv"),
+            br()
+          )
+        )
       )
     } else {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for an 
-            offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision, 
-            for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
+        h3("The proportion of children who had been cautioned or sentenced for an
+            offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision,
+            for pupils matched to KS4 academic years 2012/13 - 2017/18"),
         column(h3(textOutput("sclTitle1_APwaf")),
-               width=6, 
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_AP1_any"),
-                   br(),
-                   plotOutput("waffle_AP1_any"), 
-                   br())),
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_AP1_any"),
+            br(),
+            plotOutput("waffle_AP1_any"),
+            br()
+          )
+        ),
         column(h3(textOutput("sclTitle2_APwaf")),
-               width=6,
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_AP2_any"), 
-                   br(),
-                   plotOutput("waffle_AP2_any"), 
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_AP2_any"),
+            br(),
+            plotOutput("waffle_AP2_any"),
+            br()
+          )
+        )
       )
     }
   )
@@ -1268,7 +1331,7 @@ server <- function(input, output, session) {
     had ever had SEN Support. However, ", WaffleText$prop_also_SEN_support_SV, "% of those who had ever had SEN Support
     were children who were cautioned or sentenced for a serious violence offence.")
   })
-  
+
   # Output - SEN waffle text 2 - sv
   output$waffleText_SEN2_sv <- renderText({
     WaffleText <- SEN_waffle_sv %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
@@ -1276,19 +1339,19 @@ server <- function(input, output, session) {
     had ever had SEN Support. However, ", WaffleText$prop_also_SEN_support_SV, "% of those who had ever had SEN Support
     were children who were cautioned or sentenced for a serious violence offence.")
   })
-  
+
   # Output - SEN waffle 1 - offenders
   output$waffle_SEN1_any <- renderPlot({
     SEN_waffle_any <- SEN_waffle_any %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
     createWaffle_SEN_any(SEN_waffle_any, input$sclLAchoice)
   })
-  
+
   # Output - SEN waffle 2 - offenders
   output$waffle_SEN2_any <- renderPlot({
     SEN_waffle_any <- SEN_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
     createWaffle_SEN_any(SEN_waffle_any, input$sclLAchoice2)
   })
-  
+
   # Output - SEN waffle text 1 - offenders
   output$waffleText_SEN1_any <- renderText({
     WaffleText <- SEN_waffle_any %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -1296,7 +1359,7 @@ server <- function(input, output, session) {
     had ever had SEN Support. However, ", WaffleText$prop_also_SEN_support_any, "% of those who had ever had SEN Support
     were children who were cautioned or sentenced for an offence.")
   })
-  
+
   # Output - SEN waffle text 2 - offenders
   output$waffleText_SEN2_any <- renderText({
     WaffleText <- SEN_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
@@ -1304,56 +1367,68 @@ server <- function(input, output, session) {
     had ever had SEN Support. However, ", WaffleText$prop_also_SEN_support_any, "% of those who had ever had SEN Support
     were children who were cautioned or sentenced for an offence.")
   })
-  
-  # output - SEN waffle switch 
+
+  # output - SEN waffle switch
   output$scl_plot_waf_sen <- renderUI(
     if (input$sen_plot_switch_waf == "sv_off") {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for a serious 
-                                                  violence offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched 
-                                                  to KS4 academic years 2012/13 - 2017/18"), 
+        h3("The proportion of children who had been cautioned or sentenced for a serious
+                                                  violence offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched
+                                                  to KS4 academic years 2012/13 - 2017/18"),
         column(h3(textOutput("sclTitle1_SENwaf")),
-               width=6, 
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_SEN1_sv"),
-                   br(),
-                   plotOutput("waffle_SEN1_sv"), 
-                   br())),
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_SEN1_sv"),
+            br(),
+            plotOutput("waffle_SEN1_sv"),
+            br()
+          )
+        ),
         column(h3(textOutput("sclTitle2_SENwaf")),
-               width=6, 
-               box(width = 12, 
-                   br(),
-                   textOutput("waffleText_SEN2_sv"),
-                   br(),
-                   plotOutput("waffle_SEN2_sv"), 
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_SEN2_sv"),
+            br(),
+            plotOutput("waffle_SEN2_sv"),
+            br()
+          )
+        )
       )
     } else {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for an
-            offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched 
-            to KS4 academic years 2012/13 - 2017/18"), 
+            offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched
+            to KS4 academic years 2012/13 - 2017/18"),
         column(h3(textOutput("sclTitle1_SENwaf")),
-               width=6, 
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_SEN1_any"),
-                   br(),
-                   plotOutput("waffle_SEN1_any"), 
-                   br())),
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_SEN1_any"),
+            br(),
+            plotOutput("waffle_SEN1_any"),
+            br()
+          )
+        ),
         column(h3(textOutput("sclTitle2_SENwaf")),
-               width=6, 
-               box(width = 12, 
-                   br(),
-                   textOutput("waffleText_SEN2_any"),
-                   br(),
-                   plotOutput("waffle_SEN2_any"), 
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_SEN2_any"),
+            br(),
+            plotOutput("waffle_SEN2_any"),
+            br()
+          )
+        )
       )
     }
   )
-  
+
   # Output - EHCP column 1 LA title
   output$sclTitle1_EHCPwaf <- renderText({
     (EHCP_waffle_sv %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
@@ -1391,19 +1466,19 @@ server <- function(input, output, session) {
     had ever had an EHC Plan. However, ", WaffleText$prop_also_EHCP_SV, "% of those who had ever had an EHC Plan
     were children who were cautioned or sentenced for a serious violence offence.")
   })
-  
+
   # Output - EHCP waffle 1 - offenders
   output$waffle_EHCP1_any <- renderPlot({
     EHCP_waffle_any <- EHCP_waffle_any %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
     createWaffle_EHCP_any(EHCP_waffle_any, input$sclLAchoice)
   })
-  
+
   # Output - EHCP waffle 2 - offenders
   output$waffle_EHCP2_any <- renderPlot({
     EHCP_waffle_any <- EHCP_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
     createWaffle_EHCP_any(EHCP_waffle_any, input$sclLAchoice2)
   })
-  
+
   # Output - EHCP waffle text 1 - offenders
   output$waffleText_EHCP1_any <- renderText({
     WaffleText <- EHCP_waffle_any %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice)
@@ -1411,7 +1486,7 @@ server <- function(input, output, session) {
     had ever had an EHC Plan. However, ", WaffleText$prop_also_EHCP_any, "% of those who had ever had an EHC Plan
     were children who were cautioned or sentenced for an offence.")
   })
-  
+
   # Output - EHCP waffle text 2 - offenders
   output$waffleText_EHCP2_any <- renderText({
     WaffleText <- EHCP_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
@@ -1420,51 +1495,63 @@ server <- function(input, output, session) {
     were children who were cautioned or sentenced for an offence.")
   })
 
-  # output - EHCP waffle switch 
+  # output - EHCP waffle switch
   output$scl_plot_waf_ehcp <- renderUI(
     if (input$ehcp_plot_switch_waf == "sv_off") {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for a serious violence 
-                                                  offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to 
-                                                  KS4 academic years 2012/13 - 2017/18"), 
+        h3("The proportion of children who had been cautioned or sentenced for a serious violence
+                                                  offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to
+                                                  KS4 academic years 2012/13 - 2017/18"),
         column(h3(textOutput("sclTitle1_EHCPwaf")),
-               width=6, 
-               box(width = 12, 
-                   br(),
-                   textOutput("waffleText_EHCP1_sv"),
-                   br(),
-                   plotOutput("waffle_EHCP1_sv"), 
-                   br())),
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_EHCP1_sv"),
+            br(),
+            plotOutput("waffle_EHCP1_sv"),
+            br()
+          )
+        ),
         column(h3(textOutput("sclTitle2_EHCPwaf")),
-               width=6, 
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_EHCP2_sv"),
-                   br(),
-                   plotOutput("waffle_EHCP2_sv"), 
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_EHCP2_sv"),
+            br(),
+            plotOutput("waffle_EHCP2_sv"),
+            br()
+          )
+        )
       )
     } else {
       tagList(
-        h3("The proportion of children who had been cautioned or sentenced for an 
-            offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to 
-            KS4 academic years 2012/13 - 2017/18"), 
+        h3("The proportion of children who had been cautioned or sentenced for an
+            offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to
+            KS4 academic years 2012/13 - 2017/18"),
         column(h3(textOutput("sclTitle1_EHCPwaf")),
-               width=6, 
-               box(width = 12, 
-                   br(),
-                   textOutput("waffleText_EHCP1_any"),
-                   br(),
-                   plotOutput("waffle_EHCP1_any"), 
-                   br())),
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_EHCP1_any"),
+            br(),
+            plotOutput("waffle_EHCP1_any"),
+            br()
+          )
+        ),
         column(h3(textOutput("sclTitle2_EHCPwaf")),
-               width=6, 
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_EHCP2_any"),
-                   br(),
-                   plotOutput("waffle_EHCP2_any"), 
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_EHCP2_any"),
+            br(),
+            plotOutput("waffle_EHCP2_any"),
+            br()
+          )
+        )
       )
     }
   )
@@ -1542,7 +1629,7 @@ server <- function(input, output, session) {
 
   # Output - CSC column 2 LA title
   output$CSCTitle2 <- renderText({
-    (EverCINCLA %>% filter(indicator == input$cscindichoice2, LA == input$cscLAchoice2)%>% slice_head())$LA
+    (EverCINCLA %>% filter(indicator == input$cscindichoice2, LA == input$cscLAchoice2) %>% slice_head())$LA
   })
 
   # Output - CSC chart 1
@@ -1562,49 +1649,60 @@ server <- function(input, output, session) {
     if (input$csc_plot_switch_waf == "sv_off") {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN, and all pupils who had ever been CIN, for pupils matched to KS4
-            academic year 2012/13 - 2017/18"), 
+            academic year 2012/13 - 2017/18"),
         column(h3(textOutput("CSCTitle1_waf")),
-               width=6, 
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_CIN1_sv"),
-                   br(),
-                   plotOutput("waffle_CIN1_sv"), 
-                   br())), 
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_CIN1_sv"),
+            br(),
+            plotOutput("waffle_CIN1_sv"),
+            br()
+          )
+        ),
         column(h3(textOutput("CSCTitle2_waf")),
-               width=6, 
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_CIN2_sv"),
-                   br(),
-                   plotOutput("waffle_CIN2_sv"), 
-                   br()))
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_CIN2_sv"),
+            br(),
+            plotOutput("waffle_CIN2_sv"),
+            br()
+          )
+        )
       )
     } else {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for an offence and had ever been CIN, and all pupils who had ever been CIN, for pupils matched to KS4
-            academic year 2012/13 - 2017/18"), 
+            academic year 2012/13 - 2017/18"),
         column(h3(textOutput("CSCTitle1_waf")),
-               width=6, 
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_CIN1_any"),
-                   br(),
-                   plotOutput("waffle_CIN1_any"), 
-                   br())), 
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_CIN1_any"),
+            br(),
+            plotOutput("waffle_CIN1_any"),
+            br()
+          )
+        ),
         column(h3(textOutput("CSCTitle2_waf")),
-               width=6, 
-               box(width = 12,
-                   br(),
-                   textOutput("waffleText_CIN2_any"),
-                   br(),
-                   plotOutput("waffle_CIN2_any"), 
-                   br()))
-      
+          width = 6,
+          box(
+            width = 12,
+            br(),
+            textOutput("waffleText_CIN2_any"),
+            br(),
+            plotOutput("waffle_CIN2_any"),
+            br()
+          )
+        )
       )
     }
   )
-  
+
   # Output - CSC waffle column 1 LA title
   output$CSCTitle1_waf <- renderText({
     (CIN_waffle_sv %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice))$LA
@@ -1622,7 +1720,7 @@ server <- function(input, output, session) {
     had ever been CIN. However, ", WaffleText$also_propany_count_CIN, "% of those who had ever been
     CIN were children who were cautioned or sentenced for an offence.")
   })
-  
+
   # Output - CIN waffle text 2 - offenders
   output$waffleText_CIN2_any <- renderText({
     WaffleText <- CIN_waffle_any %>% filter(indicator == input$cscindichoice2, LA == input$cscLAchoice2)
@@ -1630,19 +1728,19 @@ server <- function(input, output, session) {
     had ever been CIN. However, ", WaffleText$also_propany_count_CIN, "% of those who had ever been
     CIN were children who were cautioned or sentenced for an offence.")
   })
-  
+
   # Output - CIN waffle 1 - offenders
   output$waffle_CIN1_any <- renderPlot({
     CIN_waffle_any <- CIN_waffle_any %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
     createWaffle_CIN_any(CIN_waffle_any, input$cscLAchoice)
   })
-  
+
   # Output - CIN waffle 2 - offenders
   output$waffle_CIN2_any <- renderPlot({
     CIN_waffle_any <- CIN_waffle_any %>% filter(indicator == input$cscindichoice2, LA == input$cscLAchoice2)
     createWaffle_CIN_any(CIN_waffle_any, input$cscLAchoice2)
   })
-  
+
   # Output - CIN waffle 1 - sv
   output$waffle_CIN1_sv <- renderPlot({
     CIN_waffle_sv <- CIN_waffle_sv %>% filter(indicator == input$cscindichoice, LA == input$cscLAchoice)
