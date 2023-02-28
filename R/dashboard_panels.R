@@ -632,7 +632,9 @@ SchoolExp <- function() {
                 )),
               column(
                 width = 6,
-                uiOutput('sclLAchoice2_')
+                selectizeInput("sclLAchoice2", "Local Authority 2",
+                               choices = choicesLA_SN2$StatN_1
+                )
               ), 
               column(
                 width = 6,

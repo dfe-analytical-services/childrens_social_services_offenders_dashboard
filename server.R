@@ -47,10 +47,19 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$sclLAchoice, {
+    # Update inputs on other pages
     if (input$navlistPanel == "tab_scl") {
       updateSelectInput(session, "demLAchoice", selected = input$sclLAchoice)
       updateSelectInput(session, "cscLAchoice", selected = input$sclLAchoice)
     }
+    # Update nearest neighbours in comparison dropdown
+    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$sclLAchoice)
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    updateSelectizeInput(
+      session, "sclLAchoice2", 
+      choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
+    )
   })
 
   observeEvent(input$sclLAchoice2, {
@@ -126,20 +135,6 @@ server <- function(input, output, session) {
     choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
 
     selectizeInput("demLAchoice2", "Local Authority 2",
-      choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
-    )
-
-    # Will need to Add England in another group
-  })
-
-  # Adding interactivity for LA 2 stat neighbour (scl tab)
-  output$sclLAchoice2_ <- renderUI({
-    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$sclLAchoice)
-
-    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-
-    selectizeInput("sclLAchoice2", "Local Authority 2",
       choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
     )
 
