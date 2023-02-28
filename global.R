@@ -138,5 +138,4 @@ choiceIndicator <- data.frame(Indicator = c("Home", "School"))
 choiceGroup <- data.frame(group = c("All Pupils", "Any Offence", "Serious Violence Offence"))
 
 # Testing choicesLA with stat neighbour (These are random examples of statistical neighbours)
-choicesLA_SN2 <- read.csv(file = "data/StatNeigh_example2.csv") %>%
-  tibble()
+choicesLA_SN2 <- read.csv(file = "data/StatNeigh_example2.csv") 
