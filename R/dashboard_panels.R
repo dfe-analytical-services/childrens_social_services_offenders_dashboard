@@ -390,7 +390,9 @@ Demographics <- function() {
                 )),
               column(
                 width = 6,
-                uiOutput('demLAchoice2_')
+                selectizeInput("demLAchoice2", "Local Authority 2",
+                               choices = choicesLA_SN2$StatN_1
+                )
               ), 
               column(
                 width = 6,
@@ -1383,8 +1385,10 @@ CSCExp <- function() {
               ),
               column(
                 width = 6,
-                uiOutput('cscLAchoice2_')
-              ),
+                selectizeInput("cscLAchoice2", "Local Authority 2",
+                               choices = choicesLA_SN2$StatN_1
+                )
+              ), 
               column(
                 width = 6,
                 radioButtons("cscindichoice", 
