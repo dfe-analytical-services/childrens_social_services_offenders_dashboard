@@ -469,6 +469,7 @@ Demographics <- function() {
                                  box(
                                    width=12,
                                    plotOutput("GenderPlot1"),
+                                   p("Gaps in chart indicate where data has been suppressed due to small numbers"),
                                    br()
                                  )
                           ),
@@ -477,6 +478,7 @@ Demographics <- function() {
                                  box(
                                    width=12,
                                    plotOutput("GenderPlot2"),
+                                   p("Gaps in chart indicate where data has been suppressed due to small numbers."),
                                    br()
                                  )
                           ),
@@ -495,6 +497,7 @@ Demographics <- function() {
                                         box(
                                           width = 12,
                                           plotOutput("ageofplot1"),
+                                          p("Gaps in chart indicate where data has been suppressed due to small numbers"),
                                           br()
                                         )
                                  ),
@@ -503,6 +506,7 @@ Demographics <- function() {
                                         box(
                                           width = 12,
                                           plotOutput("ageofplot2"),
+                                          p("Gaps in chart indicate where data has been suppressed due to small numbers"),
                                           br()
                                         )
                                  ),
@@ -531,14 +535,16 @@ Demographics <- function() {
                                  width=6,
                                  box(
                                    width = 12,
-                                   plotOutput("EthPlot1")
+                                   plotOutput("EthPlot1"),
+                                   p("Gaps in chart indicate where data has been suppressed due to small numbers")
                                  ),
                           ),
                           column(h3(textOutput("DemTitle2_eth")),
                                  width=6,
                                  box(
                                    width = 12,
-                                   plotOutput("EthPlot2")
+                                   plotOutput("EthPlot2"),
+                                   p("Gaps in chart indicate where data has been suppressed due to small numbers")
                                  ),
                           ),
                           strong("Footnotes"),
@@ -568,9 +574,11 @@ Demographics <- function() {
                                      h3("The proportion of all pupils eligible for free school meals (FSM) by offending and pupil group, 
                                                          for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
                                      column(width=6, h3(textOutput("DemTitle1_FSM1")), 
-                                            box(width = 12, plotOutput("fsmPlot1"))),
+                                            box(width = 12, plotOutput("fsmPlot1"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
                                      column(width=6, h3(textOutput("DemTitle1_FSM2")), 
-                                            box(width = 12, plotOutput("fsmPlot2")))),
+                                            box(width = 12, plotOutput("fsmPlot2"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers")))),
                                    tabPanel(
                                      p(tags$u("Waffle plot")), 
                                      
@@ -1425,8 +1433,7 @@ CSCExp <- function() {
                         between 2011/12 – 2017/18 for CIN, and 2005/06 - 2017/18 for CLA", tags$sup("[1]"), ". CIN here refers to children who are designated under a number of
                         different social care classifications: children on a child in need plan; children on a child protection plan", tags$sup("[2]"), "; and children who are looked 
                         after", tags$sup("[3]"), ". As such, CLA figures are included in the figures for CIN. Since the CIN and CLA data cover different time periods, and CIN 
-                        includes CLA for some of the same period, comparisons of CIN to CLA should be made with caution. To maximise coverage of the CIN data 
-                        and avoid skewed results, the analysis in this section is based on children matched to KS4 academic year 2012/13 - 2017/18 only."), br(),
+                        includes CLA for some of the same period, comparisons of CIN to CLA should be made with caution."), br(),
                p("When reading the findings related to children looked after (CLA), it is important to note that the introduction of the Legal Aid, 
                         Sentencing and Punishment of Offenders Act 2012 (LASPOA) meant that, from 3rd December 2012, children up to the age of 18 who are 
                         remanded to youth detention accommodation as a result of being charged with or convicted of an offence will be ‘looked after’ by the 
@@ -1439,6 +1446,9 @@ CSCExp <- function() {
                                column(
                                  width=12,
                                  br(),
+                                 p("The analysis presented here utilises a different dataset", tags$sup("[5]"), "to that used in the previous publication, enabling more granular 
+                                 examination of those recorded in the children’s social care system at any point during the year, and to look at changes in their social care group throughout the year."),
+                                 br(),
                                  h5(tags$b("Choose plot type")),
                                  tabBox(width = 12, title = NULL, id="csc_subtabs",
                                         tabPanel(
@@ -1447,10 +1457,13 @@ CSCExp <- function() {
                                           column(h3(textOutput("CSCTitle1")),
                                                  width=6, 
                                                  box(width = 12,
-                                                     plotOutput("CSCPlot1"))), 
+                                                     plotOutput("CSCPlot1"),
+                                                     p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
                                           column(h3(textOutput("CSCTitle2")),
                                                  width=6, 
-                                                 box(width = 12,br(), plotOutput("CSCPlot2")))),
+                                                 box(width = 12, 
+                                                     plotOutput("CSCPlot2"),
+                                                     p("Gaps in chart indicate where data has been suppressed due to small numbers")))),
                                         
                                         tabPanel(
                                           p(tags$u("Waffle plot")), 
@@ -1489,18 +1502,21 @@ CSCExp <- function() {
                              a(href = "https://www.gov.uk/government/publications/children-in-need-of-help-and-protection-data-and-analysis", 
                                "Children looked after return 2020 to 2021"),
                              br(),
-                             paste("5. Full CIN data is available from 2011/12, term 3. Children are included in this CIN analysis if they had 
+                             paste("5. Termly CIN and CLA datasets were provided internally to enable us to complete this analysis. This data is not currently 
+                available within the MoJ-DfE data share."),
+                             br(),
+                             paste("6. Full CIN data is available from 2011/12, term 3. Children are included in this CIN analysis if they had 
           been recorded as a child in need in any period between the ages of 12 - 16. Those matched to earlier 
           years in the KS4 attainment data will as a result have less coverage than those matched to later years. For example: 
                 those with KS4 academic year 2012/13 have coverage from age 14 and above."),
                              br(),
-                             paste("6. Children are included in this CLA analysis if they had been recorded as a child being looked after 
+                             paste("7. Children are included in this CLA analysis if they had been recorded as a child being looked after 
                       in any period between the ages of 6 - 16. Those matched to earlier years in the KS4 attainment data will as a result have less 
           coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 8 and above."),
                              br(),
-                             paste("7. Percentages are rounded to the nearest 1%."),
+                             paste("8. Percentages are rounded to the nearest 1%."),
                              br(),
-                             paste("8. Caution is advised when comparing across local authorities, due to differences in local policies."),
+                             paste("9. Caution is advised when comparing across local authorities, due to differences in local policies."),
                              br()),
                            tabPanel(
                              "Timing of CSC",
@@ -1511,22 +1527,22 @@ CSCExp <- function() {
                         looked after occurred before, after or during the same school term as their first serious violence offence (for those recorded as CIN, 
                         including CLA, as defined by the Children Act 1989, at any point in a given school term between 2011/12 – 2017/18 for CIN, and 
                           2004/05 - 2017/18 for CLA)."), br(),
-                             p("The analysis presented here utilises a different dataset", tags$sup("[5]"), "to that used in the previous tab (Ever CIN/CLA), enabling more granular examination of those recorded in the children’s social care system at any point during the year,
-                        and to look at changes in their social care group throughout the year."), br(),
-                             p("Children who had been cautioned or sentenced for a serious violence offence have been classifed here as being CIN, CPP or CLA 
-                        in an academic term, if at any point in that term they have been recorded as CIN, CPP or CLA", tags$sup("[6]"), "."),
+                             p("Children who had been cautioned or sentenced for a serious violence offence have been classified here as being CIN, CPP or CLA 
+                        in an academic term, if at any point in that term they have been recorded as CIN, CPP or CLA", tags$sup("[5]"), "."),
                              h3("The first record of children being a child in need, having a child protection plan or 
-                            being a child who was looked after, relative to the timing of their first offence, for all pupils matched to KS4 
+                            being a child who was looked after, relative to the timing of their first serious violence offence, for all pupils matched to KS4 
                              academic year 2012/13 - 2017/18"), 
                              column(h3(textOutput("CSCTitle1_time")),
                                     width=6, 
                                     box(width = 12,
-                                        plotOutput("timing_CSC1"))
+                                        plotOutput("timing_CSC1"),
+                                        p("Gaps in chart indicate where data has been suppressed due to small numbers"))
                              ), 
                              column(h3(textOutput("CSCTitle2_time")),
                                     width=6, 
                                     box(width = 12, 
-                                        plotOutput("timing_CSC2"))
+                                        plotOutput("timing_CSC2"),
+                                        p("Gaps in chart indicate where data has been suppressed due to small numbers"))
                              )
                              ,
                              strong("Footnotes"),
@@ -1549,10 +1565,7 @@ CSCExp <- function() {
                              a(href = "https://www.gov.uk/government/publications/children-in-need-of-help-and-protection-data-and-analysis", 
                                "Children looked after return 2020 to 2021"),
                              br(),
-                             paste("5. Termly CIN and CLA datasets were provided internally to enable us to complete this analysis. This data is not currently 
-                available within the MoJ-DfE data share."),
-                             br(),
-                             paste("6. A child can move between various stages of the social care system within and between terms, including into and out of need. 
+                             paste("5. A child can move between various stages of the social care system within and between terms, including into and out of need. 
           Each child was assigned a termly activity label based on the following hierarchy: CLA – if a child has been looked after for at least 
           one day in that term; CPP – if a child is not labelled as CLA and has been on a child protection plan for at least one day in that term; 
           CIN – a child that falls into any of the two previous categories, or if they are CINP - if a child is not labelled as CLA or CPP and has 
@@ -1562,11 +1575,11 @@ CSCExp <- function() {
                              a(href = "https://www.gov.uk/government/publications/children-in-need-of-help-and-protection-data-and-analysis", 
                                "Children in need of help and protection: data and analysis"),
                              br(),
-                             paste("7. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
+                             paste("6. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
                              br(),
-                             paste("8. Percentages are rounded to the nearest 1%."),
+                             paste("7. Percentages are rounded to the nearest 1%."),
                              br(),
-                             paste("9. Caution is advised when comparing across local authorities, due to differences in local policies."),
+                             paste("8. Caution is advised when comparing across local authorities, due to differences in local policies."),
                              br())
                ),
         )

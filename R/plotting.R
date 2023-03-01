@@ -32,7 +32,7 @@ plotAvgRevBenchmark <- function(dfRevenueBalance,inputArea){
       text = element_text(size = 12),
       axis.text.x = element_text(angle = 300),
       axis.title.x = element_blank(),
-      axis.title.y = element_text(margin = margin(r = 12)),
+      axis.title.y = element_text(margin = margin(t = 12)),
       axis.line = element_line( size = 1.0),
       legend.position = "none"
     ) +
@@ -48,23 +48,20 @@ plotAvgRevBenchmark <- function(dfRevenueBalance,inputArea){
 }
 
 createGenderPlot <- function(data, LAchoice){
-  
-  title1 <- paste0("Gender breakdown for ", LAchoice)
+
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(fill = Gender, x = group, y = perc)) +
     geom_bar(stat = "identity") +
-    labs(x=NULL, y="% male/female", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%"), group = Gender), color = "white", position = position_stack(vjust = 0.5), size=6) +
+    labs(x=NULL, y = NULL, title = "% male/female", caption = caption1) +
+    geom_text(aes(label = paste0(perc, "%"), group = Gender), color = "white", position = position_stack(vjust = 0.5), size=5.5) +
     theme_classic() +
     theme(legend.position = "bottom", 
           legend.title = element_blank(), 
           axis.text = element_text(color = "black", size = 15),
           text = element_text(size = 15), 
           legend.text = element_text(size = 15),
-          axis.title.y = element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20),
-          plot.subtitle = element_text(hjust = 0.5)) +
+          plot.title = element_text(size = 15, hjust = -0.05)) +
     scale_fill_manual(values = c("#08306b", "#2171b5"), labels = c("Female", "Male")) +
     scale_x_discrete(labels = c("All pupils", "Any\nOffence", "Serious\nViolence\nOffence"))
 
@@ -72,45 +69,80 @@ createGenderPlot <- function(data, LAchoice){
 
 createEthPlot <- function(data, LAchoice){
   
-  title1 <- paste0("Ethnicity breakdown for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
-  ggplot(data, aes(x=perc, y=EthnicGroupMajor, fill = EthnicGroupMajor )) +
+  ggplot(data, aes(x = perc, y = EthnicGroupMajor, fill = EthnicGroupMajor)) +
     geom_bar(stat = "identity") +
-    labs(x = "% of ethnic group major", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), vjust = 0, hjust=-0.1, size=6) +
+    labs(x = "% of ethnic group major", y = NULL, caption = caption1) +
+    geom_text(
+      aes(label = paste0(perc, "%")),
+      vjust = 0,
+      hjust = -0.1,
+      size = 6
+    ) +
     theme_classic() +
-    theme(legend.position = "none", axis.text = element_text(color="black", size=15)) +
-    scale_fill_manual(values = c("#08306b", "#08519c", "#2171b5", "#4292c6", "#6baed6", "#9ecae1", "#c6dbef")) +
-    facet_wrap(~group) + 
+    theme(legend.position = "none",
+          axis.text = element_text(color = "black", size = 15)) +
+    scale_fill_manual(values = c(
+      "#08306b",
+               "#08519c",
+               "#2171b5",
+               "#4292c6",
+               "#6baed6",
+               "#9ecae1",
+               "#c6dbef"
+    )) +
+    facet_wrap( ~ group) +
     theme(strip.background = element_blank()) +
-    xlim(0,105) +
-    scale_y_discrete(labels = c("Any other\nethnic group","Asian","Black", "Chinese", "Mixed", "Unclassified", "White")) + 
-    theme(text=element_text(size = 15),
-          axis.text=element_text(size = 15),
-          axis.title=element_text(size = 15), 
-          legend.text=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20)) + 
-    annotate("segment",x=0,xend=100,y=Inf,yend=Inf,color="black",lwd=1)
+    xlim(0, 105) +
+    scale_y_discrete(
+      labels = c("Any other\nethnic group", "Asian","Black",
+        "Chinese", "Mixed","Unclassified", "White"
+      )
+    ) +
+    theme(
+      text = element_text(size = 15),
+      axis.text = element_text(size = 15),
+      axis.title = element_text(size = 15),
+      legend.text = element_text(size = 15)
+    ) +
+    annotate(
+      "segment",
+      x = 0,
+      xend = 100,
+      y = Inf,
+      yend = Inf,
+      color = "black",
+      lwd = 1
+    ) +
+    scale_x_continuous(breaks = c(0, 33, 66))
 }
 
 createFSMPlot <- function(data, LAchoice){
   
-  title1 <- paste0("Free school meals (FSM) for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
-  ggplot(data, aes(x=perc, y=group, fill = group)) +
+  ggplot(data, aes(x = perc, y = group, fill = group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x="% eligible for FSM", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), hjust =-0.1, position = position_dodge(width = 1), size=6) +
+    labs(x = "% eligible for FSM", y = NULL,  caption = caption1) +
+    geom_text(
+      aes(label = paste0(perc, "%")),
+      hjust = -0.1,
+      position = position_dodge(width = 1),
+      size = 5.5
+    ) +
     theme_classic() +
-    theme(legend.position = "none", axis.text = element_text(color="black", size=15)) +
+    theme(legend.position = "none",
+          axis.text = element_text(color = "black", size = 15)) +
     scale_fill_manual(values = c("#08306b", "#08306b", "#08306b")) +
-    xlim(0,100) + 
-    theme(text=element_text(size = 15),
-          axis.text=element_text(size = 15),
-          axis.title=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20))
+    xlim(0, 100) +
+    theme(
+      text = element_text(size = 15),
+      axis.text = element_text(size = 15),
+      axis.title = element_text(size = 15)
+    ) +
+    scale_y_discrete(labels = c("All\nPupils", "Any\nOffence", "Serious\nViolence\nOffence"))
+    
 }
 
 createWaffle_FSM_sv <- function(data, LAchoice){
@@ -221,19 +253,22 @@ createWaffle_FSM_any <- function(data, LAchoice){
 
 createAgeOffence <- function(data, LAchoice){
   
-  title1 <- paste0("Age at first offence for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=OffenceStartAge, y=perc, group=group)) + 
     geom_line(aes(color=group), size=1.5) + 
-    labs(x = "Age at first offence", y="% at age", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
+    labs(x = "Age at first offence", y = NULL, title = "% at age", caption = caption1) +
     theme_classic() +
-    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
-    scale_color_manual(values = c("#08306b", "#2171b5")) +
-    theme(axis.title.y=element_text(angle=0, size=15)) +
+    theme(legend.position = "bottom", 
+          legend.title=element_blank(), 
+          axis.text = element_text(color="black", size=15)) +
+    scale_color_manual(values = c("#08306b", "#2171b5"), 
+                       labels = c("Any Offence", "Serious Violence\nOffence")) +
     theme(text=element_text(size=15), 
           legend.text=element_text(size=15),
-          plot.title = element_text(hjust = 0.5, size = 20))
+          plot.title = element_text(hjust = -0.05, size = 15)) +
+    ylim(0,30) +
+    guides(color = guide_legend(nrow = 2))
 }
 
 createKS2plot <- function(data, LAchoice){
@@ -1216,23 +1251,26 @@ createSEMHTimingPlot <- function(data, LAchoice){
 
 createCSCPlot <- function(data, LAchoice){
   
-  title1 <- paste0("CIN/CLA for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=CINCLA, y=perc, fill = group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x=NULL, y="% recorded\nas CIN/CLA", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), vjust =-0.4, hjust = 0.5, position = position_dodge(width = 1), size = 6) +
+    labs(x=NULL, y=NULL, title = "% recorded\nas CIN/CLA", caption = caption1) +
+    geom_text(aes(label = paste0(perc, "%")), vjust =-0.4, hjust = 0.5, position = position_dodge(width = 1), size = 5.5) +
     theme_classic() +
-    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size = 15), legend.text = element_text(size = 15)) +
+    theme(legend.position = "bottom", 
+          legend.title=element_blank(), 
+          axis.text = element_text(color="black", size = 15), 
+          legend.text = element_text(size = 15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6")) +
     scale_x_discrete(labels = c("Children in need", "Children who are\nlooked after")) +
     ylim(0,100) + 
     theme(text=element_text(size = 15),
           axis.text=element_text(size = 15),
           axis.title=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20), 
-          axis.title.y=element_text(angle=0))
+          plot.title = element_text(hjust = -0.05, size = 15), 
+          axis.title.y=element_text(angle=0)) + 
+    guides(fill=guide_legend(nrow=3))
 }
 
 createWaffle_CIN_sv <- function(data, LAchoice){
@@ -1348,15 +1386,16 @@ createCSCTimingPlot <- function(data, LAchoice){
                                                              "After the first serious violence offence")),
                           CSC_subset = factor(CSC_subset, levels = c("CLA", "CPP","CIN" )))
   
-  title1 <- paste0("CSC timing for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x = perc, y = CSC_subset, fill = Timing, group = rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% with timing", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-2.2, hjust=0, size = 6) +
+    labs(x = "% with timing", y=NULL, caption = caption1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-2.8, hjust=0, size = 5.5) +
     theme_classic() +
-    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
+    theme(legend.position = "bottom", 
+          legend.title=element_blank(), 
+          axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
                       labels = c("Before the first\nserious violence\noffence", 
                                  "In the same term as the\nfirst serious violence\noffence", 
@@ -1365,6 +1404,5 @@ createCSCTimingPlot <- function(data, LAchoice){
     theme(text=element_text(size = 15),
           axis.text=element_text(size = 15),
           axis.title=element_text(size = 15), 
-          legend.text=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20)) 
+          legend.text=element_text(size = 15)) 
 }
