@@ -694,8 +694,7 @@ SchoolExp <- function() {
                                      p(tags$u("KS2 attainment")), 
                                      h3("The proportion of all pupils who achieved level 4 or above in English and Maths at key stage 2 (KS2) 
                                             by offending and pupil group, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
-                                     p("This analysis looks at the percentage of pupils meeting the expected standard in English and Maths at KS2.
-                                              At the end of KS2 children are expected to be working to at least level 4 in English and Maths."),
+                                     p("This analysis looks at the percentage of pupils working to level 4 or above in English and Maths."),
                                      column(h3(textOutput("sclTitle1_ks2")),
                                             width=6,
                                             box(width = 12,
@@ -711,10 +710,8 @@ SchoolExp <- function() {
                                      br(),
                                      paste("1. Percentages are rounded to the nearest 1%."),
                                      br(),
-                                     paste("2. Possible attainment levels at KS2 range from Level 1 to Level 6."),
-                                     br(),
                                      paste(
-                                       "3. The figures discussed here are the combined results of all cohorts, of whom reached the end of
+                                       "2. The figures discussed here are the combined results of all cohorts, of whom reached the end of
                                             KS2 in 2007/08 - 2012/13. Based on the metrics used in this analysis, only a very small number
                                             of results for the 2009/10 cohort were withheld, in light of the boycott of the delivery of end of KS2 National
                                             Curriculum tests. It was determined that a sufficient volume of results were available for this cohort, and
