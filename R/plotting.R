@@ -273,13 +273,12 @@ createAgeOffence <- function(data, LAchoice){
 
 createKS2plot <- function(data, LAchoice){
   
-  title1 <- paste0("KS2 attainment for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(fill=Subject, x=perc, y=group)) + 
     geom_bar(position='dodge', stat='identity') +
-    labs(x="% at level 4 or above", y=NULL, title=title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), vjust = 0, hjust=-0.15, position = position_dodge(width = 1), size = 6) +
+    labs(x="% at level 4 or above", y=NULL, caption = caption1) +
+    geom_text(aes(label = paste0(perc, "%")), vjust = 0, hjust=-0.15, position = position_dodge(width = 1), size = 5.5) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank()) +
     scale_fill_manual(values = c("#08306b", "#2171b5")) +
@@ -287,20 +286,19 @@ createKS2plot <- function(data, LAchoice){
     theme(text=element_text(size=15), 
           axis.text=element_text(size = 15, color="black"), 
           axis.title=element_text(size = 15), 
-          plot.title=element_text(hjust = 0.5, size = 20), 
-          legend.text=element_text(size = 15)) 
+          legend.text=element_text(size = 15)) +
+    scale_y_discrete(labels = c("All\nPupils", "Any\nOffence", "Serious\nViolence\nOffence"))
   
 }
 
 createKS4plot <- function(data, LAchoice){
   
-  title1 <- paste0("KS4 attainment for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(fill=group, y=perc, x=rev(Subject))) + 
     geom_bar(position='dodge', stat='identity') +
-    labs(y="% at KS4\nbenchmark", x=NULL, title=title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), vjust = -0.2, hjust = 0.25, position = position_dodge(width = 1), size = 6) +
+    labs(y = NULL, x = NULL, title = "% at KS4\nbenchmark", caption = caption1) +
+    geom_text(aes(label = paste0(perc, "%")), vjust = -0.2, hjust = 0.25, position = position_dodge(width = 1), size = 5.5) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank()) +
     scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6")) +
@@ -308,7 +306,7 @@ createKS4plot <- function(data, LAchoice){
     theme(text=element_text(size=15), 
           axis.text=element_text(size=15, color="black"), 
           axis.title=element_text(size = 15), 
-          plot.title=element_text(size = 20, hjust = 0.5), 
+          plot.title=element_text(size = 15, hjust = -0.05), 
           legend.text=element_text(size = 15),
           axis.title.y=element_text(angle = 0)) +
     scale_x_discrete(labels = c("Achieved any\npass at GCSE\nor equiv.",
@@ -319,23 +317,25 @@ createKS4plot <- function(data, LAchoice){
 
 createPAPlot <- function(data, LAchoice){
   
-  title1 <- paste0("Persistent absence for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=Absence, y=perc, fill = group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x=NULL, y="% persistently\nabsent", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), vjust =-0.4, position = position_dodge(width = 1), size=6) +
+    labs(x = NULL, y = NULL, title = "% persistently\nabsent", caption = caption1) +
+    geom_text(aes(label = paste0(perc, "%")), vjust =-0.4, position = position_dodge(width = 1), size=5.5) +
     theme_classic() +
-    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
+    theme(legend.position = "bottom", 
+          legend.title=element_blank(), 
+          axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6")) +
-    scale_x_discrete(labels = c("Persistent absence", "Persistent absence\n(unauthorised other)")) +
+    scale_x_discrete(labels = c("Persistent\nabsence", "Persistent\nabsence\n(unauthorised\nother)")) +
     ylim(0,100) + 
     theme(text=element_text(size = 15),
           axis.text=element_text(size = 15),
           axis.title=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20), 
-          axis.title.y=element_text(angle=0))
+          plot.title = element_text(hjust = -0.05, size = 15), 
+          legend.text = element_text(size = 15))  +
+    guides(fill = guide_legend(nrow = 3))
 }
 
 createWaffle_PA_sv <- function(data, LAchoice){
@@ -450,48 +450,49 @@ createPATimingPlot <- function(data, LAchoice){
                                                                 "In the same term as the first serious violence offence",
                                                                 "After the first serious violence offence")))
   
-  title1 <- paste0("Persistent absence timing for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=perc, y=rev(Absence), fill = Timing, group = rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% with persistent absence timing", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-3, hjust=0, size = 6) +
+    labs(x = "% with persistent absence timing", y=NULL, caption = caption1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-3.3, hjust=0, size = 5.5) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"), 
-                      labels = c("Before the first\nserious violence\noffence", 
-                                 "In the same term\nas the first\nserious violence\noffence", 
-                                 "After the first\nserious violence\noffence")) +
+                      labels = c("Before the first serious\nviolence offence", 
+                                 "In the same term as the\nfirst serious violence offence", 
+                                 "After the first serious\nviolence offence")) +
     xlim(0,105) +
     scale_y_discrete(labels = c("Persistent\nabsence\n(unauthorised\nother) timing","Persistent\nabsence\ntiming")) + 
     theme(text=element_text(size = 15),
           axis.text=element_text(size = 15),
           axis.title=element_text(size = 15), 
-          legend.text=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20)) 
+          legend.text=element_text(size = 14))  +
+    guides(fill = guide_legend(nrow = 3))
 }
 
 createSusExclPlot <- function(data, LAchoice){
   
-  title1 <- paste0("Suspensions and permanent exclusions\nfor ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=rev(Absence), y=perc, fill = group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x=NULL, y="% suspended/\npermanently\nexcluded", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
+    labs(x=NULL, y = NULL, title = "% suspended/\npermanently\nexcluded", caption = caption1) +
     geom_text(aes(label = paste0(perc, "%")), vjust =-0.4, position = position_dodge(width = 1), size = 6) +
     theme_classic() +
-    theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=12)) +
+    theme(legend.position = "bottom", 
+          legend.title=element_blank(), 
+          axis.text = element_text(color="black", size=12)) +
     scale_fill_manual(values = c("#08306b", "#2171b5","#4292c6")) +
-    scale_x_discrete(labels = c("Suspended", "Permanently excluded")) +
+    scale_x_discrete(labels = c("Suspended", "Permanently\nexcluded")) +
     ylim(0,100) + 
     theme(text=element_text(size = 15),
           axis.text=element_text(size = 15),
           axis.title=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20), 
-          axis.title.y=element_text(angle=0))
+          plot.title = element_text(hjust = -0.05, size = 15),
+          legend.text=element_text(size = 14))+
+    guides(fill = guide_legend(nrow = 3))
 }
 
 createWaffle_Sus_sv <- function(data, LAchoice){
@@ -710,7 +711,6 @@ createSusTimePlot <- function(data, LAchoice, time){
   
   data <- data %>% filter(SusExcl=="Suspended", Time == time) %>% mutate(rank = as.factor(rank))
   
-  title1 <- paste0(time," suspension timing for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   labels1 <- c(paste0(time, " suspension\nprior to first\nserious violence\noffence"),
                paste0(time, " suspension\non same day as first\nserious violence\noffence"),
@@ -718,7 +718,7 @@ createSusTimePlot <- function(data, LAchoice, time){
   
   ggplot(data, aes(x=rank, y=Perc, fill = time_group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x=NULL, y="% with\ntiming", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
+    labs(x=NULL, y = "% with\ntiming", caption = caption1) +
     geom_text(aes(label = paste0(Perc, "%")), vjust =-0.4, position = position_dodge(width = 1)) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), 
@@ -732,7 +732,6 @@ createSusTimePlot <- function(data, LAchoice, time){
     theme(text=element_text(size = 15),
           axis.text=element_text(size = 15),
           axis.title=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20), 
           axis.title.y=element_text(angle=0)) +
     ylim(0,(max(data$Perc, na.rm = T) + 3))
 }
@@ -741,7 +740,6 @@ createExclTimePlot <- function(data, LAchoice, time){
   
   data <- data %>% filter(SusExcl=="Permanently excluded", Time == time) %>% mutate(rank = as.factor(rank))
   
-  title1 <- paste0(time," permanent exclusion timing for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   labels1 <- c(paste0(time, " permanent\nexclusion\nprior to first\nserious violence\noffence"),
                paste0(time, " permanent\nexclusion\non same day as first\nserious violence\noffence"),
@@ -749,7 +747,7 @@ createExclTimePlot <- function(data, LAchoice, time){
   
   ggplot(data, aes(x=rank, y=Perc, fill = time_group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x=NULL, y="% with\ntiming", title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
+    labs(x=NULL, y="% with\ntiming",  caption = caption1) +
     geom_text(aes(label = paste0(Perc, "%")), vjust =-0.4, position = position_dodge(width = 1)) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), 
@@ -770,12 +768,11 @@ createExclTimePlot <- function(data, LAchoice, time){
 
 createAPPlot <- function(data, LAchoice){
   
-  title1 <- paste0("Alternative provision for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   ggplot(data, aes(x=perc, y=group, fill = group)) +
     geom_bar(position = 'dodge', stat = 'identity') +
-    labs(x="% ever attended AP", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
+    labs(x="% ever attended AP", y=NULL, caption = caption1) +
     geom_text(aes(label = paste0(perc, "%")), hjust =-0.1, position = position_dodge(width = 1), size = 6) +
     theme_classic() +
     theme(legend.position = "none", legend.title=element_blank(), axis.text = element_text(color="black", size = 15)) +
@@ -783,9 +780,9 @@ createAPPlot <- function(data, LAchoice){
     xlim(0,100) + 
     theme(text=element_text(size = 15),
           axis.text=element_text(size = 15),
-          axis.title=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20), 
-          axis.title.y=element_text(angle=0))
+          axis.title=element_text(size = 15), 
+          axis.title.y=element_text(angle=0)) +
+    scale_y_discrete(labels = c("All\nPupils", "Any\nOffence", "Serious\nViolence\nOffence"))
 }
 
 createWaffle_AP_sv <- function(data, LAchoice){
@@ -899,55 +896,52 @@ createAPTimingPlot <- function(data, LAchoice){
   data <- data %>% mutate(Timing = factor(Timing, levels = c("Before the first serious violence offence",
                                                              "In the same term as the first serious violence offence",
                                                              "After the first serious violence offence")))
-  
-  title1 <- paste0("Alternative provision timing for ", LAchoice)
+
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   data <- data %>% mutate(group="Serious\nViolence\nOffence")
   
   ggplot(data, aes(x=perc, y=group, fill = Timing, group = rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% with AP timing", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-5.5, hjust=0, size = 6) +
+    labs(x = "% with AP timing", y=NULL, caption = caption1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-6, hjust=0, size = 5.5) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"), 
-                      labels = c("Before the first\nserious violence\noffence", 
-                                 "In the same term as\nthe first serious\nviolence offence", 
-                                 "After the first\nserious violence\noffence")) +
+                      labels = c("Before the first serious\nviolence offence", 
+                                 "In the same term as the\nfirst serious violence offence", 
+                                 "After the first serious\nviolence offence")) +
     xlim(0,105) +
     theme(text=element_text(size = 15),
           axis.text=element_text(size = 15),
           axis.title=element_text(size = 15), 
-          legend.text=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20)) 
+          legend.text=element_text(size = 15)) + 
+    guides(fill=guide_legend(nrow=3))
 }
 
 createSENPlot <- function(data, LAchoice){
   
   data <- data %>% mutate(SEN_type = factor(SEN_type, levels = c("No identified SEN","SEN support", "EHCP")))
-  
-  title1 <- paste0("SEN for ", LAchoice)
+
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
-  
-  data <- data %>% mutate(perc = abs(perc)) # REMOVE THIS WHEN USING REAL DATA
   
   ggplot(data, aes(x=perc, y=group, fill = SEN_type, group=rev(SEN_type))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% of SEN", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-2.5, hjust=0, size = 6) +
+    labs(x = "% of SEN", y=NULL, caption = caption1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-2.8, hjust=0, size = 5.5) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size = 15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
-                      labels = c("No Identified\nSEN", 
-                                 "SEN\nSupport",
-                                 "EHC\nplan")) +
+                      labels = c("No Identified SEN", 
+                                 "SEN Support",
+                                 "EHC plan")) +
     #xlim(0,105) +
     theme(text=element_text(size = 15),
           axis.text=element_text(size = 15),
           axis.title=element_text(size = 15), 
-          legend.text=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20)) 
+          legend.text=element_text(size = 15)) + 
+    guides(fill=guide_legend(nrow=3)) +
+    scale_y_discrete(labels = c("All\nPupils", "Any\nOffence", "Serious\nViolence\nOffence"))
 }
 
 createWaffle_SEN_sv <- function(data, LAchoice){
@@ -1167,28 +1161,27 @@ createSENTimingPlot <- function(data, LAchoice){
   data <- data %>% mutate(Timing = factor(Timing, levels = c("Before the first serious violence offence",
                                                              "In the same term as the first serious violence offence",
                                                              "After the first serious violence offence")))
-  
-  title1 <- paste0("SEN timing for ", LAchoice)
+
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   data <- data %>% mutate(group="Serious\nViolence\nOffence")
   
   ggplot(data, aes(x=perc, y=group, fill = Timing , group=rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% with timing", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-5.5, hjust=0, size = 6) +
+    labs(x = "% with timing", y=NULL, caption = caption1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-6, hjust=0, size = 5.5) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
-                      labels = c("Before the first\nserious violence\noffence", 
-                                 "In the same term as the\nfirst serious violence\noffence", 
-                                 "After the first\nserious violence\noffence")) +
+                      labels = c("Before the first serious\nviolence offence", 
+                                 "In the same term as the\nfirst serious violence offence", 
+                                 "After the first serious\nviolence offence")) +
     xlim(0,105) +
     theme(text=element_text(size = 15),
           axis.text=element_text(size = 15),
           axis.title=element_text(size = 15), 
-          legend.text=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20)) 
+          legend.text=element_text(size = 15)) + 
+  guides(fill=guide_legend(nrow=3))
 }
 
 createEHCPTimingPlot <- function(data, LAchoice){
@@ -1197,27 +1190,26 @@ createEHCPTimingPlot <- function(data, LAchoice){
                                                              "In the same term as the first serious violence offence",
                                                              "After the first serious violence offence")))
   
-  title1 <- paste0("EHC plan timing for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   data <- data %>% mutate(group="Serious\nViolence\nOffence")
   
   ggplot(data, aes(x=perc, y=group, fill = Timing ,group=rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% with timing", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-5.5, hjust=0, size = 6) +
+    labs(x = "% with timing", y=NULL, caption = caption1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-5.5, hjust=0, size = 5.5) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
-                      labels = c("Before the first\nserious violence\noffence", 
-                                 "In the same term as the\nfirst serious violence\noffence", 
-                                 "After the first\nserious violence\noffence")) +
+                      labels = c("Before the first serious\nviolence offence", 
+                                 "In the same term as the\nfirst serious violence offence", 
+                                 "After the first serious\nviolence offence")) +
     xlim(0,105) +
     theme(text=element_text(size = 15),
           axis.text=element_text(size = 15),
           axis.title=element_text(size = 15), 
-          legend.text=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20)) 
+          legend.text=element_text(size = 15)) + 
+    guides(fill=guide_legend(nrow=3))
 }
 
 createSEMHTimingPlot <- function(data, LAchoice){
@@ -1226,27 +1218,26 @@ createSEMHTimingPlot <- function(data, LAchoice){
                                                              "In the same term as the first serious violence offence",
                                                              "After the first serious violence offence")))
   
-  title1 <- paste0("SEMH timing for ", LAchoice)
   caption1 <- paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice)
   
   data <- data %>% mutate(group="Serious\nViolence\nOffence")
   
   ggplot(data, aes(x=perc, y=group, fill = Timing, group = rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
-    labs(x = "% with timing", y=NULL, title = title1, caption = paste0(caption1,"\nGaps in chart indicate where data has been suppressed due to small numbers")) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-5.5, hjust=0, size = 6) +
+    labs(x = "% with timing", y=NULL, caption = caption1) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-5.5, hjust=0, size = 5.5) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
-                      labels = c("Before the first\nserious violence\noffence", 
-                                 "In the same term as\nthe first serious\nviolence offence", 
-                                 "After the first\nserious violence\noffence")) +
+                      labels = c("Before the first serious\nviolence offence", 
+                                 "In the same term as the\nfirst serious violence offence", 
+                                 "After the first serious\nviolence offence")) +
     xlim(0,105) +
     theme(text=element_text(size = 15),
           axis.text=element_text(size = 15),
           axis.title=element_text(size = 15), 
-          legend.text=element_text(size = 15),
-          plot.title = element_text(hjust = 0.5, size = 20)) 
+          legend.text=element_text(size = 15)) + 
+    guides(fill=guide_legend(nrow=3))
 }
 
 createCSCPlot <- function(data, LAchoice){

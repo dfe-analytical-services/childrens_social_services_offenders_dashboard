@@ -390,7 +390,9 @@ Demographics <- function() {
                 )),
               column(
                 width = 6,
-                uiOutput('demLAchoice2_')
+                selectizeInput("demLAchoice2", "Local Authority 2",
+                               choices = choicesLA_SN2$StatN_1
+                )
               ), 
               column(
                 width = 6,
@@ -640,7 +642,9 @@ SchoolExp <- function() {
                 )),
               column(
                 width = 6,
-                uiOutput('sclLAchoice2_')
+                selectizeInput("sclLAchoice2", "Local Authority 2",
+                               choices = choicesLA_SN2$StatN_1
+                )
               ), 
               column(
                 width = 6,
@@ -690,25 +694,24 @@ SchoolExp <- function() {
                                      p(tags$u("KS2 attainment")), 
                                      h3("The proportion of all pupils who achieved level 4 or above in English and Maths at key stage 2 (KS2) 
                                             by offending and pupil group, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
-                                     p("This analysis looks at the percentage of pupils meeting the expected standard in English and Maths at KS2.
-                                              At the end of KS2 children are expected to be working to at least level 4 in English and Maths."),
+                                     p("This analysis looks at the percentage of pupils working to level 4 or above in English and Maths."),
                                      column(h3(textOutput("sclTitle1_ks2")),
                                             width=6,
                                             box(width = 12,
-                                                plotOutput("ks2attainplot1"))), 
+                                                plotOutput("ks2attainplot1"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
                                      column(h3(textOutput("sclTitle2_ks2")),
                                             width=6,
                                             box(width = 12,
-                                                plotOutput("ks2attainplot2"))),
+                                                plotOutput("ks2attainplot2"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
                                      br(),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. Percentages are rounded to the nearest 1%."),
                                      br(),
-                                     paste("2. Possible attainment levels at KS2 range from Level 1 to Level 6."),
-                                     br(),
                                      paste(
-                                       "3. The figures discussed here are the combined results of all cohorts, of whom reached the end of
+                                       "2. The figures discussed here are the combined results of all cohorts, of whom reached the end of
                                             KS2 in 2007/08 - 2012/13. Based on the metrics used in this analysis, only a very small number
                                             of results for the 2009/10 cohort were withheld, in light of the boycott of the delivery of end of KS2 National
                                             Curriculum tests. It was determined that a sufficient volume of results were available for this cohort, and
@@ -725,10 +728,12 @@ SchoolExp <- function() {
                                      column(h3(textOutput("sclTitle1_ks4")),
                                             width=6,
                                             box(width = 12,
-                                                plotOutput("ks4attainplot1"))), 
+                                                plotOutput("ks4attainplot1"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
                                      column(h3(textOutput("sclTitle2_ks4")),
                                             width=6,
-                                            box(width = 12,plotOutput("ks4attainplot2"))),
+                                            box(width = 12,plotOutput("ks4attainplot2"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
                                      br(),
                                      strong("Footnotes"),
                                      br(),
@@ -786,11 +791,13 @@ SchoolExp <- function() {
                                     column(h3(textOutput("sclTitle1_PA")),
                                            width=6,
                                            box(width = 12,
-                                               plotOutput("PAPlot1"))), 
+                                               plotOutput("PAPlot1"),
+                                               p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
                                     column(h3(textOutput("sclTitle2_PA")),
                                            width=6,
                                            box(width = 12, 
-                                               plotOutput("PAPlot2")))),
+                                               plotOutput("PAPlot2"),
+                                               p("Gaps in chart indicate where data has been suppressed due to small numbers")))),
                                   tabPanel(
                                     p(tags$u("Waffle plot")), 
                                     column(12,	
@@ -834,10 +841,14 @@ SchoolExp <- function() {
                                     of children’s first serious violence offence, for all pupils matched to KS4 academic years 2012/13 - 2017/18", tags$sup("[5]")),
                                 column(h3(textOutput("sclTitle1_PAtime")),
                                        width=6,
-                                       box(width = 12, plotOutput("timing_PA1"))), 
+                                       box(width = 12, 
+                                           plotOutput("timing_PA1"),
+                                           p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
                                 column(h3(textOutput("sclTitle2_PAtime")),
                                        width=6,
-                                       box(width = 12, plotOutput("timing_PA2"))),
+                                       box(width = 12, 
+                                           plotOutput("timing_PA2"),
+                                           p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
                                 br(),
                                 strong("Footnotes"),
                                 br(),
@@ -899,10 +910,14 @@ SchoolExp <- function() {
                                             permanently excluded by offending and pupil group, for all pupils matched to KS4 academic years 2012/13 - 2017/18"), 
                                               column(h3(textOutput("sclTitle1_sus")),
                                                      width=6,
-                                                     box(width = 12, plotOutput("SusExclPlot1"))),  
+                                                     box(width = 12, 
+                                                         plotOutput("SusExclPlot1"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),  
                                               column(h3(textOutput("sclTitle2_sus")),
                                                      width=6,
-                                                     box(width = 12, plotOutput("SusExclPlot2")))
+                                                     box(width = 12, 
+                                                         plotOutput("SusExclPlot2"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
                                             ),
                                             tabPanel(
                                               p(tags$u("Suspension Waffle plot")), 
@@ -967,11 +982,13 @@ SchoolExp <- function() {
                                               column(h3(textOutput("sclTitle1_fstsus")),
                                                      width=6,
                                                      box(width = 12,
-                                                         plotOutput("FstSusTime1"))),  
+                                                         plotOutput("FstSusTime1"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),  
                                               column(h3(textOutput("sclTitle2_fstsus")),
                                                      width=6,
                                                      box(width = 12,
-                                                         plotOutput("FstSusTime2")))
+                                                         plotOutput("FstSusTime2"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
                                             ),
                                             tabPanel(
                                               p(tags$u("Closest suspension")), 
@@ -980,11 +997,13 @@ SchoolExp <- function() {
                                               column(h3(textOutput("sclTitle1_clssus")),
                                                      width=6,
                                                      box(width = 12,
-                                                         plotOutput("clstSusTime1"))), 
+                                                         plotOutput("clstSusTime1"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
                                               column(h3(textOutput("sclTitle2_clssus")),
                                                      width=6,
                                                      box(width = 12,
-                                                         plotOutput("clstSusTime2")))
+                                                         plotOutput("clstSusTime2"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
                                             ),
                                             tabPanel(
                                               p(tags$u("First exclusion")), 
@@ -993,10 +1012,13 @@ SchoolExp <- function() {
                                               column(h3(textOutput("sclTitle1_fstexcl")),
                                                      width=6,
                                                      box(width = 12,
-                                                         plotOutput("FstExclTime1"))), 
+                                                         plotOutput("FstExclTime1"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
                                               column(h3(textOutput("sclTitle2_fstexcl")),
                                                      width=6,
-                                                     box(width = 12,plotOutput("FstExclTime2")))
+                                                     box(width = 12,
+                                                         plotOutput("FstExclTime2"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
                                             ),
                                             tabPanel(
                                               p(tags$u("Closest exclusion")), 
@@ -1005,11 +1027,13 @@ SchoolExp <- function() {
                                               column(h3(textOutput("sclTitle1_clsexcl")),
                                                      width=6,
                                                      box(width = 12,
-                                                         plotOutput("clstExclTime1"))), 
+                                                         plotOutput("clstExclTime1"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
                                               column(h3(textOutput("sclTitle2_clsexcl")),
                                                      width=6,
                                                      box(width = 12, 
-                                                         plotOutput("clstExclTime2"))))),
+                                                         plotOutput("clstExclTime2"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))))),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. Prior to 2019/20, suspensions were referred to as fixed term exclusions."),
@@ -1068,11 +1092,13 @@ SchoolExp <- function() {
                                               column(h3(textOutput("sclTitle1_AP")),
                                                      width=6, 
                                                      box(width = 12,
-                                                         plotOutput("APchart1"))),
+                                                         plotOutput("APchart1"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
                                               column(h3(textOutput("sclTitle2_AP")),
                                                      width=6,
                                                      box(width = 12,
-                                                         plotOutput("APchart2")))),
+                                                         plotOutput("APchart2"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))),
                                             tabPanel(
                                               p(tags$u("Waffle plot")), 
                                               column(12,	
@@ -1100,11 +1126,13 @@ SchoolExp <- function() {
                                      column(h3(textOutput("sclTitle1_APtime")),
                                             width=6, 
                                             box(width = 12,
-                                                plotOutput("timing_AP1"))), 
+                                                plotOutput("timing_AP1"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
                                      column(h3(textOutput("sclTitle2_APtime")),
                                             width=6, 
                                             box(width = 12,
-                                                plotOutput("timing_AP2"))),
+                                                plotOutput("timing_AP2"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. Please see here for more information on AP statutory guidance:"),
@@ -1152,11 +1180,13 @@ SchoolExp <- function() {
                                               column(h3(textOutput("sclTitle1_SEN")),
                                                      width=6, 
                                                      box(width = 12,
-                                                         plotOutput("SENchart1"))),  
+                                                         plotOutput("SENchart1"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),  
                                               column(h3(textOutput("sclTitle2_SEN")),
                                                      width=6, 
                                                      box(width = 12, 
-                                                         plotOutput("SENchart2")))
+                                                         plotOutput("SENchart2"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
                                             ),
                                             tabPanel(
                                               p(tags$u("SEN Support Waffle plot")), 
@@ -1227,11 +1257,13 @@ SchoolExp <- function() {
                                               column(h3(textOutput("sclTitle1_SENtime")),
                                                      width=6, 
                                                      box(width = 12,
-                                                         plotOutput("timing_SEN1"))),
+                                                         plotOutput("timing_SEN1"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
                                               column(h3(textOutput("sclTitle2_SENtime")), 
                                                      width=6, 
                                                      box(width = 12,
-                                                         plotOutput("timing_SEN2")))
+                                                         plotOutput("timing_SEN2"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
                                             ),
                                             tabPanel(
                                               p(tags$u("EHC plan timing")), 
@@ -1240,11 +1272,13 @@ SchoolExp <- function() {
                                               column(h3(textOutput("sclTitle1_EHCPtime")),
                                                      width=6, 
                                                      box(width = 12,
-                                                         plotOutput("timing_EHCP1"))), 
+                                                         plotOutput("timing_EHCP1"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
                                               column(h3(textOutput("sclTitle2_EHCPtime")),
                                                      width=6, 
                                                      box(width = 12,
-                                                         plotOutput("timing_EHCP2")))
+                                                         plotOutput("timing_EHCP2"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
                                             )),
                                      strong("Footnotes"),
                                      br(),
@@ -1301,11 +1335,13 @@ SchoolExp <- function() {
                                      column(h3(textOutput("sclTitle1_SEMHtime")),
                                             width=6, 
                                             box(width = 12,
-                                                plotOutput("timing_SEMH1"))),
+                                                plotOutput("timing_SEMH1"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
                                      column(h3(textOutput("sclTitle2_SEMHtime")),
                                             width=6, 
                                             box(width = 12,
-                                                plotOutput("timing_SEMH2"))),
+                                                plotOutput("timing_SEMH2"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. The Children and Families Act 2014 and the SEND Code of Practice (2015) covers children and young 
@@ -1389,8 +1425,10 @@ CSCExp <- function() {
               ),
               column(
                 width = 6,
-                uiOutput('cscLAchoice2_')
-              ),
+                selectizeInput("cscLAchoice2", "Local Authority 2",
+                               choices = choicesLA_SN2$StatN_1
+                )
+              ), 
               column(
                 width = 6,
                 radioButtons("cscindichoice", 
