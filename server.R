@@ -41,7 +41,7 @@ server <- function(input, output, session) {
     choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
     choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
     updateSelectizeInput(
-      session, "demLAchoice2", 
+      session, "demLAchoice2",
       choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
     )
   })
@@ -64,7 +64,7 @@ server <- function(input, output, session) {
     choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
     choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
     updateSelectizeInput(
-      session, "sclLAchoice2", 
+      session, "sclLAchoice2",
       choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
     )
   })
@@ -85,10 +85,9 @@ server <- function(input, output, session) {
     choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
     choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
     updateSelectizeInput(
-      session, "cscLAchoice2", 
+      session, "cscLAchoice2",
       choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
     )
-    
   })
 
   observeEvent(input$cscLAchoice2, {

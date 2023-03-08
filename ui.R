@@ -85,7 +85,7 @@ ui <- function(input, output, session) {
       logo = "images/DfE_logo_landscape.png",
       logo_width = 150,
       logo_height = 32
-      ),
+    ),
     shinyGovstyle::banner(
       "beta banner",
       "beta",
