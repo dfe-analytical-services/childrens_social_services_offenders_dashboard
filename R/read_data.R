@@ -23,3 +23,25 @@ read_revenue_data <- function(file='data/la_maintained_schools_revenue_reserve_f
                                            TRUE ~ la_name))
   return(dfRevenue)
 }
+
+read_cohort_data <- function(file='data/Cohort.csv'){
+  # This reads in an data showing cohorts used in data share
+  dfCohort <- read.csv(file)
+  # Change col names
+  colnames(dfCohort)[1:7] <- c("Academic Year",  "Cohort 6", "Cohort 5", "Cohort 4", "Cohort 5", "Cohort 2", "Cohort 1")
+  return(dfCohort)
+}
+
+
+# function to read in tables/data needed for demographics tab
+read_dash_data <- function(file="data/Demographics.xlsx"){
+  sheetNames <- getSheetNames(file)
+  no_sheets <- length(sheetNames)
+  demo_data <- vector("list", no_sheets)
+  for (i in 1:no_sheets){
+    demo_data[[i]] <- read_excel(file, sheet = i)
+  } 
+  # Add sheet names to list of data - this will make it easier when added to environment  
+  names(demo_data) <- sheetNames
+  list2env(demo_data[1:no_sheets], envir = .GlobalEnv)
+}

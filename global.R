@@ -23,6 +23,14 @@ shhh(library(ggplot2))
 shhh(library(plotly))
 shhh(library(DT))
 shhh(library(xfun))
+shhh(library(tidyverse)) # added
+shhh(library(readxl)) # added install.packages('readxl')
+shhh(library(openxlsx)) # added install.packages('openxlsx')
+shhh(library(writexl)) # added install.packages('writexl')
+shhh(library(waffle)) # added
+shhh(library(gridExtra)) # added
+shhh(library(shinyBS))
+
 
 # Functions ---------------------------------------------------------------------------------
 
@@ -77,9 +85,12 @@ appLoadingCSS <- "
 
 site_primary <- "https://department-for-education.shinyapps.io/dfe-shiny-template/"
 site_overflow <- "https://department-for-education.shinyapps.io/dfe-shiny-template-overflow/"
+sites_list <- c(site_primary, site_overflow) # We can add further mirrors where necessary. Each one can generally handle about 2,500 users simultaneously
+ees_pub_name <- "Statistical publication" # Update this with your parent publication name (e.g. the EES publication)
+ees_publication <- "https://explore-education-statistics.service.gov.uk/find-statistics/" # Update with parent publication link
 
-source("R/support_links.R")
 source("R/read_data.R")
+source("R/standard_panels.R")
 
 # Read in the data
 dfRevBal <- read_revenue_data()
@@ -106,3 +117,25 @@ choicesAreas <- dfAreas %>%
 choicesYears <- unique(dfRevBal$time_period)
 
 choicesPhase <- unique(dfRevBal$school_phase)
+
+# Read in cohort data
+dfCohort <- read_cohort_data()
+
+# Read in Dummy data
+# alldata <- read_alldata() # Can delete this now as no longer needed
+
+# Read in data needed for dashboard
+read_dash_data(file = "data/10_Demographics.xlsx") # Can read this in for different files to get data for diff tabs
+read_dash_data(file = "data/10_SchoolExp.xlsx")
+read_dash_data(file = "data/10_CSCExp.xlsx")
+
+# Add tables currently needed from alldata to environment
+# Use this table to get a list of LAs to be used as choices
+choicesLA <- Gender %>%
+  select(LA) %>%
+  distinct()
+choiceIndicator <- data.frame(Indicator = c("Home", "School"))
+choiceGroup <- data.frame(group = c("All Pupils", "Any Offence", "Serious Violence Offence"))
+
+# Testing choicesLA with stat neighbour (These are random examples of statistical neighbours)
+choicesLA_SN2 <- read.csv(file = "data/statNeigh_example2.csv")

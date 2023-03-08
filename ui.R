@@ -58,11 +58,17 @@
 
 ui <- function(input, output, session) {
   fluidPage(
-    title = tags$head(tags$link(
-      rel = "shortcut icon",
-      href = "dfefavicon.png"
-    )),
+    title = tags$head(
+      tags$link(
+        rel = "shortcut icon",
+        href = "dfefavicon.png"
+      ),
+      # Add title for browser tabs
+      tags$title("Education, children's social care and offending")
+    ),
+    tags$html(lang = "en"),
     shinyjs::useShinyjs(),
+    customDisconnectMessage(),
     useShinydashboard(),
     tags$head(includeHTML(("google-analytics.html"))),
     tags$head(
@@ -73,20 +79,17 @@ ui <- function(input, output, session) {
       )
     ),
     shinyGovstyle::header(
-      main_text = "DfE",
+      main_text = "",
       main_link = "https://www.gov.uk/government/organisations/department-for-education",
-      secondary_text = "DfE Shiny Template",
-      logo = "images/DfE_logo.png"
+      secondary_text = "Education, children's social care and offending",
+      logo = "images/DfE_logo_landscape.png",
+      logo_width = 150,
+      logo_height = 32
     ),
     shinyGovstyle::banner(
       "beta banner",
       "beta",
-      paste0(
-        "This Dashboard is in beta phase and we are still reviewing performance and reliability. ",
-        "In case of slowdown or connection issues due to high demand, we have produced two instances of this site which can be accessed at the following links: ",
-        "<a href=", site_primary, " id='link_site_1'>Site 1</a> and ",
-        "<a href=", site_overflow, " id='link_site_2'>Site 2</a>."
-      )
+      "This Dashboard is in beta phase and we are still reviewing performance and reliability."
     ),
     shiny::navlistPanel(
       "",
@@ -94,7 +97,9 @@ ui <- function(input, output, session) {
       widths = c(2, 8),
       well = FALSE,
       homepage_panel(),
-      dashboard_panel(),
+      Demographics(),
+      SchoolExp(),
+      CSCExp(),
       a11y_panel(),
       support_links()
     ),
