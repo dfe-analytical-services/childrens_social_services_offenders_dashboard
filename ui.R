@@ -64,7 +64,7 @@ ui <- function(input, output, session) {
         href = "dfefavicon.png"
       ),
       # Add title for browser tabs
-      tags$title("DfE Shiny Template")
+      tags$title("Education, children's social care and offending")
     ),
     tags$html(lang = "en"),
     shinyjs::useShinyjs(),
@@ -79,11 +79,13 @@ ui <- function(input, output, session) {
       )
     ),
     shinyGovstyle::header(
-      main_text = "DfE",
+      main_text = "",
       main_link = "https://www.gov.uk/government/organisations/department-for-education",
-      secondary_text = "DfE Shiny Template",
-      logo = "images/DfE_logo.png"
-    ),
+      secondary_text = "Education, children's social care and offending",
+      logo = "images/DfE_logo_landscape.png",
+      logo_width = 150,
+      logo_height = 32
+      ),
     shinyGovstyle::banner(
       "beta banner",
       "beta",
