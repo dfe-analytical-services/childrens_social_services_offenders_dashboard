@@ -37,6 +37,13 @@ server <- function(input, output, session) {
       updateSelectInput(session, "sclLAchoice", selected = input$demLAchoice)
       updateSelectInput(session, "cscLAchoice", selected = input$demLAchoice)
     }
+    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$demLAchoice)
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    updateSelectizeInput(
+      session, "demLAchoice2", 
+      choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
+    )
   })
 
   observeEvent(input$demLAchoice2, {
@@ -47,10 +54,19 @@ server <- function(input, output, session) {
   })
 
   observeEvent(input$sclLAchoice, {
+    # Update inputs on other pages
     if (input$navlistPanel == "tab_scl") {
       updateSelectInput(session, "demLAchoice", selected = input$sclLAchoice)
       updateSelectInput(session, "cscLAchoice", selected = input$sclLAchoice)
     }
+    # Update nearest neighbours in comparison dropdown
+    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$sclLAchoice)
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    updateSelectizeInput(
+      session, "sclLAchoice2", 
+      choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
+    )
   })
 
   observeEvent(input$sclLAchoice2, {
@@ -65,6 +81,14 @@ server <- function(input, output, session) {
       updateSelectInput(session, "demLAchoice", selected = input$cscLAchoice)
       updateSelectInput(session, "sclLAchoice", selected = input$cscLAchoice)
     }
+    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$cscLAchoice)
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    updateSelectizeInput(
+      session, "cscLAchoice2", 
+      choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
+    )
+    
   })
 
   observeEvent(input$cscLAchoice2, {
@@ -118,138 +142,6 @@ server <- function(input, output, session) {
     }
   })
 
-  # Adding interactivity for LA 2 stat neighbour (dem tab)
-  output$demLAchoice2_ <- renderUI({
-    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$demLAchoice)
-
-    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-
-    selectizeInput("demLAchoice2", "Local Authority 2",
-      choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
-    )
-
-    # Will need to Add England in another group
-  })
-
-  # Adding interactivity for LA 2 stat neighbour (scl tab)
-  output$sclLAchoice2_ <- renderUI({
-    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$sclLAchoice)
-
-    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-
-    selectizeInput("sclLAchoice2", "Local Authority 2",
-      choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
-    )
-
-    # Will need to Add England in another group
-  })
-
-  # Adding interactivity for LA 2 stat neighbour (CSC tab)
-  output$cscLAchoice2_ <- renderUI({
-    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$cscLAchoice)
-
-    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-
-    selectizeInput("cscLAchoice2", "Local Authority 2",
-      choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
-    )
-
-    # Will need to Add England in another group
-  })
-
-
-  # Simple server stuff goes here ------------------------------------------------------------
-  reactiveRevBal <- reactive({
-    dfRevBal %>% filter(
-      area_name == input$selectArea | area_name == "England",
-      school_phase == input$selectPhase
-    )
-  })
-
-  # Define server logic required to draw a histogram
-  output$lineRevBal <- renderPlotly({
-    ggplotly(createAvgRevTimeSeries(reactiveRevBal(), input$selectArea)) %>%
-      config(displayModeBar = F) %>%
-      layout(legend = list(orientation = "h", x = 0, y = -0.2))
-  })
-
-  reactiveBenchmark <- reactive({
-    dfRevBal %>%
-      filter(
-        area_name %in% c(input$selectArea, input$selectBenchLAs),
-        school_phase == input$selectPhase,
-        year == max(year)
-      )
-  })
-
-  output$colBenchmark <- renderPlotly({
-    ggplotly(
-      plotAvgRevBenchmark(reactiveBenchmark()) %>%
-        config(displayModeBar = F),
-      height = 420
-    )
-  })
-
-  output$tabBenchmark <- renderDataTable({
-    datatable(
-      reactiveBenchmark() %>%
-        select(
-          Area = area_name,
-          `Average Revenue Balance (£)` = average_revenue_balance,
-          `Total Revenue Balance (£m)` = total_revenue_balance_million
-        ),
-      options = list(
-        scrollX = TRUE,
-        paging = FALSE
-      )
-    )
-  })
-
-  # Define server logic to create a box
-
-  output$boxavgRevBal <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(
-      # take input number
-      paste0("£", format(
-        (reactiveRevBal() %>% filter(
-          year == max(year),
-          area_name == input$selectArea,
-          school_phase == input$selectPhase
-        ))$average_revenue_balance,
-        big.mark = ","
-      )),
-      # add subtitle to explain what it's hsowing
-      paste0("This is the latest value for the selected inputs"),
-      color = "blue"
-    )
-  })
-  output$boxpcRevBal <- renderValueBox({
-    latest <- (reactiveRevBal() %>% filter(
-      year == max(year),
-      area_name == input$selectArea,
-      school_phase == input$selectPhase
-    ))$average_revenue_balance
-    penult <- (reactiveRevBal() %>% filter(
-      year == max(year) - 1,
-      area_name == input$selectArea,
-      school_phase == input$selectPhase
-    ))$average_revenue_balance
-
-    # Put value into box to plug into app
-    valueBox(
-      # take input number
-      paste0("£", format(latest - penult,
-        big.mark = ","
-      )),
-      # add subtitle to explain what it's hsowing
-      paste0("Change on previous year"),
-      color = "blue"
-    )
-  })
 
   observeEvent(input$link_to_app_content_tab, {
     updateTabsetPanel(session, "navlistPanel", selected = "dashboard")
