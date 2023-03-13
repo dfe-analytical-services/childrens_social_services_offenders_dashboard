@@ -522,7 +522,7 @@ server <- function(input, output, session) {
     WaffleText <- PA_waffle_sv %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
     paste0(WaffleText$sv_prop_count_PA, "% of children who were cautioned or sentenced for a serious violence offence
     had ever been persistently absent. However, ", WaffleText$also_sv_prop_count_PA, "% of those who had ever been persistently absent
-    for FSM were children who were cautioned or sentenced for a serious violence offence.")
+             were children who were cautioned or sentenced for a serious violence offence.")
   })
 
   # Output - PA waffle 1 - offender
@@ -550,7 +550,7 @@ server <- function(input, output, session) {
     WaffleText <- PA_waffle_any %>% filter(indicator == input$sclindichoice2, LA == input$sclLAchoice2)
     paste0(WaffleText$any_prop_count_PA, "% of children who were cautioned or sentenced for an offence
     had ever been persistently absent. However, ", WaffleText$also_any_prop_count_PA, "% of those who had ever been persistently absent
-    for FSM were children who were cautioned or sentenced for an offence.")
+             were children who were cautioned or sentenced for an offence.")
   })
 
   # output - PA waffle switch
@@ -1549,7 +1549,8 @@ server <- function(input, output, session) {
             textOutput("waffleText_CIN1_sv"),
             br(),
             plotOutput("waffle_CIN1_sv"),
-            br()
+            br(),
+            uiOutput("csc_waf_caution_la1")
           )
         ),
         column(h3(textOutput("CSCTitle2_waf")),
@@ -1560,7 +1561,8 @@ server <- function(input, output, session) {
             textOutput("waffleText_CIN2_sv"),
             br(),
             plotOutput("waffle_CIN2_sv"),
-            br()
+            br(),
+            uiOutput("csc_waf_caution_la2")
           )
         )
       )
@@ -1576,7 +1578,8 @@ server <- function(input, output, session) {
             textOutput("waffleText_CIN1_any"),
             br(),
             plotOutput("waffle_CIN1_any"),
-            br()
+            br(),
+            uiOutput("csc_waf_caution_la1")
           )
         ),
         column(h3(textOutput("CSCTitle2_waf")),
@@ -1587,7 +1590,8 @@ server <- function(input, output, session) {
             textOutput("waffleText_CIN2_any"),
             br(),
             plotOutput("waffle_CIN2_any"),
-            br()
+            br(),
+            uiOutput("csc_waf_caution_la2")
           )
         )
       )
@@ -1681,7 +1685,121 @@ server <- function(input, output, session) {
     CSC_timing <- CSC_timing %>% filter(indicator == input$cscindichoice2, LA == input$cscLAchoice2)
     createCSCTimingPlot(CSC_timing, input$cscLAchoice2)
   })
+  
+  # Caution warning for CSC results for Barnet - Ever bar chart la 1
+  output$csc_caution_la1 <- renderUI(
+    if (input$cscLAchoice == "Bradford") {
+      tagList(
+        column(width = 12,
+               box(
+                 width = 12,
+                 title = "CAUTION",
+                 solidHeader = TRUE,
+                 p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion 
+                   of EverCIN children it has been possible to identify in the data."),
+                 status = "danger",
+                 collapsible = TRUE
+               )
+        )
+      )
+    } 
+  )
 
+  # Caution warning for CSC results for Barnet - Ever bar chart la 2
+  output$csc_caution_la2 <- renderUI(
+    if (input$cscLAchoice2 == "Bradford") {
+      tagList(
+        column(width = 12,
+               box(
+                 width = 12,
+                 title = "CAUTION",
+                 solidHeader = TRUE,
+                 p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion 
+                   of EverCIN children it has been possible to identify in the data."),
+                 status = "danger",
+                 collapsible = TRUE
+               )
+        )
+      )
+    } 
+  )
+  
+  # Caution warning for CSC results for Barnet - wafffle la 1
+  output$csc_waf_caution_la1 <- renderUI(
+    if (input$cscLAchoice == "Bradford") {
+      tagList(
+        column(width = 12,
+               box(
+                 width = 12,
+                 title = "CAUTION",
+                 solidHeader = TRUE,
+                 p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion 
+                   of EverCIN children it has been possible to identify in the data."),
+                 status = "danger",
+                 collapsible = TRUE
+               )
+        )
+      )
+    } 
+  )
+  
+  # Caution warning for CSC results for Barnet - wafffle la 2
+  output$csc_waf_caution_la2 <- renderUI(
+    if (input$cscLAchoice2 == "Bradford") {
+      tagList(
+        column(width = 12,
+               box(
+                 width = 12,
+                 title = "CAUTION",
+                 solidHeader = TRUE,
+                 p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion 
+                   of EverCIN children it has been possible to identify in the data."),
+                 status = "danger",
+                 collapsible = TRUE
+               )
+        )
+      )
+    } 
+  )
+  
+  # Caution warning for CSC results for Barnet - csc timing la 1
+  output$csc_time_caution_la1 <- renderUI(
+    if (input$cscLAchoice == "Bradford") {
+      tagList(
+        column(width = 12,
+               box(
+                 width = 12,
+                 title = "CAUTION",
+                 solidHeader = TRUE,
+                 p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion 
+                   of EverCIN children it has been possible to identify in the data."),
+                 status = "danger",
+                 collapsible = TRUE
+               )
+        )
+      )
+    } 
+  )
+  
+  # Caution warning for CSC results for Barnet - csc timing la 2
+  output$csc_time_caution_la2 <- renderUI(
+    if (input$cscLAchoice2 == "Bradford") {
+      tagList(
+        column(width = 12,
+               box(
+                 width = 12,
+                 title = "CAUTION",
+                 solidHeader = TRUE,
+                 p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion 
+                   of EverCIN children it has been possible to identify in the data."),
+                 status = "danger",
+                 collapsible = TRUE
+               )
+        )
+      )
+    } 
+  )
+  
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {
