@@ -1685,121 +1685,127 @@ server <- function(input, output, session) {
     CSC_timing <- CSC_timing %>% filter(indicator == input$cscindichoice2, LA == input$cscLAchoice2)
     createCSCTimingPlot(CSC_timing, input$cscLAchoice2)
   })
-  
+
   # Caution warning for CSC results for Barnet - Ever bar chart la 1
   output$csc_caution_la1 <- renderUI(
     if (input$cscLAchoice == "Bradford") {
       tagList(
-        column(width = 12,
-               box(
-                 width = 12,
-                 title = "CAUTION",
-                 solidHeader = TRUE,
-                 p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion 
+        column(
+          width = 12,
+          box(
+            width = 12,
+            title = "CAUTION",
+            solidHeader = TRUE,
+            p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion
                    of EverCIN children it has been possible to identify in the data."),
-                 status = "danger",
-                 collapsible = TRUE
-               )
+            status = "danger",
+            collapsible = TRUE
+          )
         )
       )
-    } 
+    }
   )
 
   # Caution warning for CSC results for Barnet - Ever bar chart la 2
   output$csc_caution_la2 <- renderUI(
     if (input$cscLAchoice2 == "Bradford") {
       tagList(
-        column(width = 12,
-               box(
-                 width = 12,
-                 title = "CAUTION",
-                 solidHeader = TRUE,
-                 p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion 
+        column(
+          width = 12,
+          box(
+            width = 12,
+            title = "CAUTION",
+            solidHeader = TRUE,
+            p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion
                    of EverCIN children it has been possible to identify in the data."),
-                 status = "danger",
-                 collapsible = TRUE
-               )
+            status = "danger",
+            collapsible = TRUE
+          )
         )
       )
-    } 
+    }
   )
-  
+
   # Caution warning for CSC results for Barnet - wafffle la 1
   output$csc_waf_caution_la1 <- renderUI(
     if (input$cscLAchoice == "Bradford") {
       tagList(
-        column(width = 12,
-               box(
-                 width = 12,
-                 title = "CAUTION",
-                 solidHeader = TRUE,
-                 p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion 
+        column(
+          width = 12,
+          box(
+            width = 12,
+            title = "CAUTION",
+            solidHeader = TRUE,
+            p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion
                    of EverCIN children it has been possible to identify in the data."),
-                 status = "danger",
-                 collapsible = TRUE
-               )
+            status = "danger",
+            collapsible = TRUE
+          )
         )
       )
-    } 
+    }
   )
-  
+
   # Caution warning for CSC results for Barnet - wafffle la 2
   output$csc_waf_caution_la2 <- renderUI(
     if (input$cscLAchoice2 == "Bradford") {
       tagList(
-        column(width = 12,
-               box(
-                 width = 12,
-                 title = "CAUTION",
-                 solidHeader = TRUE,
-                 p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion 
+        column(
+          width = 12,
+          box(
+            width = 12,
+            title = "CAUTION",
+            solidHeader = TRUE,
+            p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion
                    of EverCIN children it has been possible to identify in the data."),
-                 status = "danger",
-                 collapsible = TRUE
-               )
+            status = "danger",
+            collapsible = TRUE
+          )
         )
       )
-    } 
+    }
   )
-  
+
   # Caution warning for CSC results for Barnet - csc timing la 1
   output$csc_time_caution_la1 <- renderUI(
     if (input$cscLAchoice == "Bradford") {
       tagList(
-        column(width = 12,
-               box(
-                 width = 12,
-                 title = "CAUTION",
-                 solidHeader = TRUE,
-                 p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion 
+        column(
+          width = 12,
+          box(
+            width = 12,
+            title = "CAUTION",
+            solidHeader = TRUE,
+            p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion
                    of EverCIN children it has been possible to identify in the data."),
-                 status = "danger",
-                 collapsible = TRUE
-               )
+            status = "danger",
+            collapsible = TRUE
+          )
         )
       )
-    } 
+    }
   )
-  
+
   # Caution warning for CSC results for Barnet - csc timing la 2
   output$csc_time_caution_la2 <- renderUI(
     if (input$cscLAchoice2 == "Bradford") {
       tagList(
-        column(width = 12,
-               box(
-                 width = 12,
-                 title = "CAUTION",
-                 solidHeader = TRUE,
-                 p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion 
+        column(
+          width = 12,
+          box(
+            width = 12,
+            title = "CAUTION",
+            solidHeader = TRUE,
+            p("Extreme caution should be taken when interpreting and comparing figures for Barnet, due to the low proportion
                    of EverCIN children it has been possible to identify in the data."),
-                 status = "danger",
-                 collapsible = TRUE
-               )
+            status = "danger",
+            collapsible = TRUE
+          )
         )
       )
-    } 
+    }
   )
-  
+
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {
