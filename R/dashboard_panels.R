@@ -469,7 +469,7 @@ Demographics <- function() {
                                  box(
                                    width=12,
                                    plotOutput("GenderPlot1"),
-                                   p("Gaps in chart indicate where data has been suppressed due to small numbers"),
+                                   p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                    br()
                                  )
                           ),
@@ -478,7 +478,7 @@ Demographics <- function() {
                                  box(
                                    width=12,
                                    plotOutput("GenderPlot2"),
-                                   p("Gaps in chart indicate where data has been suppressed due to small numbers."),
+                                   p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                    br()
                                  )
                           ),
@@ -497,7 +497,7 @@ Demographics <- function() {
                                         box(
                                           width = 12,
                                           plotOutput("ageofplot1"),
-                                          p("Gaps in chart indicate where data has been suppressed due to small numbers"),
+                                          p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                           br()
                                         )
                                  ),
@@ -506,7 +506,7 @@ Demographics <- function() {
                                         box(
                                           width = 12,
                                           plotOutput("ageofplot2"),
-                                          p("Gaps in chart indicate where data has been suppressed due to small numbers"),
+                                          p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                           br()
                                         )
                                  ),
@@ -536,7 +536,7 @@ Demographics <- function() {
                                  box(
                                    width = 12,
                                    plotOutput("EthPlot1"),
-                                   p("Gaps in chart indicate where data has been suppressed due to small numbers")
+                                   p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
                                  ),
                           ),
                           column(h3(textOutput("DemTitle2_eth")),
@@ -544,7 +544,7 @@ Demographics <- function() {
                                  box(
                                    width = 12,
                                    plotOutput("EthPlot2"),
-                                   p("Gaps in chart indicate where data has been suppressed due to small numbers")
+                                   p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
                                  ),
                           ),
                           strong("Footnotes"),
@@ -587,10 +587,10 @@ Demographics <- function() {
                                                          for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
                                      column(width=6, h3(textOutput("DemTitle1_FSM1")), 
                                             box(width = 12, plotOutput("fsmPlot1"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),
                                      column(width=6, h3(textOutput("DemTitle1_FSM2")), 
                                             box(width = 12, plotOutput("fsmPlot2"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))))
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))))
                                    
                             )
                           ),
@@ -693,12 +693,12 @@ SchoolExp <- function() {
                                             width=6,
                                             box(width = 12,
                                                 plotOutput("ks2attainplot1"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))), 
                                      column(h3(textOutput("sclTitle2_ks2")),
                                             width=6,
                                             box(width = 12,
                                                 plotOutput("ks2attainplot2"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),
                                      br(),
                                      strong("Footnotes"),
                                      br(),
@@ -720,11 +720,11 @@ SchoolExp <- function() {
                                             width=6,
                                             box(width = 12,
                                                 plotOutput("ks4attainplot1"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))), 
                                      column(h3(textOutput("sclTitle2_ks4")),
                                             width=6,
                                             box(width = 12,plotOutput("ks4attainplot2"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),
                                      br(),
                                      strong("Footnotes"),
                                      br(),
@@ -795,12 +795,12 @@ SchoolExp <- function() {
                                            width=6,
                                            box(width = 12,
                                                plotOutput("PAPlot1"),
-                                               p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
+                                               p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))), 
                                     column(h3(textOutput("sclTitle2_PA")),
                                            width=6,
                                            box(width = 12, 
                                                plotOutput("PAPlot2"),
-                                               p("Gaps in chart indicate where data has been suppressed due to small numbers")))),
+                                               p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")))),
                                   
                                   ),
                                 br(),
@@ -834,12 +834,12 @@ SchoolExp <- function() {
                                        width=6,
                                        box(width = 12, 
                                            plotOutput("timing_PA1"),
-                                           p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
+                                           p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))), 
                                 column(h3(textOutput("sclTitle2_PAtime")),
                                        width=6,
                                        box(width = 12, 
                                            plotOutput("timing_PA2"),
-                                           p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                           p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),
                                 br(),
                                 strong("Footnotes"),
                                 br(),
@@ -928,12 +928,12 @@ SchoolExp <- function() {
                                                      width=6,
                                                      box(width = 12, 
                                                          plotOutput("SusExclPlot1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),  
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),  
                                               column(h3(textOutput("sclTitle2_sus")),
                                                      width=6,
                                                      box(width = 12, 
                                                          plotOutput("SusExclPlot2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")))
                                             )
                                      ),
                                      strong("Footnotes"),
@@ -974,12 +974,12 @@ SchoolExp <- function() {
                                                      width=6,
                                                      box(width = 12,
                                                          plotOutput("FstSusTime1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),  
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),  
                                               column(h3(textOutput("sclTitle2_fstsus")),
                                                      width=6,
                                                      box(width = 12,
                                                          plotOutput("FstSusTime2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")))
                                             ),
                                             tabPanel(
                                               p(tags$u("Closest suspension")), 
@@ -989,12 +989,12 @@ SchoolExp <- function() {
                                                      width=6,
                                                      box(width = 12,
                                                          plotOutput("clstSusTime1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))), 
                                               column(h3(textOutput("sclTitle2_clssus")),
                                                      width=6,
                                                      box(width = 12,
                                                          plotOutput("clstSusTime2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")))
                                             ),
                                             tabPanel(
                                               p(tags$u("First exclusion")), 
@@ -1004,12 +1004,12 @@ SchoolExp <- function() {
                                                      width=6,
                                                      box(width = 12,
                                                          plotOutput("FstExclTime1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))), 
                                               column(h3(textOutput("sclTitle2_fstexcl")),
                                                      width=6,
                                                      box(width = 12,
                                                          plotOutput("FstExclTime2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")))
                                             ),
                                             tabPanel(
                                               p(tags$u("Closest exclusion")), 
@@ -1019,12 +1019,12 @@ SchoolExp <- function() {
                                                      width=6,
                                                      box(width = 12,
                                                          plotOutput("clstExclTime1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))), 
                                               column(h3(textOutput("sclTitle2_clsexcl")),
                                                      width=6,
                                                      box(width = 12, 
                                                          plotOutput("clstExclTime2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))))),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))))),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. Prior to 2019/20, suspensions were referred to as fixed term exclusions."),
@@ -1096,12 +1096,12 @@ SchoolExp <- function() {
                                                      width=6, 
                                                      box(width = 12,
                                                          plotOutput("APchart1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),
                                               column(h3(textOutput("sclTitle2_AP")),
                                                      width=6,
                                                      box(width = 12,
                                                          plotOutput("APchart2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))))),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))))),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. Please see here for more information on AP statutory guidance:"),
@@ -1118,12 +1118,12 @@ SchoolExp <- function() {
                                             width=6, 
                                             box(width = 12,
                                                 plotOutput("timing_AP1"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))), 
                                      column(h3(textOutput("sclTitle2_APtime")),
                                             width=6, 
                                             box(width = 12,
                                                 plotOutput("timing_AP2"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. Please see here for more information on AP statutory guidance:"),
@@ -1196,12 +1196,12 @@ SchoolExp <- function() {
                                                      width=6, 
                                                      box(width = 12,
                                                          plotOutput("SENchart1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),  
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),  
                                               column(h3(textOutput("sclTitle2_SEN")),
                                                      width=6, 
                                                      box(width = 12, 
                                                          plotOutput("SENchart2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")))
                                             )),
                                      strong("Footnotes"),
                                      br(),
@@ -1249,12 +1249,12 @@ SchoolExp <- function() {
                                                      width=6, 
                                                      box(width = 12,
                                                          plotOutput("timing_SEN1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),
                                               column(h3(textOutput("sclTitle2_SENtime")), 
                                                      width=6, 
                                                      box(width = 12,
                                                          plotOutput("timing_SEN2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")))
                                             ),
                                             tabPanel(
                                               p(tags$u("EHC plan timing")), 
@@ -1264,12 +1264,12 @@ SchoolExp <- function() {
                                                      width=6, 
                                                      box(width = 12,
                                                          plotOutput("timing_EHCP1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))), 
                                               column(h3(textOutput("sclTitle2_EHCPtime")),
                                                      width=6, 
                                                      box(width = 12,
                                                          plotOutput("timing_EHCP2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")))
                                             )),
                                      strong("Footnotes"),
                                      br(),
@@ -1327,12 +1327,12 @@ SchoolExp <- function() {
                                             width=6, 
                                             box(width = 12,
                                                 plotOutput("timing_SEMH1"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),
                                      column(h3(textOutput("sclTitle2_SEMHtime")),
                                             width=6, 
                                             box(width = 12,
                                                 plotOutput("timing_SEMH2"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. The Children and Families Act 2014 and the SEND Code of Practice (2015) covers children and young 
@@ -1501,14 +1501,14 @@ CSCExp <- function() {
                                                  width=6, 
                                                  box(width = 12,
                                                      plotOutput("CSCPlot1"),
-                                                     p("Gaps in chart indicate where data has been suppressed due to small numbers"),
+                                                     p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                                      br(),
                                                      uiOutput("csc_caution_la1"))), 
                                           column(h3(textOutput("CSCTitle2")),
                                                  width=6, 
                                                  box(width = 12, 
                                                      plotOutput("CSCPlot2"),
-                                                     p("Gaps in chart indicate where data has been suppressed due to small numbers"),
+                                                     p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                                      br(),
                                                      uiOutput("csc_caution_la2"))))
                                  )
@@ -1571,7 +1571,7 @@ CSCExp <- function() {
                                     width=6, 
                                     box(width = 12,
                                         plotOutput("timing_CSC1"),
-                                        p("Gaps in chart indicate where data has been suppressed due to small numbers"),
+                                        p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                         br(),
                                         uiOutput("csc_time_caution_la1"))
                              ), 
@@ -1579,7 +1579,7 @@ CSCExp <- function() {
                                     width=6, 
                                     box(width = 12, 
                                         plotOutput("timing_CSC2"),
-                                        p("Gaps in chart indicate where data has been suppressed due to small numbers"),
+                                        p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                         br(),
                                         uiOutput("csc_time_caution_la2"))
                              )
