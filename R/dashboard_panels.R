@@ -23,11 +23,14 @@ homepage_panel <- function() {
                 class = "panel-body",
                 tags$div(
                   h3(tags$b("Aims")),
-                  p("This dashboard was created to complement the previously published", 
+                  p("This interactive dashboard was created to complement the previously published", 
                     tags$a(href = "https://www.gov.uk/government/publications/education-childrens-social-care-and-offending", 
                            "Education, children’s social care and offending", style = "font-size:16px"),
                     "descriptive analysis with the aim of providing local authority specific breakdowns, for each local authority in England, where possible.",
-                    style = "font-size:16px"),
+                    style = "font-size:16px", tags$br(), tags$br(), "This is the first time a matched dataset has been available to local authorties to improve 
+                    their understanding of local factors which result in vulnerability to crime and serious violence.", tags$br(),tags$br(),
+                  "The dashboard will present findings relating to all pupils, and specifically both for children who had been cautioned or sentenced 
+                  for an offence, and for a serious violence offence."),
                   br(),
                   tabBox(width = 12, title = NULL, id="overview_tabs",
                          tabPanel(h4(tags$u("Dashboard overview")), 
@@ -118,7 +121,7 @@ homepage_panel <- function() {
                                     label = "Cohorts",
                                     help_text = tags$p( "The cohorts of children within this analysis include all pupils who finished key stage 2 (KS2) in 2007/08, 2008/09, 2009/10, 2010/11, 2011/12 
                                     or 2012/13, and were aged 10 at the start of these academic years. Therefore, this cohort has a key stage 4 
-                                    (KS4) academic year of 2012/13, 2013/14, 2013/14, 2014/15, 2015/16 or 2017/18, amounting to approximately [Number to be added] children.", tags$br(), tags$br(), 
+                                    (KS4) academic year of 2012/13, 2013/14, 2013/14, 2014/15, 2015/16 or 2017/18, amounting to approximately 3,165,000 children.", tags$br(), tags$br(), 
                                                        "For these children, all their records from Year 1 to Year 13 (or equivalent) are included. Pupils who do not have a KS4 record are not included. 
                                     Pupils who attended an independent primary or secondary school have been excluded from the data as their characteristics are not recorded, except for those 
                                     registered in independent Alternative Provision (AP) settings.", tags$br(), tags$br(),
@@ -450,10 +453,6 @@ Demographics <- function() {
                             paste("1. Percentages are rounded to the nearest 1%."),
                             br(),
                             paste("2. '*' in the table indicate where data has been suppressed due to small numbers."),
-                            br(),
-                            paste("3. In order to better understand offending trajectories for children who had been cautioned
-                            or sentenced for a serious violence offence, this analysis looks at the volume of offending which 
-                                  preceded a first serious violence offence."),
                             br()
                           ),
                         )
@@ -1547,8 +1546,8 @@ CSCExp <- function() {
                       in any period between the ages of 6 - 16. Those matched to earlier years in the KS4 attainment data will as a result have less 
           coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 8 and above."),
                              br(),
-                             paste("8. Figures for Barnet, Westminster, and Hammersmith and Fulham should be interpreted with caution 
-                              due to the low proportion of EverCIN children it has been possible to identify in the data."),
+                             paste("8. Figures for Barnet, Westminster, and Hammersmith and Fulham should be interpreted with caution. Offence rates may 
+                                   appear higher than average due to the low prop of EverCIN pupils it has been possible identify in the data."),
                              br(),
                              paste("9. Percentages are rounded to the nearest 1%."),
                              br(),
@@ -1617,8 +1616,8 @@ CSCExp <- function() {
                              br(),
                              paste("6. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
                              br(),
-                             paste("7. Figures for Barnet, Westminster, and Hammersmith and Fulham should be interpreted with caution 
-                              due to the low proportion of EverCIN children it has been possible to identify in the data."),
+                             paste("7. Figures for Barnet, Westminster, and Hammersmith and Fulham should be interpreted with caution. Offence rates may 
+                                   appear higher than average due to the low prop of EverCIN pupils it has been possible identify in the data."),
                              br(),
                              paste("8. Percentages are rounded to the nearest 1%."),
                              br(),
