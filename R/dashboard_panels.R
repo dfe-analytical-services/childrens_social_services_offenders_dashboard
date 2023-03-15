@@ -497,7 +497,10 @@ Demographics <- function() {
                                         box(
                                           width = 12,
                                           plotOutput("ageofplot1"),
-                                          p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
+                                          dataTableOutput("age_table1"),
+                                          br(),
+                                          p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always 
+                                            sum to 100%."),
                                           br()
                                         )
                                  ),
@@ -506,6 +509,8 @@ Demographics <- function() {
                                         box(
                                           width = 12,
                                           plotOutput("ageofplot2"),
+                                          dataTableOutput("age_table2"),
+                                          br(),
                                           p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                           br()
                                         )
@@ -756,8 +761,8 @@ SchoolExp <- function() {
                             details(
                               inputId = "PAUO_def",
                               label = "What is persistent absence for 'unauthorised other' reasons (PAUO)?",
-                              help_text = tags$p("The absence reason ‘persistent absence for “unauthorised other” reasons’ (PAUO) is used as a closest 
-                              available proxy for persistent truancy.", tags$br(), tags$br(), "The definition of persistent absence includes all possible reasons for absence, 
+                              help_text = tags$p("The absence reason PAUO refers to unauthorised absence as the school is not satisfied with the reason given for the absence, 
+                              has not authorised the absence and it is not covered by any other code / description.", tags$br(), tags$br(), "The definition of persistent absence includes all possible reasons for absence, 
                               including children whose absence was unauthorised, but the school was still provided with a reason for that absence 
                               (for example, an unagreed family holiday). The analysis has included this additional metric of absence (PAUO), as a way 
                               of differentiating those whose absence was not authorised and were unable to provide a reason for that absence, from those
@@ -1038,7 +1043,8 @@ SchoolExp <- function() {
                                      br(), 
                                      paste("4. Where children who had been cautioned or sentenced for a serious violence offence had received multiple suspensions/permanent exclusions, 
                           the analysis defined closest as the shortest amount of time between the start of the suspensions/permanent exclusions and the first 
-                                serious violence offence date"),
+                                serious violence offence date.  For children who had their closest suspension equal days before and after their first serious violence both suspensions
+                                           have been accounted for, therefore there may be more suspensions than pupils suspended."),
                                      br(),
                                      paste("5.The analysis uses the date the offence took place rather than the date it was processed through the courts."),
                                      br(),
@@ -1107,7 +1113,9 @@ SchoolExp <- function() {
                                      paste("1. Please see here for more information on AP statutory guidance:"),
                                      a(href = "https://www.gov.uk/government/publications/alternative-provision", "Alternative Provision Statutory Guidance"),
                                      br(),
-                                     paste("2. Percentages are rounded to the nearest 1%."),
+                                     paste("2. Figures discussed here refer to both state and non-state funded AP."),
+                                     br(),
+                                     paste("3. Percentages are rounded to the nearest 1%."),
                                      br()),
                                    tabPanel( 
                                      p(tags$u("Timing of AP")), 
@@ -1129,9 +1137,11 @@ SchoolExp <- function() {
                                      paste("1. Please see here for more information on AP statutory guidance:"),
                                      a(href = "https://www.gov.uk/government/publications/alternative-provision", "Alternative Provision Statutory Guidance"),
                                      br(),
-                                     paste("2. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
+                                     paste("2. Figures discussed here refer to both state and non-state funded AP."),
                                      br(),
-                                     paste("3. Percentages are rounded to the nearest 1%."),
+                                     paste("3. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
+                                     br(),
+                                     paste("4. Percentages are rounded to the nearest 1%."),
                                      br())),
                           )
                         )
@@ -1546,8 +1556,9 @@ CSCExp <- function() {
                       in any period between the ages of 6 - 16. Those matched to earlier years in the KS4 attainment data will as a result have less 
           coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 8 and above."),
                              br(),
-                             paste("8. Figures for Barnet, Westminster, and Hammersmith and Fulham should be interpreted with caution. Offence rates may 
-                                   appear higher than average due to the low prop of EverCIN pupils it has been possible identify in the data."),
+                             paste("8. Figures for Barnet, Westminster, and Hammersmith and Fulham should be interpreted with caution. Offence rates 
+                                   for these local authorities may appear to be much higher than the true figure due to the low proportion of EverCIN pupils 
+                                   it has been possible to identify in the data."),
                              br(),
                              paste("9. Percentages are rounded to the nearest 1%."),
                              br(),
@@ -1616,8 +1627,9 @@ CSCExp <- function() {
                              br(),
                              paste("6. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
                              br(),
-                             paste("7. Figures for Barnet, Westminster, and Hammersmith and Fulham should be interpreted with caution. Offence rates may 
-                                   appear higher than average due to the low prop of EverCIN pupils it has been possible identify in the data."),
+                             paste("7. Figures for Barnet, Westminster, and Hammersmith and Fulham should be interpreted with caution. Offence rates 
+                                   for these local authorities may appear to be much higher than the true figure due to the low proportion of EverCIN pupils 
+                                   it has been possible to identify in the data."),
                              br(),
                              paste("8. Percentages are rounded to the nearest 1%."),
                              br(),

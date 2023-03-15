@@ -421,6 +421,54 @@ server <- function(input, output, session) {
     createAgeOffence(age_plot, input$demLAchoice2)
   })
 
+  # Output - age first offence table 1
+  output$age_table1 <- renderDataTable(datatable(
+    {
+      age_offence <- age_offence %>%
+        filter(
+          indicator == input$demindichoice,
+          LA == input$demLAchoice
+        ) %>%
+        rename("Age at first offence" = OffenceStartAge) %>%
+        pivot_wider(
+          names_from = group,
+          values_from = perc
+        ) %>%
+        select(!c(indicator, LA)) %>%
+        t() %>%
+        as.data.frame()
+    },
+    rownames = TRUE,
+    colnames = NULL,
+    options = list(searchable = FALSE, dom = "t", ordering = F),
+    filter = c("none"),
+    selection = c("none")
+  ))
+
+  # Output - age first offence table 2
+  output$age_table2 <- renderDataTable(datatable(
+    {
+      age_offence <- age_offence %>%
+        filter(
+          indicator == input$demindichoice2,
+          LA == input$demLAchoice2
+        ) %>%
+        rename("Age at first offence" = OffenceStartAge) %>%
+        pivot_wider(
+          names_from = group,
+          values_from = perc
+        ) %>%
+        select(!c(indicator, LA)) %>%
+        t() %>%
+        as.data.frame()
+    },
+    rownames = TRUE,
+    colnames = NULL,
+    options = list(searchable = FALSE, dom = "t", ordering = F),
+    filter = c("none"),
+    selection = c("none")
+  ))
+
   # Output - KS2 attainment column 1 LA title
   output$sclTitle1_ks2 <- renderText({
     (KS2_attain %>% filter(indicator == input$sclindichoice, LA == input$sclLAchoice) %>% slice_head())$LA
