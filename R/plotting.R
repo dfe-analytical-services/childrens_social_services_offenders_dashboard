@@ -171,7 +171,7 @@ createWaffle_FSM_sv <- function(data, LAchoice){
           legend.text=element_text(size=12)) 
   
   # automated text for waffle - RHS
-  FSM_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_FSM, "%\nChildren cautioned or sentenced\nfor a serious violence offence"),
+  FSM_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_FSM, "%\nChildren cautioned\nor sentenced for a\nserious violence offence"),
                              x2 = paste0(data$not_also_sv_prop_count_FSM, "%\nAll other\npupils"))
   
   FSM_RHS_waffle <- waffle(data[5:6], rows=10, size=0.6, flip=TRUE,
@@ -224,7 +224,7 @@ createWaffle_FSM_any <- function(data, LAchoice){
           legend.text=element_text(size=12)) 
   
   # automated text for waffle - RHS
-  FSM_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_FSM, "%\nChildren cautioned or sentenced\nfor an offence"),
+  FSM_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_FSM, "%\nChildren cautioned\nor sentenced\nfor an offence"),
                              x2 = paste0(data$not_also_any_prop_count_FSM, "%\nAll other\npupils"))
   
   FSM_RHS_waffle <- waffle(data[c("also_any_prop_count_FSM","not_also_any_prop_count_FSM")], rows=10, size=0.6, flip=TRUE,
@@ -422,7 +422,7 @@ createWaffle_PA_any <- function(data, LAchoice){
   
   PA_RHS_waffle <- waffle(data[c("also_any_prop_count_PA","not_also_any_prop_count_PA")], rows=10, size=0.6, flip=TRUE,
                           colors=c("#08306b", "#6BACE6"), 
-                          title="All pupils who were\npersistentlyabsent",
+                          title="All pupils who were\npersistently absent",
                           xlab="1 square = 1 %") + 
     theme_classic() +
     theme(axis.line = element_blank(),
