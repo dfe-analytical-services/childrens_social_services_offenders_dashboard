@@ -436,17 +436,14 @@ Demographics <- function() {
           tabsetPanel(id = "tabsetpanels2",
                       tabPanel(
                         "LA info",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12,
                             br(),
                             h5("The table below contains information about the selected local authorities and/or England"),
                             br(),
-                            box(
-                              width = 12,
                               div(dataTableOutput("demotable"), 
-                                  style = "font-size:16px")
-                            ),
+                                  style = "font-size:16px"),
                             br(),
                             strong("Footnotes"),
                             br(),
@@ -459,28 +456,22 @@ Demographics <- function() {
                       ),
                       tabPanel(
                         "Gender",
-                        fluidRow(
+                        gov_row(
                           h3("The gender breakdown of offending and pupil group, for all pupils matched to KS4 academic years 2012/13 - 2017/18"),
                           h5("Gender information has been taken from the DfE school census.
                                Where a pupil's gender has changed over time, the most recent record has been used. The gender recorded in the DfE school census may not be the
                                same as to which a child identifies."),
                           column(h3(textOutput("DemTitle1")),
                                  width=6,
-                                 box(
-                                   width=12,
                                    plotOutput("GenderPlot1"),
                                    p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                    br()
-                                 )
                           ),
                           column(h3(textOutput("DemTitle2")),
                                  width=6,
-                                 box(
-                                   width=12,
                                    plotOutput("GenderPlot2"),
                                    p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                    br()
-                                 )
                           ),
                           strong("Footnotes"),
                           br(),
@@ -490,7 +481,7 @@ Demographics <- function() {
                       ),
                       tabPanel(
                         "Age at first offence",
-                        fluidRow(h3("The proportion of children relative to their age at first offence\nby offending group, for pupils matched 
+                        gov_row(h3("The proportion of children relative to their age at first offence\nby offending group, for pupils matched 
                                to KS4 academic years 2012/13 - 2017/18"),
                                  column(h3(textOutput("DemTitle1_age")),
                                         width=6,
@@ -530,7 +521,7 @@ Demographics <- function() {
                       ),
                       tabPanel(
                         "Ethnicity",
-                        fluidRow(
+                        gov_row(
                           h3("The proportion of all pupils split by ethnic group major, offending and pupil group, for pupils matched to KS4 academic years
                                2012/13 - 2017/18"),
                           h5("Ethnicity", tags$sup("[1]"), "has two different categorisations in the school census - ethnic group major
@@ -570,10 +561,10 @@ Demographics <- function() {
                       ),
                       tabPanel(
                         "Free school meals",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12, h5(tags$b("Choose plot type")),
-                            tabBox(width = 12, title = NULL, id="FSMsubtabs",
+                            tabsetPanel(id="FSMsubtabs",
                                    tabPanel(
                                      p(tags$u("Waffle plot")), 
                                      column(12,	
@@ -591,11 +582,11 @@ Demographics <- function() {
                                      h3("The proportion of all pupils eligible for free school meals (FSM) by offending and pupil group, 
                                                          for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
                                      column(width=6, h3(textOutput("DemTitle1_FSM1")), 
-                                            box(width = 12, plotOutput("fsmPlot1"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))),
+                                            plotOutput("fsmPlot1"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")),
                                      column(width=6, h3(textOutput("DemTitle1_FSM2")), 
-                                            box(width = 12, plotOutput("fsmPlot2"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))))
+                                            plotOutput("fsmPlot2"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")))
                                    
                             )
                           ),
@@ -686,7 +677,7 @@ SchoolExp <- function() {
           tabsetPanel(id = "tabsetpanels3",
                       tabPanel(
                         "Attainment",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12,
                             tabBox(width = 12, title = NULL, id="atn_subtabs",
@@ -744,7 +735,7 @@ SchoolExp <- function() {
                       ),
                       tabPanel(
                         "Persistent Absence",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12,
                             br(),
@@ -880,7 +871,7 @@ SchoolExp <- function() {
                       ),
                       tabPanel(
                         "Suspension & Exclusions",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12,
                             br(),
@@ -1058,7 +1049,7 @@ SchoolExp <- function() {
                       ),
                       tabPanel(
                         "Alternative Provision",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12, 
                             br(),
@@ -1148,7 +1139,7 @@ SchoolExp <- function() {
                       ),
                       tabPanel(
                         "SEN",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12,
                             h3("Special Educational Needs"),
@@ -1481,7 +1472,7 @@ CSCExp <- function() {
                tabsetPanel(id = "tabsetpanels3",
                            tabPanel(
                              "Ever CIN/CLA",
-                             fluidRow(
+                             gov_row(
                                column(
                                  width=12,
                                  br(),

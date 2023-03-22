@@ -213,10 +213,19 @@ server <- function(input, output, session) {
   })
 
   # Gender plot 1
-  output$GenderPlot1 <- renderPlot({
-    Genderplot <- Gender %>% filter(indicator == input$demindichoice, LA == input$demLAchoice)
-    createGenderPlot(Genderplot, input$demLAchoice)
-  })
+  output$GenderPlot1 <- renderPlot(
+    {
+      Genderplot <- Gender %>% filter(indicator == input$demindichoice, LA == input$demLAchoice)
+      createGenderPlot(Genderplot, input$demLAchoice)
+    },
+    alt = reactive({
+      paste0(
+        "Bar chart showin the gender split of all pupils, ",
+        "pupils having committed any offence and pupils having committed a serious violence offence in ",
+        input$demLAchoice
+      )
+    })
+  )
 
   # Gender plot 2
   output$GenderPlot2 <- renderPlot({
@@ -344,26 +353,20 @@ server <- function(input, output, session) {
         column(
           width = 6,
           h3(textOutput("DemTitle2_FSM1_sv")),
-          box(
-            width = 12,
-            br(),
-            textOutput("WaffleTextFSM1_sv"),
-            br(),
-            plotOutput("waffle_FSM1_sv"),
-            br()
-          )
+          br(),
+          textOutput("WaffleTextFSM1_sv"),
+          br(),
+          plotOutput("waffle_FSM1_sv"),
+          br()
         ),
         column(
           width = 6,
           h3(textOutput("DemTitle2_FSM2_sv")),
-          box(
-            width = 12,
-            br(),
-            textOutput("WaffleTextFSM2_sv"),
-            br(),
-            plotOutput("waffle_FSM2_sv"),
-            br()
-          )
+          br(),
+          textOutput("WaffleTextFSM2_sv"),
+          br(),
+          plotOutput("waffle_FSM2_sv"),
+          br()
         )
       )
     } else {
@@ -374,26 +377,20 @@ server <- function(input, output, session) {
         column(
           width = 6,
           h3(textOutput("DemTitle2_FSM1_sv")),
-          box(
-            width = 12,
-            br(),
-            textOutput("WaffleTextFSM1_any"),
-            br(),
-            plotOutput("waffle_FSM1_any"),
-            br()
-          )
+          br(),
+          textOutput("WaffleTextFSM1_any"),
+          br(),
+          plotOutput("waffle_FSM1_any"),
+          br()
         ),
         column(
           width = 6,
           h3(textOutput("DemTitle2_FSM2_sv")),
-          box(
-            width = 12,
-            br(),
-            textOutput("WaffleTextFSM2_any"),
-            br(),
-            plotOutput("waffle_FSM2_any"),
-            br()
-          )
+          br(),
+          textOutput("WaffleTextFSM2_any"),
+          br(),
+          plotOutput("waffle_FSM2_any"),
+          br()
         )
       )
     }

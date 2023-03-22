@@ -30,6 +30,7 @@ shhh(library(writexl)) # added install.packages('writexl')
 shhh(library(waffle)) # added
 shhh(library(gridExtra)) # added
 shhh(library(shinyBS))
+shhh(library(shinya11y))
 
 
 # Functions ---------------------------------------------------------------------------------
