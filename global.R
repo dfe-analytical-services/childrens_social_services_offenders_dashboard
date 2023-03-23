@@ -126,9 +126,9 @@ dfCohort <- read_cohort_data()
 # alldata <- read_alldata() # Can delete this now as no longer needed
 
 # Read in data needed for dashboard
-read_dash_data(file = "data/10_Demographics.xlsx") # Can read this in for different files to get data for diff tabs
-read_dash_data(file = "data/10_SchoolExp.xlsx")
-read_dash_data(file = "data/10_CSCExp.xlsx")
+read_dash_data(file = "data/OFFSEN_to_delete/2023_03_16_OFSEN_Demographics.xlsx") # Can read this in for different files to get data for diff tabs
+read_dash_data(file = "data/OFFSEN_to_delete/2023_03_16_OFFSEN_SchoolExp.xlsx")
+read_dash_data(file = "data/OFFSEN_to_delete/2023_03_16_OFFSEN_CSCExp.xlsx")
 
 # Add tables currently needed from alldata to environment
 # Use this table to get a list of LAs to be used as choices
@@ -139,4 +139,4 @@ choiceIndicator <- data.frame(Indicator = c("Home", "School"))
 choiceGroup <- data.frame(group = c("All Pupils", "Any Offence", "Serious Violence Offence"))
 
 # Testing choicesLA with stat neighbour (These are random examples of statistical neighbours)
-choicesLA_SN2 <- read.csv(file = "data/statNeigh_example2.csv")
+choicesLA_SN2 <- read.csv(file = "data/OFFSEN_to_delete/stat_neighbour_groupings.csv")

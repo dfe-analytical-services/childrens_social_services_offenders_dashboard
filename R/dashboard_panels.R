@@ -113,7 +113,7 @@ homepage_panel <- function() {
                                                        "Applications to access the data share can be made by ONS accredited researchers, by submitting the", 
                                                        tags$a(href="https://www.gov.uk/government/publications/moj-data-first-application-form-for-secure-access-to-data", "application form"), "to MoJ and DfE. 
                                   Successful applicants will access the data through the ONS Secure Research Service (SRS).", tags$br(), tags$br(),
-                                                       "For more information please see the previously published", 
+                                                       "For more information, please see the previously published", 
                                                        tags$a(href = "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1059557/Education_children_s_social_care_and_offending_descriptive_stats_Technical_Note_FINAL.pdf", 
                                                               "technical note"), ".")),
                                   details(
