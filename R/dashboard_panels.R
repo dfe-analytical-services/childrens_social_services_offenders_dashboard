@@ -16,8 +16,7 @@ homepage_panel <- function() {
               class = "panel panel-info",
               div(
                 class = "panel-heading",
-                style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-                h6("")
+                style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;"
               ),
               div(
                 class = "panel-body",
@@ -27,7 +26,7 @@ homepage_panel <- function() {
                     tags$a(href = "https://www.gov.uk/government/publications/education-childrens-social-care-and-offending", 
                            "Education, children’s social care and offending", style = "font-size:16px"),
                     "descriptive analysis with the aim of providing local authority specific breakdowns, for each local authority in England, where possible.",
-                    style = "font-size:16px", tags$br(), tags$br(), "This is the first time a matched dataset has been available to local authorties to improve 
+                    style = "font-size:16px", tags$br(), tags$br(), "This is the first time a matched dataset has been available to local areas to improve 
                     their understanding of local factors which result in vulnerability to crime and serious violence.", tags$br(),tags$br(),
                   "The dashboard will present findings relating to all pupils, and specifically both for children who had been cautioned or sentenced 
                   for an offence, and for a serious violence offence."),
