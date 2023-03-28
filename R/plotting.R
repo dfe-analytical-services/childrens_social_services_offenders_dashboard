@@ -77,12 +77,12 @@ createEthPlot <- function(data, LAchoice){
     geom_text(
       aes(label = paste0(perc, "%")),
       vjust = 0,
-      hjust = -0.1,
-      size = 6
+      hjust = -0.05,
+      size = 5
     ) +
     theme_classic() +
     theme(legend.position = "none",
-          axis.text = element_text(color = "black", size = 15)) +
+          axis.text = element_text(color = "black", size = 14)) +
     scale_fill_manual(values = c(
       "#08306b",
                "#08519c",
@@ -92,19 +92,24 @@ createEthPlot <- function(data, LAchoice){
                "#9ecae1",
                "#c6dbef"
     )) +
-    facet_wrap( ~ group) +
-    theme(strip.background = element_blank()) +
-    xlim(0, 105) +
+    facet_wrap( ~ group, labeller = labeller(group = 
+                                               c("All Pupils" = "All Pupils",
+                                                 "Any Offence" = "Any\nOffence",
+                                                 "Serious Violence Offence" = "Serious\nViolence Offence")
+    )) +
+    theme(strip.background = element_blank(),
+          strip.text = element_text(size = 14)) +
+    xlim(0, 110) +
     scale_y_discrete(
       labels = c("Any other\nethnic group", "Asian","Black",
         "Chinese", "Mixed","Unclassified", "White"
       )
     ) +
     theme(
-      text = element_text(size = 15),
-      axis.text = element_text(size = 15),
-      axis.title = element_text(size = 15),
-      legend.text = element_text(size = 15)
+      text = element_text(size = 14),
+      axis.text = element_text(size = 14),
+      axis.title = element_text(size = 14),
+      legend.text = element_text(size = 14)
     ) +
     annotate(
       "segment",
@@ -115,7 +120,7 @@ createEthPlot <- function(data, LAchoice){
       color = "black",
       lwd = 1
     ) +
-    scale_x_continuous(breaks = c(0, 33, 66))
+    scale_x_continuous(breaks = c(0, 33, 66)) 
 }
 
 createFSMPlot <- function(data, LAchoice){
@@ -168,11 +173,12 @@ createWaffle_FSM_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), 
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12)) 
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  FSM_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_FSM, "%\nChildren cautioned\nor sentenced for a\nserious violence offence"),
-                             x2 = paste0(data$not_also_sv_prop_count_FSM, "%\nAll other\npupils"))
+  FSM_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_FSM, "%\nChildren cautioned or\nsentenced for a\nserious violence offence"),
+                             x2 = paste0(data$not_also_sv_prop_count_FSM, "%\nAll other pupils"))
   
   FSM_RHS_waffle <- waffle(data[5:6], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#6BACE6"), 
@@ -191,7 +197,8 @@ createWaffle_FSM_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12))  
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(FSM_LHS_waffle, FSM_RHS_waffle), ncol=2, widths=c(1,2), 
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -221,11 +228,12 @@ createWaffle_FSM_any <- function(data, LAchoice){
     theme(text=element_text(size=12), 
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12)) 
+          legend.text=element_text(size=12)) +
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  FSM_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_FSM, "%\nChildren cautioned\nor sentenced\nfor an offence"),
-                             x2 = paste0(data$not_also_any_prop_count_FSM, "%\nAll other\npupils"))
+  FSM_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_FSM, "%\nChildren cautioned or\nsentenced for an offence"),
+                             x2 = paste0(data$not_also_any_prop_count_FSM, "%\nAll other pupils"))
   
   FSM_RHS_waffle <- waffle(data[c("also_any_prop_count_FSM","not_also_any_prop_count_FSM")], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#6BACE6"), 
@@ -244,7 +252,8 @@ createWaffle_FSM_any <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12))  
+          legend.text=element_text(size=12))   +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(FSM_LHS_waffle, FSM_RHS_waffle), ncol=2, widths=c(1,2), 
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -342,7 +351,7 @@ createWaffle_PA_sv <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   PA_LHS_text <- data.frame(x1 = paste0(data$sv_prop_count_PA, "%\nPersistently\nabsent"),
-                             x2 = paste0(data$prop_sv_not_PA, "%\nNot\npersistently\nabsent"))
+                             x2 = paste0(data$prop_sv_not_PA, "%\nNot persistently\nabsent"))
   
   PA_LHS_waffle <- waffle(data[c(3,5)], rows=10, size=0.6, flip=TRUE, 
                            colors=c("#08306b", "#2171b5"), 
@@ -361,11 +370,12 @@ createWaffle_PA_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), 
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12)) 
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
 
   # automated text for waffle - RHS
-  PA_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_PA, "%\nChildren cautioned or sentenced\nfor a serious violence offence"),
-                             x2 = paste0(data$not_also_sv_prop_count_PA, "%\nAll other\npupils"))
+  PA_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_PA, "%\nChildren cautioned or\nsentenced for a\nserious violence offence"),
+                             x2 = paste0(data$not_also_sv_prop_count_PA, "%\nAll other pupils"))
   
   PA_RHS_waffle <- waffle(data[c(4,6)], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#6BACE6"), 
@@ -384,7 +394,8 @@ createWaffle_PA_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12))  
+          legend.text=element_text(size=12))   +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(PA_LHS_waffle, PA_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -395,7 +406,7 @@ createWaffle_PA_any <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   PA_LHS_text <- data.frame(x1 = paste0(data$any_prop_count_PA, "%\nPersistently\nabsent"),
-                            x2 = paste0(data$prop_any_not_PA, "%\nNot\npersistently\nabsent"))
+                            x2 = paste0(data$prop_any_not_PA, "%\nNot\npersistently absent"))
   
   PA_LHS_waffle <- waffle(data[c("any_prop_count_PA","prop_any_not_PA")], rows=10, size=0.6, flip=TRUE, 
                           colors=c("#08306b", "#2171b5"), 
@@ -414,11 +425,12 @@ createWaffle_PA_any <- function(data, LAchoice){
     theme(text=element_text(size=12), 
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12)) 
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  PA_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_PA, "%\nChildren cautioned or sentenced\nfor an offence"),
-                            x2 = paste0(data$not_also_any_prop_count_PA, "%\nAll other\npupils"))
+  PA_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_PA, "%\nChildren cautioned or\nsentenced for an offence"),
+                            x2 = paste0(data$not_also_any_prop_count_PA, "%\nAll othe pupils"))
   
   PA_RHS_waffle <- waffle(data[c("also_any_prop_count_PA","not_also_any_prop_count_PA")], rows=10, size=0.6, flip=TRUE,
                           colors=c("#08306b", "#6BACE6"), 
@@ -437,7 +449,8 @@ createWaffle_PA_any <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12))  
+          legend.text=element_text(size=12))   +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(PA_LHS_waffle, PA_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -455,7 +468,7 @@ createPATimingPlot <- function(data, LAchoice){
   ggplot(data, aes(x=perc, y=rev(Absence), fill = Timing, group = rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
     labs(x = "% with persistent absence timing", y=NULL, caption = caption1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-3.3, hjust=0, size = 5.5) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-3.8, hjust=0, size = 5.5) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     
@@ -499,7 +512,7 @@ createWaffle_Sus_sv <- function(data, LAchoice){
 
   # automated text for waffle - LHS
   sus_LHS_text <- data.frame(x1 = paste0(data$sv_prop_count_Sus, "%\nSuspended"),
-                            x2 = paste0(data$prop_sv_not_Sus, "%\nNot\nsuspended"))
+                            x2 = paste0(data$prop_sv_not_Sus, "%\nNot suspended"))
 
   sus_LHS_waffle <- waffle(data[c("sv_prop_count_Sus","prop_sv_not_Sus")], rows=10, size=0.6, flip=TRUE,
                           colors=c("#08306b", "#2171b5"),
@@ -518,11 +531,12 @@ createWaffle_Sus_sv <- function(data, LAchoice){
     theme(text=element_text(size=12),
           axis.title=element_text(size=12),
           plot.title=element_text(size=12),
-          legend.text=element_text(size=12))
+          legend.text=element_text(size=12))+
+    guides(fill = guide_legend(nrow = 2))
 
   # automated text for waffle - RHS
-  sus_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_Sus, "%\nChildren cautioned or sentenced\nfor a serious violence offence"),
-                            x2 = paste0(data$not_also_sv_prop_count_Sus, "%\nAll other\npupils"))
+  sus_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_Sus, "%\nChildren cautioned or\nsentenced for a\nserious violence offence"),
+                            x2 = paste0(data$not_also_sv_prop_count_Sus, "%\nAll other pupils"))
 
   sus_RHS_waffle <- waffle(data[c("also_sv_prop_count_Sus","not_also_sv_prop_count_Sus")], rows=10, size=0.6, flip=TRUE,
                           colors=c("#08306b", "#6BACE6"),
@@ -541,7 +555,8 @@ createWaffle_Sus_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12),
-          legend.text=element_text(size=12))
+          legend.text=element_text(size=12))+
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(sus_LHS_waffle, sus_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -552,7 +567,7 @@ createWaffle_Sus_any <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   sus_LHS_text <- data.frame(x1 = paste0(data$any_prop_count_Sus, "%\nSuspended"),
-                             x2 = paste0(data$prop_any_not_Sus, "%\nNot\nsuspended"))
+                             x2 = paste0(data$prop_any_not_Sus, "%\nNot suspended"))
   
   sus_LHS_waffle <- waffle(data[c("any_prop_count_Sus","prop_any_not_Sus")], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#2171b5"),
@@ -571,11 +586,12 @@ createWaffle_Sus_any <- function(data, LAchoice){
     theme(text=element_text(size=12),
           axis.title=element_text(size=12),
           plot.title=element_text(size=12),
-          legend.text=element_text(size=12))
+          legend.text=element_text(size=12))+
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  sus_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_Sus, "%\nChildren cautioned or sentenced\nfor an offence"),
-                             x2 = paste0(data$not_also_any_prop_count_Sus, "%\nAll other\npupils"))
+  sus_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_Sus, "%\nChildren cautioned or\nsentenced for an offence"),
+                             x2 = paste0(data$not_also_any_prop_count_Sus, "%\nAll other pupils"))
   
   sus_RHS_waffle <- waffle(data[c("also_any_prop_count_Sus","not_also_any_prop_count_Sus")], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#6BACE6"),
@@ -594,7 +610,8 @@ createWaffle_Sus_any <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12),
-          legend.text=element_text(size=12))
+          legend.text=element_text(size=12))+
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(sus_LHS_waffle, sus_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -605,7 +622,7 @@ createWaffle_Excl_sv <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   sus_LHS_text <- data.frame(x1 = paste0(data$sv_prop_count_Excl, "%\nPermanently\nexcluded"),
-                             x2 = paste0(data$prop_sv_not_Excl, "%\nNot\npermanently\nexcluded"))
+                             x2 = paste0(data$prop_sv_not_Excl, "%\nNot permanently\nexcluded"))
   
   sus_LHS_waffle <- waffle(data[c("sv_prop_count_Excl","prop_sv_not_Excl")], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#2171b5"),
@@ -624,11 +641,12 @@ createWaffle_Excl_sv <- function(data, LAchoice){
     theme(text=element_text(size=12),
           axis.title=element_text(size=12),
           plot.title=element_text(size=12),
-          legend.text=element_text(size=12))
+          legend.text=element_text(size=12))+
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  sus_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_Excl, "%\nChildren cautioned or sentenced\nfor a serious violence offence"),
-                             x2 = paste0(data$not_also_sv_prop_count_Excl, "%\nAll other\npupils"))
+  sus_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_Excl, "%\nChildren cautioned or\nsentenced for a\nserious violence offence"),
+                             x2 = paste0(data$not_also_sv_prop_count_Excl, "%\nAll other pupils"))
   
   sus_RHS_waffle <- waffle(data[c("also_sv_prop_count_Excl","not_also_sv_prop_count_Excl")], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#6BACE6"),
@@ -647,7 +665,9 @@ createWaffle_Excl_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12),
-          legend.text=element_text(size=12))
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
+  
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(sus_LHS_waffle, sus_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -658,7 +678,7 @@ createWaffle_Excl_any <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   sus_LHS_text <- data.frame(x1 = paste0(data$any_prop_count_Excl, "%\nPermanently\nexcluded"),
-                             x2 = paste0(data$prop_any_not_Excl, "%\nNot\npermanently\nexcluded"))
+                             x2 = paste0(data$prop_any_not_Excl, "%\nNot permanently\nexcluded"))
   
   sus_LHS_waffle <- waffle(data[c("any_prop_count_Excl","prop_any_not_Excl")], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#2171b5"),
@@ -677,11 +697,12 @@ createWaffle_Excl_any <- function(data, LAchoice){
     theme(text=element_text(size=12),
           axis.title=element_text(size=12),
           plot.title=element_text(size=12),
-          legend.text=element_text(size=12))
+          legend.text=element_text(size=12)) +
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  sus_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_Excl, "%\nChildren cautioned or sentenced\nfor an offence"),
-                             x2 = paste0(data$not_also_any_prop_count_Excl, "%\nAll other\npupils"))
+  sus_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_Excl, "%\nChildren cautioned or\nsentenced for an offence"),
+                             x2 = paste0(data$not_also_any_prop_count_Excl, "%\nAll other pupils"))
   
   sus_RHS_waffle <- waffle(data[c("also_any_prop_count_Excl","not_also_any_prop_count_Excl")], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#6BACE6"),
@@ -700,7 +721,8 @@ createWaffle_Excl_any <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12),
-          legend.text=element_text(size=12))
+          legend.text=element_text(size=12)) +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(sus_LHS_waffle, sus_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -808,11 +830,12 @@ createWaffle_AP_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), 
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12)) 
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  AP_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_AP, "%\nChildren cautioned or sentenced\nfor a serious violence offence"),
-                            x2 = paste0(data$not_also_sv_prop_count_AP, "%\nAll other\npupils"))
+  AP_RHS_text <- data.frame(x1 = paste0(data$also_sv_prop_count_AP, "%\nChildren cautioned or\nsentenced for a\nserious violence offence"),
+                            x2 = paste0(data$not_also_sv_prop_count_AP, "%\nAll other pupils"))
   
   AP_RHS_waffle <- waffle(data[c("also_sv_prop_count_AP","not_also_sv_prop_count_AP")], rows=10, size=0.6, flip=TRUE,
                           colors=c("#08306b", "#6BACE6"), 
@@ -831,7 +854,8 @@ createWaffle_AP_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12))  
+          legend.text=element_text(size=12))   +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(AP_LHS_waffle, AP_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -861,11 +885,12 @@ createWaffle_AP_any <- function(data, LAchoice){
     theme(text=element_text(size=12), 
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12)) 
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  AP_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_AP, "%\nChildren cautioned or sentenced\nfor an offence"),
-                            x2 = paste0(data$not_also_any_prop_count_AP, "%\nAll other\npupils"))
+  AP_RHS_text <- data.frame(x1 = paste0(data$also_any_prop_count_AP, "%\nChildren cautioned or\nsentenced for an offence"),
+                            x2 = paste0(data$not_also_any_prop_count_AP, "%\nAll other pupils"))
   
   AP_RHS_waffle <- waffle(data[c("also_any_prop_count_AP","not_also_any_prop_count_AP")], rows=10, size=0.6, flip=TRUE,
                           colors=c("#08306b", "#6BACE6"), 
@@ -884,7 +909,8 @@ createWaffle_AP_any <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12))  
+          legend.text=element_text(size=12))   +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(AP_LHS_waffle, AP_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -948,7 +974,7 @@ createWaffle_SEN_sv <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   SEN_LHS_text <- data.frame(x1 = paste0(data$prop_SEN_support_SV, "%\nSEN\nSupport"),
-                            x2 = paste0(data$prop_not_SEN_support_SV, "%\nNot\nSEN\nSupport"))
+                            x2 = paste0(data$prop_not_SEN_support_SV, "%\nNot SEN\nSupport"))
   
   SEN_LHS_waffle <- waffle(data[c("prop_SEN_support_SV","prop_not_SEN_support_SV")], rows=10, size=0.6, flip=TRUE, 
                           colors=c("#08306b", "#2171b5"), 
@@ -967,11 +993,12 @@ createWaffle_SEN_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), 
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12)) 
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  SEN_RHS_text <- data.frame(x1 = paste0(data$prop_also_SEN_support_SV, "%\nChildren cautioned or sentenced\nfor a serious violence offence"),
-                            x2 = paste0(data$not_also_SEN_support_SV, "%\nAll other\npupils"))
+  SEN_RHS_text <- data.frame(x1 = paste0(data$prop_also_SEN_support_SV, "%\nChildren cautioned or\nsentenced for a \nerious violence offence"),
+                            x2 = paste0(data$not_also_SEN_support_SV, "%\nAll other pupils"))
   
   SEN_RHS_waffle <- waffle(data[c("prop_also_SEN_support_SV","not_also_SEN_support_SV")], rows=10, size=0.6, flip=TRUE,
                           colors=c("#08306b", "#6BACE6"), 
@@ -990,7 +1017,8 @@ createWaffle_SEN_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12))  
+          legend.text=element_text(size=12))   +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(SEN_LHS_waffle, SEN_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -1001,7 +1029,7 @@ createWaffle_SEN_any <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   SEN_LHS_text <- data.frame(x1 = paste0(data$prop_SEN_support_any, "%\nSEN\nSupport"),
-                             x2 = paste0(data$prop_not_SEN_support_any, "%\nNot\nSEN\nSupport"))
+                             x2 = paste0(data$prop_not_SEN_support_any, "%\nNot SEN\nSupport"))
   
   SEN_LHS_waffle <- waffle(data[c("prop_SEN_support_any","prop_not_SEN_support_any")], rows=10, size=0.6, flip=TRUE, 
                            colors=c("#08306b", "#2171b5"), 
@@ -1020,11 +1048,12 @@ createWaffle_SEN_any <- function(data, LAchoice){
     theme(text=element_text(size=12), 
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12)) 
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  SEN_RHS_text <- data.frame(x1 = paste0(data$prop_also_SEN_support_any, "%\nChildren cautioned or sentenced\nfor an offence"),
-                             x2 = paste0(data$not_also_SEN_support_any, "%\nAll other\npupils"))
+  SEN_RHS_text <- data.frame(x1 = paste0(data$prop_also_SEN_support_any, "%\nChildren cautioned or\nsentenced for an offence"),
+                             x2 = paste0(data$not_also_SEN_support_any, "%\nAll other pupils"))
   
   SEN_RHS_waffle <- waffle(data[c("prop_also_SEN_support_any","not_also_SEN_support_any")], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#6BACE6"), 
@@ -1043,7 +1072,8 @@ createWaffle_SEN_any <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12))  
+          legend.text=element_text(size=12))   +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(SEN_LHS_waffle, SEN_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -1053,8 +1083,8 @@ createWaffle_SEN_any <- function(data, LAchoice){
 createWaffle_EHCP_sv <- function(data, LAchoice){
   
   # automated text for waffle - LHS
-  EHC_LHS_text <- data.frame(x1 = paste0(data$prop_EHCP_SV , "%\nEHC\nplan"),
-                            x2 = paste0(data$prop_not_EHCP_SV, "%\nNo\nEHC\nplan"))
+  EHC_LHS_text <- data.frame(x1 = paste0(data$prop_EHCP_SV , "%\nEHC plan"),
+                            x2 = paste0(data$prop_not_EHCP_SV, "%\nNo EHC plan"))
   
   EHC_LHS_waffle <- waffle(data[c("prop_EHCP_SV","prop_not_EHCP_SV")], rows=10, size=0.6, flip=TRUE, 
                           colors=c("#08306b", "#2171b5"), 
@@ -1073,11 +1103,12 @@ createWaffle_EHCP_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), 
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12)) 
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  EHC_RHS_text <- data.frame(x1 = paste0(data$prop_also_EHCP_SV, "%\nChildren cautioned or sentenced\nfor a serious violence offence"),
-                            x2 = paste0(data$not_prop_also_EHCP_SV, "%\nAll other\npupils"))
+  EHC_RHS_text <- data.frame(x1 = paste0(data$prop_also_EHCP_SV, "%\nChildren cautioned or\nsentenced for a\nserious violence offence"),
+                            x2 = paste0(data$not_prop_also_EHCP_SV, "%\nAll other pupils"))
   
   EHC_RHS_waffle <- waffle(data[c("prop_also_EHCP_SV","not_prop_also_EHCP_SV")], rows=10, size=0.6, flip=TRUE,
                           colors=c("#08306b", "#6BACE6"), 
@@ -1096,7 +1127,8 @@ createWaffle_EHCP_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12))  
+          legend.text=element_text(size=12))   +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(EHC_LHS_waffle, EHC_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -1106,8 +1138,8 @@ createWaffle_EHCP_sv <- function(data, LAchoice){
 createWaffle_EHCP_any <- function(data, LAchoice){
   
   # automated text for waffle - LHS
-  EHC_LHS_text <- data.frame(x1 = paste0(data$prop_EHCP_any , "%\nEHC\nplan"),
-                             x2 = paste0(data$prop_not_EHCP_any, "%\nNo\nEHC\nplan"))
+  EHC_LHS_text <- data.frame(x1 = paste0(data$prop_EHCP_any , "%\nEHC plan"),
+                             x2 = paste0(data$prop_not_EHCP_any, "%\nNo EHC plan"))
   
   EHC_LHS_waffle <- waffle(data[c("prop_EHCP_any","prop_not_EHCP_any")], rows=10, size=0.6, flip=TRUE, 
                            colors=c("#08306b", "#2171b5"), 
@@ -1126,11 +1158,12 @@ createWaffle_EHCP_any <- function(data, LAchoice){
     theme(text=element_text(size=12), 
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12)) 
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  EHC_RHS_text <- data.frame(x1 = paste0(data$prop_also_EHCP_any, "%\nChildren cautioned or sentenced\nfor an offence"),
-                             x2 = paste0(data$not_prop_also_EHCP_any, "%\nAll other\npupils"))
+  EHC_RHS_text <- data.frame(x1 = paste0(data$prop_also_EHCP_any, "%\nChildren cautioned or\nsentenced for an offence"),
+                             x2 = paste0(data$not_prop_also_EHCP_any, "%\nAll other pupils"))
   
   EHC_RHS_waffle <- waffle(data[c("prop_also_EHCP_any","not_prop_also_EHCP_any")], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#6BACE6"), 
@@ -1149,7 +1182,8 @@ createWaffle_EHCP_any <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12))  
+          legend.text=element_text(size=12))   +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(EHC_LHS_waffle, EHC_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -1169,7 +1203,7 @@ createSENTimingPlot <- function(data, LAchoice){
   ggplot(data, aes(x=perc, y=group, fill = Timing , group=rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
     labs(x = "% with timing", y=NULL, caption = caption1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-6, hjust=0, size = 5.5) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-6.3, hjust=0, size = 5.5) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
@@ -1197,7 +1231,7 @@ createEHCPTimingPlot <- function(data, LAchoice){
   ggplot(data, aes(x=perc, y=group, fill = Timing ,group=rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
     labs(x = "% with timing", y=NULL, caption = caption1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-5.5, hjust=0, size = 5.5) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-6.3, hjust=0, size = 5.5) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
@@ -1225,7 +1259,7 @@ createSEMHTimingPlot <- function(data, LAchoice){
   ggplot(data, aes(x=perc, y=group, fill = Timing, group = rev(Timing))) +
     geom_bar(position='stack', stat = "identity", width = 0.7) +
     labs(x = "% with timing", y=NULL, caption = caption1) +
-    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-5.5, hjust=0, size = 5.5) +
+    geom_text(aes(label = paste0(perc, "%")), position = position_stack(vjust = 0.5), vjust=-6.3, hjust=0, size = 5.5) +
     theme_classic() +
     theme(legend.position = "bottom", legend.title=element_blank(), axis.text = element_text(color="black", size=15)) +
     scale_fill_manual(values = c("#08306b", "#2171b5", "#4292c6"),
@@ -1268,7 +1302,7 @@ createWaffle_CIN_sv <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   CIN_LHS_text <- data.frame(x1 = paste0(data$propsv_count_CIN , "%\nCIN"),
-                             x2 = paste0(data$propsv_count_not_CIN, "%\nNot\nCIN"))
+                             x2 = paste0(data$propsv_count_not_CIN, "%\nNot CIN"))
   
   CIN_LHS_waffle <- waffle(data[c("propsv_count_CIN","propsv_count_not_CIN")], rows=10, size=0.6, flip=TRUE, 
                            colors=c("#08306b", "#2171b5"), 
@@ -1287,11 +1321,12 @@ createWaffle_CIN_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), 
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12)) 
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  CIN_RHS_text <- data.frame(x1 = paste0(data$also_propsv_count_CIN, "%\nChildren cautioned or sentenced\nfor a serious violence offence"),
-                             x2 = paste0(data$not_also_propsv_count_CIN, "%\nAll other\npupils"))
+  CIN_RHS_text <- data.frame(x1 = paste0(data$also_propsv_count_CIN, "%\nChildren cautioned or\nsentenced for a\nserious violence offence"),
+                             x2 = paste0(data$not_also_propsv_count_CIN, "%\nAll other pupils"))
   
   CIN_RHS_waffle <- waffle(data[c("also_propsv_count_CIN","not_also_propsv_count_CIN")], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#6BACE6"), 
@@ -1310,7 +1345,8 @@ createWaffle_CIN_sv <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12))  
+          legend.text=element_text(size=12))   +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(CIN_LHS_waffle, CIN_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
@@ -1321,7 +1357,7 @@ createWaffle_CIN_any <- function(data, LAchoice){
   
   # automated text for waffle - LHS
   CIN_LHS_text <- data.frame(x1 = paste0(data$propany_count_CIN , "%\nCIN"),
-                             x2 = paste0(data$propany_count_not_CIN, "%\nNot\nCIN"))
+                             x2 = paste0(data$propany_count_not_CIN, "%\nNot CIN"))
   
   CIN_LHS_waffle <- waffle(data[c("propany_count_CIN","propany_count_not_CIN")], rows=10, size=0.6, flip=TRUE, 
                            colors=c("#08306b", "#2171b5"), 
@@ -1340,11 +1376,12 @@ createWaffle_CIN_any <- function(data, LAchoice){
     theme(text=element_text(size=12), 
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12)) 
+          legend.text=element_text(size=12))  +
+    guides(fill = guide_legend(nrow = 2))
   
   # automated text for waffle - RHS
-  CIN_RHS_text <- data.frame(x1 = paste0(data$also_propany_count_CIN, "%\nChildren cautioned or sentenced\nfor an offence"),
-                             x2 = paste0(data$not_also_propany_count_CIN, "%\nAll other\npupils"))
+  CIN_RHS_text <- data.frame(x1 = paste0(data$also_propany_count_CIN, "%\nChildren cautioned or\nsentenced for an offence"),
+                             x2 = paste0(data$not_also_propany_count_CIN, "%\nAll other pupils"))
   
   CIN_RHS_waffle <- waffle(data[c("also_propany_count_CIN","not_also_propany_count_CIN")], rows=10, size=0.6, flip=TRUE,
                            colors=c("#08306b", "#6BACE6"), 
@@ -1363,7 +1400,8 @@ createWaffle_CIN_any <- function(data, LAchoice){
     theme(text=element_text(size=12), #change font size of all text
           axis.title=element_text(size=12),
           plot.title=element_text(size=12), 
-          legend.text=element_text(size=12))  
+          legend.text=element_text(size=12))   +
+    guides(fill = guide_legend(nrow = 2))
   # Use grid.arrange to put plots in columns
   grid.arrange(grobs = list(CIN_LHS_waffle, CIN_RHS_waffle), ncol=2, widths=c(1,2),
                bottom=paste0("For children who ", ifelse(data$indicator == "School", "go to school in ", "live in "), LAchoice))
