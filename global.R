@@ -7,7 +7,6 @@
 #
 # ---------------------------------------------------------
 
-
 # Library calls ---------------------------------------------------------------------------------
 shhh <- suppressPackageStartupMessages # It's a library, so shhh!
 shhh(library(shiny))
