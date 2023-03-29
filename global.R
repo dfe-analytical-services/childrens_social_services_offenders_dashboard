@@ -134,7 +134,6 @@ read_dash_data(file = "data/10_Demographics.xlsx") # Can read this in for differ
 read_dash_data(file = "data/10_SchoolExp.xlsx")
 read_dash_data(file = "data/10_CSCExp.xlsx")
 
-
 # Add tables currently needed from alldata to environment
 # Use this table to get a list of LAs to be used as choices
 choicesLA <- Gender %>%
