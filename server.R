@@ -9,7 +9,7 @@
 # https://shiny.rstudio.com/images/shiny-cheatsheet.pdf
 #
 #
-# This is the server logic of a Shiny web application. You can run th
+# This is the server logic of a Shiny web application. You can run the
 # application by clicking 'Run App' above.
 #
 # Find out more about building applications with Shiny here:
@@ -37,9 +37,17 @@ server <- function(input, output, session) {
       updateSelectInput(session, "sclLAchoice", selected = input$demLAchoice)
       updateSelectInput(session, "cscLAchoice", selected = input$demLAchoice)
     }
-    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$demLAchoice)
-    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    choicesLA_SN2 <- choicesLA_SN2 %>% filter(la_name == input$demLAchoice)
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(
+      choicesLA_SN2$stat_1, choicesLA_SN2$stat_2, choicesLA_SN2$stat_3,
+      choicesLA_SN2$stat_4, choicesLA_SN2$stat_5, choicesLA_SN2$stat_6, choicesLA_SN2$stat_7,
+      choicesLA_SN2$stat_8, choicesLA_SN2$stat_9, choicesLA_SN2$stat_10
+    ))
+    choicesLA_stat <- choicesLA %>% filter(LA %in% c(
+      choicesLA_SN2$stat_1, choicesLA_SN2$stat_2, choicesLA_SN2$stat_3,
+      choicesLA_SN2$stat_4, choicesLA_SN2$stat_5, choicesLA_SN2$stat_6, choicesLA_SN2$stat_7,
+      choicesLA_SN2$stat_8, choicesLA_SN2$stat_9, choicesLA_SN2$stat_10
+    ))
     updateSelectizeInput(
       session, "demLAchoice2",
       choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
@@ -59,10 +67,17 @@ server <- function(input, output, session) {
       updateSelectInput(session, "demLAchoice", selected = input$sclLAchoice)
       updateSelectInput(session, "cscLAchoice", selected = input$sclLAchoice)
     }
-    # Update nearest neighbours in comparison dropdown
-    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$sclLAchoice)
-    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    choicesLA_SN2 <- choicesLA_SN2 %>% filter(la_name == input$sclLAchoice)
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(
+      choicesLA_SN2$stat_1, choicesLA_SN2$stat_2, choicesLA_SN2$stat_3,
+      choicesLA_SN2$stat_4, choicesLA_SN2$stat_5, choicesLA_SN2$stat_6, choicesLA_SN2$stat_7,
+      choicesLA_SN2$stat_8, choicesLA_SN2$stat_9, choicesLA_SN2$stat_10
+    ))
+    choicesLA_stat <- choicesLA %>% filter(LA %in% c(
+      choicesLA_SN2$stat_1, choicesLA_SN2$stat_2, choicesLA_SN2$stat_3,
+      choicesLA_SN2$stat_4, choicesLA_SN2$stat_5, choicesLA_SN2$stat_6, choicesLA_SN2$stat_7,
+      choicesLA_SN2$stat_8, choicesLA_SN2$stat_9, choicesLA_SN2$stat_10
+    ))
     updateSelectizeInput(
       session, "sclLAchoice2",
       choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
@@ -81,9 +96,17 @@ server <- function(input, output, session) {
       updateSelectInput(session, "demLAchoice", selected = input$cscLAchoice)
       updateSelectInput(session, "sclLAchoice", selected = input$cscLAchoice)
     }
-    choicesLA_SN2 <- choicesLA_SN2 %>% filter(LA == input$cscLAchoice)
-    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
-    choicesLA_stat <- choicesLA %>% filter(LA %in% c(choicesLA_SN2$StatN_1, choicesLA_SN2$StatN_2))
+    choicesLA_SN2 <- choicesLA_SN2 %>% filter(la_name == input$cscLAchoice)
+    choicesLA_not_stat <- choicesLA %>% filter(!LA %in% c(
+      choicesLA_SN2$stat_1, choicesLA_SN2$stat_2, choicesLA_SN2$stat_3,
+      choicesLA_SN2$stat_4, choicesLA_SN2$stat_5, choicesLA_SN2$stat_6, choicesLA_SN2$stat_7,
+      choicesLA_SN2$stat_8, choicesLA_SN2$stat_9, choicesLA_SN2$stat_10
+    ))
+    choicesLA_stat <- choicesLA %>% filter(LA %in% c(
+      choicesLA_SN2$stat_1, choicesLA_SN2$stat_2, choicesLA_SN2$stat_3,
+      choicesLA_SN2$stat_4, choicesLA_SN2$stat_5, choicesLA_SN2$stat_6, choicesLA_SN2$stat_7,
+      choicesLA_SN2$stat_8, choicesLA_SN2$stat_9, choicesLA_SN2$stat_10
+    ))
     updateSelectizeInput(
       session, "cscLAchoice2",
       choices = c("Statistical neighbour" = choicesLA_stat, "All other" = choicesLA_not_stat)
@@ -220,18 +243,28 @@ server <- function(input, output, session) {
     },
     alt = reactive({
       paste0(
-        "Bar chart showin the gender split of all pupils, ",
-        "pupils having committed any offence and pupils having committed a serious violence offence in ",
+        "Bar chart showing the gender split of all pupils, ",
+        "children who had been cautioned or sentenced for an offence and childrenwho had been cautioned or sentenced for a serious violence offence in ",
         input$demLAchoice
       )
     })
   )
 
   # Gender plot 2
-  output$GenderPlot2 <- renderPlot({
-    Genderplot <- Gender %>% filter(indicator == input$demindichoice2, LA == input$demLAchoice2)
-    createGenderPlot(Genderplot, input$demLAchoice2)
-  })
+  output$GenderPlot2 <- renderPlot(
+    {
+      Genderplot <- Gender %>% filter(indicator == input$demindichoice2, LA == input$demLAchoice2)
+      createGenderPlot(Genderplot, input$demLAchoice2)
+    },
+    alt = reactive({
+      paste0(
+        "Bar chart showing the gender split of all pupils, ",
+        "children who had been cautioned or sentenced for an offence and childrenwho had been cautioned or sentenced for a serious violence offence in ",
+        input$demLAchoice2
+      )
+    })
+  )
+
 
   # Output - Ethnicity column 1 LA title
   output$DemTitle1_eth <- renderText({
@@ -352,7 +385,7 @@ server <- function(input, output, session) {
                                    to KS4 academic years 2012/13 - 2017/18"),
         column(
           width = 6,
-          h3(textOutput("DemTitle2_FSM1_sv")),
+          h3(textOutput("DemTitle2_FSM1_sv"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           br(),
           textOutput("WaffleTextFSM1_sv"),
           br(),
@@ -361,7 +394,7 @@ server <- function(input, output, session) {
         ),
         column(
           width = 6,
-          h3(textOutput("DemTitle2_FSM2_sv")),
+          h3(textOutput("DemTitle2_FSM2_sv"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           br(),
           textOutput("WaffleTextFSM2_sv"),
           br(),
@@ -376,7 +409,7 @@ server <- function(input, output, session) {
             to KS4 academic years 2012/13 - 2017/18"),
         column(
           width = 6,
-          h3(textOutput("DemTitle2_FSM1_sv")),
+          h3(textOutput("DemTitle2_FSM1_sv"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           br(),
           textOutput("WaffleTextFSM1_any"),
           br(),
@@ -385,7 +418,7 @@ server <- function(input, output, session) {
         ),
         column(
           width = 6,
-          h3(textOutput("DemTitle2_FSM2_sv")),
+          h3(textOutput("DemTitle2_FSM2_sv"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           br(),
           textOutput("WaffleTextFSM2_any"),
           br(),
@@ -427,6 +460,7 @@ server <- function(input, output, session) {
           LA == input$demLAchoice
         ) %>%
         rename("Age at first offence" = OffenceStartAge) %>%
+        mutate(group = ifelse(group == "Any Offence", "Any Offence (%)", "Serious Violence Offence (%)")) %>%
         pivot_wider(
           names_from = group,
           values_from = perc
@@ -440,6 +474,10 @@ server <- function(input, output, session) {
     options = list(searchable = FALSE, dom = "t", ordering = F),
     filter = c("none"),
     selection = c("none")
+  ) %>% formatStyle(
+    0,
+    target = "row",
+    fontWeight = styleEqual("Age at first offence", "bold")
   ))
 
   # Output - age first offence table 2
@@ -451,6 +489,7 @@ server <- function(input, output, session) {
           LA == input$demLAchoice2
         ) %>%
         rename("Age at first offence" = OffenceStartAge) %>%
+        mutate(group = ifelse(group == "Any Offence", "Any Offence (%)", "Serious Violence Offence (%)")) %>%
         pivot_wider(
           names_from = group,
           values_from = perc
@@ -464,6 +503,10 @@ server <- function(input, output, session) {
     options = list(searchable = FALSE, dom = "t", ordering = F),
     filter = c("none"),
     selection = c("none")
+  ) %>% formatStyle(
+    0,
+    target = "row",
+    fontWeight = styleEqual("Age at first offence", "bold")
   ))
 
   # Output - KS2 attainment column 1 LA title
@@ -605,27 +648,21 @@ server <- function(input, output, session) {
         h3("The proportion of children who had been cautioned or sentenced for a
             serious violence offence and had been persistently absent, and all pupils who had ever been
             persistently absent, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
-        column(h3(textOutput("sclTitle1_PAwaf")),
+        column(h3(textOutput("sclTitle1_PAwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_PA1_sv"),
-            br(),
-            plotOutput("waffle_PA1_sv"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_PA1_sv"),
+          br(),
+          plotOutput("waffle_PA1_sv"),
+          br()
         ),
-        column(h3(textOutput("sclTitle2_PAwaf")),
+        column(h3(textOutput("sclTitle2_PAwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_PA2_sv"),
-            br(),
-            plotOutput("waffle_PA2_sv"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_PA2_sv"),
+          br(),
+          plotOutput("waffle_PA2_sv"),
+          br()
         )
       )
     } else {
@@ -633,27 +670,21 @@ server <- function(input, output, session) {
         h3("The proportion of children who had been cautioned or sentenced for an
             offence and had been persistently absent, and all pupils who had ever been
             persistently absent, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
-        column(h3(textOutput("sclTitle1_PAwaf")),
+        column(h3(textOutput("sclTitle1_PAwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_PA1_any"),
-            br(),
-            plotOutput("waffle_PA1_any"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_PA1_any"),
+          br(),
+          plotOutput("waffle_PA1_any"),
+          br()
         ),
-        column(h3(textOutput("sclTitle2_PAwaf")),
+        column(h3(textOutput("sclTitle2_PAwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_PA2_any"),
-            br(),
-            plotOutput("waffle_PA2_any"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_PA2_any"),
+          br(),
+          plotOutput("waffle_PA2_any"),
+          br()
         )
       )
     }
@@ -776,27 +807,21 @@ server <- function(input, output, session) {
         h3("The proportion of children who had been cautioned or sentenced for a serious violence
             offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years
             2012/13 - 2017/18"),
-        column(h3(textOutput("sclTitle1_suswaf")),
+        column(h3(textOutput("sclTitle1_suswaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_sus1_sv"),
-            br(),
-            plotOutput("waffle_Sus1_sv"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_sus1_sv"),
+          br(),
+          plotOutput("waffle_Sus1_sv"),
+          br()
         ),
-        column(h3(textOutput("sclTitle2_suswaf")),
+        column(h3(textOutput("sclTitle2_suswaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_sus2_sv"),
-            br(),
-            plotOutput("waffle_Sus2_sv"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_sus2_sv"),
+          br(),
+          plotOutput("waffle_Sus2_sv"),
+          br()
         )
       )
     } else {
@@ -804,27 +829,21 @@ server <- function(input, output, session) {
         h3("The proportion of children who had been cautioned or sentenced for an
             offence and had ever been suspended, and all pupils who had ever been suspended, for pupils matched to KS4 academic years
             2012/13 - 2017/18"),
-        column(h3(textOutput("sclTitle1_suswaf")),
+        column(h3(textOutput("sclTitle1_suswaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_sus1_any"),
-            br(),
-            plotOutput("waffle_Sus1_any"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_sus1_any"),
+          br(),
+          plotOutput("waffle_Sus1_any"),
+          br()
         ),
-        column(h3(textOutput("sclTitle2_suswaf")),
+        column(h3(textOutput("sclTitle2_suswaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_sus2_any"),
-            br(),
-            plotOutput("waffle_Sus2_any"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_sus2_any"),
+          br(),
+          plotOutput("waffle_Sus2_any"),
+          br()
         )
       )
     }
@@ -903,27 +922,21 @@ server <- function(input, output, session) {
         h3("The proportion of children who had been cautioned or sentenced for a serious violence
             offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched
             to KS4 academic years 2012/13 - 2017/18"),
-        column(h3(textOutput("sclTitle1_exclwaf")),
+        column(h3(textOutput("sclTitle1_exclwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_excl1_sv"),
-            br(),
-            plotOutput("waffle_Excl1_sv"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_excl1_sv"),
+          br(),
+          plotOutput("waffle_Excl1_sv"),
+          br()
         ),
-        column(h3(textOutput("sclTitle2_exclwaf")),
+        column(h3(textOutput("sclTitle2_exclwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_excl2_sv"),
-            br(),
-            plotOutput("waffle_Excl2_sv"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_excl2_sv"),
+          br(),
+          plotOutput("waffle_Excl2_sv"),
+          br()
         )
       )
     } else {
@@ -931,27 +944,21 @@ server <- function(input, output, session) {
         h3("The proportion of children who had been cautioned or sentenced for an
             offence and had ever been permanently excluded, and all pupils who had ever been permanently excluded, for pupils matched
             to KS4 academic years 2012/13 - 2017/18"),
-        column(h3(textOutput("sclTitle1_exclwaf")),
+        column(h3(textOutput("sclTitle1_exclwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_excl1_any"),
-            br(),
-            plotOutput("waffle_Excl1_any"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_excl1_any"),
+          br(),
+          plotOutput("waffle_Excl1_any"),
+          br()
         ),
-        column(h3(textOutput("sclTitle2_exclwaf")),
+        column(h3(textOutput("sclTitle2_exclwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_excl2_any"),
-            br(),
-            plotOutput("waffle_Excl2_any"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_excl2_any"),
+          br(),
+          plotOutput("waffle_Excl2_any"),
+          br()
         )
       )
     }
@@ -1140,27 +1147,21 @@ server <- function(input, output, session) {
         h3("The proportion of children who had been cautioned or sentenced for a serious violence
             offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision,
             for pupils matched to KS4 academic years 2012/13 - 2017/18"),
-        column(h3(textOutput("sclTitle1_APwaf")),
+        column(h3(textOutput("sclTitle1_APwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_AP1_sv"),
-            br(),
-            plotOutput("waffle_AP1_sv"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_AP1_sv"),
+          br(),
+          plotOutput("waffle_AP1_sv"),
+          br()
         ),
-        column(h3(textOutput("sclTitle2_APwaf")),
+        column(h3(textOutput("sclTitle2_APwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_AP2_sv"),
-            br(),
-            plotOutput("waffle_AP2_sv"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_AP2_sv"),
+          br(),
+          plotOutput("waffle_AP2_sv"),
+          br()
         )
       )
     } else {
@@ -1168,27 +1169,21 @@ server <- function(input, output, session) {
         h3("The proportion of children who had been cautioned or sentenced for an
             offence and had ever attended alternative provision, and all pupils who had ever attended alternative provision,
             for pupils matched to KS4 academic years 2012/13 - 2017/18"),
-        column(h3(textOutput("sclTitle1_APwaf")),
+        column(h3(textOutput("sclTitle1_APwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_AP1_any"),
-            br(),
-            plotOutput("waffle_AP1_any"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_AP1_any"),
+          br(),
+          plotOutput("waffle_AP1_any"),
+          br()
         ),
-        column(h3(textOutput("sclTitle2_APwaf")),
+        column(h3(textOutput("sclTitle2_APwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_AP2_any"),
-            br(),
-            plotOutput("waffle_AP2_any"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_AP2_any"),
+          br(),
+          plotOutput("waffle_AP2_any"),
+          br()
         )
       )
     }
@@ -1311,27 +1306,21 @@ server <- function(input, output, session) {
         h3("The proportion of children who had been cautioned or sentenced for a serious
                                                   violence offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched
                                                   to KS4 academic years 2012/13 - 2017/18"),
-        column(h3(textOutput("sclTitle1_SENwaf")),
+        column(h3(textOutput("sclTitle1_SENwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_SEN1_sv"),
-            br(),
-            plotOutput("waffle_SEN1_sv"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_SEN1_sv"),
+          br(),
+          plotOutput("waffle_SEN1_sv"),
+          br()
         ),
-        column(h3(textOutput("sclTitle2_SENwaf")),
+        column(h3(textOutput("sclTitle2_SENwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_SEN2_sv"),
-            br(),
-            plotOutput("waffle_SEN2_sv"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_SEN2_sv"),
+          br(),
+          plotOutput("waffle_SEN2_sv"),
+          br()
         )
       )
     } else {
@@ -1339,27 +1328,21 @@ server <- function(input, output, session) {
         h3("The proportion of children who had been cautioned or sentenced for an
             offence and had ever had SEN Support, and all pupils who had ever had SEN Support, for pupils matched
             to KS4 academic years 2012/13 - 2017/18"),
-        column(h3(textOutput("sclTitle1_SENwaf")),
+        column(h3(textOutput("sclTitle1_SENwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_SEN1_any"),
-            br(),
-            plotOutput("waffle_SEN1_any"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_SEN1_any"),
+          br(),
+          plotOutput("waffle_SEN1_any"),
+          br()
         ),
-        column(h3(textOutput("sclTitle2_SENwaf")),
+        column(h3(textOutput("sclTitle2_SENwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_SEN2_any"),
-            br(),
-            plotOutput("waffle_SEN2_any"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_SEN2_any"),
+          br(),
+          plotOutput("waffle_SEN2_any"),
+          br()
         )
       )
     }
@@ -1438,27 +1421,21 @@ server <- function(input, output, session) {
         h3("The proportion of children who had been cautioned or sentenced for a serious violence
                                                   offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to
                                                   KS4 academic years 2012/13 - 2017/18"),
-        column(h3(textOutput("sclTitle1_EHCPwaf")),
+        column(h3(textOutput("sclTitle1_EHCPwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_EHCP1_sv"),
-            br(),
-            plotOutput("waffle_EHCP1_sv"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_EHCP1_sv"),
+          br(),
+          plotOutput("waffle_EHCP1_sv"),
+          br()
         ),
-        column(h3(textOutput("sclTitle2_EHCPwaf")),
+        column(h3(textOutput("sclTitle2_EHCPwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_EHCP2_sv"),
-            br(),
-            plotOutput("waffle_EHCP2_sv"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_EHCP2_sv"),
+          br(),
+          plotOutput("waffle_EHCP2_sv"),
+          br()
         )
       )
     } else {
@@ -1466,27 +1443,21 @@ server <- function(input, output, session) {
         h3("The proportion of children who had been cautioned or sentenced for an
             offence and had ever had an EHC plan, and all pupils who had ever had an EHC plan, for pupils matched to
             KS4 academic years 2012/13 - 2017/18"),
-        column(h3(textOutput("sclTitle1_EHCPwaf")),
+        column(h3(textOutput("sclTitle1_EHCPwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_EHCP1_any"),
-            br(),
-            plotOutput("waffle_EHCP1_any"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_EHCP1_any"),
+          br(),
+          plotOutput("waffle_EHCP1_any"),
+          br()
         ),
-        column(h3(textOutput("sclTitle2_EHCPwaf")),
+        column(h3(textOutput("sclTitle2_EHCPwaf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_EHCP2_any"),
-            br(),
-            plotOutput("waffle_EHCP2_any"),
-            br()
-          )
+          br(),
+          textOutput("waffleText_EHCP2_any"),
+          br(),
+          plotOutput("waffle_EHCP2_any"),
+          br()
         )
       )
     }
@@ -1586,58 +1557,46 @@ server <- function(input, output, session) {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for a serious violence offence and had ever been CIN, and all pupils who had ever been CIN, for pupils matched to KS4
             academic year 2012/13 - 2017/18"),
-        column(h3(textOutput("CSCTitle1_waf")),
+        column(h3(textOutput("CSCTitle1_waf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_CIN1_sv"),
-            br(),
-            plotOutput("waffle_CIN1_sv"),
-            br(),
-            uiOutput("csc_waf_caution_la1")
-          )
+          br(),
+          textOutput("waffleText_CIN1_sv"),
+          br(),
+          plotOutput("waffle_CIN1_sv"),
+          br(),
+          uiOutput("csc_waf_caution_la1")
         ),
-        column(h3(textOutput("CSCTitle2_waf")),
+        column(h3(textOutput("CSCTitle2_waf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_CIN2_sv"),
-            br(),
-            plotOutput("waffle_CIN2_sv"),
-            br(),
-            uiOutput("csc_waf_caution_la2")
-          )
+          br(),
+          textOutput("waffleText_CIN2_sv"),
+          br(),
+          plotOutput("waffle_CIN2_sv"),
+          br(),
+          uiOutput("csc_waf_caution_la2")
         )
       )
     } else {
       tagList(
         h3("The proportion of children who had been cautioned or sentenced for an offence and had ever been CIN, and all pupils who had ever been CIN, for pupils matched to KS4
             academic year 2012/13 - 2017/18"),
-        column(h3(textOutput("CSCTitle1_waf")),
+        column(h3(textOutput("CSCTitle1_waf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_CIN1_any"),
-            br(),
-            plotOutput("waffle_CIN1_any"),
-            br(),
-            uiOutput("csc_waf_caution_la1")
-          )
+          br(),
+          textOutput("waffleText_CIN1_any"),
+          br(),
+          plotOutput("waffle_CIN1_any"),
+          br(),
+          uiOutput("csc_waf_caution_la1")
         ),
-        column(h3(textOutput("CSCTitle2_waf")),
+        column(h3(textOutput("CSCTitle2_waf"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
           width = 6,
-          box(
-            width = 12,
-            br(),
-            textOutput("waffleText_CIN2_any"),
-            br(),
-            plotOutput("waffle_CIN2_any"),
-            br(),
-            uiOutput("csc_waf_caution_la2")
-          )
+          br(),
+          textOutput("waffleText_CIN2_any"),
+          br(),
+          plotOutput("waffle_CIN2_any"),
+          br(),
+          uiOutput("csc_waf_caution_la2")
         )
       )
     }
@@ -1733,7 +1692,7 @@ server <- function(input, output, session) {
 
   # Caution warning for CSC results for Barnet - Ever bar chart la 1
   output$csc_caution_la1 <- renderUI(
-    if (input$cscLAchoice == "Bradford") {
+    if (input$cscLAchoice == "Barnet") {
       tagList(
         column(
           width = 12,
@@ -1753,7 +1712,7 @@ server <- function(input, output, session) {
 
   # Caution warning for CSC results for Barnet - Ever bar chart la 2
   output$csc_caution_la2 <- renderUI(
-    if (input$cscLAchoice2 == "Bradford") {
+    if (input$cscLAchoice2 == "Barnet") {
       tagList(
         column(
           width = 12,
@@ -1773,7 +1732,7 @@ server <- function(input, output, session) {
 
   # Caution warning for CSC results for Barnet - wafffle la 1
   output$csc_waf_caution_la1 <- renderUI(
-    if (input$cscLAchoice == "Bradford") {
+    if (input$cscLAchoice == "Barnet") {
       tagList(
         column(
           width = 12,
@@ -1793,7 +1752,7 @@ server <- function(input, output, session) {
 
   # Caution warning for CSC results for Barnet - wafffle la 2
   output$csc_waf_caution_la2 <- renderUI(
-    if (input$cscLAchoice2 == "Bradford") {
+    if (input$cscLAchoice2 == "Barnet") {
       tagList(
         column(
           width = 12,
@@ -1813,7 +1772,7 @@ server <- function(input, output, session) {
 
   # Caution warning for CSC results for Barnet - csc timing la 1
   output$csc_time_caution_la1 <- renderUI(
-    if (input$cscLAchoice == "Bradford") {
+    if (input$cscLAchoice == "Barnet") {
       tagList(
         column(
           width = 12,
@@ -1833,7 +1792,7 @@ server <- function(input, output, session) {
 
   # Caution warning for CSC results for Barnet - csc timing la 2
   output$csc_time_caution_la2 <- renderUI(
-    if (input$cscLAchoice2 == "Bradford") {
+    if (input$cscLAchoice2 == "Barnet") {
       tagList(
         column(
           width = 12,

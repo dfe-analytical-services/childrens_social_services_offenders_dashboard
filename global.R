@@ -30,7 +30,7 @@ shhh(library(writexl)) # added install.packages('writexl')
 shhh(library(waffle)) # added
 shhh(library(gridExtra)) # added
 shhh(library(shinyBS))
-#shhh(library(shinya11y))
+# shhh(library(shinya11y))
 
 
 # Functions ---------------------------------------------------------------------------------
@@ -126,6 +126,10 @@ dfCohort <- read_cohort_data()
 # alldata <- read_alldata() # Can delete this now as no longer needed
 
 # Read in data needed for dashboard
+# read_dash_data(file = "data/OFFSEN_to_delete/2023_03_16_OFSEN_Demographics.xlsx") # Can read this in for different files to get data for diff tabs
+# read_dash_data(file = "data/OFFSEN_to_delete/2023_03_16_OFFSEN_SchoolExp.xlsx")
+# read_dash_data(file = "data/OFFSEN_to_delete/2023_03_16_OFFSEN_CSCExp.xlsx")
+
 read_dash_data(file = "data/10_Demographics.xlsx") # Can read this in for different files to get data for diff tabs
 read_dash_data(file = "data/10_SchoolExp.xlsx")
 read_dash_data(file = "data/10_CSCExp.xlsx")
@@ -139,4 +143,4 @@ choiceIndicator <- data.frame(Indicator = c("Home", "School"))
 choiceGroup <- data.frame(group = c("All Pupils", "Any Offence", "Serious Violence Offence"))
 
 # Testing choicesLA with stat neighbour (These are random examples of statistical neighbours)
-choicesLA_SN2 <- read.csv(file = "data/statNeigh_example2.csv")
+choicesLA_SN2 <- read.csv(file = "data/stat_neighbour_groupings.csv")
