@@ -5,7 +5,7 @@ a11y_panel <- function() {
         gov_row(
           column(width=12,
       h1("Accessibility statement"),
-      br("This accessibility statement applies to the Education, children's social care and offending: local authoirty level dashboard.
+      br("This accessibility statement applies to the Education, children's social care and offending: local authority level dashboard.
             This application is run by the Department for Education. We want as many people as possible to be able to use this application,
             and have actively developed this application with accessibilty in mind."),
       h2("WCAG 2.1 compliance"),
@@ -27,7 +27,7 @@ a11y_panel <- function() {
       h2("Feedback"),
       br(
         "If you have any feedback on how we could further improve the accessibility of this application, please contact us at",
-        a(href = "mailto:email@education.gov.uk", "email@education.gov.uk")
+        a(href = "mailto:SV.RESEARCH@EDUCATION.GOV.UK", "SV.RESEARCH@EDUCATION.GOV.UK")
       )
     )
     )
@@ -44,7 +44,7 @@ support_links <- function() {
     h2("Give us feedback"),
     "This dashboard is a new service that we are developing. If you have any feedback or suggestions for improvements, please submit them using our ",
     a(
-      href = "https://forms.office.com",
+      href = "https://forms.office.com/e/F3ybcuKaTP",
       "feedback form", .noWS = c("after")
     ), ".", br(),
     "If you spot any errors or bugs while using this dashboard, please screenshot and email them to ",
@@ -68,7 +68,7 @@ support_links <- function() {
     a(href = "mailto:statistics.development@education.gov.uk", "statistics.development@education.gov.uk", .noWS = c("after")), br(),
     h2("See the source code"),
     "The source code for this dashboard is available in our ",
-    a(href = "https://github.com/dfe-analytical-services/shiny-template", "GitHub repository", .noWS = c("after")),
+    a(href = "https://github.com/dfe-analytical-services/childrens_social_services_offenders_dashboard", "GitHub repository", .noWS = c("after")),
     ".",
     br(),
     br(),
