@@ -261,7 +261,6 @@ categories of offence groups and offence types: indictable only 'violence agains
 The analysis has identified approximately `r round(offender_counts_school$sv, -1)` children who had been cautioned or sentenced for a serious violence offence and attended school in `r offender_counts_school$SCHOOL_LA`, which is equivalent to `r offender_counts_school$prop_sv`% of the all-pupil cohort that attended school in `r offender_counts_school$SCHOOL_LA`. In comparison, this analysis looks at approximately `r round(offender_counts_home$sv, -1)` children who had been cautioned or sentenced for a serious violence offence and lived in `r offender_counts_home$HOME_LA`, which is equivalent to `r offender_counts_home$prop_sv`% of the all-pupil cohort that lived in `r offender_counts_home$HOME_LA`.   
 
 ```{r offenders and sv offenders overlap, include=FALSE}
-
 offender_counts_school_for_waffle <- offender_counts_school %>%
   select(all, offenders, sv) %>%
   mutate(
@@ -595,7 +594,6 @@ gender_chart
 ```
 
 ```{r age, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-
 age <- read_excel(data_file,
   sheet = "Age_first_offence_sclLA(SAFE)"
 ) %>%
@@ -643,7 +641,6 @@ age_chart
 ```
 
 ```{r ethnicity, include=FALSE, fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-
 ethnic_minor <- read_excel(data_file,
   sheet = "Ethnicity_minor_sclLA(SAFE)"
 ) %>%
@@ -737,12 +734,10 @@ The most common major ethnic group amongst all pupils with a school LA of `r eth
 `r if("*" %in% ethnic_major$prop_all | "*" %in% ethnic_major$prop_off | "*" %in% ethnic_major$prop_sv){"*Please note: gaps in the below chart indicate spaces where data has been suppressed due to small numbers*"}`
 
 ```{r ethnicity chart, echo=FALSE, fig.cap="The proportion of all pupils split by ethnic group major, offending and pupil group, for pupils matched to KS4 academic years 2012/13, 2013/14 and 2014/15. [Source: DfE-MoJ data share, table: ...]"}
-
 ethnic_major_chart
 ```
 
 ```{r FSM, include=FALSE, fig.dim = c(8, 6), fig.cap="[Source: DfE-MoJ data share, table: ...]"}
-
 ever_flags <- read_excel(data_file,
   sheet = "Everflag_sclLA(SAFE)"
 ) %>%
