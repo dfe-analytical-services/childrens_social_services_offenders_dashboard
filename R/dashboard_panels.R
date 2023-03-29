@@ -16,18 +16,20 @@ homepage_panel <- function() {
               class = "panel panel-info",
               div(
                 class = "panel-heading",
-                style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-                h6("")
+                style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;"
               ),
               div(
                 class = "panel-body",
                 tags$div(
                   h3(tags$b("Aims")),
-                  p("This dashboard was created to complement the previously published", 
+                  p("This interactive dashboard was created to complement the previously published", 
                     tags$a(href = "https://www.gov.uk/government/publications/education-childrens-social-care-and-offending", 
                            "Education, children’s social care and offending", style = "font-size:16px"),
                     "descriptive analysis with the aim of providing local authority specific breakdowns, for each local authority in England, where possible.",
-                    style = "font-size:16px"),
+                    style = "font-size:16px", tags$br(), tags$br(), "This is the first time a matched dataset has been available to local areas to improve 
+                    their understanding of local factors which result in vulnerability to crime and serious violence.", tags$br(),tags$br(),
+                  "The dashboard will present findings relating to all pupils, and specifically both for children who had been cautioned or sentenced 
+                  for an offence, and for a serious violence offence."),
                   br(),
                   tabBox(width = 12, title = NULL, id="overview_tabs",
                          tabPanel(h4(tags$u("Dashboard overview")), 
@@ -43,8 +45,8 @@ homepage_panel <- function() {
                                     "for more information on statistical neighbours used in the dashboard.",  
                                     tags$br(), 
                                     tags$b("2."),
-                                    "Either home or school LA – this selects whether the analysis focuses on the LA in which a child resides, or the LA in which a 
-                                    child attends school (please see the Data Overview tab for more information).", 
+                                    "Either home or school LA – this selects whether the analysis focuses on the LA in which a child resides, or the LA in which a child 
+                                    attends school (please note that most pupils live and go to school in the same LA. However, in some cases a child's home and school LA differ)", 
                                     tags$br(),
                                     tags$br(),
                                     "There is also the option to select sub-tabs within these tabs, to look at more specific variables within each page, with 
@@ -102,25 +104,23 @@ homepage_panel <- function() {
                                     absences and exclusions.", tags$br(), tags$br(),
                                                        tags$b("Police National Computer (PNC)"), "– MoJ. This dataset includes recordable offences committed, with separate entries for each offence committed by a person, 
                                     although only some information (e.g. personal characteristics) will be available through the linked data. The data analysed in this report is a subset of
-                                    the total number of individuals. All individuals who commit an offence are recorded on the Police National Computer (PNC), this report is based on offenders
-                                    from the PNC that were successfully matched to the NPD, covering the period 2000 - 2020.", tags$br(), tags$br(),
+                                    the total number of individuals. All individuals who commit an offence are recorded on the PNC, however this report is only
+                                    based on those cautioned or convicted since 2000 by a police force in England in Wales that were successfully matched to the NPD.", tags$br(), tags$br(),
                                                        "The first iteration of the share was carried out in 2019 and covered offending data up to the end of 2017 and education data up to
                                   the end of the 17/18 academic year. The second iteration of the share was completed in 2022 and includes offending data up to the end of 2020 and education data
-                                  up to the end of the 2019/20 academic year. The share is intended to be updated on an annual basis going forward.", tags$br(), tags$br(), 
+                                  up to the end of the 2020/21 academic year.", tags$br(), tags$br(), 
                                                        "Applications to access the data share can be made by ONS accredited researchers, by submitting the", 
                                                        tags$a(href="https://www.gov.uk/government/publications/moj-data-first-application-form-for-secure-access-to-data", "application form"), "to MoJ and DfE. 
                                   Successful applicants will access the data through the ONS Secure Research Service (SRS).", tags$br(), tags$br(),
-                                                       "For more information please see the previously published", 
+                                                       "For more information, please see the previously published", 
                                                        tags$a(href = "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1059557/Education_children_s_social_care_and_offending_descriptive_stats_Technical_Note_FINAL.pdf", 
                                                               "technical note"), ".")),
                                   details(
                                     inputId = "cohort_def",
                                     label = "Cohorts",
-                                    help_text = tags$p(tags$i("The below text describes the cohorts we will be using in the final dashboard, so does not directly apply to the data currently included"), 
-                                                       tags$br(), tags$br(),
-                                                       "The cohorts of children within this analysis include all pupils who finished key stage 2 (KS2) in 2007/08, 2008/09, 2009/10, 2010/11, 2011/12 
+                                    help_text = tags$p( "The cohorts of children within this analysis include all pupils who finished key stage 2 (KS2) in 2007/08, 2008/09, 2009/10, 2010/11, 2011/12 
                                     or 2012/13, and were aged 10 at the start of these academic years. Therefore, this cohort has a key stage 4 
-                                    (KS4) academic year of 2012/13, 2013/14, 2013/14, 2014/15, 2015/16 or 2017/18, amounting to approximately [Number to be added] children.", tags$br(), tags$br(), 
+                                    (KS4) academic year of 2012/13, 2013/14, 2013/14, 2014/15, 2015/16 or 2017/18, amounting to approximately 3,165,000 children.", tags$br(), tags$br(), 
                                                        "For these children, all their records from Year 1 to Year 13 (or equivalent) are included. Pupils who do not have a KS4 record are not included. 
                                     Pupils who attended an independent primary or secondary school have been excluded from the data as their characteristics are not recorded, except for those 
                                     registered in independent Alternative Provision (AP) settings.", tags$br(), tags$br(),
@@ -131,7 +131,8 @@ homepage_panel <- function() {
                                                        "This publication will present statistics relating to the local authority (LA) of a child’s school during the school year they entered when they were 
                                     aged 15. We selected age 15 as this is the most common age at which children who had been cautioned or sentenced for a serious violence offence commit their
                                     first serious violence offence. Where this isn’t possible, the closest previous year has been used. We have also conducted analysis using the 
-                                    records of the LA of the child’s home address when they were aged 15.",
+                                    records of the LA of the child’s home address when they were aged 15.", tags$br(), tags$br(),  
+                                                       "Please see below for the year group breakdown for the all pupil cohort.",
                                                        tags$table(border = 1, style = "font-size:16px",
                                                                   tags$tbody(
                                                                     tags$tr(
@@ -347,7 +348,7 @@ homepage_panel <- function() {
                                                        be calculated using other numbers), numbers have been further suppressed. Due to the size variation across the local authority areas,
                                                        this happens more for some LAs than others.", tags$br(), tags$br(), "Due to low numbers among the offending groups, LA level analysis
                                                        has not been conducted for City of London, Isle of Scilly and Bournemouth, Christchurch and Poole. Once more data becomes available, they may be included in future 
-                                                       updates/iterations of the dashboard. However, these LAs are included in the national level analysis as a result of this LA counts may
+                                                       updates/iterations of the dashboard. However, these LAs are included in the national level analysis. As a result of this LA counts may
                                                        not sum to England counts.")
                                   )
                          )
@@ -434,55 +435,42 @@ Demographics <- function() {
           tabsetPanel(id = "tabsetpanels2",
                       tabPanel(
                         "LA info",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12,
                             br(),
                             h5("The table below contains information about the selected local authorities and/or England"),
                             br(),
-                            box(
-                              width = 12,
                               div(dataTableOutput("demotable"), 
-                                  style = "font-size:16px")
-                            ),
+                                  style = "font-size:16px"),
                             br(),
                             strong("Footnotes"),
                             br(),
                             paste("1. Percentages are rounded to the nearest 1%."),
                             br(),
                             paste("2. '*' in the table indicate where data has been suppressed due to small numbers."),
-                            br(),
-                            paste("3. In order to better understand offending trajectories for children who had been cautioned
-                            or sentenced for a serious violence offence, this analysis looks at the volume of offending which 
-                                  preceded a first serious violence offence."),
                             br()
                           ),
                         )
                       ),
                       tabPanel(
                         "Gender",
-                        fluidRow(
+                        gov_row(
                           h3("The gender breakdown of offending and pupil group, for all pupils matched to KS4 academic years 2012/13 - 2017/18"),
                           h5("Gender information has been taken from the DfE school census.
                                Where a pupil's gender has changed over time, the most recent record has been used. The gender recorded in the DfE school census may not be the
                                same as to which a child identifies."),
-                          column(h3(textOutput("DemTitle1")),
+                          column(h3(textOutput("DemTitle1"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                  width=6,
-                                 box(
-                                   width=12,
                                    plotOutput("GenderPlot1"),
-                                   p("Gaps in chart indicate where data has been suppressed due to small numbers"),
+                                   p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                    br()
-                                 )
                           ),
-                          column(h3(textOutput("DemTitle2")),
+                          column(h3(textOutput("DemTitle2"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                  width=6,
-                                 box(
-                                   width=12,
                                    plotOutput("GenderPlot2"),
-                                   p("Gaps in chart indicate where data has been suppressed due to small numbers."),
+                                   p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                    br()
-                                 )
                           ),
                           strong("Footnotes"),
                           br(),
@@ -492,25 +480,24 @@ Demographics <- function() {
                       ),
                       tabPanel(
                         "Age at first offence",
-                        fluidRow(h3("The proportion of children relative to their age at first offence\nby offending group, for pupils matched 
+                        gov_row(h3("The proportion of children relative to their age at first offence\nby offending group, for pupils matched 
                                to KS4 academic years 2012/13 - 2017/18"),
-                                 column(h3(textOutput("DemTitle1_age")),
+                                 column(h3(textOutput("DemTitle1_age"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                         width=6,
-                                        box(
-                                          width = 12,
                                           plotOutput("ageofplot1"),
-                                          p("Gaps in chart indicate where data has been suppressed due to small numbers"),
+                                          dataTableOutput("age_table1"),
+                                          br(),
+                                          p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always 
+                                            sum to 100%."),
                                           br()
-                                        )
                                  ),
-                                 column(h3(textOutput("DemTitle2_age")),
+                                 column(h3(textOutput("DemTitle2_age"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                         width=6,
-                                        box(
-                                          width = 12,
                                           plotOutput("ageofplot2"),
-                                          p("Gaps in chart indicate where data has been suppressed due to small numbers"),
+                                          dataTableOutput("age_table2"),
+                                          br(),
+                                          p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
                                           br()
-                                        )
                                  ),
                                  strong("Footnotes"),
                                  br(),
@@ -527,28 +514,25 @@ Demographics <- function() {
                       ),
                       tabPanel(
                         "Ethnicity",
-                        fluidRow(
+                        gov_row(
                           h3("The proportion of all pupils split by ethnic group major, offending and pupil group, for pupils matched to KS4 academic years
                                2012/13 - 2017/18"),
                           h5("Ethnicity", tags$sup("[1]"), "has two different categorisations in the school census - ethnic group major
                             and ethnic group minor. Ethnic group major contains wider categories (Asian, Black,
                             Chinese, White, Mixed, Unclassified, Any Other Ethnic Group) whereas ethnic group minor is more detailed", tags$sup("[2]"),"."),
-                          column(h3(textOutput("DemTitle1_eth")),
-                                 width=6,
-                                 box(
-                                   width = 12,
+                          column(h3(textOutput("DemTitle1_eth"),p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
+                                   width = 6,
                                    plotOutput("EthPlot1"),
-                                   p("Gaps in chart indicate where data has been suppressed due to small numbers")
-                                 ),
-                          ),
-                          column(h3(textOutput("DemTitle2_eth")),
+                                   p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
+                                 br()
+                                  ),
+                          column(h3(textOutput("DemTitle2_eth"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                  width=6,
-                                 box(
-                                   width = 12,
                                    plotOutput("EthPlot2"),
-                                   p("Gaps in chart indicate where data has been suppressed due to small numbers")
-                                 ),
+                                   p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
+                                 br()
                           ),
+                          br(),
                           strong("Footnotes"),
                           br(),
                           paste("1. Where a pupil’s ethnicity changes over time, the most recent ethnicity has been taken. 
@@ -567,23 +551,12 @@ Demographics <- function() {
                       ),
                       tabPanel(
                         "Free school meals",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12, h5(tags$b("Choose plot type")),
-                            tabBox(width = 12, title = NULL, id="FSMsubtabs",
-                                   tabPanel(
-                                     p(tags$u("Bar chart (All pupil groups)")), 
-                                     h3("The proportion of all pupils eligible for free school meals (FSM) by offending and pupil group, 
-                                                         for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
-                                     column(width=6, h3(textOutput("DemTitle1_FSM1")), 
-                                            box(width = 12, plotOutput("fsmPlot1"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
-                                     column(width=6, h3(textOutput("DemTitle1_FSM2")), 
-                                            box(width = 12, plotOutput("fsmPlot2"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers")))),
+                            tabsetPanel(id="FSMsubtabs",
                                    tabPanel(
                                      p(tags$u("Waffle plot")), 
-                                     
                                      column(12,	
                                             radioGroupButtons(                  
                                               inputId="fsm_plot_switch_waf", 
@@ -592,11 +565,19 @@ Demographics <- function() {
                                               choiceValues=c("Any_off", "sv_off"),
                                             )
                                      ),
-                                     
                                      uiOutput("dem_plot_waf_fsm"),
-                                     
-                                     
-                                   )
+                                   ),
+                                   tabPanel(
+                                     p(tags$u("Bar chart (All pupil groups)")), 
+                                     h3("The proportion of all pupils eligible for free school meals (FSM) by offending and pupil group, 
+                                                         for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
+                                     column(width=6, h3(textOutput("DemTitle1_FSM1"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))), 
+                                            plotOutput("fsmPlot1"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")),
+                                     column(width=6, h3(textOutput("DemTitle1_FSM2"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))), 
+                                            plotOutput("fsmPlot2"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")))
+                                   
                             )
                           ),
                           strong("Footnotes"),
@@ -685,55 +666,52 @@ SchoolExp <- function() {
           width=12,
           tabsetPanel(id = "tabsetpanels3",
                       tabPanel(
-                        "Attainment",
-                        fluidRow(
+                        "Attainment", br(),
+                        gov_row(
                           column(
                             width=12,
                             tabBox(width = 12, title = NULL, id="atn_subtabs",
                                    tabPanel(
                                      p(tags$u("KS2 attainment")), 
                                      h3("The proportion of all pupils who achieved level 4 or above in English and Maths at key stage 2 (KS2) 
-                                            by offending and pupil group, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
-                                     p("This analysis looks at the percentage of pupils working to level 4 or above in English and Maths."),
-                                     column(h3(textOutput("sclTitle1_ks2")),
+                                            by offending and pupil group, for pupils matched to KS4 academic year 2017/18 only"),
+                                     column(h3(textOutput("sclTitle1_ks2"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                             width=6,
-                                            box(width = 12,
                                                 plotOutput("ks2attainplot1"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
-                                     column(h3(textOutput("sclTitle2_ks2")),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                ), 
+                                     column(h3(textOutput("sclTitle2_ks2"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                             width=6,
-                                            box(width = 12,
                                                 plotOutput("ks2attainplot2"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                ),
                                      br(),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. Percentages are rounded to the nearest 1%."),
                                      br(),
                                      paste(
-                                       "2. The figures discussed here are the combined results of all cohorts, of whom reached the end of
-                                            KS2 in 2007/08 - 2012/13. Based on the metrics used in this analysis, only a very small number
-                                            of results for the 2009/10 cohort were withheld, in light of the boycott of the delivery of end of KS2 National
-                                            Curriculum tests. It was determined that a sufficient volume of results were available for this cohort, and
-                                            that the results of all three cohorts could be combined. Please see here for more information regarding the
-                                            2009/10 KS2 National Curriculum tests results:"
+                                       "2. The figures discussed here are results for pupils matched to KS4 academic year 2017/18 (those with KS2 academic year 2012/13) only. Due to changes 
+                                       in English measures made in 2012, results are not directly comparable with previous years. Please see here for 
+                                       further information regarding the assessment changes: "
                                      ),
-                                     a(href = "https://www.gov.uk/government/statistics/national-curriculum-assessments-at-key-stage-2-and-3-in-england-academic-year-2009-to-2010-provisional",
-                                       "National curriculum assessments: KS2 and KS3, 2010"), "."), 
+                                     a(href = "https://www.gov.uk/government/statistics/national-curriculum-assessments-at-key-stage-2-2012-to-2013",
+                                       "National curriculum assessments: key stage 2, 2013 (revised)"), "."), 
                                    tabPanel(
                                      p(tags$u("KS4 attainment")),
                                      h3("The proportion of all pupils who achieved various key stage 4 (KS4) benchmarks by offending and 
                                             pupil group, for pupils matched to KS4 academic year 2014/15 - 2017/18"),
                                      p("This analysis looks at the percentage of pupils meeting various KS4 benchmarks."),
-                                     column(h3(textOutput("sclTitle1_ks4")),
+                                     column(h3(textOutput("sclTitle1_ks4"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                             width=6,
-                                            box(width = 12,
                                                 plotOutput("ks4attainplot1"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
-                                     column(h3(textOutput("sclTitle2_ks4")),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                ), 
+                                     column(h3(textOutput("sclTitle2_ks4"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                             width=6,
-                                            box(width = 12,plotOutput("ks4attainplot2"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                            plotOutput("ks4attainplot2"),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                ),
                                      br(),
                                      strong("Footnotes"),
                                      br(),
@@ -748,7 +726,7 @@ SchoolExp <- function() {
                       ),
                       tabPanel(
                         "Persistent Absence",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12,
                             br(),
@@ -765,8 +743,8 @@ SchoolExp <- function() {
                             details(
                               inputId = "PAUO_def",
                               label = "What is persistent absence for 'unauthorised other' reasons (PAUO)?",
-                              help_text = tags$p("The absence reason ‘persistent absence for “unauthorised other” reasons’ (PAUO) is used as a closest 
-                              available proxy for persistent truancy.", tags$br(), tags$br(), "The definition of persistent absence includes all possible reasons for absence, 
+                              help_text = tags$p("The absence reason PAUO refers to unauthorised absence as the school is not satisfied with the reason given for the absence, 
+                              has not authorised the absence and it is not covered by any other code / description.", tags$br(), tags$br(), "The definition of persistent absence includes all possible reasons for absence, 
                               including children whose absence was unauthorised, but the school was still provided with a reason for that absence 
                               (for example, an unagreed family holiday). The analysis has included this additional metric of absence (PAUO), as a way 
                               of differentiating those whose absence was not authorised and were unable to provide a reason for that absence, from those
@@ -783,21 +761,6 @@ SchoolExp <- function() {
                                 h5(tags$b("Choose plot type")),
                                 tabBox(
                                   width = 12, title = NULL, id="pa_subtabs2",
-                                  tabPanel( 
-                                    p(tags$u("Bar chart (All pupil groups)")), 
-                                    h3("The proportion of all pupils who had ever been persistently absent or 
-                                            persistently absent (unauthorised other) by offending and pupil group, for pupils matched to 
-                                                                 KS4 academic years 2012/13 - 2017/18"), 
-                                    column(h3(textOutput("sclTitle1_PA")),
-                                           width=6,
-                                           box(width = 12,
-                                               plotOutput("PAPlot1"),
-                                               p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
-                                    column(h3(textOutput("sclTitle2_PA")),
-                                           width=6,
-                                           box(width = 12, 
-                                               plotOutput("PAPlot2"),
-                                               p("Gaps in chart indicate where data has been suppressed due to small numbers")))),
                                   tabPanel(
                                     p(tags$u("Waffle plot")), 
                                     column(12,	
@@ -808,10 +771,25 @@ SchoolExp <- function() {
                                              choiceValues=c("Any_off", "sv_off"),
                                            )
                                     ),
-                                    
                                     uiOutput("scl_plot_waf_pa")
-                                    
-                                  )),
+                                  ),
+                                  tabPanel( 
+                                    p(tags$u("Bar chart (All pupil groups)")), 
+                                    h3("The proportion of all pupils who had ever been persistently absent or 
+                                            persistently absent (unauthorised other) by offending and pupil group, for pupils matched to 
+                                                                 KS4 academic years 2012/13 - 2017/18"), 
+                                    column(h3(textOutput("sclTitle1_PA"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
+                                           width=6,
+                                               plotOutput("PAPlot1"),
+                                               p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                               ), 
+                                    column(h3(textOutput("sclTitle2_PA"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
+                                           width=6,
+                                               plotOutput("PAPlot2"),
+                                               p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                               )),
+                                  
+                                  ),
                                 br(),
                                 strong("Footnotes"),
                                 br(),
@@ -839,16 +817,16 @@ SchoolExp <- function() {
                                   "Throughout the rest of the publication, annual absence data has been used."),
                                 h3("Timing of first record of persistent absence or persistent absence (unauthorised other) relative to the timing 
                                     of children’s first serious violence offence, for all pupils matched to KS4 academic years 2012/13 - 2017/18", tags$sup("[5]")),
-                                column(h3(textOutput("sclTitle1_PAtime")),
+                                column(h3(textOutput("sclTitle1_PAtime"),p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                        width=6,
-                                       box(width = 12, 
                                            plotOutput("timing_PA1"),
-                                           p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
-                                column(h3(textOutput("sclTitle2_PAtime")),
+                                           p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                           ), 
+                                column(h3(textOutput("sclTitle2_PAtime"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                        width=6,
-                                       box(width = 12, 
                                            plotOutput("timing_PA2"),
-                                           p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                           p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                           ),
                                 br(),
                                 strong("Footnotes"),
                                 br(),
@@ -884,7 +862,7 @@ SchoolExp <- function() {
                       ),
                       tabPanel(
                         "Suspension & Exclusions",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12,
                             br(),
@@ -904,21 +882,6 @@ SchoolExp <- function() {
                                      p(tags$u("Ever suspended/excluded")),
                                      h5(tags$b("Choose plot type")),
                                      tabBox(width=12, title = NULL, id="SusExcl_subtabs2", 
-                                            tabPanel(
-                                              p(tags$u("Bar chart (All pupil groups)")), 
-                                              h3("The proportion of all pupils who had a record of being suspended or 
-                                            permanently excluded by offending and pupil group, for all pupils matched to KS4 academic years 2012/13 - 2017/18"), 
-                                              column(h3(textOutput("sclTitle1_sus")),
-                                                     width=6,
-                                                     box(width = 12, 
-                                                         plotOutput("SusExclPlot1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),  
-                                              column(h3(textOutput("sclTitle2_sus")),
-                                                     width=6,
-                                                     box(width = 12, 
-                                                         plotOutput("SusExclPlot2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
-                                            ),
                                             tabPanel(
                                               p(tags$u("Suspension Waffle plot")), 
                                               column(12,	
@@ -943,6 +906,21 @@ SchoolExp <- function() {
                                                      )
                                               ),
                                               uiOutput("scl_plot_waf_excl"),
+                                            ),
+                                            tabPanel(
+                                              p(tags$u("Bar chart (All pupil groups)")), 
+                                              h3("The proportion of all pupils who had a record of being suspended or 
+                                            permanently excluded by offending and pupil group, for all pupils matched to KS4 academic years 2012/13 - 2017/18"), 
+                                              column(h3(textOutput("sclTitle1_sus"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
+                                                     width=6,
+                                                         plotOutput("SusExclPlot1"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         ),  
+                                              column(h3(textOutput("sclTitle2_sus"),p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
+                                                     width=6,
+                                                         plotOutput("SusExclPlot2"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         )
                                             )
                                      ),
                                      strong("Footnotes"),
@@ -979,61 +957,61 @@ SchoolExp <- function() {
                                             (p(tags$u("First suspension")), 
                                               h3("Timing of children’s first suspension relative to their first serious violence offence,
                                                       for all pupils matched to KS4 academic years 2012/13 - 2017/18"),
-                                              column(h3(textOutput("sclTitle1_fstsus")),
+                                              column(h3(textOutput("sclTitle1_fstsus"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                                      width=6,
-                                                     box(width = 12,
                                                          plotOutput("FstSusTime1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),  
-                                              column(h3(textOutput("sclTitle2_fstsus")),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         ),  
+                                              column(h3(textOutput("sclTitle2_fstsus"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                                      width=6,
-                                                     box(width = 12,
                                                          plotOutput("FstSusTime2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         )
                                             ),
                                             tabPanel(
                                               p(tags$u("Closest suspension")), 
                                               h3("Timing of children’s closest suspension relative to their first serious violence offence, 
                                                       for all pupils matched to KS4 academic years 2012/13 - 2017/18"),
-                                              column(h3(textOutput("sclTitle1_clssus")),
+                                              column(h3(textOutput("sclTitle1_clssus"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                                      width=6,
-                                                     box(width = 12,
                                                          plotOutput("clstSusTime1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
-                                              column(h3(textOutput("sclTitle2_clssus")),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         ), 
+                                              column(h3(textOutput("sclTitle2_clssus"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                                      width=6,
-                                                     box(width = 12,
                                                          plotOutput("clstSusTime2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         )
                                             ),
                                             tabPanel(
                                               p(tags$u("First exclusion")), 
                                               h3("Timing of children’s first permanent exclusion relative to their first serious violence offence, 
                                                       for all pupils matched to KS4 academic years 2012/13 - 2017/18"),
-                                              column(h3(textOutput("sclTitle1_fstexcl")),
+                                              column(h3(textOutput("sclTitle1_fstexcl"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                                      width=6,
-                                                     box(width = 12,
                                                          plotOutput("FstExclTime1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
-                                              column(h3(textOutput("sclTitle2_fstexcl")),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         ), 
+                                              column(h3(textOutput("sclTitle2_fstexcl"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                                      width=6,
-                                                     box(width = 12,
                                                          plotOutput("FstExclTime2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         )
                                             ),
                                             tabPanel(
                                               p(tags$u("Closest exclusion")), 
                                               h3("Timing of children’s closest permanent exclusion relative to their first serious violence offence, 
                                                       for all pupils matched to KS4 academic years 2012/13 - 2017/18"), 
-                                              column(h3(textOutput("sclTitle1_clsexcl")),
+                                              column(h3(textOutput("sclTitle1_clsexcl"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                                      width=6,
-                                                     box(width = 12,
                                                          plotOutput("clstExclTime1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
-                                              column(h3(textOutput("sclTitle2_clsexcl")),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         ), 
+                                              column(h3(textOutput("sclTitle2_clsexcl"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                                      width=6,
-                                                     box(width = 12, 
                                                          plotOutput("clstExclTime2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))))),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."))
+                                                     )),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. Prior to 2019/20, suspensions were referred to as fixed term exclusions."),
@@ -1047,7 +1025,8 @@ SchoolExp <- function() {
                                      br(), 
                                      paste("4. Where children who had been cautioned or sentenced for a serious violence offence had received multiple suspensions/permanent exclusions, 
                           the analysis defined closest as the shortest amount of time between the start of the suspensions/permanent exclusions and the first 
-                                serious violence offence date"),
+                                serious violence offence date.  For children who had their closest suspension equal days before and after their first serious violence both suspensions
+                                           have been accounted for, therefore there may be more suspensions than pupils suspended."),
                                      br(),
                                      paste("5.The analysis uses the date the offence took place rather than the date it was processed through the courts."),
                                      br(),
@@ -1061,7 +1040,7 @@ SchoolExp <- function() {
                       ),
                       tabPanel(
                         "Alternative Provision",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12, 
                             br(),
@@ -1086,20 +1065,6 @@ SchoolExp <- function() {
                                      h5(tags$b("Choose plot type")),
                                      tabBox(width=12, title = NULL, id="AP_subtabs2",
                                             tabPanel(
-                                              p(tags$u("Bar chart (All pupil groups)")), 
-                                              h3("The proportion of all pupils who had ever attended alternative provision by offending 
-                                                and pupil group, for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
-                                              column(h3(textOutput("sclTitle1_AP")),
-                                                     width=6, 
-                                                     box(width = 12,
-                                                         plotOutput("APchart1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
-                                              column(h3(textOutput("sclTitle2_AP")),
-                                                     width=6,
-                                                     box(width = 12,
-                                                         plotOutput("APchart2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))),
-                                            tabPanel(
                                               p(tags$u("Waffle plot")), 
                                               column(12,	
                                                      radioGroupButtons(                  
@@ -1110,44 +1075,62 @@ SchoolExp <- function() {
                                                      )
                                               ),
                                               uiOutput("scl_plot_waf_ap"),
-                                            )),
+                                            ),
+                                            tabPanel(
+                                              p(tags$u("Bar chart (All pupil groups)")), 
+                                              h3("The proportion of all pupils who had ever attended alternative provision by offending 
+                                                and pupil group, for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
+                                              column(h3(textOutput("sclTitle1_AP"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
+                                                     width=6, 
+                                                         plotOutput("APchart1"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         ),
+                                              column(h3(textOutput("sclTitle2_AP"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
+                                                     width=6,
+                                                         plotOutput("APchart2"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         ))),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. Please see here for more information on AP statutory guidance:"),
                                      a(href = "https://www.gov.uk/government/publications/alternative-provision", "Alternative Provision Statutory Guidance"),
                                      br(),
-                                     paste("2. Percentages are rounded to the nearest 1%."),
+                                     paste("2. Figures discussed here refer to both state and non-state funded AP."),
+                                     br(),
+                                     paste("3. Percentages are rounded to the nearest 1%."),
                                      br()),
                                    tabPanel( 
                                      p(tags$u("Timing of AP")), 
                                      h3("The first term children attended alternative provision (AP) relative to the timing of their first 
                                       offence, for all pupils matched to KS4 academic years 2012/13 - 2017/18"), 
                                      p("Did the first term a child attended alternative provision (AP) commonly precede the first serious violence offence?"),  
-                                     column(h3(textOutput("sclTitle1_APtime")),
+                                     column(h3(textOutput("sclTitle1_APtime"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                             width=6, 
-                                            box(width = 12,
                                                 plotOutput("timing_AP1"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
-                                     column(h3(textOutput("sclTitle2_APtime")),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                ), 
+                                     column(h3(textOutput("sclTitle2_APtime"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                             width=6, 
-                                            box(width = 12,
                                                 plotOutput("timing_AP2"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                ),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. Please see here for more information on AP statutory guidance:"),
                                      a(href = "https://www.gov.uk/government/publications/alternative-provision", "Alternative Provision Statutory Guidance"),
                                      br(),
-                                     paste("2. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
+                                     paste("2. Figures discussed here refer to both state and non-state funded AP."),
                                      br(),
-                                     paste("3. Percentages are rounded to the nearest 1%."),
+                                     paste("3. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
+                                     br(),
+                                     paste("4. Percentages are rounded to the nearest 1%."),
                                      br())),
                           )
                         )
                       ),
                       tabPanel(
                         "SEN",
-                        fluidRow(
+                        gov_row(
                           column(
                             width=12,
                             h3("Special Educational Needs"),
@@ -1174,21 +1157,6 @@ SchoolExp <- function() {
                                      h5(tags$b("Choose plot type")),
                                      tabBox(width=12, title = NULL, id="sen_subtab2",
                                             tabPanel(
-                                              p(tags$u("Bar chart (All pupil groups)")), 
-                                              h3("Special Educational Needs (SEN) of all pupils by offending and pupil group, for those that 
-                                                   were ever recorded with SEN, for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
-                                              column(h3(textOutput("sclTitle1_SEN")),
-                                                     width=6, 
-                                                     box(width = 12,
-                                                         plotOutput("SENchart1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),  
-                                              column(h3(textOutput("sclTitle2_SEN")),
-                                                     width=6, 
-                                                     box(width = 12, 
-                                                         plotOutput("SENchart2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
-                                            ),
-                                            tabPanel(
                                               p(tags$u("SEN Support Waffle plot")), 
                                               column(12,	
                                                      radioGroupButtons(                  
@@ -1211,6 +1179,21 @@ SchoolExp <- function() {
                                                      )
                                               ),
                                               uiOutput("scl_plot_waf_ehcp"),
+                                            ),
+                                            tabPanel(
+                                              p(tags$u("Bar chart (All pupil groups)")), 
+                                              h3("Special Educational Needs (SEN) of all pupils by offending and pupil group, for those that 
+                                                   were ever recorded with SEN, for pupils matched to KS4 academic years 2012/13 - 2017/18"), 
+                                              column(h3(textOutput("sclTitle1_SEN"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
+                                                     width=6, 
+                                                         plotOutput("SENchart1"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         ),  
+                                              column(h3(textOutput("sclTitle2_SEN"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
+                                                     width=6, 
+                                                         plotOutput("SENchart2"),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         )
                                             )),
                                      strong("Footnotes"),
                                      br(),
@@ -1254,31 +1237,31 @@ SchoolExp <- function() {
                                               p(tags$u("SEN timing")), 
                                               h3("The first term children had been recorded with SEN, relative to the timing of their first 
                                          serious violence offence, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
-                                              column(h3(textOutput("sclTitle1_SENtime")),
+                                              column(h3(textOutput("sclTitle1_SENtime"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                                      width=6, 
-                                                     box(width = 12,
                                                          plotOutput("timing_SEN1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
-                                              column(h3(textOutput("sclTitle2_SENtime")), 
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         ),
+                                              column(h3(textOutput("sclTitle2_SENtime"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))), 
                                                      width=6, 
-                                                     box(width = 12,
                                                          plotOutput("timing_SEN2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         )
                                             ),
                                             tabPanel(
                                               p(tags$u("EHC plan timing")), 
                                               h3("The first term children had an EHC plan, relative to the timing of their first serious violence
                                                   offence, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
-                                              column(h3(textOutput("sclTitle1_EHCPtime")),
+                                              column(h3(textOutput("sclTitle1_EHCPtime"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                                      width=6, 
-                                                     box(width = 12,
                                                          plotOutput("timing_EHCP1"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
-                                              column(h3(textOutput("sclTitle2_EHCPtime")),
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         ), 
+                                              column(h3(textOutput("sclTitle2_EHCPtime"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                                      width=6, 
-                                                     box(width = 12,
                                                          plotOutput("timing_EHCP2"),
-                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers")))
+                                                         p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                         )
                                             )),
                                      strong("Footnotes"),
                                      br(),
@@ -1332,16 +1315,16 @@ SchoolExp <- function() {
                                                           tags$br(), tags$br(), "The most prevalent type of recorded SEN amongst children who had been cautioned or sentenced for 
                                                     a serious violence offence was Social, Emotional and Mental Health needs (SEMH)", tags$sup("[5][6]", "."))), 
                                      h3("The first term children had SEMH, relative to the timing of their first serious violence offence, for pupils matched to KS4 academic years 2012/13 - 2017/18"),
-                                     column(h3(textOutput("sclTitle1_SEMHtime")),
+                                     column(h3(textOutput("sclTitle1_SEMHtime"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                             width=6, 
-                                            box(width = 12,
                                                 plotOutput("timing_SEMH1"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
-                                     column(h3(textOutput("sclTitle2_SEMHtime")),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                ),
+                                     column(h3(textOutput("sclTitle2_SEMHtime"), p(tags$hr(style = "border-top: 2px solid #C1CDCD;"))),
                                             width=6, 
-                                            box(width = 12,
                                                 plotOutput("timing_SEMH2"),
-                                                p("Gaps in chart indicate where data has been suppressed due to small numbers"))),
+                                                p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%.")
+                                                ),
                                      strong("Footnotes"),
                                      br(),
                                      paste("1. The Children and Families Act 2014 and the SEND Code of Practice (2015) covers children and young 
@@ -1480,7 +1463,7 @@ CSCExp <- function() {
                tabsetPanel(id = "tabsetpanels3",
                            tabPanel(
                              "Ever CIN/CLA",
-                             fluidRow(
+                             gov_row(
                                column(
                                  width=12,
                                  br(),
@@ -1489,20 +1472,6 @@ CSCExp <- function() {
                                  br(),
                                  h5(tags$b("Choose plot type")),
                                  tabBox(width = 12, title = NULL, id="csc_subtabs",
-                                        tabPanel(
-                                          p(tags$u("Bar chart (All pupil groups)")), 
-                                          h3("The proportion of children who had been recorded as being CIN/CLA, by offending and pupil group, for pupils matched to KS4 academic year 2012/13 - 2017/18"), 
-                                          column(h3(textOutput("CSCTitle1")),
-                                                 width=6, 
-                                                 box(width = 12,
-                                                     plotOutput("CSCPlot1"),
-                                                     p("Gaps in chart indicate where data has been suppressed due to small numbers"))), 
-                                          column(h3(textOutput("CSCTitle2")),
-                                                 width=6, 
-                                                 box(width = 12, 
-                                                     plotOutput("CSCPlot2"),
-                                                     p("Gaps in chart indicate where data has been suppressed due to small numbers")))),
-                                        
                                         tabPanel(
                                           p(tags$u("Waffle plot")), 
                                           
@@ -1516,7 +1485,22 @@ CSCExp <- function() {
                                                  )
                                           ),
                                           uiOutput("csc_plot_la_waf")
-                                        )
+                                        ),
+                                        tabPanel(
+                                          p(tags$u("Bar chart (All pupil groups)")), 
+                                          h3("The proportion of children who had been recorded as being CIN/CLA, by offending and pupil group, for pupils matched to KS4 academic year 2012/13 - 2017/18"), 
+                                          column(h3(textOutput("CSCTitle1")),
+                                                 width=6, 
+                                                     plotOutput("CSCPlot1"),
+                                                     p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
+                                                     br(),
+                                                     uiOutput("csc_caution_la1")), 
+                                          column(h3(textOutput("CSCTitle2")),
+                                                 width=6, 
+                                                     plotOutput("CSCPlot2"),
+                                                     p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
+                                                     br(),
+                                                     uiOutput("csc_caution_la2")))
                                  )
                                )
                              ),
@@ -1552,9 +1536,13 @@ CSCExp <- function() {
                       in any period between the ages of 6 - 16. Those matched to earlier years in the KS4 attainment data will as a result have less 
           coverage than those matched to later years. For example: those with KS4 academic year 2012/13 have coverage from age 8 and above."),
                              br(),
-                             paste("8. Percentages are rounded to the nearest 1%."),
+                             paste("8. Figures for Barnet, Westminster, and Hammersmith and Fulham should be interpreted with caution. Offence rates 
+                                   for these local authorities may appear to be much higher than the true figure due to the low proportion of EverCIN pupils 
+                                   it has been possible to identify in the data."),
                              br(),
-                             paste("9. Caution is advised when comparing across local authorities, due to differences in local policies."),
+                             paste("9. Percentages are rounded to the nearest 1%."),
+                             br(),
+                             paste("10. Caution is advised when comparing across local authorities, due to differences in local policies."),
                              br()),
                            tabPanel(
                              "Timing of CSC",
@@ -1572,15 +1560,17 @@ CSCExp <- function() {
                              academic year 2012/13 - 2017/18"), 
                              column(h3(textOutput("CSCTitle1_time")),
                                     width=6, 
-                                    box(width = 12,
                                         plotOutput("timing_CSC1"),
-                                        p("Gaps in chart indicate where data has been suppressed due to small numbers"))
+                                        p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
+                                        br(),
+                                        uiOutput("csc_time_caution_la1")
                              ), 
                              column(h3(textOutput("CSCTitle2_time")),
                                     width=6, 
-                                    box(width = 12, 
                                         plotOutput("timing_CSC2"),
-                                        p("Gaps in chart indicate where data has been suppressed due to small numbers"))
+                                        p("Gaps in chart indicate where data has been suppressed due to small numbers, as such figures won't always sum to 100%."),
+                                        br(),
+                                        uiOutput("csc_time_caution_la2")
                              )
                              ,
                              strong("Footnotes"),
@@ -1615,9 +1605,13 @@ CSCExp <- function() {
                              br(),
                              paste("6. The analysis uses the date the offence took place rather than the date it was processed through the courts."),
                              br(),
-                             paste("7. Percentages are rounded to the nearest 1%."),
+                             paste("7. Figures for Barnet, Westminster, and Hammersmith and Fulham should be interpreted with caution. Offence rates 
+                                   for these local authorities may appear to be much higher than the true figure due to the low proportion of EverCIN pupils 
+                                   it has been possible to identify in the data."),
                              br(),
-                             paste("8. Caution is advised when comparing across local authorities, due to differences in local policies."),
+                             paste("8. Percentages are rounded to the nearest 1%."),
+                             br(),
+                             paste("9. Caution is advised when comparing across local authorities, due to differences in local policies."),
                              br())
                ),
         )
