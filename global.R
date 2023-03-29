@@ -31,7 +31,6 @@ shhh(library(gridExtra)) # added
 shhh(library(shinyBS))
 # shhh(library(shinya11y))
 
-
 # Functions ---------------------------------------------------------------------------------
 
 # Here's an example function for simplifying the code needed to commas separate numbers:
