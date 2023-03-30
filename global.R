@@ -124,13 +124,9 @@ dfCohort <- read_cohort_data()
 # alldata <- read_alldata() # Can delete this now as no longer needed
 
 # Read in data needed for dashboard
-# read_dash_data(file = "data/OFFSEN_to_delete/2023_03_16_OFSEN_Demographics.xlsx") # Can read this in for different files to get data for diff tabs
-# read_dash_data(file = "data/OFFSEN_to_delete/2023_03_16_OFFSEN_SchoolExp.xlsx")
-# read_dash_data(file = "data/OFFSEN_to_delete/2023_03_16_OFFSEN_CSCExp.xlsx")
-
-read_dash_data(file = "data/10_Demographics.xlsx") # Can read this in for different files to get data for diff tabs
-read_dash_data(file = "data/10_SchoolExp.xlsx")
-read_dash_data(file = "data/10_CSCExp.xlsx")
+read_dash_data(file = "data/2023_03_16_OFSEN_Demographics.xlsx") # Can read this in for different files to get data for diff tabs
+read_dash_data(file = "data/2023_03_16_OFFSEN_SchoolExp.xlsx")
+read_dash_data(file = "data/2023_03_16_OFFSEN_CSCExp.xlsx")
 
 # Add tables currently needed from alldata to environment
 # Use this table to get a list of LAs to be used as choices
