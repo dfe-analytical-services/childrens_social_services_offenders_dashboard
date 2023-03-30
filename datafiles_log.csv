@@ -17,3 +17,6 @@ data/10_SchoolExp.xlsx,dummy
 data/10_CSCExp.xlsx,dummy
 data/statNeigh_example2.csv,dummy
 data/stat_neighbour_groupings.csv,reference
+data/2023_03_16_OFSEN_Demographics.xlsx,published
+data/2023_03_16_OFFSEN_SchoolExp.xlsx,published
+data/2023_03_16_OFFSEN_CSCExp.xlsx,published
