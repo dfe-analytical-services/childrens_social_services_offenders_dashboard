@@ -10,18 +10,49 @@ The tracking number below MUST be replaced with a unique number, contact the sta
 */
     gtag('config', 'G-Q1PYWZZ7S4');
   
-  $(document).on('change', 'select#selectPhase', function(e) {
-    gtag('event', 'select phase', {'event_category' : 'choose Phase',
-    'event_label' : document.querySelector('select#selectPhase').value
+  $(document).on('shiny:disconnected', function(e) {
+    gtag('event', 'disconnect', { 
+      'event_label' : 'Disconnect',
+      'event_category' : 'Disconnect'
+    });
+  });
+
+  $(document).on('change', 'select#demLAchoice', function(e) {
+    gtag('event', 'select phase', {'event_category' : 'LA choice',
+    'event_label' : document.querySelector('select#demLAchoice').value
     });
   });
   
-  $(document).on('change', 'select#selectArea', function(e) {
-    gtag('event', 'select area', {'event_category' : 'choose Area',
-    'event_label' : document.querySelector('select#selectArea').value
+  $(document).on('change', 'select#sclLAchoice', function(e) {
+    gtag('event', 'select phase', {'event_category' : 'LA choice',
+    'event_label' : document.querySelector('select#sclLAchoice').value
+    });
+  });
+
+  $(document).on('change', 'select#cscLAchoice', function(e) {
+    gtag('event', 'select phase', {'event_category' : 'LA choice',
+    'event_label' : document.querySelector('select#cscLAchoice').value
+    });
+  });
+
+  $(document).on('change', 'select#demLAchoice2', function(e) {
+    gtag('event', 'select phase', {'event_category' : 'LA ccomparator',
+    'event_label' : document.querySelector('select#demLAchoice2').value
     });
   });
   
+  $(document).on('change', 'select#sclLAchoice2', function(e) {
+    gtag('event', 'select phase', {'event_category' : 'LA comparator',
+    'event_label' : document.querySelector('select#sclLAchoice2').value
+    });
+  });
+
+  $(document).on('change', 'select#cscLAchoice2', function(e) {
+    gtag('event', 'select phase', {'event_category' : 'LA comparator',
+    'event_label' : document.querySelector('select#cscLAchoice2').value
+    });
+  });
+
   $(document).on('click', 'ul#navlistPanel', function(e) {
     gtag('event', 'navlistPanel', {'event_category' : 'navbar click',
     'event_label' : document.querySelector('ul#navlistPanel > li.active > a').getAttribute('data-value')
