@@ -7,7 +7,6 @@
 #
 # ---------------------------------------------------------
 
-
 # Library calls ---------------------------------------------------------------------------------
 shhh <- suppressPackageStartupMessages # It's a library, so shhh!
 shhh(library(shiny))
@@ -30,8 +29,8 @@ shhh(library(writexl)) # added install.packages('writexl')
 shhh(library(waffle)) # added
 shhh(library(gridExtra)) # added
 shhh(library(shinyBS))
+shhh(library(shinyalert))
 # shhh(library(shinya11y))
-
 
 # Functions ---------------------------------------------------------------------------------
 
@@ -52,10 +51,13 @@ tidy_code_function <- function() {
   message("App scripts")
   message("----------------------------------------")
   app_scripts <- eval(styler::style_dir(recursive = FALSE)$changed)
+  message("R/ scripts")
+  message("----------------------------------------")
+  r_scripts <- eval(styler::style_dir("R/", filetype = "r")$changed)
   message("Test scripts")
   message("----------------------------------------")
   test_scripts <- eval(styler::style_dir("tests/", filetype = "r")$changed)
-  script_changes <- c(app_scripts, test_scripts)
+  script_changes <- c(app_scripts, r_scripts, test_scripts)
   return(script_changes)
 }
 
@@ -89,7 +91,7 @@ site_overflow <- "https://department-for-education.shinyapps.io/dfe-shiny-templa
 sites_list <- c(site_primary, site_overflow) # We can add further mirrors where necessary. Each one can generally handle about 2,500 users simultaneously
 ees_pub_name <- "Statistical publication" # Update this with your parent publication name (e.g. the EES publication)
 ees_publication <- "https://explore-education-statistics.service.gov.uk/find-statistics/" # Update with parent publication link
-
+google_analytics_key <- "Q1PYWZZ7S4"
 source("R/read_data.R")
 source("R/standard_panels.R")
 
