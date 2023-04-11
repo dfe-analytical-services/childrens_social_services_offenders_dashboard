@@ -30,6 +30,7 @@ shhh(library(waffle)) # added
 shhh(library(gridExtra)) # added
 shhh(library(shinyBS))
 shhh(library(shinyalert))
+shhh(library(readr))
 # shhh(library(shinya11y))
 
 # Functions ---------------------------------------------------------------------------------
